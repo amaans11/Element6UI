@@ -1,8 +1,6 @@
 import React from "react";
 import {  NavLink } from "react-router-dom";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import {Typography,ListItem,Box} from "@material-ui/core";
 import GraphicEqIcon from "@material-ui/icons/GraphicEq";
 import VerticalSplitIcon from "@material-ui/icons/VerticalSplit";
 import TimelineIcon from "@material-ui/icons/Timeline";
@@ -60,8 +58,8 @@ function ListItemLink(props) {
   return (
     <li>
       <ListItem button component={CustomLink} className="navigation">
-        <ListItemIcon>{getAvataricon(icon)}</ListItemIcon>
-        <ListItemText primary={primary}>{primary}</ListItemText>
+        <Box>{getAvataricon(icon)}</Box>
+        <Typography style={{fontSize:8}}>{primary}</Typography>
       </ListItem>
     </li>
   );

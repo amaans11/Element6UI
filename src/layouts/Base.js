@@ -1,8 +1,11 @@
 import React from "react";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
-import {Drawer,AppBar,Toolbar,CssBaseline,Typography,IconButton,MenuItem,Menu,List} from "@material-ui/core";
+import {Drawer,AppBar,Toolbar,CssBaseline,Typography,IconButton,MenuItem,Menu,List,Button} from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import SettingsIcon from '@material-ui/icons/Settings'
 import { LinkContainer } from "react-router-bootstrap";
 import { Route, Switch, Link } from "react-router-dom";
 import ListItemLink from "../components/ListItemLink";
@@ -104,6 +107,9 @@ const styles = (theme) => ({
   grow: {
     flexGrow: 1,
   },
+  icon:{
+    marginRight:10
+  }
 });
 
 class MiniDrawer extends React.Component {
@@ -190,8 +196,9 @@ class MiniDrawer extends React.Component {
                 open={open}
                 onClose={this.handleClose}
               >
-                <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                <MenuItem onClick={this.handleClose}><BorderColorIcon className={classes.icon} />Change Theme</MenuItem>
+                <MenuItem onClick={this.handleClose}><SettingsIcon className={classes.icon}/>Settings</MenuItem>
+                <MenuItem onClick={this.handleClose}><ExitToAppIcon className={classes.icon}/>Logout</MenuItem>
               </Menu>
             </div>
           </Toolbar>
@@ -211,7 +218,7 @@ class MiniDrawer extends React.Component {
           open={this.state.open}
         >
           <div className={classes.toolbar} />
-          <List style={{ paddingTop: "2px" }}>
+          <List style={{ paddingTop: 20 }}>
             {this.state.routeList.map((e, index) => (
               <ListItemLink
                 primary={e.name}
@@ -222,19 +229,17 @@ class MiniDrawer extends React.Component {
           </List>
         </Drawer>
         <main className={classes.content}>
-          {/* <div className={classes.toolbar} /> */}
-          <div className="filter-main">
+          {window.location.pathname != '/' && <div className="filter-main">
             <label className="filter-heading">Filters</label>
             <div className="filter-part">
               <FilterGroup />
             </div>
-          </div>
+          </div>}
           <div className="content-part">
             <div
-              style={{ width: "100%", display: "flex", flexDirection: "column" }}
             >
               <div style={{ display: "flex", width: "100%" }}>
-                <div style={{ display: "flex", width: "70%" }}>
+                <div style={{ display: "flex", width: "75%" }}>
                   <SelectwithSearch heading={"Select Portfolio"} data={portfolioData} />
                   <SelectwithSearch heading={"Select Benchmark"} data={portfolioData} />
                 </div>
@@ -243,14 +248,16 @@ class MiniDrawer extends React.Component {
                     display: "flex",
                     width: "30%",
                     justifyContent: "center",
+                    marginTop:-20,
+                    height:50
                   }}
                 >
-                  {/* <UploadPortfolio
-                    currency={MainRouterProps.currency_symbol}
-                    color={[colorscheme.colorIcons, colorscheme.colorCharts[5]]}
-                    userInfo={MainRouterProps.userInfo}
-                    handleStatusUpload={handleStatusUpload}
-                  /> */}
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                  >
+                    UPLOAD (DISABLED)
+                  </Button>
                 </div>
               </div>
             </div>

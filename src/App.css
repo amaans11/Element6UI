@@ -1,70 +1,3 @@
-// @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap");
-// body {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-//   font-family: "Montserrat", "sans-serif", "Helvetica Neue", sans-serif !important;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-// }
-
-// .MuiTypography-root {
-//   font-family: "Montserrat", "sans-serif", "Helvetica Neue", sans-serif !important;
-// }
-
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-/* 
-.MuiInputBase-input,
-.MuiFormLabel-root,
-.MuiFormLabel-root.Mui.focused {
-  color: #cecece !important;
-  font-weight: 400 !important;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  color: #cecece !important;
-  background-color: transparent !important;
-  -webkit-text-fill-color: #cecece !important;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-.MuiInput-underline:after,
-.MuiInput-underline:before {
-  border-bottom: 1px solid #cecece !important;
-} */
-
 .MuiButton-root {
   background: transparent;
 }
@@ -93,16 +26,17 @@ select:-webkit-autofill:focus {
 .landingpage-section {
   display: flex;
   min-height: 100vh;
-  .nav-section {
+}
+.nav-section {
     background-color: red;
     height: 70px;
     width: 100%;
     display: flex;
-    .dropdown-section {
+}
+.dropdown-section {
       margin: 0 20px;
       display: flex;
-    }
-  }
+}
   .navigation {
     justify-content: center;
     display: flex;
@@ -111,30 +45,10 @@ select:-webkit-autofill:focus {
     padding: 5px 0px 0px;
     margin-bottom: 8px;
     margin-top: 8px;
-    &:first-child {
-      margin-top: 0;
-    }
-    .MuiListItemIcon-root {
+  }
+  .MuiListItemIcon-root {
       min-width: auto;
-    }
-    .MuiListItemText-root {
-      margin-top: 2px;
-      span {
-        font-size: 10px;
-        letter-spacing: 0.3px;
-      }
-    }
-  }
-  button {
-    &:focus {
-      outline: none;
-    }
-  }
 }
-
-// .MuiListItem-gutters {
-//   padding-left: 23px !important;
-// }
 
 .MuiChip-root {
   margin-right: 5px !important;
@@ -168,42 +82,38 @@ select:-webkit-autofill:focus {
   box-shadow: none !important;
 }
 
-.navbar-section-toolbar {
-  .MuiTypography-body1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
 
 .MuiFormControl-marginNormal {
   margin-top: -13px !important;
 }
-
+.content-part{
+  margin-top:80px
+}
 .main-section {
   width: 100%;
   display: flex;
-  .filter-main {
+}
+.filter-main {
     width: 22%;
     height: 82vh;
     overflow: auto;
-    margin-top: -5px;
+    margin-top: 100px;
     position: fixed;
-    .filter-heading {
+}
+.filter-heading {
       display: flex;
       font-size: 1.2rem;
       margin-bottom: 20px;
       font-weight: bold;
-    }
-    .filter-part {
+}
+.filter-part {
       width: 100%;
       margin-bottom: 10px;
       padding-right: 20px;
-      .tags-root {
+}
+.tags-root {
         padding-bottom: 20px;
         text-align: left;
-      }
-    }
   }
   .tags-label {
     width: 100%;
@@ -223,32 +133,25 @@ select:-webkit-autofill:focus {
   }
   .MuiButton-root {
     border-radius: 0;
-  }
 }
 
 .tabs-section {
   display: flex;
   flex-direction: column;
   margin-top: 15px;
-  .tab-panel {
+}
+.tab-panel {
     padding-top: 10px;
     text-align: left;
   }
-  .MuiPaper-root {
+.MuiPaper-root {
     box-shadow: none;
     background-color: transparent;
-    .MuiTab-textColorPrimary {
-      font-size: 12px;
-    }
   }
   .footprint-content {
     display: flex;
     margin-top: 10px;
     flex-direction: column;
-    label {
-      margin-left: 13px;
-    }
-  }
 }
 
 .chart-section {
@@ -263,4 +166,16 @@ select:-webkit-autofill:focus {
   height: 22px;
   padding: 10px 5px;
   border-radius: 2px;
+}
+.error-msg{
+  color:red;
+  font-size:12px;
+}
+.icon{
+  color:black;
+  margin-left:10px;
+  margin-top:3px
+}
+.color-default{
+  color:rgb(120,120,120)
 }

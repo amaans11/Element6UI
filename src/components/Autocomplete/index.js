@@ -15,7 +15,7 @@ export default function SelectwithSearch({ heading, data }) {
 
 
   return (
-    <div style={{ width: 300, marginRight: "20px" }}>
+    <div style={{ width: 400, marginRight: "20px" }}>
       <Autocomplete
         {...defaultProps}
         id={heading}
