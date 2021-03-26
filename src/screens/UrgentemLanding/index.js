@@ -1,6 +1,8 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Card, Typography ,Box,Grid, rgbToHex} from '@material-ui/core';
+import React,{useState,useEffect} from 'react';
+import { useDispatch,useSelector } from 'react-redux';
+import { Card, Typography ,Box,Grid} from '@material-ui/core';
+import axios from 'axios'
+import * as actionTypes from '../../redux/actionTypes'
 import { makeStyles } from '@material-ui/core/styles';
 import GraphicEqIcon from "@material-ui/icons/GraphicEq";
 import VerticalSplitIcon from "@material-ui/icons/VerticalSplit";
@@ -16,6 +18,40 @@ import configs from '../../util/landing-page.config';
 import AdvancedTable from '../../components/Table/AdvancedTable'
 import {getPortfolioList} from '../../redux/actions/authActions'
 
+function getHeadCells(){
+  return [
+    {
+      id:'name',
+      label:'Portfolio Name',
+      disablePadding:false
+    },
+    {
+      id:'% of Portfolio Processed',
+      label:'Fundamentals Data Coverage (%)',
+      disablePadding:true
+    },
+    {
+      id:'emission',
+      label:'Emissions Data Coverage (%)',
+      disablePadding:true
+    },
+    {
+      id:'% of Portfolio Covered by Price data',
+      label:'Price Data Coverage (%)',
+      disablePadding:true
+    },
+    {
+      id:'date',
+      label:'Processing Date',
+      disablePadding:false
+    },
+    {
+      id:'Processing Status',
+      label:'Processing Status',
+      disablePadding:true
+    },
+  ]
+}
 function ListItemLink({icon}) {
         switch (icon) {
         case "GraphicEqIcon":
@@ -62,6 +98,45 @@ function UrgentemLanding() {
 	const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [uploadedPortfolio,setUploadedPortfolio]=useState([])
+	const auth = useSelector((state) => state.auth);
+
+	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
+
+  
+
+  const getUploadPortfolios=async()=>{
+    try{
+      let response= await axios.get(`${actionTypes.API_URL}/statuses/portfolios_new/${currentUser.client}`)
+
+      if(response.data.status == 'Success'){
+        const portfolios=response.data.Portfolios
+        let result=[]
+        portfolios.map(portfolio=>{
+          result.push({
+            name:portfolio['Portfolio Name'],
+            date:portfolio['Processed Date and Time'],
+            emission:portfolio['% of Portfolio Covered by Emissions data']
+          })
+        })
+        setUploadedPortfolio(result)
+      }
+      else{
+        setUploadedPortfolio([])
+      }
+    }
+    catch(error){
+      setUploadedPortfolio([])
+    }
+  }
+  useEffect(() => {
+      getUploadPortfolios();
+  }, []);
+
+  const headCells=getHeadCells();
+
+  console.log("uploadedPortfolio",uploadedPortfolio)
+
 	return (
         <React.Fragment>
             <Grid container>
@@ -88,24 +163,10 @@ function UrgentemLanding() {
                     <Box mt={2}>
                         <AdvancedTable
                         rows={
-                          [
-                            {name:'amaan',portName:'10'},
-                            {name:'shifa',portName:'20'}
-                          ]
+                          uploadedPortfolio
                         }
                         headCells={
-                          [
-                            {
-                              id:'name',
-                              label:'Name',
-                              disablePadding:true
-                            },
-                            {
-                              id:'portName',
-                              label:'portName',
-                              disablePadding:true
-                            }
-                          ]
+                          headCells
                         }
                         />
                     </Box>

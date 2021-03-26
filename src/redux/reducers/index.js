@@ -5,7 +5,9 @@ const reducers = {
   auth:auth
 };
 
-const rootReducer = combineReducers({ ...reducers });
+const rootReducer =()=> combineReducers({
+  auth:auth
+});
 
 export default rootReducer;
 

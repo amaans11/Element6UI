@@ -95,6 +95,7 @@ function Login(props) {
 			await dispatch(signinUser(data));
 			setErrorMsg('');
 			NotificationManager.success('Login Successful!');
+			props.history.push("/")
 		} catch (error) {
 			setErrorMsg(error.message);
 		}

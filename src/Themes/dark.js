@@ -60,7 +60,6 @@ const theme = createMuiTheme({
     },
     MuiListItem: {
       button: {
-        textTransform: "capitalize",
         "&:hover": {
           color: "#cecece",
         },

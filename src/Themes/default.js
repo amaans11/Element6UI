@@ -36,7 +36,6 @@ const theme = createMuiTheme({
     },
     MuiListItem: {
       button: {
-        textTransform: "capitalize",
         "&:hover": {
           color: "#556cd6",
         },
@@ -45,10 +44,13 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: "#556cd6",
+      main: "#1890ff",
     },
     secondary: {
-      main: "#cc4444",
+      main: "#f5222d",
+    },
+    default:{
+      color:'#000000'
     },
     error: {
       main: red.A400,

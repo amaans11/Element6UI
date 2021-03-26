@@ -1,304 +1,270 @@
-import React from "react";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core/styles";
-import {Drawer,AppBar,Toolbar,CssBaseline,Typography,IconButton,MenuItem,Menu,List,Button} from "@material-ui/core";
-import AccountCircle from "@material-ui/icons/AccountCircle";
+import React, { useState, useEffect } from 'react';
+import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import {
+	Drawer,
+	AppBar,
+	Toolbar,
+	CssBaseline,
+	Typography,
+	IconButton,
+	MenuItem,
+	Menu,
+	List,
+	Button
+} from '@material-ui/core';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import SettingsIcon from '@material-ui/icons/Settings'
-import { LinkContainer } from "react-router-bootstrap";
-import { Route, Switch, Link } from "react-router-dom";
-import ListItemLink from "../components/ListItemLink";
-import Logo from "../assets/Urgentem_Wordmark.png";
-import { RouteData } from "./Route";
-import SelectwithSearch from '../components/Autocomplete'
-import FilterGroup from '../components/FilterSection'
-import PortfolioFootprint from "../screens/PortfolioFootprint";
-import Scope3Materiality from "../screens/Scope3Materiality";
-import TemperatureMetric from "../screens/TemperatureMetric";
-import PortfolioOptimization from "../screens/PortfolioOptimization";
-import PortfolioCarbonRisk from "../screens/PortfolioCarbonRisk";
-import ForwardLookingAnalysis from "../screens/ForwardLookingAnalysis";
-import StrandedAssetsAnalysis from "../screens/StrandedAssetsAnalysis";
-import UrgentemDownload from "../screens/UrgentemDownload";
-import GenerateReport from "../screens/GenerateReport";
-import UrgentemLanding from "../screens/UrgentemLanding";
+import SettingsIcon from '@material-ui/icons/Settings';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Route, Switch, Link } from 'react-router-dom';
+import EditIcon from '@material-ui/icons/Edit';
+import ListItemLink from '../components/ListItemLink';
+import Logo from '../assets/Urgentem_Wordmark.png';
+import { RouteData } from './Route';
+import Header from '../components/Header';
+import SelectwithSearch from '../components/Autocomplete';
+import FilterGroup from '../components/FilterSection';
+import PortfolioFootprint from '../screens/PortfolioFootprint';
+import Scope3Materiality from '../screens/Scope3Materiality';
+import TemperatureMetric from '../screens/TemperatureMetric';
+import PortfolioOptimization from '../screens/PortfolioOptimization';
+import PortfolioCarbonRisk from '../screens/PortfolioCarbonRisk';
+import ForwardLookingAnalysis from '../screens/ForwardLookingAnalysis';
+import StrandedAssetsAnalysis from '../screens/StrandedAssetsAnalysis';
+import UrgentemDownload from '../screens/UrgentemDownload';
+import GenerateReport from '../screens/GenerateReport';
+import UrgentemLanding from '../screens/UrgentemLanding';
+import { getPortfolioList, getUserInfo, getUploadPortfolioList } from '../redux/actions/authActions';
 
-const portfolioData=[
-  {label:'SP 500',value:'SP500'},
-  {label:'CBUS Total Quities',value:'CBUS Total Quities'},
-  {label:'CBUS GLobal Quities',value:'CBUS Total Quities'}
-]
 const drawerWidth = 295;
 
 const styles = (theme) => ({
-  root: {
-    display: "flex",
-    width: "100%",
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    boxShadow: "none",
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginLeft: 11,
-    marginRight: 36,
-  },
-  menuButtonIconClosed: {
-    transition: theme.transitions.create(["transform"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    transform: "rotate(0deg)",
-  },
-  menuButtonIconOpen: {
-    transition: theme.transitions.create(["transform"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    transform: "rotate(180deg)",
-  },
-  hide: {
-    display: "none",
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: theme.spacing.unit * 7 + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing.unit * 9 + 1,
-    },
-  },
-  toolbar: {
-    display: "flex",
-    alignItems: "center",
-    marginTop: theme.spacing.unit,
-    justifyContent: "flex-end",
-    padding: "0 8px",
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  icon:{
-    marginRight:10
-  }
+	root: {
+		display: 'flex',
+		width: '100%'
+	},
+	appBar: {
+		zIndex: theme.zIndex.drawer + 1,
+		boxShadow: 'none'
+	},
+	appBarShift: {
+		marginLeft: drawerWidth,
+		width: `calc(100% - ${drawerWidth}px)`,
+		transition: theme.transitions.create([ 'width', 'margin' ], {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen
+		})
+	},
+	menuButton: {
+		marginLeft: 11,
+		marginRight: 36
+	},
+	menuButtonIconClosed: {
+		transition: theme.transitions.create([ 'transform' ], {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen
+		}),
+		transform: 'rotate(0deg)'
+	},
+	menuButtonIconOpen: {
+		transition: theme.transitions.create([ 'transform' ], {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen
+		}),
+		transform: 'rotate(180deg)'
+	},
+	hide: {
+		display: 'none'
+	},
+	drawer: {
+		width: drawerWidth,
+		flexShrink: 0,
+		whiteSpace: 'nowrap'
+	},
+	drawerOpen: {
+		width: drawerWidth,
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen
+		})
+	},
+	drawerClose: {
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen
+		}),
+		overflowX: 'hidden',
+		width: theme.spacing.unit * 7 + 1,
+		[theme.breakpoints.up('sm')]: {
+			width: theme.spacing.unit * 9 + 1
+		}
+	},
+	toolbar: {
+		display: 'flex',
+		alignItems: 'center',
+		marginTop: theme.spacing.unit,
+		justifyContent: 'flex-end',
+		padding: '0 8px',
+		...theme.mixins.toolbar
+	},
+	content: {
+		flexGrow: 1,
+		padding: theme.spacing.unit * 3
+	},
+	grow: {
+		flexGrow: 1
+	},
+	icon: {
+		marginRight: 10
+	},
+	uploadBtn: {
+		height: 50,
+		width: '90%',
+    marginLeft:theme.spacing(2)
+	}
 });
 
-class MiniDrawer extends React.Component {
-  state = {
-    open: false,
-    anchorEl: null,
-    routeList: RouteData,
-  };
+const MiniDrawer = ({ classes, history }) => {
+	const [ open, setOpen ] = useState(false);
+	const dispatch = useDispatch();
 
-  handleDrawerOpen = () => {
-    //this.setState({ open: !this.state.open });
-  };
+	const auth = useSelector((state) => state.auth);
+	const portfolios = useSelector((state) => state.auth.portfolioList);
 
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
+	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
 
-  handleMenu = (event) => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
+	const getUserDetails = async () => {
+		const data = {
+			userName: currentUser.userName
+		};
+		await dispatch(getUserInfo(data));
+	};
+	const getPortfolio = async () => {
+		await dispatch(getPortfolioList(currentUser.client));
+	};
+	const fetchDetails = async () => {
+		await getUserDetails();
+		await getPortfolio();
+	};
+	useEffect(() => {
+		fetchDetails();
+	}, []);
 
-  render() {
-    const { classes, theme } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
-    return (
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={classes.appBar}
-          fooJon={classNames(classes.appBar, {
-            [classes.appBarShift]: this.state.open,
-          })}
-        >
-          <Toolbar disableGutters={true}>
-            <div
-              className="navbar-section-toolbar"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
-                marginLeft:20
-              }}
-            >
-              <LinkContainer to="/" style={{ cursor: "pointer" }}>
-                <img
-                  src={Logo}
-                  alt="website logo"
-                  height="40px"
-                  style={{ width: "22%" }}
-                ></img>
-              </LinkContainer>
+	return (
+		<div className={classes.root}>
+			<CssBaseline />
+			<Header history={history} />
+			<Drawer
+				variant="permanent"
+				className={classNames(classes.drawer, {
+					[classes.drawerOpen]: open,
+					[classes.drawerClose]: !open
+				})}
+				classes={{
+					paper: classNames({
+						[classes.drawerOpen]: open,
+						[classes.drawerClose]: !open
+					})
+				}}
+				open={open}
+			>
+				<div className={classes.toolbar} />
+				<List style={{ paddingTop: 20 }}>
+					{RouteData.map((e, index) => <ListItemLink primary={e.name} icon={e.icon} to={e.url} />)}
+				</List>
+			</Drawer>
+			<main className={classes.content}>
+				{window.location.pathname != '/' ? (
+					<div className="filter-main">
+						<label className="filter-heading">Filters</label>
+						<div className="filter-part">
+							<FilterGroup />
+						</div>
+					</div>
+				) : (
+					<div className="filter-main">
+						<Button variant="outlined" color="primary" className={classes.uploadBtn}>
+							Upload Portfolio
+						</Button>
+					</div>
+				)}
+				<div className="content-part">
+					<div>
+						<div style={{ display: 'flex', width: '100%' }}>
+							<div style={{ display: 'flex', width: '75%' }}>
+								<SelectwithSearch heading={'Select Portfolio'} data={portfolios} />
+								<SelectwithSearch heading={'Select Benchmark'} data={portfolios} />
+							</div>
+							<Button
+								variant="outlined"
+								color="secondary"
+								style={{ marginTop: -10,height:45,width:'16%' }}
+								onClick={() => history.push('/settings')}
+							>
+								1 USD = 1USD
+							</Button>
 
-              <Typography variant="body1" color="inherit" noWrap>
-                  <div> Username / Client </div>
-                  <div> Role </div>
-              </Typography>
-              
-            </div>
-            <div>
-              <IconButton
-                aria-owns={open ? "menu-appbar" : undefined}
-                aria-haspopup="true"
-                onClick={this.handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={open}
-                onClose={this.handleClose}
-              >
-                <MenuItem onClick={this.handleClose}><BorderColorIcon className={classes.icon} />Change Theme</MenuItem>
-                <MenuItem onClick={this.handleClose}><SettingsIcon className={classes.icon}/>Settings</MenuItem>
-                <MenuItem onClick={this.handleClose}><ExitToAppIcon className={classes.icon}/>Logout</MenuItem>
-              </Menu>
-            </div>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          variant="permanent"
-          className={classNames(classes.drawer, {
-            [classes.drawerOpen]: this.state.open,
-            [classes.drawerClose]: !this.state.open,
-          })}
-          classes={{
-            paper: classNames({
-              [classes.drawerOpen]: this.state.open,
-              [classes.drawerClose]: !this.state.open,
-            }),
-          }}
-          open={this.state.open}
-        >
-          <div className={classes.toolbar} />
-          <List style={{ paddingTop: 20 }}>
-            {this.state.routeList.map((e, index) => (
-              <ListItemLink
-                primary={e.name}
-                icon={e.icon}
-                to={e.url}
-              ></ListItemLink>
-            ))}
-          </List>
-        </Drawer>
-        <main className={classes.content}>
-          {window.location.pathname != '/' && <div className="filter-main">
-            <label className="filter-heading">Filters</label>
-            <div className="filter-part">
-              <FilterGroup />
-            </div>
-          </div>}
-          <div className="content-part">
-            <div
-            >
-              <div style={{ display: "flex", width: "100%" }}>
-                <div style={{ display: "flex", width: "75%" }}>
-                  <SelectwithSearch heading={"Select Portfolio"} data={portfolioData} />
-                  <SelectwithSearch heading={"Select Benchmark"} data={portfolioData} />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    width: "30%",
-                    justifyContent: "center",
-                    marginTop:-20,
-                    height:50
-                  }}
-                >
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                  >
-                    UPLOAD (DISABLED)
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <Switch>
-            <Route path="/portfolio-footprint">
-              <PortfolioFootprint />
-            </Route>
-            <Route path="/scope3-materiality">
-              <Scope3Materiality />
-            </Route>
-            <Route path="/temperature-metric">
-              <TemperatureMetric />
-            </Route>
-            <Route path="/portfolio-optimization">
-              <PortfolioOptimization />
-            </Route>
-            <Route path="/portfolio-carbon-risk">
-              <PortfolioCarbonRisk />
-            </Route>
-            <Route path="/forward-looking-analysis">
-              <ForwardLookingAnalysis />
-            </Route>
-            <Route path="/stranded-assets-analysis">
-              <StrandedAssetsAnalysis />
-            </Route>
-            <Route path="/urgentem-download">
-              <UrgentemDownload />
-            </Route>
-            <Route path="/urgentem-api"></Route>
-            <Route path="/generate-report">
-              <GenerateReport />
-            </Route>
-            <Route path="/">
-              <UrgentemLanding />
-            </Route>
-          </Switch>
-        </main>
-      </div>
-    );
-  }
-}
+							{/* <h4
+								style={{
+									marginLeft: 20,
+									marginTop: -3,
+									border: '1px solid rgb(180,180,180)',
+									paddingTop: 6,
+                  paddingLeft:10,
+                  paddingRight:10,
+                  display:'flex',
+                  flexDirection:'row'
+								}}
+							>
+								<div style={{paddingLeft:10}}>1 USD = 1USD </div>
+                	<div>
+									<EditIcon 
+                  onClick={()=>history.push("/settings")}
+                  />
+								</div>
+							</h4> */}
+						</div>
+					</div>
+				</div>
+				<Switch>
+					<Route path="/portfolio-footprint">
+						<PortfolioFootprint />
+					</Route>
+					<Route path="/scope3-materiality">
+						<Scope3Materiality />
+					</Route>
+					<Route path="/temperature-metric">
+						<TemperatureMetric />
+					</Route>
+					<Route path="/portfolio-optimization">
+						<PortfolioOptimization />
+					</Route>
+					<Route path="/portfolio-carbon-risk">
+						<PortfolioCarbonRisk />
+					</Route>
+					<Route path="/forward-looking-analysis">
+						<ForwardLookingAnalysis />
+					</Route>
+					<Route path="/stranded-assets-analysis">
+						<StrandedAssetsAnalysis />
+					</Route>
+					<Route path="/urgentem-download">
+						<UrgentemDownload />
+					</Route>
+					<Route path="/urgentem-api" />
+					<Route path="/generate-report">
+						<GenerateReport />
+					</Route>
+					<Route path="/">
+						<UrgentemLanding />
+					</Route>
+				</Switch>
+			</main>
+		</div>
+	);
+};
 
 export default withStyles(styles, { withTheme: true })(MiniDrawer);

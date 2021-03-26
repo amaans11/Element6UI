@@ -97,7 +97,7 @@
     width: 22%;
     height: 82vh;
     overflow: auto;
-    margin-top: 100px;
+    margin-top: 70px;
     position: fixed;
 }
 .filter-heading {
@@ -133,6 +133,7 @@
   }
   .MuiButton-root {
     border-radius: 0;
+    text-transform: none  !important;
 }
 
 .tabs-section {
