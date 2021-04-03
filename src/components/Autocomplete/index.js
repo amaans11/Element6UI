@@ -23,6 +23,7 @@ export default function SelectwithSearch({ heading, data }) {
         renderInput={(params) => (
           <TextField {...params} label={heading} margin="normal" />
         )}
+        onChange={e=>{console.log("e",e)}}
       />
     </div>
   );

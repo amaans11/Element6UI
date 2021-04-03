@@ -14,11 +14,6 @@ import {
 	List,
 	Button
 } from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Route, Switch, Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import ListItemLink from '../components/ListItemLink';
@@ -37,7 +32,7 @@ import StrandedAssetsAnalysis from '../screens/StrandedAssetsAnalysis';
 import UrgentemDownload from '../screens/UrgentemDownload';
 import GenerateReport from '../screens/GenerateReport';
 import UrgentemLanding from '../screens/UrgentemLanding';
-import { getPortfolioList, getUserInfo, getUploadPortfolioList } from '../redux/actions/authActions';
+import { getPortfolioList, getUserInfo, getUploadPortfolioList,setTheme } from '../redux/actions/authActions';
 
 const drawerWidth = 295;
 
@@ -120,9 +115,13 @@ const styles = (theme) => ({
 	icon: {
 		marginRight: 10
 	},
+  uploadDiv:{
+    position:'absolute',
+    top:90
+  },
 	uploadBtn: {
 		height: 50,
-		width: '90%',
+		width: 300,
     marginLeft:theme.spacing(2)
 	}
 });
@@ -133,8 +132,7 @@ const MiniDrawer = ({ classes, history }) => {
 
 	const auth = useSelector((state) => state.auth);
 	const portfolios = useSelector((state) => state.auth.portfolioList);
-
-	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
+  let currentUser = auth && auth.currentUser ? auth.currentUser : {};
 
 	const getUserDetails = async () => {
 		const data = {
@@ -142,21 +140,26 @@ const MiniDrawer = ({ classes, history }) => {
 		};
 		await dispatch(getUserInfo(data));
 	};
+
 	const getPortfolio = async () => {
 		await dispatch(getPortfolioList(currentUser.client));
 	};
+
 	const fetchDetails = async () => {
 		await getUserDetails();
 		await getPortfolio();
 	};
+
+
 	useEffect(() => {
 		fetchDetails();
 	}, []);
 
 	return (
 		<div className={classes.root}>
-			<CssBaseline />
-			<Header history={history} />
+    <CssBaseline />
+			<Header history={history}
+      />
 			<Drawer
 				variant="permanent"
 				className={classNames(classes.drawer, {
@@ -185,7 +188,7 @@ const MiniDrawer = ({ classes, history }) => {
 						</div>
 					</div>
 				) : (
-					<div className="filter-main">
+					<div className={classes.uploadDiv}>
 						<Button variant="outlined" color="primary" className={classes.uploadBtn}>
 							Upload Portfolio
 						</Button>
@@ -195,8 +198,8 @@ const MiniDrawer = ({ classes, history }) => {
 					<div>
 						<div style={{ display: 'flex', width: '100%' }}>
 							<div style={{ display: 'flex', width: '75%' }}>
-								<SelectwithSearch heading={'Select Portfolio'} data={portfolios} />
-								<SelectwithSearch heading={'Select Benchmark'} data={portfolios} />
+								<SelectwithSearch heading={'Select Portfolio'} data={portfolios && portfolios.length > 0 ? portfolios : []} />
+								<SelectwithSearch heading={'Select Benchmark'} data={portfolios && portfolios.length > 0 ? portfolios : []} />
 							</div>
 							<Button
 								variant="outlined"
@@ -230,32 +233,32 @@ const MiniDrawer = ({ classes, history }) => {
 					</div>
 				</div>
 				<Switch>
-					<Route path="/portfolio-footprint">
+					<Route path="/portfolio-footprint" exact >
 						<PortfolioFootprint />
 					</Route>
-					<Route path="/scope3-materiality">
+					<Route path="/scope3-materiality" exact>
 						<Scope3Materiality />
 					</Route>
-					<Route path="/temperature-metric">
+					<Route path="/temperature-metric" exact>
 						<TemperatureMetric />
 					</Route>
-					<Route path="/portfolio-optimization">
+					<Route path="/portfolio-optimization" exact>
 						<PortfolioOptimization />
 					</Route>
-					<Route path="/portfolio-carbon-risk">
+					<Route path="/portfolio-carbon-risk" exact>
 						<PortfolioCarbonRisk />
 					</Route>
-					<Route path="/forward-looking-analysis">
+					<Route path="/forward-looking-analysis" exact>
 						<ForwardLookingAnalysis />
 					</Route>
-					<Route path="/stranded-assets-analysis">
+					<Route path="/stranded-assets-analysis" exact>
 						<StrandedAssetsAnalysis />
 					</Route>
-					<Route path="/urgentem-download">
+					<Route path="/urgentem-download" exact>
 						<UrgentemDownload />
 					</Route>
-					<Route path="/urgentem-api" />
-					<Route path="/generate-report">
+					<Route path="/urgentem-api" exact />
+					<Route path="/generate-report" exact>
 						<GenerateReport />
 					</Route>
 					<Route path="/">

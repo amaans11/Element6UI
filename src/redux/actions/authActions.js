@@ -104,4 +104,32 @@ export const verifyUser = data => {
   };
 
 
+  export const updateCurrency = (data) => {
+    const {year,quarter,currency}=data
+    return async dispatch => {
+      return axios.get(`${actionTypes.API_URL}/currencies/currency/${year}/${quarter}`)
+      .then(result=>{
+          if(result.data.status =='done'){
+            const res={
+              ...result.data,
+              currency
+            }
+              dispatch(updateCurrencySuccess(res))
+          }
+          else{
+            dispatch(updateCurrencyFailed({currency}))
+          }
+      })
+      .catch(error=>{
+        dispatch(updateCurrencyFailed({currency}))
+      })
+    };
+  };
   
+  export const updateCurrencySuccess = res => {
+    return { type: actionTypes.UPDATE_CURRENCY_SUCCESS, res };
+  };
+  export const updateCurrencyFailed = res => {
+    return { type: actionTypes.UPDATE_CURRENCY_FAILED, res };
+  };
+

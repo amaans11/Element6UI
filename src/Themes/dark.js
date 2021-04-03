@@ -44,6 +44,11 @@ const theme = createMuiTheme({
         color: "#cecece",
       },
     },
+    MuiTypography:{
+      root:{
+        color:'#FFFFFF !important'
+      }
+    },
     MuiButton: {
       contained: {
         backgroundColor: "black",
@@ -54,9 +59,16 @@ const theme = createMuiTheme({
       },
       root: {
         "&:hover": {
-          backgroundColor: "gold",
+          backgroundColor: "#FFFFFF !important",
+          color:"#000000 !important"
         },
       },
+      
+    },
+    MuiCard:{
+      root:{
+        border:"1px solid #FFFFFF"
+      }
     },
     MuiListItem: {
       button: {

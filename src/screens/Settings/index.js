@@ -5,19 +5,19 @@ import {
 	Box,
 	Typography,
 	Button,
-	OutlinedInput,
-	InputAdornment,
-	IconButton,
-	CardHeader,
 	Select,
 	MenuItem,
-	FormControl
+	FormControl,
+	CssBaseline,
+	TextField,
+	Dialog,
+	DialogTitle
 } from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
-import { useSelector } from 'react-redux';
+import { updateCurrency } from '../../redux/actions/authActions';
 
 const yearOptions = [ 2020, 2019, 2018 ];
 const quarterOptions = [ 'Q1', 'Q2', 'Q3', 'Q4' ];
@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
 	container: {
 		marginLeft: 100,
 		marginTop: 100,
-		marginBottom:40
+		marginBottom: 40
 	},
 	card: {
 		padding: 10
@@ -73,11 +73,26 @@ const Settings = ({}) => {
 	const [ year, setYear ] = useState(2020);
 	const [ quarter, setQuarter ] = useState('Q1');
 	const [ currency, setCurrency ] = useState('USD');
+	const [ emailDialog, setEmailDialog ] = useState(false);
+
+	const dispatch = useDispatch();
 
 	const userInfo = useSelector((state) => state.auth.userInfo);
 
+	const updateCurrencyHandler = () => {
+		const data = {
+			year,
+			quarter,
+			currency
+		};
+		dispatch(updateCurrency(data));
+	};
+	const closeEmailDialog = () => {
+		setEmailDialog(true);
+	};
 	return (
-		<React.Fragment>
+		<Box>
+			<CssBaseline />
 			<Header />
 			<SideBar />
 			<Grid container className={classes.container} spacing={3}>
@@ -91,7 +106,9 @@ const Settings = ({}) => {
 								<Typography className={classes.headingText}>User name :</Typography>
 							</Grid>
 							<Grid item xs={6}>
-								<Typography className={classes.contentText}>{userInfo && Object.keys(userInfo).length > 0 ? userInfo.userName : ''}</Typography>
+								<Typography className={classes.contentText}>
+									{userInfo && Object.keys(userInfo).length > 0 ? userInfo.userName : ''}
+								</Typography>
 							</Grid>
 						</Grid>
 						<Grid container>
@@ -99,7 +116,9 @@ const Settings = ({}) => {
 								<Typography className={classes.headingText}>Role :</Typography>
 							</Grid>
 							<Grid item xs={6}>
-								<Typography className={classes.contentText}>{userInfo && Object.keys(userInfo).length > 0 ? userInfo.role : ''}</Typography>
+								<Typography className={classes.contentText}>
+									{userInfo && Object.keys(userInfo).length > 0 ? userInfo.role : ''}
+								</Typography>
 							</Grid>
 						</Grid>
 
@@ -108,10 +127,19 @@ const Settings = ({}) => {
 								<Typography className={classes.headingText}>email :</Typography>
 							</Grid>
 							<Grid item xs={6}>
-								<Typography className={classes.contentText}>{userInfo && Object.keys(userInfo).length > 0 ? userInfo.email : ''}</Typography>
+								<Typography className={classes.contentText}>
+									{userInfo && Object.keys(userInfo).length > 0 ? userInfo.email : ''}
+								</Typography>
 							</Grid>
 							<Grid item xs={3}>
-								<Button color="primary" variant="contained" className={classes.btn}>
+								<Button
+									color="primary"
+									variant="outlined"
+									className={classes.btn}
+									onClick={() => {
+										setEmailDialog(true);
+									}}
+								>
 									Change Email
 								</Button>
 							</Grid>
@@ -124,7 +152,7 @@ const Settings = ({}) => {
 								<Typography className={classes.contentText}>********</Typography>
 							</Grid>
 							<Grid item xs={3}>
-								<Button color="primary" variant="contained" className={classes.btn}>
+								<Button color="primary" variant="outlined" className={classes.btn}>
 									Change Password
 								</Button>
 							</Grid>
@@ -147,7 +175,12 @@ const Settings = ({}) => {
 							>
 								Currency Settings
 							</Typography>
-							<Button variant="contained" color="primary" style={{ marginBottom: 10 }}>
+							<Button
+								variant="outlined"
+								color="primary"
+								style={{ marginBottom: 10 }}
+								onClick={updateCurrencyHandler}
+							>
 								Update
 							</Button>
 						</Box>
@@ -157,7 +190,14 @@ const Settings = ({}) => {
 							</Grid>
 							<Grid item xs={6}>
 								<FormControl variant="outlined">
-									<Select placeholder="Select year" value={year} className={classes.dropdown}>
+									<Select
+										placeholder="Select year"
+										value={year}
+										className={classes.dropdown}
+										onChange={(e) => {
+											setYear(e.target.value);
+										}}
+									>
 										{yearOptions.map((year) => <MenuItem value={year}>{year}</MenuItem>)}
 									</Select>
 								</FormControl>
@@ -169,7 +209,14 @@ const Settings = ({}) => {
 							</Grid>
 							<Grid item xs={6}>
 								<FormControl variant="outlined">
-									<Select placeholder="Select quarter" value={quarter} className={classes.dropdown}>
+									<Select
+										placeholder="Select quarter"
+										value={quarter}
+										className={classes.dropdown}
+										onChange={(e) => {
+											setQuarter(e.target.value);
+										}}
+									>
 										{quarterOptions.map((quarter) => (
 											<MenuItem value={quarter}>{quarter}</MenuItem>
 										))}
@@ -183,7 +230,14 @@ const Settings = ({}) => {
 							</Grid>
 							<Grid item xs={6}>
 								<FormControl variant="outlined">
-									<Select placeholder="Select currency" value={currency} className={classes.dropdown}>
+									<Select
+										placeholder="Select currency"
+										value={currency}
+										className={classes.dropdown}
+										onChange={(e) => {
+											setCurrency(e.target.value);
+										}}
+									>
 										<MenuItem value="USD">USD ($)</MenuItem>
 										<MenuItem value="EUR">EUR (€)</MenuItem>
 										<MenuItem value="GBP">GBP (£)</MenuItem>
@@ -213,7 +267,7 @@ const Settings = ({}) => {
 							>
 								Emission Settings
 							</Typography>
-							<Button variant="contained" color="primary" style={{ marginBottom: 10 }}>
+							<Button variant="outlined" color="primary" style={{ marginBottom: 10 }}>
 								Update
 							</Button>
 						</Box>
@@ -274,7 +328,7 @@ const Settings = ({}) => {
 							>
 								Fundamental Settings
 							</Typography>
-							<Button variant="contained" color="primary" style={{ marginBottom: 10 }}>
+							<Button variant="outlined" color="primary" style={{ marginBottom: 10 }}>
 								Update
 							</Button>
 						</Box>
@@ -320,7 +374,21 @@ const Settings = ({}) => {
 					</Card>
 				</Grid>
 			</Grid>
-		</React.Fragment>
+			<Dialog onClose={closeEmailDialog} open={emailDialog}>
+				<Typography align="center" variant="h5">Change Email</Typography>
+				<Typography variant="p">
+					Please enter your new email.Note : The entered email must be different from the current email.
+				</Typography>
+				<Grid container>
+					<Grid item xs={4}>
+						<Typography> New EMail : </Typography>
+					</Grid>
+					<Grid item xs={8}>
+						<TextField label="New Email" variant="outlined" />
+					</Grid>
+				</Grid>
+			</Dialog>
+		</Box>
 	);
 };
 

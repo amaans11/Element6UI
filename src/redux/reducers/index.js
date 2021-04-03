@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
 import auth from './authReducer'
-
-const reducers = {
-  auth:auth
-};
+import footprint from './footprintReducer'
 
 const rootReducer =()=> combineReducers({
-  auth:auth
+  auth:auth,
+  footprint:footprint
 });
 
 export default rootReducer;

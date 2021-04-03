@@ -1,14 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, IconButton, MenuItem, Menu } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, IconButton, MenuItem, Menu ,Box} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { LinkContainer } from 'react-router-bootstrap';
 import Logo from '../../assets/Urgentem_Wordmark.png';
-import { CustomThemeContext } from '../Themes/customThemeProvider';
 
 const drawerWidth = 295;
 
@@ -29,17 +28,18 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: 10
 	}
 }));
-const Header = ({history}) => {
+const Header = ({ history }) => {
 	const classes = useStyles();
 	const [ anchorEl, setAnchor ] = useState(null);
-	const { currentTheme, setTheme } = useContext(CustomThemeContext);
-
 	const auth = useSelector((state) => state.auth);
+	const userInfo = useSelector((state) => state.auth.userInfo);
+	const currentTheme = localStorage.getItem('appTheme');
 
 	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
-
-	console.log('auth>>', auth);
-
+	let emissionYear=2019;
+	if(userInfo && userInfo.year_emissions){
+		emissionYear=userInfo.year_emissions
+	}
 	const open = Boolean(anchorEl);
 
 	const handleSettings = () => {
@@ -48,11 +48,14 @@ const Header = ({history}) => {
 	const handleMenu = (event) => {
 		setAnchor(event.currentTarget);
 	};
-	const handleThemeChange = (event) => {
-		if (currentTheme === 'basic') {
-			setTheme('dark');
+
+	const handleThemeChange = () => {
+		if (currentTheme == 'dark') {
+			localStorage.setItem("appTheme",'basic')
+			window.location.reload()
 		} else {
-			setTheme('basic');
+			localStorage.setItem("appTheme",'dark')
+			window.location.reload()
 		}
 	};
 	return (
@@ -71,10 +74,10 @@ const Header = ({history}) => {
 						<img src={Logo} alt="website logo" height="40px" style={{ width: '22%' }} />
 					</LinkContainer>
 
-					<Typography variant="body1" color="inherit" noWrap>
+					<Box variant="body1" color="inherit" noWrap>
 						<div> {`${currentUser.displayName} / ${currentUser.client}`} </div>
-						<div style={{ fontSize: 12 }}> {currentUser.role} </div>
-					</Typography>
+						<div style={{ fontSize: 12 }}> Emission Year - {emissionYear} </div>
+					</Box>
 				</div>
 				<div>
 					<IconButton
@@ -98,8 +101,8 @@ const Header = ({history}) => {
 						}}
 						open={open}
 					>
-						<MenuItem>
-							<BorderColorIcon className={classes.icon} onClick={handleThemeChange} />Change Theme
+						<MenuItem onClick={handleThemeChange}>
+							<BorderColorIcon className={classes.icon} />Change Theme
 						</MenuItem>
 						<MenuItem onClick={handleSettings}>
 							<SettingsIcon className={classes.icon} />Settings
@@ -113,4 +116,5 @@ const Header = ({history}) => {
 		</AppBar>
 	);
 };
+
 export default Header;

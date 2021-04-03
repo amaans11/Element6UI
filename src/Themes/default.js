@@ -16,19 +16,24 @@ const theme = createMuiTheme({
       },
     },
     MuiButton: {
-      contained: {
-        backgroundColor: "#acacac",
-        color: "rgba(0, 0, 0, 0.87)",
+      outlinedSecondary: {
+        color: "#ff4d4f",
         "&:hover": {
-          backgroundColor: "#acacac",
+          backgroundColor: "#ff4d4f !important",
+          color:"#FFFFFF !important"
         },
       },
       root: {
         "&:hover": {
-          backgroundColor: "#acacac !important",
-        },
+          backgroundColor: "#1890ff !important",
+          color:"#FFFFFF !important"},
       },
     },
+  MuiTypography:{
+    root:{
+      color:'#000000 !important'
+    }
+  },
     MuiChip: {
       colorPrimary: {
         border: "1px solid transparent",
@@ -41,13 +46,18 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiCard:{
+      root:{
+        border:"1px solid #b4b4b4"
+      }
+    }
   },
   palette: {
     primary: {
       main: "#1890ff",
     },
     secondary: {
-      main: "#f5222d",
+      main: "#ff4d4f",
     },
     default:{
       color:'#000000'
