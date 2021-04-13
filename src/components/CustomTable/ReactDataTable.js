@@ -1,5 +1,5 @@
 import React from "react";
-import DataTable from "react-data-table-component";
+import DataTable ,{createTheme} from "react-data-table-component";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import {get} from 'lodash'
 import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined';
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -256,7 +257,6 @@ class ReactDataTable extends React.Component {
           columns={columns}
           data={isFilter ? filteredData : data}
           pagination={true}
-          theme="custom-theme"
           customStyles={this.customStyles}
           paginationRowsPerPageOptions={[10, 25, 100]}
           actions={actionsMemo}

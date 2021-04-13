@@ -1,16 +1,30 @@
 import React, { useState,useEffect } from 'react';
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux';
 import { Paper, Grid,Tabs,Tab } from '@material-ui/core';
 import TabPanel from './../../components/TabPanel';
 import { footprintTabs } from '../../util/tabs-config';
 import PortfolioEmission from './PortfolioEmission';
+import CarbonEmission from './CarbonEmission'
+import SovereignFootprint from './SovereignFootprint'
+import AvoidedEmission from './AvoidedEmission'
+import Disclosure from './Disclosure'
+import CarbonAttribution from './CarbonAttribution';
+import { setTabValue } from '../../redux/actions/authActions';
 
 function PortfolioFootprint() {
-	const [ value, setValue ] = useState(0);
+	const tabValue = useSelector((state) => state.auth.tabValue);
+	console.log("tabValue",tabValue)
+	const [ value, setValue ] = useState(tabValue);
+	const dispatch=useDispatch()
 
-	const handleChange = (event, newValue) => {
+	const handleChange = async(event, newValue) => {
+		await dispatch(setTabValue(newValue))
 		setValue(newValue);
 	};
+	// useEffect(()=>{
+	// 	dispatch(setTabValue(0))
+	// })
+
 
 	return (
 		<div className="tabs-section">
@@ -23,8 +37,23 @@ function PortfolioFootprint() {
 								footprintTabs.map((e, i) => <Tab label={e} {...e} style={{ width: 40 }} />)}
 						</Tabs>
 					</Paper>
-					<TabPanel value={0} index={0}>
+					<TabPanel value={value} index={0}>
                         <PortfolioEmission />
+					</TabPanel>
+					<TabPanel value={value} index={1}>
+                        <CarbonEmission />
+					</TabPanel>
+					<TabPanel value={value} index={2}>
+                        <SovereignFootprint />
+					</TabPanel>
+					<TabPanel value={value} index={3}>
+                        <CarbonAttribution />
+					</TabPanel>
+					<TabPanel value={value} index={4}>
+                        <Disclosure />
+					</TabPanel>
+					<TabPanel value={value} index={5}>
+                        <AvoidedEmission />
 					</TabPanel>
 				</Grid>
 			</Grid>

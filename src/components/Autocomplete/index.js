@@ -1,30 +1,39 @@
 /* eslint-disable no-use-before-define */
-import React from "react";
-import {TextField} from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import React from 'react';
+import { TextField } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
-export default function SelectwithSearch({ heading, data }) {
-  const defaultProps = {
-    options: data,
-    getOptionLabel: (option) => option.label,
-  };
+const useStyles = makeStyles((theme) => ({
+  portColor:{
+    color:'#597ef7',
+    fontWeight:'bold'
+  },
+  benchColor:{
+    color:'#bae637',
+    fontWeight:'bold'
+  }
+}));
 
-  const flatProps = {
-    options: data.map((option) => option.label),
-  };
-
-
-  return (
-    <div style={{ width: 400, marginRight: "20px" }}>
-      <Autocomplete
-        {...defaultProps}
-        id={heading}
-        debug
-        renderInput={(params) => (
-          <TextField {...params} label={heading} margin="normal" />
-        )}
-        onChange={e=>{console.log("e",e)}}
-      />
-    </div>
-  );
+export default function SelectwithSearch({ heading, data, defaultValue,handleChange ,type}) {
+  const classes=useStyles();
+	return (
+		<div style={{ width: 400, marginRight: '20px' }}>
+			<Autocomplete
+				id={heading}
+				options={data}
+				getOptionLabel={(option) => option.label}
+				defaultValue={defaultValue}
+				renderInput={(params) => (
+					<TextField {...params} variant="standard" label={heading} 
+          // InputProps={{
+          //   className: type == 'portfolio' ? classes.portColor :  classes.benchColor
+          // }}
+          />
+				)}
+        onChange={(e,newValue)=>{if(e){console.log("e",newValue)}}}
+        // onInputChange={(e,value)=>handleChange(value)}
+			/>
+		</div>
+	);
 }

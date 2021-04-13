@@ -14,6 +14,8 @@ import Settings from './screens/Settings';
 
 // React notifications css import
 import 'react-notifications/lib/notifications.css';
+require("highcharts/modules/exporting")(Highcharts);
+
 
 const { store, persistor } = configureStore();
 
@@ -21,23 +23,20 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['x-api-key'] = '_yF0FT6hgogJxSF1G0sAl3d9d4pQwxhuiRSS8FxAWb8';
 axios.defaults.headers.get['x-api-key'] = '_yF0FT6hgogJxSF1G0sAl3d9d4pQwxhuiRSS8FxAWb8';
 
+const currentTheme = localStorage.getItem("appTheme") || "basic";
+
 Highcharts.theme = {
 	colors: [
 	  "#597ef7",
 	  "#bae637",
+	  
 	],
 	chart: {
-	  backgroundColor: {
-		linearGradient: [0, 0, 500, 500],
-		stops: [
-		  [0, "rgb(255, 255, 255)"],
-		  [1, "rgb(240, 240, 255)"],
-		],
-	  },
+	  backgroundColor: currentTheme == 'dark' ? '#303030' : '#f5f5f5'
 	},
 	title: {
 	  style: {
-		color: "#000",
+		color:  currentTheme == 'dark' ? '#f5f5f5' : '#303030',
 		font: 'bold 22px "Trebuchet MS", Verdana, sans-serif',
 	  },
 	},
@@ -56,6 +55,10 @@ Highcharts.theme = {
 		color: "gray",
 	  },
 	},
+	lang: {
+		numericSymbols: null,
+		thousandsSep: ','
+	}
   };
 
 function App() {

@@ -1,6 +1,7 @@
  const data = [
     {
       grpname: "Sector Classification",
+      grpKey:'sector',
       tagsList: [
         { name: "SASB", value: "SASB", selected: true },
         { name: "GICS", value: "GICS", selected: false },
@@ -8,6 +9,7 @@
     },
     {
       grpname: "Footprint Metric",
+      grpKey:'footprintMetric',
       tagsList: [
         { name: "Weighted Average Intensity (Revenue)", value: "Revenue", selected: true },
         { name: "Weighted Average Intensity (Market Value)", value: "MarketVal", selected: false },
@@ -18,6 +20,7 @@
     },
     {
       grpname: "Market Value",
+      grpKey:'marketValue',
       tagsList: [
         { name: "Market Capitalization", value: "Equity", selected: true },
         { name: "Market Capitalization + Total Debt", value: "EquityDebt", selected: false },
@@ -27,6 +30,7 @@
     },
     {
       grpname: "Asset Class",
+      grpKey:'assetClass',
       tagsList: [
         { name: "Equity", value: "Eq", selected: false },
         { name: "Corporate Bonds", value: "CB", selected: false },
@@ -35,6 +39,7 @@
     },
     {
       grpname: "Inference Type",
+      grpKey:'inferenceType',
       tagsList: [
         { name: "Average", value: "Avg", selected: true },
         { name: "Maximum", value: "Max", selected: false },
@@ -42,11 +47,13 @@
     },
     {
       grpname: "Emissions",
+      grpKey:'emission',
       tagsList: [
         { name: "Scope 1+2", value: "Sc12", selected: true },
         { name: "Scope 1+2+3", value: "Sc123", selected: false },
       ],
     },
   ]
+  
   
   export default data;

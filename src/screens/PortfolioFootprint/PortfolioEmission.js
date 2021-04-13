@@ -1,52 +1,197 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {Box} from  '@material-ui/core'
 import { getPortfolioEmission } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
+import DataTable from '../../components/Table/DataTable';
+
+const headCells = [
+	{
+		name: 'Portfolios',
+		selector: 'name',
+		sortable: true,
+		right: false,
+		wrap: true
+	},
+	{
+		name: 'Scope 1+2',
+		selector: 'Sc12',
+		sortable: true,
+		right: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc12)}</div>
+	},
+	{
+		name: 'Scope 3',
+		selector: 'Sc3',
+		sortable: true,
+		right: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc3)}</div>
+	},
+	{
+		name: 'Scope 1+2+3',
+		selector: 'Sc123',
+		sortable: true,
+		right: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc123)}</div>
+	}
+];
+const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3' ];
 
 const PortfolioEmission = ({}) => {
 	const dispatch = useDispatch();
 
+	const [ chartData, setChartData ] = useState([]);
+	const [ tableData, setTableData ] = useState([]);
+	const [ yAxisTitle, setYAxisTitle ] = useState('');
+	const [ loading, setLoading ] = useState(false);
+
+	const filterItem = useSelector((state) => state.auth.filterItem);
+	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
+	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
+	const currentYear = useSelector((state) => state.auth.currentYear);
+	const currentCurrency = useSelector((state) => state.auth.currentCurrency);
+	const currentQuarter = useSelector((state) => state.auth.currentQuarter);
+	const currentUser = useSelector((state) => state.auth.currentUser);
+	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
+
 	const fetchDetails = async () => {
+		const { sector, footprintMetric, marketValue, assetClass } = filterItem;
+		setLoading(true);
 		const data = {
-			asset_type: 'CB',
-			benchmark: 'BMW_Sample_Benchmark',
-			benchmark_date: 20200930,
-			client: 'test3',
-			currency: 'USD',
+			asset_type: assetClass,
+			benchmark: currentBenchmark.label,
+			benchmark_date: currentBenchmark.value,
+			client: currentUser.client,
+			currency: currentCurrency,
 			emissions_quarter: 'Q1',
-			footprint_metric: 'Revenue',
+			footprint_metric: footprintMetric,
 			fundamentals_quarter: 'Q1',
-			market_value: 'Equity',
-			portfolio: 'BMW_Sample_Benchmark',
-			portfolio_date: 20200930,
-			quarter: 'Q1',
-			sector: 'SASB',
+			market_value: marketValue,
+			portfolio: currentPortfolio.label,
+			portfolio_date: currentPortfolio.value,
+			quarter: currentQuarter,
+			sector: sector,
 			version: '',
 			version_emissions: '11',
 			version_fundamentals: '1',
-			year: '2020'
+			year: currentYear
 		};
 		await dispatch(getPortfolioEmission(data));
+		setLoading(false);
 	};
 	useEffect(() => {
 		fetchDetails();
 	}, []);
-
-	const horizontalBarData = [
-		{
-			name: 'portfolio',
-			data: [ 107, 31, 635 ]
+	useEffect(
+		() => {
+			getData();
 		},
-		{
-			name: 'Benchmark',
-			data: [ 133, 156, 947 ]
-		}
-	];
-	const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3' ];
+		[ portfolioEmission ]
+	);
 
+	const getData = () => {
+		const { inferenceType } = filterItem;
+
+		let intensityChartData = [];
+		let intensityTableData = [];
+		let yTitle = '';
+
+		console.log('portfolioEmission', portfolioEmission);
+
+		if (portfolioEmission['data'] && Object.keys(portfolioEmission['data']).length > 0) {
+			let response = portfolioEmission['data']['data'];
+			yTitle = portfolioEmission['data']['chart_name'];
+
+			const intensityPortSc12 =
+				inferenceType == 'Avg'
+					? response[0][0]['Portfolio_Avg_Intensity']['Sc12']
+					: response[0][1]['Portfolio_Max_Intensity']['Sc12'];
+			const intensityPortSc123 =
+				inferenceType == 'Avg'
+					? response[0][0]['Portfolio_Avg_Intensity']['Sc123']
+					: response[0][1]['Portfolio_Max_Intensity']['Sc123'];
+			const intensityPortSc3 =
+				inferenceType == 'Avg'
+					? response[0][0]['Portfolio_Avg_Intensity']['Sc3']
+					: response[0][1]['Portfolio_Max_Intensity']['Sc3'];
+
+			const intensityBenchSc12 =
+				inferenceType == 'Avg'
+					? response[1][0]['Benchmark_Avg_Intensity']['Sc12']
+					: response[1][1]['Benchmark_Max_Intensity']['Sc12'];
+			const intensityBenchSc123 =
+				inferenceType == 'Avg'
+					? response[1][0]['Benchmark_Avg_Intensity']['Sc123']
+					: response[1][1]['Benchmark_Max_Intensity']['Sc123'];
+			const intensityBenchSc3 =
+				inferenceType == 'Avg'
+					? response[1][0]['Benchmark_Avg_Intensity']['Sc3']
+					: response[1][1]['Benchmark_Max_Intensity']['Sc3'];
+
+			intensityChartData = [
+				{
+					name: 'portfolio',
+					data: [ intensityPortSc12, intensityPortSc3, intensityPortSc123 ]
+				},
+				{
+					name: 'benchmark',
+					data: [ intensityBenchSc12, intensityBenchSc3, intensityBenchSc123 ]
+				}
+			];
+			intensityTableData = [
+				{
+					name: 'Portfolio Avg GHG Intensity in tCO2e / 1M USD',
+					Sc12: response[0][0]['Portfolio_Avg_Intensity']['Sc12'],
+					Sc3: response[0][0]['Portfolio_Avg_Intensity']['Sc3'],
+					Sc123: response[0][0]['Portfolio_Avg_Intensity']['Sc123']
+				},
+				{
+					name: 'Benchmark Avg GHG Intensity in tCO2e / 1M USD',
+					Sc12: response[1][0]['Benchmark_Avg_Intensity']['Sc12'],
+					Sc3: response[1][0]['Benchmark_Avg_Intensity']['Sc3'],
+					Sc123: response[1][0]['Benchmark_Avg_Intensity']['Sc123']
+				},
+				{
+					name: 'Portfolio Max GHG Intensity in tCO2e / 1M USD',
+					Sc12: response[0][1]['Portfolio_Max_Intensity']['Sc12'],
+					Sc3: response[0][1]['Portfolio_Max_Intensity']['Sc3'],
+					Sc123: response[0][1]['Portfolio_Max_Intensity']['Sc123']
+				},
+				{
+					name: 'Benchmark Max GHG Intensity in tCO2e / 1M USD	',
+					Sc12: response[1][1]['Benchmark_Max_Intensity']['Sc12'],
+					Sc3: response[1][1]['Benchmark_Max_Intensity']['Sc3'],
+					Sc123: response[1][1]['Benchmark_Max_Intensity']['Sc123']
+				}
+			];
+		}
+		setChartData(intensityChartData);
+		setTableData(intensityTableData);
+		setYAxisTitle(yTitle);
+	};
 	return (
 		<React.Fragment>
-			<HorizontalBar categories={categories} data={horizontalBarData} chartKey="PORTFOLIO_INTENSITY" />
+			{portfolioEmission.error ? (
+				<Box align="center"  className="error-msg" style={{marginTop:20,fontSize:16}}>
+					{portfolioEmission.error}
+				</Box>
+			) : (
+				<React.Fragment>
+					<HorizontalBar
+						categories={categories}
+						data={chartData}
+						chartKey="PORTFOLIO_INTENSITY"
+						yAxisTitle={yAxisTitle}
+						loading={loading}
+					/>
+					<DataTable
+						data={tableData}
+						columns={headCells}
+						tableHeading="PORTFOLIO_INTENSITY"
+						loading={loading}
+					/>
+				</React.Fragment>
+			)}
 		</React.Fragment>
 	);
 };

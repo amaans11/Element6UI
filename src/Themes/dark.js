@@ -67,7 +67,7 @@ const theme = createMuiTheme({
     },
     MuiCard:{
       root:{
-        border:"1px solid #FFFFFF"
+        border:"1px solid #b4b4b4"
       }
     },
     MuiListItem: {

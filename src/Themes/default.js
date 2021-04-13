@@ -31,7 +31,6 @@ const theme = createMuiTheme({
     },
   MuiTypography:{
     root:{
-      color:'#000000 !important'
     }
   },
     MuiChip: {

@@ -32,7 +32,7 @@ import StrandedAssetsAnalysis from '../screens/StrandedAssetsAnalysis';
 import UrgentemDownload from '../screens/UrgentemDownload';
 import GenerateReport from '../screens/GenerateReport';
 import UrgentemLanding from '../screens/UrgentemLanding';
-import { getPortfolioList, getUserInfo, getUploadPortfolioList,setTheme } from '../redux/actions/authActions';
+import { getPortfolioList, getUserInfo, getUploadPortfolioList, setTheme,setPortfolio, setBenchmark } from '../redux/actions/authActions';
 
 const drawerWidth = 295;
 
@@ -115,14 +115,14 @@ const styles = (theme) => ({
 	icon: {
 		marginRight: 10
 	},
-  uploadDiv:{
-    position:'absolute',
-    top:90
-  },
+	uploadDiv: {
+		position: 'absolute',
+		top: 90
+	},
 	uploadBtn: {
 		height: 50,
 		width: 300,
-    marginLeft:theme.spacing(2)
+		marginLeft: theme.spacing(2)
 	}
 });
 
@@ -132,7 +132,10 @@ const MiniDrawer = ({ classes, history }) => {
 
 	const auth = useSelector((state) => state.auth);
 	const portfolios = useSelector((state) => state.auth.portfolioList);
-  let currentUser = auth && auth.currentUser ? auth.currentUser : {};
+	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
+	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
+
+	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
 
 	const getUserDetails = async () => {
 		const data = {
@@ -149,7 +152,29 @@ const MiniDrawer = ({ classes, history }) => {
 		await getUserDetails();
 		await getPortfolio();
 	};
-
+	const onPortfolioChange=currentValue=>{
+		let portfolio={}
+		if(portfolios && portfolios.length > 0){
+			portfolios.map(port=>{
+				if(port.label == currentValue){
+					portfolio= {...port}
+				}
+			})
+		}
+		console.log("portfolio",portfolio)
+		dispatch(setPortfolio(portfolio))
+	}
+	const onBenchmarkChange=currentValue=>{
+		let benchmark={}
+		if(portfolios && portfolios.length > 0){
+			portfolios.map(port=>{
+				if(port.label == currentValue){
+					benchmark= {...port}
+				}
+			})
+		}
+		dispatch(setBenchmark(benchmark))
+	}
 
 	useEffect(() => {
 		fetchDetails();
@@ -157,9 +182,8 @@ const MiniDrawer = ({ classes, history }) => {
 
 	return (
 		<div className={classes.root}>
-    <CssBaseline />
-			<Header history={history}
-      />
+			<CssBaseline />
+			<Header history={history} />
 			<Drawer
 				variant="permanent"
 				className={classNames(classes.drawer, {
@@ -198,42 +222,35 @@ const MiniDrawer = ({ classes, history }) => {
 					<div>
 						<div style={{ display: 'flex', width: '100%' }}>
 							<div style={{ display: 'flex', width: '75%' }}>
-								<SelectwithSearch heading={'Select Portfolio'} data={portfolios && portfolios.length > 0 ? portfolios : []} />
-								<SelectwithSearch heading={'Select Benchmark'} data={portfolios && portfolios.length > 0 ? portfolios : []} />
+								<SelectwithSearch
+									heading={'Select Portfolio'}
+									data={portfolios && portfolios.length > 0 ? portfolios : []}
+									defaultValue={currentPortfolio}
+									handleChange={onPortfolioChange}
+									type = 'portfolio'
+								/>
+								<SelectwithSearch
+									heading={'Select Benchmark'}
+									data={portfolios && portfolios.length > 0 ? portfolios : []}
+									defaultValue={currentBenchmark}
+									handleChange={onBenchmarkChange}
+									type = 'benchmark'
+								/>
+								
 							</div>
 							<Button
 								variant="outlined"
 								color="secondary"
-								style={{ marginTop: -10,height:45,width:'16%' }}
+								style={{ marginTop: -10, height: 45, width: '16%' }}
 								onClick={() => history.push('/settings')}
 							>
 								1 USD = 1USD
 							</Button>
-
-							{/* <h4
-								style={{
-									marginLeft: 20,
-									marginTop: -3,
-									border: '1px solid rgb(180,180,180)',
-									paddingTop: 6,
-                  paddingLeft:10,
-                  paddingRight:10,
-                  display:'flex',
-                  flexDirection:'row'
-								}}
-							>
-								<div style={{paddingLeft:10}}>1 USD = 1USD </div>
-                	<div>
-									<EditIcon 
-                  onClick={()=>history.push("/settings")}
-                  />
-								</div>
-							</h4> */}
 						</div>
 					</div>
 				</div>
 				<Switch>
-					<Route path="/portfolio-footprint" exact >
+					<Route path="/portfolio-footprint" exact>
 						<PortfolioFootprint />
 					</Route>
 					<Route path="/scope3-materiality" exact>

@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
 
-function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle,chartTitle }) {
-  let title=chartTitle;
-  if(!chartTitle){
-   title = CONFIG['CHART'][chartKey]['TITLE'];
-  }
+function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
+	const title = CONFIG['CHART'][chartKey]['TITLE'];
 	let yAxis = yAxisTitle;
 	if (!yAxisTitle) {
 		yAxis = CONFIG['CHART'][chartKey]['Y_AXIS_TITLE'];
 	}
-	const currentTheme = localStorage.getItem('appTheme');
+
+    const currentTheme = localStorage.getItem('appTheme');
 
 	const options = {
 		chart: {
@@ -56,14 +54,12 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle,chartT
 				}
 			}
 		},
-
+		legend: {
+			reversed: true
+		},
 		plotOptions: {
-			bar: {
-				dataLabels: {
-					enabled: true
-				}
-			},
 			series: {
+				stacking: 'normal',
 				dataLabels: {
 					enabled: true,
 					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
@@ -75,20 +71,11 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle,chartT
 				borderColor: currentTheme == 'dark' ? '#000000' : '#FFFFFF'
 			}
 		},
-		legend: {
-			layout: 'vertical',
-			align: 'right',
-			verticalAlign: 'top',
-			x: -40,
-			y: 80,
-			floating: true,
-			borderWidth: 1,
-			backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-			shadow: true
-		},
-		credits: {
-			enabled: false
-		},
+        legend: {
+            itemStyle:{
+                color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+            }
+        },
 		series: data
 	};
 
@@ -99,4 +86,4 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle,chartT
 	);
 }
 
-export default HorizontalBar;
+export default StackedBar;
