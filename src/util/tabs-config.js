@@ -6,5 +6,9 @@ const footprintTabs = [
 	'Disclosure',
 	'Avoided Emissions'
 ];
+const scope3Tabs =[
+	'Portfolio Scope 3 Heatmap',
+	'Portfolio Sectoral Scope 3 Heatmap'
+]
 
-export { footprintTabs };
+export { footprintTabs,scope3Tabs };

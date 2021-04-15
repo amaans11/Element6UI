@@ -13,7 +13,6 @@ import { setTabValue } from '../../redux/actions/authActions';
 
 function PortfolioFootprint() {
 	const tabValue = useSelector((state) => state.auth.tabValue);
-	console.log("tabValue",tabValue)
 	const [ value, setValue ] = useState(tabValue);
 	const dispatch=useDispatch()
 
@@ -21,10 +20,6 @@ function PortfolioFootprint() {
 		await dispatch(setTabValue(newValue))
 		setValue(newValue);
 	};
-	// useEffect(()=>{
-	// 	dispatch(setTabValue(0))
-	// })
-
 
 	return (
 		<div className="tabs-section">

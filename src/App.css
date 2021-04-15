@@ -180,3 +180,7 @@
 .color-default{
   color:rgb(120,120,120)
 }
+.table-header{
+  font: bold 22px "Trebuchet MS", Verdana, sans-serif;
+  margin-left:20px
+}

@@ -3,7 +3,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
 
-function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle,chartTitle }) {
+function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loading,chartTitle }) {
   let title=chartTitle;
   if(!chartTitle){
    title = CONFIG['CHART'][chartKey]['TITLE'];
@@ -13,6 +13,8 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle,chartT
 		yAxis = CONFIG['CHART'][chartKey]['Y_AXIS_TITLE'];
 	}
 	const currentTheme = localStorage.getItem('appTheme');
+
+  console.log("loading>>",loading)
 
 	const options = {
 		chart: {
@@ -33,7 +35,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle,chartT
 			title: {
 				text: null
 			},
-			labels: {
+			labels: {       
 				style: {
 					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
 				}
@@ -50,17 +52,17 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle,chartT
 				}
 			},
 			labels: {
-				overflow: 'justify',
 				style: {
 					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
-				}
+				},
 			}
 		},
 
 		plotOptions: {
 			bar: {
 				dataLabels: {
-					enabled: true
+					enabled: true,
+          
 				}
 			},
 			series: {
@@ -68,7 +70,8 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle,chartT
 					enabled: true,
 					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
 					style: {
-						fontWeight: 'normal'
+						fontWeight: 'normal',
+            shadow:false
 					}
 				},
 				borderWidth: 1,

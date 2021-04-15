@@ -8,7 +8,101 @@ import {
 	getPortfolioEmission,
 	getSovereignFootprint
 } from './footprintActions';
+import { getScope3Data } from './scope3Actions';
 
+const requestApi = (dispatch,auth) => {
+  const moduleName=auth.moduleName;
+  const tabValue=auth.tabValue;
+  let data={}
+  console.log("auth>>",auth)
+
+	switch (moduleName) {
+		case 'Emission':
+      console.log("test2")
+			switch (tabValue) {
+				case 0:
+          
+					data = getRequestData('PORTFOLIO_EMISSION', auth);
+					dispatch(getPortfolioEmission(data));
+					break;
+				case 1:
+					data = getRequestData('CARBON_EMISSION', auth);
+					dispatch(getPortfolioEmission(data));
+					break;
+				case 2:
+					data = getRequestData('SOVEREIGN_FOOTPRINT', auth);
+					dispatch(getSovereignFootprint(data));
+					break;
+				case 3:
+					data = getRequestData('CARBON_ATTRIBUTION', auth);
+					dispatch(getCarbonAttribution(data));
+					break;
+				case 4:
+					data = getRequestData('DISCLOSURE', auth);
+					dispatch(getDisclosureData(data));
+					break;
+				case 5:
+					data = getRequestData('AVOIDED_EMISSION', auth);
+					dispatch(getAvoidedEmissions(data));
+					break;
+				default:
+					data = getRequestData('PORTFOLIO_EMISSION', auth);
+					dispatch(getPortfolioEmission(data));
+					break;
+			}
+			break;
+		case 'Scope3':
+      console.log("test")
+			switch (tabValue) {
+				case 0:
+					data = getRequestData('SCOPE3_MATERILITY', auth);
+					dispatch(getScope3Data(data));
+					break;
+				case 1:
+					data = getRequestData('SECTORAL_SCOPE3_MATERILITY', auth);
+					dispatch(getScope3Data(data));
+					break;
+				default:
+					data = getRequestData('SCOPE3_MATERILITY', auth);
+					dispatch(getScope3Data(data));
+					break;
+			}
+			break;
+    default:
+      console.log("test1")
+      switch (tabValue) {
+				case 0:
+					data = getRequestData('PORTFOLIO_EMISSION', auth);
+					dispatch(getPortfolioEmission(data));
+					break;
+				case 1:
+					data = getRequestData('CARBON_EMISSION', auth);
+					dispatch(getPortfolioEmission(data));
+					break;
+				case 2:
+					data = getRequestData('SOVEREIGN_FOOTPRINT', auth);
+					dispatch(getSovereignFootprint(data));
+					break;
+				case 3:
+					data = getRequestData('CARBON_ATTRIBUTION', auth);
+					dispatch(getCarbonAttribution(data));
+					break;
+				case 4:
+					data = getRequestData('DISCLOSURE', auth);
+					dispatch(getDisclosureData(data));
+					break;
+				case 5:
+					data = getRequestData('AVOIDED_EMISSION', auth);
+					dispatch(getAvoidedEmissions(data));
+					break;
+				default:
+					data = getRequestData('PORTFOLIO_EMISSION', auth);
+					dispatch(getPortfolioEmission(data));
+					break;
+			}
+			break;
+	}
+};
 export const signinUser = (data) => {
 	return async (dispatch) => {
 		return axios.post(`${actionTypes.API_URL}/accounts/sign_in`, data).then((result) => {
@@ -132,42 +226,9 @@ export const updateCurrencyFailed = (res) => {
 
 export const setPortfolio = (portfolio) => {
 	return async (dispatch, getState) => {
-		const tabValue = getState().auth.tabValue;
-		let data = {};
-
 		await dispatch(setPortfolioSuccess(portfolio));
-    const auth = getState().auth;
-
-		switch (tabValue) {
-			case 0:
-				data = getRequestData('PORTFOLIO_EMISSION', auth);
-				dispatch(getPortfolioEmission(data));
-				break;
-			case 1:
-				data = getRequestData('CARBON_EMISSION', auth);
-				dispatch(getPortfolioEmission(data));
-				break;
-			case 2:
-				data = getRequestData('SOVEREIGN_FOOTPRINT', auth);
-				dispatch(getSovereignFootprint(data));
-				break;
-			case 3:
-				data = getRequestData('CARBON_ATTRIBUTION', auth);
-				dispatch(getCarbonAttribution(data));
-				break;
-			case 4:
-				data = getRequestData('DISCLOSURE', auth);
-				dispatch(getDisclosureData(data));
-				break;
-			case 5:
-				data = getRequestData('AVOIDED_EMISSION', auth);
-				dispatch(getAvoidedEmissions(data));
-				break;
-			default:
-				data = getRequestData('PORTFOLIO_EMISSION', auth);
-				dispatch(getPortfolioEmission(data));
-				break;
-		}
+		const auth = getState().auth;
+    requestApi(dispatch,auth)
 	};
 };
 
@@ -175,43 +236,10 @@ export const setPortfolioSuccess = (res) => {
 	return { type: actionTypes.SET_PORTFOLIO, res };
 };
 export const setBenchmark = (benchmark) => {
-	return async (dispatch,getState) => {
-		const tabValue = getState().auth.tabValue;
-		let data = {};
-
+	return async (dispatch, getState) => {
 		await dispatch(setBenchmarkSuccess(benchmark));
-    const auth = getState().auth;
-
-		switch (tabValue) {
-			case 0:
-				data = getRequestData('PORTFOLIO_EMISSION', auth);
-				dispatch(getPortfolioEmission(data));
-				break;
-			case 1:
-				data = getRequestData('CARBON_EMISSION', auth);
-				dispatch(getPortfolioEmission(data));
-				break;
-			case 2:
-				data = getRequestData('SOVEREIGN_FOOTPRINT', auth);
-				dispatch(getSovereignFootprint(data));
-				break;
-			case 3:
-				data = getRequestData('CARBON_ATTRIBUTION', auth);
-				dispatch(getCarbonAttribution(data));
-				break;
-			case 4:
-				data = getRequestData('DISCLOSURE', auth);
-				dispatch(getDisclosureData(data));
-				break;
-			case 5:
-				data = getRequestData('AVOIDED_EMISSION', auth);
-				dispatch(getAvoidedEmissions(data));
-				break;
-			default:
-				data = getRequestData('PORTFOLIO_EMISSION', auth);
-				dispatch(getPortfolioEmission(data));
-				break;
-		}
+		const auth = getState().auth;
+    requestApi(dispatch,auth)
 	};
 };
 
@@ -220,42 +248,10 @@ export const setBenchmarkSuccess = (res) => {
 };
 
 export const setFilterItem = (data) => {
-	return async (dispatch,getState) => {
-		await dispatch(setFilterItemSuccess(data));
-
-		const tabValue = getState().auth.tabValue;
+	return async (dispatch, getState) => {
+    await dispatch(setFilterItemSuccess(data));
 		const auth = getState().auth;
-		let resData = {};
-		switch (tabValue) {
-			case 0:
-				resData = getRequestData('PORTFOLIO_EMISSION', auth);
-				dispatch(getPortfolioEmission(resData));
-				break;
-			case 1:
-				resData = getRequestData('CARBON_EMISSION', auth);
-				dispatch(getPortfolioEmission(resData));
-				break;
-			case 2:
-				resData = getRequestData('SOVEREIGN_FOOTPRINT', auth);
-				dispatch(getSovereignFootprint(resData));
-				break;
-			case 3:
-				resData = getRequestData('CARBON_ATTRIBUTION', auth);
-				dispatch(getCarbonAttribution(resData));
-				break;
-			case 4:
-				resData = getRequestData('DISCLOSURE', auth);
-				dispatch(getDisclosureData(resData));
-				break;
-			case 5:
-				resData = getRequestData('AVOIDED_EMISSION', auth);
-				dispatch(getAvoidedEmissions(resData));
-				break;
-			default:
-				resData = getRequestData('PORTFOLIO_EMISSION', auth);
-				dispatch(getPortfolioEmission(resData));
-				break;
-		}
+		requestApi(dispatch,auth)
 	};
 };
 
@@ -270,4 +266,13 @@ export const setTabValue = (value) => {
 
 export const setTabValueSuccess = (res) => {
 	return { type: actionTypes.SET_TAB_SUCCESS, res };
+};
+export const setModule = (value) => {
+	return async (dispatch) => {
+		dispatch(setModuleSuccess(value));
+	};
+};
+
+export const setModuleSuccess = (res) => {
+	return { type: actionTypes.SET_MODULE_SUCCESS, res };
 };

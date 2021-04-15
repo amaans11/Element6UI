@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid } from '@material-ui/core';
+import { Grid, Box } from '@material-ui/core';
 import { getSovereignFootprint } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
@@ -10,21 +10,21 @@ const headCells = [
 		name: 'Type',
 		selector: 'name',
 		sortable: true,
-        right: false,
+		right: false
 	},
 	{
 		name: 'Emissions Intensity of GDP (tCO2/1,000 $USD)',
 		selector: 'gdpData',
 		sortable: true,
-        right: true,
-        cell: (row) => <div>{new Intl.NumberFormat().format(row.gdpData)}</div>
+		right: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.gdpData)}</div>
 	},
 	{
 		name: 'Emissions Intensity of Population (tCO2/person)',
 		selector: 'popData',
 		sortable: true,
-        right: true,
-        cell: (row) => <div>{new Intl.NumberFormat().format(row.popData)}</div>
+		right: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.popData)}</div>
 	}
 ];
 
@@ -68,9 +68,6 @@ const SovereignFootprint = ({}) => {
 
 	const getTableData = () => {
 		const data = sovFootprint && Object.keys(sovFootprint).length > 0 ? sovFootprint['data']['Sovereign_plot'] : [];
-
-		console.log('sovFootprint>>', sovFootprint);
-		console.log('data>>', data);
 
 		let tableData = [];
 		if (data && Object.keys(data).length > 0) {
@@ -158,18 +155,30 @@ const SovereignFootprint = ({}) => {
 		[ sovFootprint ]
 	);
 
-
 	return (
 		<React.Fragment>
-			<Grid container>
-				<Grid item xs={6}>
-						<HorizontalBar categories={categories} data={gdpChartData} chartKey="SOV_GDP_CHART" />
-				</Grid>
-				<Grid item xs={6}>
-						<HorizontalBar categories={categories} data={popChartData} chartKey="SOV_POP_CHART" />
-				</Grid>
-			</Grid>
-			<DataTable data={tableData} columns={headCells} tableHeading="SOVEREIGN_FOOTPRINT" loading={loading} />
+			{sovFootprint.error ? (
+				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
+					{sovFootprint.error}
+				</Box>
+			) : (
+				<Box>
+					<Grid container>
+						<Grid item xs={6}>
+							<HorizontalBar categories={categories} data={gdpChartData} chartKey="SOV_GDP_CHART" />
+						</Grid>
+						<Grid item xs={6}>
+							<HorizontalBar categories={categories} data={popChartData} chartKey="SOV_POP_CHART" />
+						</Grid>
+					</Grid>
+					<DataTable
+						data={tableData}
+						columns={headCells}
+						tableHeading="SOVEREIGN_FOOTPRINT"
+						loading={loading}
+					/>
+				</Box>
+			)}
 		</React.Fragment>
 	);
 };

@@ -11,6 +11,9 @@ const configs={
         },
         'AVOIDED_EMISSIONS':{
             'HEADING':'Avoided Emission'
+        },
+        'SECTORAL_SCOPE3_HEATMAP':{
+            'TITLE':'Supply and Value Chain Scope 3 Materiality',
         }
     },
     "CHART":{
@@ -47,7 +50,12 @@ const configs={
         'CARBON_ATTRIBUTION':{
             'TITLE':'Carbon Attribution',
             'Y_AXIS_TITLE':'GHG Intensity (tCO2e / 1M USD )'
-
+        },
+        "SCOPE3_HEATMAP":{
+            'TITLE':'Supply and Value Chain Scope 3 Materiality',
+        },
+        "SECTORAL_SCOPE3_HEATMAP":{
+            'TITLE':'Supply and Value Chain Scope 3 Materiality',
         }
     }
 }

@@ -1,10 +1,43 @@
 import React from 'react';
 import DataTable,{createTheme} from 'react-data-table-component';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, TextField, FormControl, InputLabel, Select, MenuItem, Card, Button } from '@material-ui/core';
+import { Grid, TextField, FormControl, InputLabel, Select, MenuItem, Card, Button ,Box} from '@material-ui/core';
 import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined';
 import CONFIG from '../../util/config';
 
+const customStyles = {
+	headCells: {
+	  style: {
+		fontWeight:'bold',
+		fontSize:14
+	  },
+	},
+	rows: {
+		style: {
+		  minHeight: 60, // override the row height
+		}
+	  },
+	cells: {
+		style: {
+		  lineHeight:2
+		},
+	  },
+	
+  };
+  const scollStyle={
+	  table:{
+		  style:{
+			  width:1
+		  }
+	  },
+	  rows: {
+		style: {
+		  width:1600, 
+		  minHeight: 60, 
+		}
+	  },
+  }
+  
 createTheme('dark', {
 	text: {
 		primary: '#FFFFFF',
@@ -17,6 +50,7 @@ createTheme('dark', {
 	  context: {
 		background: '#E91E63',
 		text: '#FFFFFF',
+		fontFamily: 'Lucida Grande',
 	  },
 	  divider: {
 		default: 'rgba(81, 81, 81, 1)',
@@ -55,6 +89,7 @@ createTheme('dark', {
     context: {
       background: '#e3f2fd',
       text: 'rgba(0, 0, 0, 0.87)',
+	  fontFamily: 'Lucida Grande',
     },
     divider: {
       default: 'rgba(0,0,0,.12)',
@@ -135,7 +170,7 @@ class ReactDataTable extends React.Component {
 		link.click();
 	};
 	render() {
-		const { columns, data, loading, tableHeading,fixedHeader } = this.props;
+		const { columns, data, loading, tableHeading,fixedHeader,isScroll } = this.props;
 		const currentTheme = localStorage.getItem('appTheme');
 		const title = CONFIG['TABLE'][tableHeading]['HEADING'];
 		const actionsMemo = (
@@ -146,20 +181,23 @@ class ReactDataTable extends React.Component {
 		return (
 			<Card style={{ marginTop: 40 }}>
 				<DataTable
-					title={title}
+					title={<Box className="table-header">{title}</Box>}
 					columns={columns}
 					data={data}
 					pagination={true}
 					paginationRowsPerPageOptions={[ 10, 25, 100 ]}
 					actions={actionsMemo}
 					highlightOnHover={false}
-					fixedHeader={fixedHeader ? fixedHeader : false}
+					// fixedHeader={fixedHeader ? fixedHeader : false}
 					progressPending={loading}
 					theme={currentTheme}
+					customStyles={isScroll ? {...customStyles,...scollStyle}: customStyles}
 				/>
 			</Card>
 		);
 	}
 }
-
+ReactDataTable.defaultProps={
+	isScroll:false
+}
 export default ReactDataTable;

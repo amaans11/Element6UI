@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Box } from '@material-ui/core';
 import { getAvoidedEmissions } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
-import filterConfig from '../../util/filter-config'
+import filterConfig from '../../util/filter-config';
 
 const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3', 'Avoided Emissions', 'Net Emissions' ];
 const headCells = [
@@ -180,29 +181,42 @@ const AvoidedEmission = ({}) => {
 		[ avoidedEmissions ]
 	);
 
-    const { footprintMetric} = filterItem;
-    let fpMetricOptions=filterConfig[1]['tagsList'];
-    let metric='';
+	const { footprintMetric } = filterItem;
+	let fpMetricOptions = filterConfig[1]['tagsList'];
+	let metric = '';
 
-    if(fpMetricOptions && fpMetricOptions.length > 0){
-        fpMetricOptions.map(option=>{
-            if(option.value == footprintMetric){
-                metric=option.name
-            }
-        })
-    }
-    const chartTitle=`Portfolio Intensity - ${metric}`
+	if (fpMetricOptions && fpMetricOptions.length > 0) {
+		fpMetricOptions.map((option) => {
+			if (option.value == footprintMetric) {
+				metric = option.name;
+			}
+		});
+	}
+	const chartTitle = `Portfolio Intensity - ${metric}`;
 
 	return (
 		<React.Fragment>
-				<HorizontalBar
-					categories={categories}
-					data={chartData}
-					chartKey="AVOIDED_EMISSIONS"
-					yAxisTitle={yAxisTitle}
-                    chartTitle={chartTitle}
-				/>
-			<DataTable data={tableData} columns={headCells} tableHeading="AVOIDED_EMISSIONS" loading={loading} />
+			{avoidedEmissions.error ? (
+				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
+					{avoidedEmissions.error}
+				</Box>
+			) : (
+				<Box>
+					<HorizontalBar
+						categories={categories}
+						data={chartData}
+						chartKey="AVOIDED_EMISSIONS"
+						yAxisTitle={yAxisTitle}
+						chartTitle={chartTitle}
+					/>
+					<DataTable
+						data={tableData}
+						columns={headCells}
+						tableHeading="AVOIDED_EMISSIONS"
+						loading={loading}
+					/>
+				</Box>
+			)}
 		</React.Fragment>
 	);
 };

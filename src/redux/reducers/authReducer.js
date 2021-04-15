@@ -8,11 +8,12 @@ const intialState = {
 	userInfo: [],
 	currentPortfolio: {},
 	currentBenchmark: {},
-  currentYear:'',
-  currentQuarter:'',
-  currentCurrency:'',
-  filterItem:{},
-  tabValue:0
+	currentYear: '',
+	currentQuarter: '',
+	currentCurrency: '',
+	filterItem: {},
+	tabValue: 0,
+  moduleName:'Emission'
 };
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -20,17 +21,17 @@ export default function authReducer(state = { ...intialState }, action) {
 		case types.SIGNIN_USER_SUCCESS:
 			return produce(state, (draft) => {
 				draft.currentUser = action.currentUser;
-        draft.currentYear = '2020';
-        draft.currentQuarter = 'Q1';
-        draft.currentCurrency = 'USD';
-        draft.filterItem={
-          sector:'SASB',
-          footprintMetric:'Revenue',
-          marketValue:'Equity',
-          assetClass:'EqCB',
-          inferenceType:'Avg',
-          emission:'Sc12'
-        }
+				draft.currentYear = '2020';
+				draft.currentQuarter = 'Q1';
+				draft.currentCurrency = 'USD';
+				draft.filterItem = {
+					sector: 'SASB',
+					footprintMetric: 'Revenue',
+					marketValue: 'Equity',
+					assetClass: 'EqCB',
+					inferenceType: 'Avg',
+					emission: 'Sc12'
+				};
 			});
 
 		case types.VERIFY_USER_SUCCESS:
@@ -79,15 +80,19 @@ export default function authReducer(state = { ...intialState }, action) {
 			return produce(state, (draft) => {
 				draft.currentBenchmark = action.res;
 			});
-    case types.SET_FILTER_ITEM:
-      console.log("test")
-      return produce(state, (draft) => {
-          draft['filterItem'][action.res.key] = action.res.value;
+		case types.SET_FILTER_ITEM:
+			console.log('test');
+			return produce(state, (draft) => {
+				draft['filterItem'][action.res.key] = action.res.value;
 			});
-    case types.SET_TAB_SUCCESS:
+		case types.SET_TAB_SUCCESS:
+			return produce(state, (draft) => {
+				draft.tabValue = action.res;
+			});
+    case types.SET_MODULE_SUCCESS:
       return produce(state, (draft) => {
-        draft.tabValue = action.res;
-    });
+				draft.moduleName = action.res;
+			});
 		default:
 			return state;
 	}

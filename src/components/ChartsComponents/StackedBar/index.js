@@ -64,13 +64,14 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 					enabled: true,
 					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
 					style: {
-						fontWeight: 'normal'
+						fontWeight: 'normal',
+                        textOutline: 'none'
 					}
 				},
 				borderWidth: 1,
 				borderColor: currentTheme == 'dark' ? '#000000' : '#FFFFFF'
-			}
-		},
+			},
+        },
         legend: {
             itemStyle:{
                 color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'

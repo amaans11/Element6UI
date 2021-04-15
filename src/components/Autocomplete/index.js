@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function SelectwithSearch({ heading, data, defaultValue,handleChange ,type}) {
+export default function SelectwithSearch({ heading, data, defaultValue,handleChange ,type,currentValue}) {
   const classes=useStyles();
 	return (
 		<div style={{ width: 400, marginRight: '20px' }}>
@@ -23,7 +23,6 @@ export default function SelectwithSearch({ heading, data, defaultValue,handleCha
 				id={heading}
 				options={data}
 				getOptionLabel={(option) => option.label}
-				defaultValue={defaultValue}
 				renderInput={(params) => (
 					<TextField {...params} variant="standard" label={heading} 
           // InputProps={{
@@ -31,8 +30,8 @@ export default function SelectwithSearch({ heading, data, defaultValue,handleCha
           // }}
           />
 				)}
-        onChange={(e,newValue)=>{if(e){console.log("e",newValue)}}}
-        // onInputChange={(e,value)=>handleChange(value)}
+        onChange={(e,newValue)=>{if(e){handleChange(newValue.label)}}}
+        value={currentValue}
 			/>
 		</div>
 	);

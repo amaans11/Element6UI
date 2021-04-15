@@ -138,6 +138,42 @@ const getRequestData = (type, auth) => {
 				country_type: 'inc'
 			};
 			break;
+		case 'SCOPE3_MATERILITY':
+			data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				database: currentUser.client + '_Portfolios',
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				interference_type: inferenceType,
+				emissions: emission,
+				sector: sector,
+				asset_type: assetClass,
+				country_type: 'inc',
+				fundamentals_quarter: 'Q1',
+				emissions_quarter: 'Q1',
+				version_fundamentals: '1',
+				version_emissions: '11'
+			};
+			break;
+		case 'SECTORAL_SCOPE3_MATERILITY':
+			data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				database: currentUser.client + '_Portfolios',
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				interference_type: inferenceType,
+				emissions: emission,
+				sector: sector,
+				asset_type: assetClass,
+				country_type: 'inc',
+				fundamentals_quarter: 'Q1',
+				emissions_quarter: 'Q1',
+				version_fundamentals: '1',
+				version_emissions: '11'
+			};
+			break;
 		default:
 			data = {};
 			break;

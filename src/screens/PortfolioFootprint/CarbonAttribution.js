@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Box } from '@material-ui/core';
 import { getCarbonAttribution } from '../../redux/actions/footprintActions';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 
@@ -77,7 +78,13 @@ const CarbonAttribution = ({}) => {
 
 	return (
 		<React.Fragment>
+			{carbonAttribution.error ? (
+				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
+					{carbonAttribution.error}
+				</Box>
+			) : (
 				<ColumnChart categories={categories} data={chartData} chartKey="CARBON_ATTRIBUTION" />
+			)}
 		</React.Fragment>
 	);
 };

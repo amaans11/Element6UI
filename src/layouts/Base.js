@@ -32,7 +32,7 @@ import StrandedAssetsAnalysis from '../screens/StrandedAssetsAnalysis';
 import UrgentemDownload from '../screens/UrgentemDownload';
 import GenerateReport from '../screens/GenerateReport';
 import UrgentemLanding from '../screens/UrgentemLanding';
-import { getPortfolioList, getUserInfo, getUploadPortfolioList, setTheme,setPortfolio, setBenchmark } from '../redux/actions/authActions';
+import { getPortfolioList, getUserInfo,setPortfolio, setBenchmark,setTabValue, setModule } from '../redux/actions/authActions';
 
 const drawerWidth = 295;
 
@@ -161,7 +161,6 @@ const MiniDrawer = ({ classes, history }) => {
 				}
 			})
 		}
-		console.log("portfolio",portfolio)
 		dispatch(setPortfolio(portfolio))
 	}
 	const onBenchmarkChange=currentValue=>{
@@ -174,6 +173,11 @@ const MiniDrawer = ({ classes, history }) => {
 			})
 		}
 		dispatch(setBenchmark(benchmark))
+	}
+	const setDefaultTab= async(e)=>{
+		await dispatch(setTabValue(0))
+		await dispatch(setModule(e.name))
+		window.location.reload()
 	}
 
 	useEffect(() => {
@@ -200,7 +204,7 @@ const MiniDrawer = ({ classes, history }) => {
 			>
 				<div className={classes.toolbar} />
 				<List style={{ paddingTop: 20 }}>
-					{RouteData.map((e, index) => <ListItemLink primary={e.name} icon={e.icon} to={e.url} />)}
+					{RouteData.map((e, index) => <ListItemLink primary={e.name} icon={e.icon} to={e.url}  handleClick={()=>setDefaultTab(e)}/>)}
 				</List>
 			</Drawer>
 			<main className={classes.content}>
@@ -225,16 +229,18 @@ const MiniDrawer = ({ classes, history }) => {
 								<SelectwithSearch
 									heading={'Select Portfolio'}
 									data={portfolios && portfolios.length > 0 ? portfolios : []}
-									defaultValue={currentPortfolio}
+									// defaultValue={currentPortfolio}
 									handleChange={onPortfolioChange}
 									type = 'portfolio'
+									currentValue={currentPortfolio}
 								/>
 								<SelectwithSearch
 									heading={'Select Benchmark'}
 									data={portfolios && portfolios.length > 0 ? portfolios : []}
-									defaultValue={currentBenchmark}
+									// defaultValue={currentBenchmark}
 									handleChange={onBenchmarkChange}
 									type = 'benchmark'
+									currentValue={currentBenchmark}
 								/>
 								
 							</div>

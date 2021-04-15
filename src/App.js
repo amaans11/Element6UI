@@ -15,6 +15,7 @@ import Settings from './screens/Settings';
 // React notifications css import
 import 'react-notifications/lib/notifications.css';
 require("highcharts/modules/exporting")(Highcharts);
+require("highcharts/modules/heatmap")(Highcharts)
 
 
 const { store, persistor } = configureStore();
@@ -27,9 +28,11 @@ const currentTheme = localStorage.getItem("appTheme") || "basic";
 
 Highcharts.theme = {
 	colors: [
-	  "#597ef7",
+	"#597ef7",
 	  "#bae637",
-	  
+	  "#1890ff",
+	  "#ff4d4f",
+	  "#FFB74D"
 	],
 	chart: {
 	  backgroundColor: currentTheme == 'dark' ? '#303030' : '#f5f5f5'

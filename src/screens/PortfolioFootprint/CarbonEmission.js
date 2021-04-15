@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {Box} from '@material-ui/core';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import { getPortfolioEmission } from '../../redux/actions/footprintActions';
 
@@ -30,7 +31,7 @@ const getContribEmission = (type) => {
 const CarbonEmission = ({}) => {
 	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
 	const filterItem = useSelector((state) => state.auth.filterItem);
-    const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
+	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
 	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
 	const currentYear = useSelector((state) => state.auth.currentYear);
 	const currentCurrency = useSelector((state) => state.auth.currentCurrency);
@@ -42,22 +43,27 @@ const CarbonEmission = ({}) => {
 	const [ sectorWeightData, setSectorWeightData ] = useState([]);
 	const [ categories, setCategories ] = useState([]);
 	const [ yAxisTitle, setYTitle ] = useState('');
-    const [ loading, setLoading ] = useState(false);
+	const [ loading, setLoading ] = useState(false);
 	const { inferenceType, emission } = filterItem;
 
-    const  dispatch = useDispatch()
+	const dispatch = useDispatch();
 
-    useEffect(() => {
+	useEffect(() => {
 		fetchDetails();
 	}, []);
 
-	useEffect(() => {
-		getSectorIntensity();
-		getSectorContribution();
-		getSectorWeight();
-	}, [portfolioEmission]);
+	useEffect(
+		() => {
+            if(portfolioEmission && portfolioEmission['data'] && Object.keys(portfolioEmission['data']).length > 0){
+                getSectorIntensity();
+                getSectorContribution();
+                getSectorWeight();
+            }
+		},
+		[ portfolioEmission ]
+	);
 
-    const fetchDetails = async () => {
+	const fetchDetails = async () => {
 		const { sector, footprintMetric, marketValue, assetClass } = filterItem;
 		setLoading(true);
 		const data = {
@@ -80,8 +86,7 @@ const CarbonEmission = ({}) => {
 			year: currentYear
 		};
 		await dispatch(getPortfolioEmission(data));
-		setLoading(false)
-
+		setLoading(false);
 	};
 
 	const getChartData = (portData, benchData, emission) => {
@@ -89,7 +94,7 @@ const CarbonEmission = ({}) => {
 		let benchmark = [];
 		let result = [];
 
-		if (portData && Object.keys(portData).length > 0) {
+		if (portData  && Object.keys(portData).length > 0) {
 			Object.keys(portData).map((sector) => {
 				const portValue = portData[sector][emission];
 				portfolio.push(portValue);
@@ -159,10 +164,7 @@ const CarbonEmission = ({}) => {
 					: response[1][1]['Benchmark_Max_SectorContribution'];
 
 			result = getChartData(portData, benchData, emissionContrib);
-			console.log('result>>', result);
-			console.log('emissionContrib>>', emissionContrib);
-			console.log('portData>>', portData);
-			console.log('benchData>>', benchData);
+			
 		}
 
 		setContribData(result);
@@ -190,24 +192,32 @@ const CarbonEmission = ({}) => {
 
 	return (
 		<React.Fragment>
-				<HorizontalBar
-					categories={categories}
-					data={sectorIntensityData}
-					chartKey="SECTOR_INTENSITY"
-					yAxisTitle={yAxisTitle}
-				/>
-				<HorizontalBar
-					categories={categories}
-					data={contribData}
-					chartKey="SECTOR_CONTRIBUTION"
-					yAxisTitle={yAxisTitle}
-				/>
-				<HorizontalBar
-					categories={categories}
-					data={sectorWeightData}
-					chartKey="SECTOR_WEIGHT"
-					yAxisTitle={yAxisTitle}
-				/>
+			{portfolioEmission.error ? (
+				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
+					{portfolioEmission.error}
+				</Box>
+			) : (
+				<Box>
+					<HorizontalBar
+						categories={categories}
+						data={sectorIntensityData}
+						chartKey="SECTOR_INTENSITY"
+						yAxisTitle={yAxisTitle}
+					/>
+					<HorizontalBar
+						categories={categories}
+						data={contribData}
+						chartKey="SECTOR_CONTRIBUTION"
+						yAxisTitle={yAxisTitle}
+					/>
+					<HorizontalBar
+						categories={categories}
+						data={sectorWeightData}
+						chartKey="SECTOR_WEIGHT"
+						yAxisTitle={yAxisTitle}
+					/>
+				</Box>
+			)}
 		</React.Fragment>
 	);
 };

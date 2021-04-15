@@ -13,7 +13,7 @@ import CodeIcon from "@material-ui/icons/Code";
 import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned";
 
 function ListItemLink(props) {
-  const { icon, primary, to } = props;
+  const { icon, primary, to,handleClick } = props;
 
   const getAvataricon = (icon) => {
     switch (icon) {
@@ -57,7 +57,7 @@ function ListItemLink(props) {
 
   return (
     <li>
-      <ListItem button component={CustomLink} className="navigation">
+      <ListItem button component={CustomLink} className="navigation" onClick={handleClick}>
         <Box>{getAvataricon(icon)}</Box>
         <Typography style={{fontSize:8}}>{primary}</Typography>
       </ListItem>
