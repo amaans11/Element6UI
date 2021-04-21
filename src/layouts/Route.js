@@ -11,11 +11,6 @@ export const RouteData = [
       icon: "VerticalSplitIcon",
     },
     {
-      name: "Temp score",
-      url: "/temperature-metric",
-      icon: "InsertChartIcon",
-    },
-    {
       name: "Optimization",
       url: "/portfolio-optimization",
       icon: "TimelineIcon",
@@ -29,6 +24,11 @@ export const RouteData = [
       name: "FLM",
       url: "/forward-looking-analysis",
       icon: "ViewWeekIcon",
+    },
+    {
+      name: "Temp score",
+      url: "/temperature-metric",
+      icon: "InsertChartIcon",
     },
     {
       name: "Stranded",

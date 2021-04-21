@@ -13,7 +13,8 @@ const intialState = {
 	currentCurrency: '',
 	filterItem: {},
 	tabValue: 0,
-  moduleName:'Emission'
+  moduleName:'Emission',
+  isVisible:true
 };
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -92,6 +93,11 @@ export default function authReducer(state = { ...intialState }, action) {
     case types.SET_MODULE_SUCCESS:
       return produce(state, (draft) => {
 				draft.moduleName = action.res;
+			});
+    case types.SET_FILTER_VISIBILITY:
+      console.log("test2")
+      return produce(state, (draft) => {
+				draft.isVisible = action.res;
 			});
 		default:
 			return state;

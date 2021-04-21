@@ -6,7 +6,7 @@ import {
 	getCarbonAttribution,
 	getDisclosureData,
 	getPortfolioEmission,
-	getSovereignFootprint
+	getSovereignFootprint,
 } from './footprintActions';
 import { getScope3Data } from './scope3Actions';
 
@@ -276,3 +276,16 @@ export const setModule = (value) => {
 export const setModuleSuccess = (res) => {
 	return { type: actionTypes.SET_MODULE_SUCCESS, res };
 };
+
+export const setFilterVisibility = (value) => {
+	return async (dispatch) => {
+		dispatch(setFilterVisibilitySuccess(value));
+	};
+};
+
+export const setFilterVisibilitySuccess = (res) => {
+	return { type: actionTypes.SET_FILTER_VISIBILITY, res };
+};
+
+
+

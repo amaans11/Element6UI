@@ -9,6 +9,7 @@ import SectoralScope3Heatmap from './SectoralScope3Heatmap';
 
 function Scope3Materiality() {
 	const tabValue = useSelector((state) => state.auth.tabValue);
+    const isVisible = useSelector((state) => state.auth.isVisible);
 	const [ value, setValue ] = useState(tabValue);
 	const dispatch=useDispatch()
 
@@ -16,12 +17,13 @@ function Scope3Materiality() {
 		await dispatch(setTabValue(newValue))
 		setValue(newValue);
 	};
+    console.log("isVisible",isVisible)
 
 	return (
 		<div className="tabs-section">
 			<Grid container>
-				<Grid item xs={3} />
-				<Grid item xs={9}>
+				{isVisible && <Grid item xs={3} />}
+				<Grid item xs={isVisible ? 9 : 12}>
 					<Paper position="static" color="default">
 						<Tabs value={value} onChange={handleChange} indicatorColor="primary" textColor="primary">
 							{scope3Tabs &&
@@ -36,24 +38,6 @@ function Scope3Materiality() {
                         <SectoralScope3Heatmap 
                         />
                     </TabPanel>
-					{/* <TabPanel value={value} index={0}>
-                        <PortfolioEmission />
-					</TabPanel>
-					<TabPanel value={value} index={1}>
-                        <CarbonEmission />
-					</TabPanel>
-					<TabPanel value={value} index={2}>
-                        <SovereignFootprint />
-					</TabPanel>
-					<TabPanel value={value} index={3}>
-                        <CarbonAttribution />
-					</TabPanel>
-					<TabPanel value={value} index={4}>
-                        <Disclosure />
-					</TabPanel>
-					<TabPanel value={value} index={5}>
-                        <AvoidedEmission />
-					</TabPanel> */}
 				</Grid>
 			</Grid>
 		</div>

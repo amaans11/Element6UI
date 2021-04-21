@@ -392,19 +392,6 @@ const SectoralScope3Heatmap = ({}) => {
 					<Grid container>
 						<Grid item xs={4}>
 							<FormControl variant="outlined" className={classes.formControl}>
-								<InputLabel>Materiality Type</InputLabel>
-								<Select
-									value={materialityType}
-									label="Materiality Type"
-									onChange={handleMaterialityChange}
-								>
-									<MenuItem value="matPort">Portfolio</MenuItem>
-									<MenuItem value="matSector">Sector</MenuItem>
-								</Select>
-							</FormControl>
-						</Grid>
-						<Grid item xs={4}>
-							<FormControl variant="outlined" className={classes.formControl}>
 								<InputLabel>Select Sector</InputLabel>
 								<Select
 									value={materialityType}

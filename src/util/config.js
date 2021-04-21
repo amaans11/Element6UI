@@ -14,6 +14,9 @@ const configs={
         },
         'SECTORAL_SCOPE3_HEATMAP':{
             'TITLE':'Supply and Value Chain Scope 3 Materiality',
+        },
+        'PORT_OPTIMIZATION':{
+            'TITLE':''
         }
     },
     "CHART":{
@@ -54,8 +57,26 @@ const configs={
         "SCOPE3_HEATMAP":{
             'TITLE':'Supply and Value Chain Scope 3 Materiality',
         },
-        "SECTORAL_SCOPE3_HEATMAP":{
+        'SECTORAL_SCOPE3_HEATMAP':{
             'TITLE':'Supply and Value Chain Scope 3 Materiality',
+        },
+        'PORT_OPTIMIZATION':{
+            'TITLE':'Low Carbon Backtesting Module',
+            'Y_AXIS_TITLE':'Return (%)'
+        },
+        'PORT_OPTIMIZATION_INTENSITY':{
+            'TITLE':'Portfolio Carbon Intensity',
+        },
+        'PORT_OPTIMIZATION_WEIGHT':{
+            'TITLE':'Sector Weights',
+            'Y_AXIS_TITLE':'Weight (%)'
+        },
+        'PORT_OPTIMIZATION_CONTRIB':{
+            'TITLE':'Sector Contribution',
+        },
+        'PERFORMANCE_ATTRIBUTION':{
+            'TITLE':'Performance Attribution',
+            'Y_AXIS_TITLE':'Returns (%)'
         }
     }
 }

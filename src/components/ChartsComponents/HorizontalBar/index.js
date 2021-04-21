@@ -14,7 +14,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 	}
 	const currentTheme = localStorage.getItem('appTheme');
 
-  console.log("loading>>",loading)
+  console.log("data>>",data)
 
 	const options = {
 		chart: {

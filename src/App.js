@@ -15,7 +15,8 @@ import Settings from './screens/Settings';
 // React notifications css import
 import 'react-notifications/lib/notifications.css';
 require("highcharts/modules/exporting")(Highcharts);
-require("highcharts/modules/heatmap")(Highcharts)
+require("highcharts/modules/heatmap")(Highcharts);
+require('highcharts/modules/export-data')(Highcharts)
 
 
 const { store, persistor } = configureStore();

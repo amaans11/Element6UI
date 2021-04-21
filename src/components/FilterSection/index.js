@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import { Accordion, AccordionSummary, AccordionDetails, Card, Box } from '@material-ui/core';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FilterTags from './tags';
 import data from '../../util/filter-config';
 import filterConfig from '../../util/tabs-filter-config';
-import { setFilterItem } from '../../redux/actions/authActions';
+import { setFilterItem, setFilterVisibility, setPortfolio } from '../../redux/actions/authActions';
 
 export default function FilterGroup() {
 	const [ filterData, setFilterData ] = useState(data);
+  const isVisible = useSelector((state) => state.auth.isVisible);
 	const [ configs, setConfigs ] = useState([]);
 
 	const dispatch = useDispatch();
@@ -43,20 +45,20 @@ export default function FilterGroup() {
 						config = filterConfig['PORTFOLIO_EMISSION'];
 						break;
 				}
-        break;
-          case 'Scope3':
-            switch (tabValue) {
-              case 0:
-                config = filterConfig['SCOPE3_HEATMAP'];
-                break;
-              case 1:
-                config = filterConfig['SECTORAL_SCOPE3_HEATMAP'];
-                break;
-              default:
-                config = filterConfig['SCOPE3_HEATMAP'];
-                break;
-            }
-            break;
+				break;
+			case 'Scope3':
+				switch (tabValue) {
+					case 0:
+						config = filterConfig['SCOPE3_HEATMAP'];
+						break;
+					case 1:
+						config = filterConfig['SECTORAL_SCOPE3_HEATMAP'];
+						break;
+					default:
+						config = filterConfig['SCOPE3_HEATMAP'];
+						break;
+				}
+				break;
 
 			default:
 				switch (tabValue) {
@@ -112,44 +114,16 @@ export default function FilterGroup() {
 		},
 		[ tabValue ]
 	);
-
-	console.log('filterData', filterData);
-	console.log('configs', configs);
+	const hideFilterSection = async () => {
+		await dispatch(setFilterVisibility(false));
+	};
 
 	return (
 		<React.Fragment>
 			{filterData.map((e, index) => {
 				if (configs.includes(e.grpKey)) {
 					return (
-						<Accordion>
-							<AccordionSummary
-								expandIcon={<ExpandMoreIcon />}
-								aria-label="Expand"
-								aria-controls="additional-actions1-content"
-								id="additional-actions1-header"
-							>
-								<label className="tags-label">{e.grpname}</label>
-							</AccordionSummary>
-							<AccordionDetails>
-								<div>
-									{e.tagsList.map((t, i) => {
-										return (
-											<FilterTags
-												name={t.name}
-												selected={t.selected}
-												grpindex={index}
-												tagindex={i}
-												action={updateTags}
-											/>
-										);
-									})}
-								</div>
-							</AccordionDetails>
-						</Accordion>
-					);
-				} else {
-					return (
-						<Accordion disabled={true}>
+						<Accordion style={{ position: 'relative' }}>
 							<AccordionSummary
 								expandIcon={<ExpandMoreIcon />}
 								aria-label="Expand"
@@ -177,6 +151,17 @@ export default function FilterGroup() {
 					);
 				}
 			})}
+			{configs.length > 0 ? (
+				<span onClick={hideFilterSection}>
+					<ArrowForwardIosIcon style={{ position: 'absolute', left: 300, top: 160 }} />
+				</span>
+			) : (
+				<Card style={{ height: 50 }}>
+					<Box align="center" fontSize={20} style={{ marginTop: 10 }}>
+						No Filters
+					</Box>
+				</Card>
+			)}
 		</React.Fragment>
 	);
 }

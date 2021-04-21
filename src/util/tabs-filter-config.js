@@ -37,12 +37,14 @@ const data={
         'assetClass',
         'inferenceType',
         'emission',
+        'materiality'
     ],
     'SECTORAL_SCOPE3_HEATMAP':[
         'sector',
         'assetClass',
         'inferenceType',
         'emission',
+        'materiality'
     ]
 }
 

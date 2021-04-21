@@ -174,6 +174,28 @@ const getRequestData = (type, auth) => {
 				version_emissions: '11'
 			};
 			break;
+        case 'PORTFOLIO_OPTIMIZATION':
+            data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+                benchmark: currentBenchmark.label,
+				benchmark_date: currentBenchmark.value,
+                asset_type: assetClass,
+                footprint_metric:footprintMetric,
+				sector: sector,
+                market_value: marketValue,
+                emissions:emission,
+                inference:inferenceType,
+                currency: currentCurrency,
+                strategy:'momentum',
+				fundamentals_quarter: 'Q1',
+				emissions_quarter: 'Q1',
+				version_fundamentals: '1',
+				version_emissions: '11',
+                reweight_factor : 1
+			};
 		default:
 			data = {};
 			break;

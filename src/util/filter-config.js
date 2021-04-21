@@ -53,6 +53,14 @@
         { name: "Scope 1+2+3", value: "Sc123", selected: false },
       ],
     },
+    {
+      grpname: "Materiality Type",
+      grpKey:'materiality',
+      tagsList: [
+        { name: "Portfolio", value: "matPort", selected: true },
+        { name: "Sector", value: "matSector", selected: false },
+      ],
+    },
   ]
   
   

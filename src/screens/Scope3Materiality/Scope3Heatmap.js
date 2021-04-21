@@ -142,13 +142,6 @@ const Scope3Heatmap = ({}) => {
 				</Box>
 			) : (
 				<React.Fragment>
-					<FormControl variant="outlined" className={classes.formControl}>
-						<InputLabel>Materiality Type</InputLabel>
-						<Select value={materialityType} label="Materiality Type" onChange={handleMaterialityChange}>
-							<MenuItem value="matPort">Portfolio</MenuItem>
-							<MenuItem value="matSector">Sector</MenuItem>
-						</Select>
-					</FormControl>
 					<HeatmapChart
 						chartKey="SCOPE3_HEATMAP"
 						yAxisCategories={yCategories}

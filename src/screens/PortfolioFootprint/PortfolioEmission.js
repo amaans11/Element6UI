@@ -54,6 +54,7 @@ const PortfolioEmission = ({}) => {
 	const currentUser = useSelector((state) => state.auth.currentUser);
 	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
 
+
 	const fetchDetails = async () => {
 		const { sector, footprintMetric, marketValue, assetClass } = filterItem;
 		setLoading(true);

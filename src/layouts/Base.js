@@ -4,20 +4,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import {
 	Drawer,
-	AppBar,
-	Toolbar,
 	CssBaseline,
-	Typography,
-	IconButton,
-	MenuItem,
-	Menu,
 	List,
-	Button
+	Button,
+	Dialog,
+	DialogActions,
+	DialogTitle,
+	DialogContent,
+	DialogContentText,
+	Box,
+	InputAdornment,
+	OutlinedInput,
+	InputLabel,
+	Grid,
+	Select,
+	MenuItem,
+	FormControl
 } from '@material-ui/core';
+import { NotificationManager } from 'react-notifications';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { Route, Switch, Link } from 'react-router-dom';
-import EditIcon from '@material-ui/icons/Edit';
+import { slideInRight } from 'react-animations';
+import Radium, { StyleRoot } from 'radium';
 import ListItemLink from '../components/ListItemLink';
-import Logo from '../assets/Urgentem_Wordmark.png';
 import { RouteData } from './Route';
 import Header from '../components/Header';
 import SelectwithSearch from '../components/Autocomplete';
@@ -32,7 +41,16 @@ import StrandedAssetsAnalysis from '../screens/StrandedAssetsAnalysis';
 import UrgentemDownload from '../screens/UrgentemDownload';
 import GenerateReport from '../screens/GenerateReport';
 import UrgentemLanding from '../screens/UrgentemLanding';
-import { getPortfolioList, getUserInfo,setPortfolio, setBenchmark,setTabValue, setModule } from '../redux/actions/authActions';
+import {
+	getPortfolioList,
+	getUserInfo,
+	setPortfolio,
+	setBenchmark,
+	setTabValue,
+	setModule,
+	setFilterVisibility
+} from '../redux/actions/authActions';
+import csvFile from '../assets/Dummy-file.xlsx';
 
 const drawerWidth = 295;
 
@@ -123,17 +141,41 @@ const styles = (theme) => ({
 		height: 50,
 		width: 300,
 		marginLeft: theme.spacing(2)
+	},
+	samplePortfolio: {
+		color: '#1890ff'
+	},
+	labelText: {
+		padding: theme.spacing(1)
+	},
+	textInput: {
+		width: 200,
+		height: 40
+	},
+	slideInRight: {
+		animation: 'x 5s',
+		animationName: Radium.keyframes(slideInRight, 'slideInRight')
+	},
+	select: {
+		width: 200,
+		height:40
 	}
 });
 
 const MiniDrawer = ({ classes, history }) => {
 	const [ open, setOpen ] = useState(false);
+	const [ dialog, setDialog ] = useState(false);
+	const [ portfolioValue, setPortfolioValue ] = useState(1000000000);
+	const [ portfolioName, setPortfolioName ] = useState('');
+
 	const dispatch = useDispatch();
 
 	const auth = useSelector((state) => state.auth);
 	const portfolios = useSelector((state) => state.auth.portfolioList);
 	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
 	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
+	const currentCurrency = useSelector((state) => state.auth.currentCurrency);
+	const isVisible = useSelector((state) => state.auth.isVisible);
 
 	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
 
@@ -152,37 +194,59 @@ const MiniDrawer = ({ classes, history }) => {
 		await getUserDetails();
 		await getPortfolio();
 	};
-	const onPortfolioChange=currentValue=>{
-		let portfolio={}
-		if(portfolios && portfolios.length > 0){
-			portfolios.map(port=>{
-				if(port.label == currentValue){
-					portfolio= {...port}
+	const onPortfolioChange = (currentValue) => {
+		let portfolio = {};
+		if (portfolios && portfolios.length > 0) {
+			portfolios.map((port) => {
+				if (port.label == currentValue) {
+					portfolio = { ...port };
 				}
-			})
+			});
 		}
-		dispatch(setPortfolio(portfolio))
-	}
-	const onBenchmarkChange=currentValue=>{
-		let benchmark={}
-		if(portfolios && portfolios.length > 0){
-			portfolios.map(port=>{
-				if(port.label == currentValue){
-					benchmark= {...port}
+		dispatch(setPortfolio(portfolio));
+	};
+	const onBenchmarkChange = (currentValue) => {
+		let benchmark = {};
+		if (portfolios && portfolios.length > 0) {
+			portfolios.map((port) => {
+				if (port.label == currentValue) {
+					benchmark = { ...port };
 				}
-			})
+			});
 		}
-		dispatch(setBenchmark(benchmark))
-	}
-	const setDefaultTab= async(e)=>{
-		await dispatch(setTabValue(0))
-		await dispatch(setModule(e.name))
-		window.location.reload()
-	}
-
+		dispatch(setBenchmark(benchmark));
+	};
+	const setDefaultTab = async (e) => {
+		await dispatch(setTabValue(0));
+		await dispatch(setModule(e.name));
+		window.location.reload();
+	};
+	const handleUploadPortfolio = () => {
+		setDialog(true);
+	};
+	const handleCloseDialog = () => {
+		setDialog(false);
+	};
+	const uploadPortfolio = () => {
+		if (!portfolioValue) {
+			NotificationManager.error('Portfolio value cannot be empty!');
+			return;
+		}
+		if (!portfolioName) {
+			NotificationManager.error('Portfolio Name cannot be empty!');
+			return;
+		}
+	};
+	const hideFilterSection = async () => {
+		await dispatch(setFilterVisibility(true));
+	};
 	useEffect(() => {
 		fetchDetails();
 	}, []);
+	let contentClass = classNames({
+		'content-part-visible': isVisible,
+		'content-part-not-visible': !isVisible
+	});
 
 	return (
 		<div className={classes.root}>
@@ -204,11 +268,13 @@ const MiniDrawer = ({ classes, history }) => {
 			>
 				<div className={classes.toolbar} />
 				<List style={{ paddingTop: 20 }}>
-					{RouteData.map((e, index) => <ListItemLink primary={e.name} icon={e.icon} to={e.url}  handleClick={()=>setDefaultTab(e)}/>)}
+					{RouteData.map((e, index) => (
+						<ListItemLink primary={e.name} icon={e.icon} to={e.url} handleClick={() => setDefaultTab(e)} />
+					))}
 				</List>
 			</Drawer>
 			<main className={classes.content}>
-				{window.location.pathname != '/' ? (
+				{isVisible ? window.location.pathname != '/' ? (
 					<div className="filter-main">
 						<label className="filter-heading">Filters</label>
 						<div className="filter-part">
@@ -217,12 +283,23 @@ const MiniDrawer = ({ classes, history }) => {
 					</div>
 				) : (
 					<div className={classes.uploadDiv}>
-						<Button variant="outlined" color="primary" className={classes.uploadBtn}>
+						<Button
+							variant="outlined"
+							color="primary"
+							className={classes.uploadBtn}
+							onClick={handleUploadPortfolio}
+						>
 							Upload Portfolio
 						</Button>
 					</div>
+				) : (
+					<StyleRoot>
+						<span onClick={hideFilterSection} style={styles.slideInRight}>
+							<ArrowForwardIosIcon style={{ position: 'absolute', left: 80, top: 300 }} />
+						</span>
+					</StyleRoot>
 				)}
-				<div className="content-part">
+				<div className={contentClass}>
 					<div>
 						<div style={{ display: 'flex', width: '100%' }}>
 							<div style={{ display: 'flex', width: '75%' }}>
@@ -231,7 +308,7 @@ const MiniDrawer = ({ classes, history }) => {
 									data={portfolios && portfolios.length > 0 ? portfolios : []}
 									// defaultValue={currentPortfolio}
 									handleChange={onPortfolioChange}
-									type = 'portfolio'
+									type="portfolio"
 									currentValue={currentPortfolio}
 								/>
 								<SelectwithSearch
@@ -239,15 +316,14 @@ const MiniDrawer = ({ classes, history }) => {
 									data={portfolios && portfolios.length > 0 ? portfolios : []}
 									// defaultValue={currentBenchmark}
 									handleChange={onBenchmarkChange}
-									type = 'benchmark'
+									type="benchmark"
 									currentValue={currentBenchmark}
 								/>
-								
 							</div>
 							<Button
 								variant="outlined"
 								color="secondary"
-								style={{ marginTop: -10, height: 45, width: '16%' }}
+								style={{ marginTop: -2, height: 45, width: '16%' }}
 								onClick={() => history.push('/settings')}
 							>
 								1 USD = 1USD
@@ -289,6 +365,62 @@ const MiniDrawer = ({ classes, history }) => {
 					</Route>
 				</Switch>
 			</main>
+			<Dialog open={dialog} keepMounted onClose={handleCloseDialog}>
+				<DialogTitle>Upload Portfolio</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						Please download our sample portfolio for an exemplary structure of your portfolio.
+						<Box>
+							<a href={csvFile} download="Sample Portfolio" className={classes.samplePortfolio}>
+								Sample Portfolio
+							</a>
+						</Box>
+					</DialogContentText>
+					<Grid container style={{ marginTop: 10 }}>
+						<Grid item xs={3}>
+							<InputLabel className={classes.labelText}>Currency :</InputLabel>
+						</Grid>
+						<Grid item xs={3}>
+							<FormControl variant="outlined">
+								<Select label="Select Currency" className={classes.select} placeholder="currency">
+									<MenuItem value="USD">USD</MenuItem>
+								</Select>
+							</FormControl>
+						</Grid>
+					</Grid>
+					<Grid container style={{ marginTop: 10 }}>
+						<Grid item xs={3}>
+							<InputLabel className={classes.labelText}>Portfolio Value :</InputLabel>
+						</Grid>
+						<Grid item xs={3}>
+							<OutlinedInput
+								type="number"
+								className={classes.textInput}
+								value={portfolioValue}
+								onChange={(e) => setPortfolioValue(e.target.value)}
+							/>{' '}
+						</Grid>
+					</Grid>
+					<Grid container style={{ marginTop: 10 }}>
+						<Grid item xs={3}>
+							<InputLabel className={classes.labelText}>Portfolio Name :</InputLabel>
+						</Grid>
+						<Grid item xs={3}>
+							<OutlinedInput
+								className={classes.textInput}
+								value={portfolioName}
+								onChange={(e) => setPortfolioName(e.target.value)}
+							/>
+						</Grid>
+					</Grid>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleCloseDialog}>Close</Button>
+					<Button onClick={uploadPortfolio} color="primary">
+						Upload
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</div>
 	);
 };
