@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Accordion, AccordionSummary, AccordionDetails, Card, Box } from '@material-ui/core';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FilterTags from './tags';
 import data from '../../util/filter-config';
@@ -10,7 +10,7 @@ import { setFilterItem, setFilterVisibility, setPortfolio } from '../../redux/ac
 
 export default function FilterGroup() {
 	const [ filterData, setFilterData ] = useState(data);
-  const isVisible = useSelector((state) => state.auth.isVisible);
+	const isVisible = useSelector((state) => state.auth.isVisible);
 	const [ configs, setConfigs ] = useState([]);
 
 	const dispatch = useDispatch();
@@ -56,6 +56,19 @@ export default function FilterGroup() {
 						break;
 					default:
 						config = filterConfig['SCOPE3_HEATMAP'];
+						break;
+				}
+				break;
+			case 'Optimization':
+				switch (tabValue) {
+					case 0:
+						config = filterConfig['PORTFOLIO_OPTIMIZATION'];
+						break;
+					case 1:
+						config = filterConfig['PERFORMANCE_ATTRIBUTION'];
+						break;
+					default:
+						config = filterConfig['PORTFOLIO_OPTIMIZATION'];
 						break;
 				}
 				break;
@@ -153,14 +166,12 @@ export default function FilterGroup() {
 			})}
 			{configs.length > 0 ? (
 				<span onClick={hideFilterSection}>
-					<ArrowForwardIosIcon style={{ position: 'absolute', left: 300, top: 160 }} />
+					<ArrowBackIosIcon style={{ position: 'fixed', left: 400, top: window.innerHeight / 3 }} />
 				</span>
 			) : (
-				<Card style={{ height: 50 }}>
-					<Box align="center" fontSize={20} style={{ marginTop: 10 }}>
-						No Filters
-					</Box>
-				</Card>
+				<span onClick={hideFilterSection}>
+					<ArrowBackIosIcon style={{ position: 'fixed', left: 80, top: window.innerHeight / 3 }} />
+				</span>
 			)}
 		</React.Fragment>
 	);

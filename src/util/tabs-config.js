@@ -14,5 +14,12 @@ const portOptimizationTabs=[
 	'Portfolio Optimization',
 	'Performance Attribution'
 ]
+const carbonRiskTabs=[
+	'Portfolio Carbon Risk'
+]
+const strandedAssetTabs=[
+	'Fossil-Fuel Reserves Footprint',
+	'Coal Power Analysis'
+]
 
-export { footprintTabs,scope3Tabs,portOptimizationTabs };
+export { footprintTabs,scope3Tabs,portOptimizationTabs,carbonRiskTabs,strandedAssetTabs };

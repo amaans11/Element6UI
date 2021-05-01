@@ -4,66 +4,23 @@ import { Grid, Box } from '@material-ui/core';
 import { getSovereignFootprint } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
-
-const headCells = [
-	{
-		name: 'Type',
-		selector: 'name',
-		sortable: true,
-		right: false
-	},
-	{
-		name: 'Emissions Intensity of GDP (tCO2/1,000 $USD)',
-		selector: 'gdpData',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.gdpData)}</div>
-	},
-	{
-		name: 'Emissions Intensity of Population (tCO2/person)',
-		selector: 'popData',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.popData)}</div>
-	}
-];
+import getRequestData from '../../util/RequestData';
+import {sovFootprintCells} from '../../util/TableHeadConfig';
 
 const SovereignFootprint = ({}) => {
-	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
-	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
-	const currentYear = useSelector((state) => state.auth.currentYear);
-	const currentCurrency = useSelector((state) => state.auth.currentCurrency);
-	const currentQuarter = useSelector((state) => state.auth.currentQuarter);
-	const currentUser = useSelector((state) => state.auth.currentUser);
+    const auth=useSelector(state=>state.auth)
 	const sovFootprint = useSelector((state) => state.footprint.sovFootprint);
 
 	const [ gdpChartData, setGdpChartData ] = useState([]);
 	const [ popChartData, setPopChartData ] = useState([]);
 	const [ categories, setCategories ] = useState([]);
-	const [ loading, setLoading ] = useState(false);
 	const [ tableData, setTableData ] = useState([]);
 
 	const dispatch = useDispatch();
 
 	const fetchDetails = async () => {
-		setLoading(true);
-		const data = {
-			client: currentUser.client,
-			user: currentUser.userName,
-			portfolio: currentPortfolio.label,
-			portfolio_date: currentPortfolio.value,
-			benchmark: currentBenchmark.label,
-			benchmark_date: currentBenchmark.value,
-			currency: currentCurrency,
-			year: currentYear,
-			quarter: currentQuarter,
-			country_type: 'dom',
-			fundamentals_quarter: 'Q1',
-			version_fundamentals: '1',
-			asset_type: 'Sov'
-		};
+        const data=getRequestData('SOVEREIGN_FOOTPRINT',auth)
 		await dispatch(getSovereignFootprint(data));
-		setLoading(false);
 	};
 
 	const getTableData = () => {
@@ -84,8 +41,6 @@ const SovereignFootprint = ({}) => {
 				}
 			];
 		}
-		console.log('tableData1>>', tableData);
-
 		setTableData(tableData);
 	};
 
@@ -173,9 +128,8 @@ const SovereignFootprint = ({}) => {
 					</Grid>
 					<DataTable
 						data={tableData}
-						columns={headCells}
+						columns={sovFootprintCells}
 						tableHeading="SOVEREIGN_FOOTPRINT"
-						loading={loading}
 					/>
 				</Box>
 			)}

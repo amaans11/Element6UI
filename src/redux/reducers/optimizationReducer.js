@@ -6,7 +6,7 @@ const intialState = {
 	perfAttributionData: {}
 };
 
-export default function authReducer(state = { ...intialState }, action) {
+export default function optimizationReducer(state = { ...intialState }, action) {
 	switch (action.type) {
 		case types.GET_PORTFOLIO_OPTIMIZATION_SUCCESS:
 			return produce(state, (draft) => {

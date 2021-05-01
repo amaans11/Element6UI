@@ -186,11 +186,17 @@
 }
 .table-header{
   font: bold 22px "Trebuchet MS", Verdana, sans-serif;
-  margin-left:20px
 }
 .tab-collapse{
   width:40px;
 }
 .tab-expand{
   width:120px;
+}
+.d-flex{
+  display: flex;
+  flex-direction: row;
+}
+.flex-space-between{
+  justify-content: space-between;
 }

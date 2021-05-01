@@ -19,8 +19,11 @@ import {
 	Grid,
 	Select,
 	MenuItem,
-	FormControl
+	FormControl,
+	Typography,
+	IconButton
 } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import { NotificationManager } from 'react-notifications';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { Route, Switch, Link } from 'react-router-dom';
@@ -158,7 +161,7 @@ const styles = (theme) => ({
 	},
 	select: {
 		width: 200,
-		height:40
+		height: 40
 	}
 });
 
@@ -295,7 +298,7 @@ const MiniDrawer = ({ classes, history }) => {
 				) : (
 					<StyleRoot>
 						<span onClick={hideFilterSection} style={styles.slideInRight}>
-							<ArrowForwardIosIcon style={{ position: 'absolute', left: 80, top: 300 }} />
+							<ArrowForwardIosIcon style={{ position: 'fixed', left: 80, top: window.innerHeight/3 }} />
 						</span>
 					</StyleRoot>
 				)}
@@ -365,8 +368,14 @@ const MiniDrawer = ({ classes, history }) => {
 					</Route>
 				</Switch>
 			</main>
-			<Dialog open={dialog} keepMounted onClose={handleCloseDialog}>
-				<DialogTitle>Upload Portfolio</DialogTitle>
+			<Dialog open={dialog} onClose={handleCloseDialog}>
+				<Box className="d-flex flex-space-between">
+					<Typography variant="h5" style={{marginLeft:20,marginTop:10}}>Upload Portfolio</Typography>
+					<IconButton  onClick={handleCloseDialog}>
+						<CloseIcon />
+					</IconButton>
+				</Box>
+
 				<DialogContent>
 					<DialogContentText>
 						Please download our sample portfolio for an exemplary structure of your portfolio.
@@ -383,7 +392,11 @@ const MiniDrawer = ({ classes, history }) => {
 						<Grid item xs={3}>
 							<FormControl variant="outlined">
 								<Select label="Select Currency" className={classes.select} placeholder="currency">
-									<MenuItem value="USD">USD</MenuItem>
+									<MenuItem value="USD">USD ($)</MenuItem>
+									<MenuItem value="EUR">EUR (€)</MenuItem>
+									<MenuItem value="GBP">GBP (£)</MenuItem>
+									<MenuItem value="AUD">AUD ($)</MenuItem>
+									<MenuItem value="NZD">NZ ($)</MenuItem>
 								</Select>
 							</FormControl>
 						</Grid>
@@ -415,7 +428,6 @@ const MiniDrawer = ({ classes, history }) => {
 					</Grid>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleCloseDialog}>Close</Button>
 					<Button onClick={uploadPortfolio} color="primary">
 						Upload
 					</Button>

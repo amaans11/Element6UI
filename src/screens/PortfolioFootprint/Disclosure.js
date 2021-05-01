@@ -5,44 +5,25 @@ import { getDisclosureData } from '../../redux/actions/footprintActions';
 import { map } from 'lodash';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 import StackedBar from '../../components/ChartsComponents/StackedBar';
+import getRequestData from '../../util/RequestData';
 
 const categories = [ 'Portfolio Disclosure', 'Benchmark Disclosure' ];
 
 const Disclosure = ({}) => {
-	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
-	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
-	const currentUser = useSelector((state) => state.auth.currentUser);
+	const auth = useSelector((state) => state.auth);
 	const portDisclosure = useSelector((state) => state.footprint.portDisclosure);
 	const benchDisclosure = useSelector((state) => state.footprint.benchDisclosure);
 
 	const [ stackedChartData, setStackedChartData ] = useState([]);
-	const [ stackedCategories, setStackedCategories ] = useState([]);
 	const [ columnChartData, setColumnChartData ] = useState([]);
 	const [ columnCategories, setColumnCategories ] = useState([]);
 
 	const dispatch = useDispatch();
 
 	const fetchDetails = async () => {
-		const data = {
-			client: currentUser.client,
-			user: currentUser.userName,
-			fundamentals_quarter: 'Q1',
-			emissions_quarter: 'Q1',
-			version_fundamentals: '1',
-			version_emissions: '11',
-			emissions_quarter: 'Q1',
-			version_emissions: '11'
-		};
-		const portData = {
-			...data,
-			portfolio: currentPortfolio.label,
-			portfolio_date: currentPortfolio.value
-		};
-		const benchData = {
-			...data,
-			portfolio: currentBenchmark.label,
-			portfolio_date: currentBenchmark.value
-		};
+		const portData = getRequestData('PORT_DISCLOSURE', auth);
+		const benchData = getRequestData('BENCH_DISCLOSURE', auth);
+
 		await dispatch(getDisclosureData(portData, 'portfolio'));
 		await dispatch(getDisclosureData(benchData, 'benchmark'));
 	};

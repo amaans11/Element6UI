@@ -4,37 +4,9 @@ import {Box} from  '@material-ui/core'
 import { getPortfolioEmission } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
+import getRequestData from '../../util/RequestData';
+import {portEmissionCells} from '../../util/TableHeadConfig';
 
-const headCells = [
-	{
-		name: 'Portfolios',
-		selector: 'name',
-		sortable: true,
-		right: false,
-		wrap: true
-	},
-	{
-		name: 'Scope 1+2',
-		selector: 'Sc12',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc12)}</div>
-	},
-	{
-		name: 'Scope 3',
-		selector: 'Sc3',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc3)}</div>
-	},
-	{
-		name: 'Scope 1+2+3',
-		selector: 'Sc123',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc123)}</div>
-	}
-];
 const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3' ];
 
 const PortfolioEmission = ({}) => {
@@ -43,42 +15,14 @@ const PortfolioEmission = ({}) => {
 	const [ chartData, setChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
-	const [ loading, setLoading ] = useState(false);
 
-	const filterItem = useSelector((state) => state.auth.filterItem);
-	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
-	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
-	const currentYear = useSelector((state) => state.auth.currentYear);
-	const currentCurrency = useSelector((state) => state.auth.currentCurrency);
-	const currentQuarter = useSelector((state) => state.auth.currentQuarter);
-	const currentUser = useSelector((state) => state.auth.currentUser);
 	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
-
+	const auth =useSelector(state=>state.auth);
+	const {filterItem}=auth;
 
 	const fetchDetails = async () => {
-		const { sector, footprintMetric, marketValue, assetClass } = filterItem;
-		setLoading(true);
-		const data = {
-			asset_type: assetClass,
-			benchmark: currentBenchmark.label,
-			benchmark_date: currentBenchmark.value,
-			client: currentUser.client,
-			currency: currentCurrency,
-			emissions_quarter: 'Q1',
-			footprint_metric: footprintMetric,
-			fundamentals_quarter: 'Q1',
-			market_value: marketValue,
-			portfolio: currentPortfolio.label,
-			portfolio_date: currentPortfolio.value,
-			quarter: currentQuarter,
-			sector: sector,
-			version: '',
-			version_emissions: '11',
-			version_fundamentals: '1',
-			year: currentYear
-		};
+		const data = getRequestData('PORTFOLIO_EMISSION', auth);
 		await dispatch(getPortfolioEmission(data));
-		setLoading(false);
 	};
 	useEffect(() => {
 		fetchDetails();
@@ -96,8 +40,6 @@ const PortfolioEmission = ({}) => {
 		let intensityChartData = [];
 		let intensityTableData = [];
 		let yTitle = '';
-
-		console.log('portfolioEmission', portfolioEmission);
 
 		if (portfolioEmission['data'] && Object.keys(portfolioEmission['data']).length > 0) {
 			let response = portfolioEmission['data']['data'];
@@ -183,13 +125,11 @@ const PortfolioEmission = ({}) => {
 						data={chartData}
 						chartKey="PORTFOLIO_INTENSITY"
 						yAxisTitle={yAxisTitle}
-						loading={loading}
 					/>
 					<DataTable
 						data={tableData}
-						columns={headCells}
+						columns={portEmissionCells}
 						tableHeading="PORTFOLIO_INTENSITY"
-						loading={loading}
 					/>
 				</React.Fragment>
 			)}

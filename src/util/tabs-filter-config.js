@@ -45,6 +45,20 @@ const data={
         'inferenceType',
         'emission',
         'materiality'
+    ],
+    'PORTFOLIO_OPTIMIZATION':[
+        'sector',
+        'footprintMetric',
+        'marketValue',
+        'assetClass',
+        'inferenceType',
+        'emission',
+        'strategy'
+    ],
+    'PERFORMANCE_ATTRIBUTION':[
+        'sector',
+        'assetClass',
+        'returnYear'
     ]
 }
 

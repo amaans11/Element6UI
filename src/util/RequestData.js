@@ -7,11 +7,11 @@ const getRequestData = (type, auth) => {
 		currentQuarter,
 		currentYear,
 		currentUser,
-		filterItem
+		filterItem,
+		reweightFactor,
 	} = auth;
 
-	const { sector, footprintMetric, marketValue, assetClass, inferenceType, emission } = filterItem;
-
+	const { sector, footprintMetric, marketValue, assetClass, inferenceType, emission,strategy,returnYear } = filterItem;
 	switch (type) {
 		case 'PORTFOLIO_EMISSION':
 			data = {
@@ -98,7 +98,7 @@ const getRequestData = (type, auth) => {
 			};
 			break;
 
-		case 'DISCLOSURE':
+		case 'PORT_DISCLOSURE':
 			data = {
 				client: currentUser.client,
 				user: currentUser.userName,
@@ -107,7 +107,23 @@ const getRequestData = (type, auth) => {
 				version_fundamentals: '1',
 				version_emissions: '11',
 				emissions_quarter: 'Q1',
-				version_emissions: '11'
+				version_emissions: '11',
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value
+			};
+			break;
+		case 'BENCH_DISCLOSURE':
+			data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				fundamentals_quarter: 'Q1',
+				emissions_quarter: 'Q1',
+				version_fundamentals: '1',
+				version_emissions: '11',
+				emissions_quarter: 'Q1',
+				version_emissions: '11',
+				portfolio: currentBenchmark.label,
+				portfolio_date: currentBenchmark.value
 			};
 			break;
 
@@ -174,28 +190,101 @@ const getRequestData = (type, auth) => {
 				version_emissions: '11'
 			};
 			break;
-        case 'PORTFOLIO_OPTIMIZATION':
-            data = {
+		case 'PORTFOLIO_OPTIMIZATION':
+			data = {
 				client: currentUser.client,
 				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
-                benchmark: currentBenchmark.label,
+				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
-                asset_type: assetClass,
-                footprint_metric:footprintMetric,
+				asset_type: assetClass,
+				footprint_metric: footprintMetric,
 				sector: sector,
-                market_value: marketValue,
-                emissions:emission,
-                inference:inferenceType,
-                currency: currentCurrency,
-                strategy:'momentum',
+				market_value: marketValue,
+				emissions: emission,
+				inference: inferenceType,
+				currency: currentCurrency,
+				strategy: strategy,
 				fundamentals_quarter: 'Q1',
 				emissions_quarter: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
-                reweight_factor : 1
+				reweight_factor: 0
 			};
+			break;
+		case 'PERFORMANCE_ATTRIBUTION':
+			data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				benchmark: currentBenchmark.label,
+				benchmark_date: currentBenchmark.value,
+				asset_type: assetClass,
+				sector: sector,
+				currency: currentCurrency,
+				quarter_fundamentals: 'Q1',
+				quarter_emissions: 'Q1',
+				version_fundamentals: '1',
+				version_emissions: '11',
+				attribution_type: 'PerformanceAttribution',
+				req_year: returnYear
+			};
+			break;
+		case 'RISK_CONTRIBUTOR':
+			data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				interference_type: inferenceType,
+				asset_type: 'Eq',
+				footprint_metric: footprintMetric,
+				market_value: marketValue,
+				version_fundamentals: '1',
+				version_emissions: '11',
+				fundamentals_quarter: 'Q1',
+				emissions_quarter: 'Q1',
+			};
+			break;
+		case 'FOSSIL_FUEL':
+			data={
+				client: currentUser.client,
+				user: currentUser.userName,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				benchmark: currentBenchmark.label,
+				benchmark_date: currentBenchmark.value,
+				year: currentYear,
+				quarter: currentQuarter,
+				currency: currentCurrency,
+				fundamentals_quarter: 'Q1',
+				emissions_quarter: 'Q1',
+				version_fundamentals: '1',
+				version_emissions: '11',
+				reserves_quarter: 'Q1',
+				market_value:marketValue,
+				asset_type:assetClass,
+				footprint_metric:footprintMetric
+			}
+			break;
+		case 'COAL_POWER':
+			data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				benchmark: currentBenchmark.label,
+				benchmark_date: currentBenchmark.value,
+				currency: currentCurrency,
+				fundamentals_quarter: 'Q1',
+				emissions_quarter: 'Q1',
+				version_fundamentals: '1',
+				version_emissions: '11',
+				year_fundamentals: 2019,
+			};
+			break;
 		default:
 			data = {};
 			break;

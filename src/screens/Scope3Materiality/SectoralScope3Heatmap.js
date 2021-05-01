@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { getScope3Data } from '../../redux/actions/scope3Actions';
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
 import DataTable from '../../components/Table/DataTable';
+import getRequestData from '../../util/RequestData';
+import {sectoralScope3Cells} from '../../util/TableHeadConfig';
 
 const useStyles = makeStyles(() => ({
 	formControl: {
@@ -13,231 +15,20 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
-const headCells = [
-	{
-		name: 'Company Name',
-		selector: 'security',
-		sortable: true,
-		right: false,
-		wrap: true
-	},
-	{
-		name: 'Purchased Goods and Services',
-		selector: 'purchased',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.purchased == -1 || row.purchased == -999999 ? 'NA' : new Intl.NumberFormat().format(row.purchased)}
-			</div>
-		)
-	},
-	{
-		name: 'Capital Goods',
-		selector: 'capital',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.capital == -1 || row.capital == -999999 ? 'NA' : new Intl.NumberFormat().format(row.capital)}
-			</div>
-		)
-	},
-	{
-		name: 'Fuel and Energy Related Activities',
-		selector: 'fuel',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>{row.fuel == -1 || row.fuel == -999999 ? 'NA' : new Intl.NumberFormat().format(row.fuel)}</div>
-		)
-	},
-	{
-		name: 'Upstream Transport and Distribution',
-		selector: 'upstreamTransport',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.upstreamTransport == -1 || row.upstreamTransport == -999999 ? (
-					'NA'
-				) : (
-					new Intl.NumberFormat().format(row.upstreamTransport)
-				)}
-			</div>
-		)
-	},
-	{
-		name: 'Waste Generated',
-		selector: 'waste"',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>{row.waste == -1 || row.waste == -999999 ? 'NA' : new Intl.NumberFormat().format(row.waste)}</div>
-		)
-	},
-	{
-		name: 'Business Travel',
-		selector: 'business',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.business == -1 || row.business == -999999 ? 'NA' : new Intl.NumberFormat().format(row.business)}
-			</div>
-		)
-	},
-	{
-		name: 'Employee Commuting',
-		selector: 'employee',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.employee == -1 || row.employee == -999999 ? 'NA' : new Intl.NumberFormat().format(row.employee)}
-			</div>
-		)
-	},
-	{
-		name: 'Upstream Leased Assets',
-		selector: 'upstreamLeased',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.upstreamLeased == -1 || row.upstreamLeased == -999999 ? (
-					'NA'
-				) : (
-					new Intl.NumberFormat().format(row.upstreamLeased)
-				)}
-			</div>
-		)
-	},
-	{
-		name: 'Downstream Transport Distribution',
-		selector: 'downstreamTransport',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.downstreamTransport == -1 || row.downstreamTransport == -999999 ? (
-					'NA'
-				) : (
-					new Intl.NumberFormat().format(row.downstreamTransport)
-				)}
-			</div>
-		)
-	},
-	{
-		name: 'Processing of Sold Products',
-		selector: 'processing',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.processing == -1 || row.processing == -999999 ? (
-					'NA'
-				) : (
-					new Intl.NumberFormat().format(row.processing)
-				)}
-			</div>
-		)
-	},
-	{
-		name: 'Use of Sold Products',
-		selector: 'useSolid',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.useSolid == -1 || row.useSolid == -999999 ? 'NA' : new Intl.NumberFormat().format(row.useSolid)}
-			</div>
-		)
-	},
-	{
-		name: 'End of Life Treatment of Sold Products',
-		selector: 'endOfLife',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.endOfLife == -1 || row.endOfLife == -999999 ? 'NA' : new Intl.NumberFormat().format(row.endOfLife)}
-			</div>
-		)
-	},
-	{
-		name: 'Downstream Leased Assets',
-		selector: 'downstreamLease',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.downstreamLease == -1 || row.downstreamLease == -999999 ? (
-					'NA'
-				) : (
-					new Intl.NumberFormat().format(row.downstreamLease)
-				)}
-			</div>
-		)
-	},
-	{
-		name: 'Franchises',
-		selector: 'franchise',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.franchise == -1 || row.franchise == -999999 ? 'NA' : new Intl.NumberFormat().format(row.franchise)}
-			</div>
-		)
-	},
-	{
-		name: 'Investments',
-		selector: 'investments',
-		sortable: true,
-		right: true,
-		wrap: true,
-		cell: (row) => (
-			<div>
-				{row.investments == -1 || row.investments == -999999 ? (
-					'NA'
-				) : (
-					new Intl.NumberFormat().format(row.investments)
-				)}
-			</div>
-		)
-	}
-];
-
 const SectoralScope3Heatmap = ({}) => {
 	const dispatch = useDispatch();
 	const classes = useStyles();
 	const [ chartData, setChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
-	const [ materialityType, setMatType ] = useState('matPort');
 	const [ yCategories, setYCategories ] = useState([]);
 	const [ xCategories, setXCategories ] = useState([]);
 	const [ currentSector, setCurrentSector ] = useState('');
-	const [ loading, setLoading ] = useState(false);
 
+    const auth = useSelector((state) => state.auth);
 	const filterItem = useSelector((state) => state.auth.filterItem);
-	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
-	const currentUser = useSelector((state) => state.auth.currentUser);
 	const heatmapData = useSelector((state) => state.scope3.heatmapData);
+
+	const {materiality} =filterItem
 
 	const getCategoryKey = (category) => {
 		switch (category) {
@@ -276,26 +67,8 @@ const SectoralScope3Heatmap = ({}) => {
 		}
 	};
 	const fetchDetails = async () => {
-		const { sector, footprintMetric, marketValue, assetClass, inferenceType, emission } = filterItem;
-		setLoading(true);
-		const data = {
-			client: currentUser.client,
-			user: currentUser.userName,
-			database: currentUser.client + '_Portfolios',
-			portfolio: currentPortfolio.label,
-			portfolio_date: currentPortfolio.value,
-			interference_type: inferenceType,
-			emissions: emission,
-			sector: sector,
-			asset_type: assetClass,
-			country_type: 'inc',
-			fundamentals_quarter: 'Q1',
-			emissions_quarter: 'Q1',
-			version_fundamentals: '1',
-			version_emissions: '11'
-		};
+		const data=getRequestData('SECTORAL_SCOPE3_MATERILITY',auth)
 		await dispatch(getScope3Data(data));
-		setLoading(false);
 	};
 	useEffect(() => {
 		fetchDetails();
@@ -304,19 +77,14 @@ const SectoralScope3Heatmap = ({}) => {
 		() => {
 			if (heatmapData && heatmapData['data'] && Object.keys(heatmapData['data']).length > 0) {
 				const sectorName = heatmapData['data']['SectorList'][0];
-				getChartData(materialityType, sectorName);
+				getChartData(materiality, sectorName);
 			}
 		},
-		[ heatmapData ]
+		[ heatmapData ,materiality]
 	);
-	const handleMaterialityChange = (e) => {
-		const matType = e.target.value;
-		setMatType(matType);
-		getChartData(matType,currentSector);
-	};
 	const handleSectorChange = (e) => {
 		const sectorName = e.target.value;
-		getChartData(materialityType, sectorName);
+		getChartData(materiality, sectorName);
 	};
 
 	const getChartData = (materialityType, currentSectorName) => {
@@ -394,7 +162,6 @@ const SectoralScope3Heatmap = ({}) => {
 							<FormControl variant="outlined" className={classes.formControl}>
 								<InputLabel>Select Sector</InputLabel>
 								<Select
-									value={materialityType}
 									label="Select Sector"
 									value={currentSector}
 									onChange={handleSectorChange}
@@ -410,12 +177,12 @@ const SectoralScope3Heatmap = ({}) => {
 						yAxisCategories={yCategories}
 						data={chartData}
 						xAxisCategories={xCategories}
+						isSectoral={true}
 					/>
 					<DataTable
 						data={tableData}
-						columns={headCells}
+						columns={sectoralScope3Cells}
 						tableHeading="SECTORAL_SCOPE3_HEATMAP"
-						loading={loading}
 						isScroll={true}
 					/>
 				</React.Fragment>

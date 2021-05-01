@@ -5,101 +5,25 @@ import { getAvoidedEmissions } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
 import filterConfig from '../../util/filter-config';
+import getRequestData from '../../util/RequestData';
+import {avoidedEmissionCells} from '../../util/TableHeadConfig';
 
 const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3', 'Avoided Emissions', 'Net Emissions' ];
-const headCells = [
-	{
-		name: '',
-		selector: 'name',
-		sortable: true,
-		right: false,
-		wrap: true
-	},
-	{
-		name: 'Scope 1+2',
-		selector: 'Sc12',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc12)}</div>
-	},
-	{
-		name: 'Scope 3',
-		selector: 'Sc3',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc3)}</div>
-	},
-	{
-		name: 'Scope 1+2+3',
-		selector: 'Sc123',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc123)}</div>
-	},
-	{
-		name: 'Avoided Emissions',
-		selector: 'avoidedEmissions',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.avoidedEmissions)}</div>
-	},
-	{
-		name: 'Net Emissions',
-		selector: 'netEmissions',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.netEmissions)}</div>
-	}
-];
 
 const AvoidedEmission = ({}) => {
-	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
-	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
-	const currentYear = useSelector((state) => state.auth.currentYear);
-	const currentCurrency = useSelector((state) => state.auth.currentCurrency);
-	const currentQuarter = useSelector((state) => state.auth.currentQuarter);
-	const currentUser = useSelector((state) => state.auth.currentUser);
-	const filterItem = useSelector((state) => state.auth.filterItem);
+    const auth = useSelector((state) => state.auth);
 	const avoidedEmissions = useSelector((state) => state.footprint.avoidedEmission);
+    const {filterItem}=auth
 
 	const [ chartData, setChartData ] = useState([]);
-	const [ loading, setLoading ] = useState(false);
 	const [ tableData, setTableData ] = useState([]);
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
 
 	const dispatch = useDispatch();
 
 	const fetchDetails = async () => {
-		setLoading(true);
-		const { sector, footprintMetric, marketValue, assetClass, inferenceType } = filterItem;
-
-		const data = {
-			client: currentUser.client,
-			user: currentUser.userName,
-			portfolio: currentPortfolio.label,
-			portfolio_date: currentPortfolio.value,
-			data_objects: [ 'PF_Avoided_Emissions' ],
-			year: currentYear,
-			quarter: currentQuarter,
-			currency: currentCurrency,
-			benchmark: currentBenchmark.label,
-			benchmark_date: currentBenchmark.value,
-			sector_classification: sector,
-			footprint_metric: footprintMetric,
-			market_value: marketValue,
-			asset_class: assetClass,
-			interference_type: inferenceType,
-			emissions: 'Sc12',
-			fundamentals_quarter: 'Q1',
-			emissions_quarter: 'Q1',
-			version_fundamentals: '1',
-			version_emissions: '11',
-			avoided_quarter: 'Q1',
-			version_avoided: '1',
-			country_type: 'inc'
-		};
+        const data=getRequestData('AVOIDED_EMISSION', auth);
 		await dispatch(getAvoidedEmissions(data));
-		setLoading(false);
 	};
 
 	const getTableData = () => {
@@ -211,9 +135,8 @@ const AvoidedEmission = ({}) => {
 					/>
 					<DataTable
 						data={tableData}
-						columns={headCells}
+						columns={avoidedEmissionCells}
 						tableHeading="AVOIDED_EMISSIONS"
-						loading={loading}
 					/>
 				</Box>
 			)}

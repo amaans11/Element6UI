@@ -13,10 +13,22 @@ const configs={
             'HEADING':'Avoided Emission'
         },
         'SECTORAL_SCOPE3_HEATMAP':{
-            'TITLE':'Supply and Value Chain Scope 3 Materiality',
+            'HEADING':'Supply and Value Chain Scope 3 Materiality',
         },
         'PORT_OPTIMIZATION':{
-            'TITLE':''
+            'HEADING':''
+        },
+        'RISK_CONTRIBUTOR':{
+            'HEADING':'Risk Contribution Table'
+        },
+        'FOSSIL_FUEL':{
+            'HEADING':''
+        },
+        'FOSSIL_FUEL_COUNTRY':{
+            'HEADING':''
+        },
+        'COAL_POWER':{
+            'HEADING':''
         }
     },
     "CHART":{
@@ -30,7 +42,8 @@ const configs={
             "TITLE":"Sector Contribution" 
         },
         "SECTOR_WEIGHT":{
-            "TITLE":"Sector Weight" 
+            "TITLE":"Sector Weight" ,
+            "Y_AXIS_TITLE":"Sector Weight (%)"
         },
         "SOV_GDP_CHART":{
             "TITLE":"Sovereign Footprint (per GDP)",
@@ -77,6 +90,16 @@ const configs={
         'PERFORMANCE_ATTRIBUTION':{
             'TITLE':'Performance Attribution',
             'Y_AXIS_TITLE':'Returns (%)'
+        },
+        'RISK_CONTRIBUTOR':{
+            'TITLE':'Portfolio Risk Contributions'
+        },
+        'FOSSIL_FUEL':{
+            'TITLE':'Fossil-Fuel Reserves Footprint'
+        },
+        'COAL_POWER':{
+            'TITLE':'Coal Power Analysis',
+            'Y_AXIS_TITLE':'MV'
         }
     }
 }

@@ -1,47 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid } from '@material-ui/core';
+import { Box, Grid, Slider, Typography,Button } from '@material-ui/core';
 import LineChart from '../../components/ChartsComponents/Line';
 import { getPortOptimizationData } from '../../redux/actions/optimizationActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
+import getRequestData from '../../util/RequestData';
+import { portOptimizationCells } from '../../util/TableHeadConfig';
 
-const headCells = [
-	{
-		name: '',
-		selector: 'name',
-		sortable: true,
-		right: false,
-		wrap: true
-	},
-	{
-		name: 'Portfolio',
-		selector: 'portfolio',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.portfolio)}</div>
-	},
-	{
-		name: 'Benchmark',
-		selector: 'benchmark',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.benchmark)}</div>
-	},
-	{
-		name: 'Tilted',
-		selector: 'tilted',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc123)}</div>
-	}
-];
 const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3' ];
 
 const PortfolioOptimization = () => {
 	const dispatch = useDispatch();
 
-	const [ loading, setLoading ] = useState(false);
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
 	const [ lineChartData, setLineChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
@@ -51,12 +22,10 @@ const PortfolioOptimization = () => {
 	const [ weightData, setWeightData ] = useState([]);
 	const [ contribData, setContribData ] = useState([]);
 
-	const filterItem = useSelector((state) => state.auth.filterItem);
-	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
-	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
-	const currentCurrency = useSelector((state) => state.auth.currentCurrency);
-	const currentUser = useSelector((state) => state.auth.currentUser);
 	const optimizationData = useSelector((state) => state.optimization.optimizationData);
+	const auth = useSelector((state) => state.auth);
+
+	const { reweightFactor } = auth;
 
 	const formatDate = (currentDate) => {
 		const year = currentDate.toString().slice(0, 4);
@@ -94,6 +63,7 @@ const PortfolioOptimization = () => {
 	};
 	const getTableData = (response) => {
 		let tableData = [];
+		let count = 0;
 
 		if (
 			response['portfolio'] &&
@@ -101,12 +71,16 @@ const PortfolioOptimization = () => {
 			Object.keys(response['portfolio']['table'].length > 0)
 		) {
 			const data = response['portfolio']['table'];
-			Object.keys(data).map((key, index) => {
+			Object.keys(data).map((key) => {
 				const tableKey = getTableKey(key);
-				tableData[index] = {
-					name: tableKey,
-					portfolio: data[key]
-				};
+				if (!key.includes('3Y')) {
+					console.log('portKey', key);
+					tableData[count] = {
+						name: tableKey,
+						portfolio: data[key]
+					};
+					count++;
+				}
 			});
 		}
 		if (
@@ -115,22 +89,34 @@ const PortfolioOptimization = () => {
 			Object.keys(response['benchmark']['table'].length > 0)
 		) {
 			const data = response['benchmark']['table'];
-			Object.keys(data).map((key, index) => {
-				tableData[index] = {
-					...tableData[index],
-					benchmark: data[key]
-				};
+			count = 0;
+			Object.keys(data).map((key) => {
+				if (!key.includes('3Y')) {
+					console.log('benchKey', key);
+					tableData[count] = {
+						...tableData[count],
+						benchmark: data[key]
+					};
+					count++;
+				}
 			});
 		}
 		if (response['tilted'] && response['tilted']['table'] && Object.keys(response['tilted']['table'].length > 0)) {
 			const data = response['tilted']['table'];
-			Object.keys(data).map((key, index) => {
-				tableData[index] = {
-					...tableData[index],
-					tilted: data[key]
-				};
+			count = 0;
+
+			Object.keys(data).map((key) => {
+				if (!key.includes('3Y')) {
+					console.log('tiltedKey', key);
+					tableData[count] = {
+						...tableData[count],
+						tilted: data[key]
+					};
+					count++;
+				}
 			});
 		}
+		console.log('tableData', tableData);
 		return tableData;
 	};
 	const getLineChartData = (response) => {
@@ -185,13 +171,13 @@ const PortfolioOptimization = () => {
 	};
 	const getIntensityData = (response) => {
 		let intensityData = [];
-		const intensityPortSc12 = response['tilted']['Intensities']['portfolio']['Scope_12'];
-		const intensityPortSc123 = response['tilted']['Intensities']['portfolio']['Scope_123'];
-		const intensityPortSc3 = response['tilted']['Intensities']['portfolio']['Scope_3'];
+		const intensityPortSc12 = parseFloat(response['tilted']['Intensities']['portfolio']['Scope_12'].toFixed(2));
+		const intensityPortSc123 = parseFloat(response['tilted']['Intensities']['portfolio']['Scope_123'].toFixed(2));
+		const intensityPortSc3 = parseFloat(response['tilted']['Intensities']['portfolio']['Scope_3'].toFixed(2));
 
-		const intensityTiltedSc12 = response['tilted']['Intensities']['tilted']['Scope_12'];
-		const intensityTiltedSc123 = response['tilted']['Intensities']['tilted']['Scope_123'];
-		const intensityTiltedSc3 = response['tilted']['Intensities']['tilted']['Scope_3'];
+		const intensityTiltedSc12 = parseFloat(response['tilted']['Intensities']['tilted']['Scope_12'].toFixed(2));
+		const intensityTiltedSc123 = parseFloat(response['tilted']['Intensities']['tilted']['Scope_123'].toFixed(2));
+		const intensityTiltedSc3 = parseFloat(response['tilted']['Intensities']['tilted']['Scope_3'].toFixed(2));
 
 		intensityData = [
 			{
@@ -278,31 +264,8 @@ const PortfolioOptimization = () => {
 		setContribData(contribData);
 	};
 	const fetchDetails = async () => {
-		const { sector, footprintMetric, marketValue, assetClass, emission, inferenceType } = filterItem;
-		setLoading(true);
-		const data = {
-			client: currentUser.client,
-			user: currentUser.userName,
-			portfolio: currentPortfolio.label,
-			portfolio_date: currentPortfolio.value,
-			benchmark: currentBenchmark.label,
-			benchmark_date: currentBenchmark.value,
-			asset_type: assetClass,
-			footprint_metric: footprintMetric,
-			sector: sector,
-			market_value: marketValue,
-			emissions: emission,
-			inference: inferenceType,
-			currency: currentCurrency,
-			strategy: 'momentum',
-			fundamentals_quarter: 'Q1',
-			emissions_quarter: 'Q1',
-			version_fundamentals: '1',
-			version_emissions: '11',
-			reweight_factor: 1
-		};
+		const data = getRequestData('PORTFOLIO_OPTIMIZATION', auth);
 		await dispatch(getPortOptimizationData(data));
-		setLoading(false);
 	};
 	useEffect(() => {
 		fetchDetails();
@@ -313,7 +276,6 @@ const PortfolioOptimization = () => {
 		},
 		[ optimizationData ]
 	);
-	console.log('lineChartData', JSON.stringify(lineChartData));
 	return (
 		<React.Fragment>
 			{optimizationData.error ? (
@@ -322,16 +284,32 @@ const PortfolioOptimization = () => {
 				</Box>
 			) : (
 				<Box>
+					<Grid container style={{marginLeft:40,marginTop:10}}>
+						<Grid item xs={5}>
+							<Typography>Select Urgentem reweight factor</Typography>
+							<Slider
+								value={reweightFactor}
+								max={1}
+								min={0}
+								step={0.01}
+								style={{width:'80%'}}
+								getAriaValueText={reweightFactor}
+								// onChange={handleChange}
+							/>
+						</Grid>
+						<Grid item xs={4} >
+							<Button type="primary" variant="contained">Submit</Button>
+						</Grid>
+					</Grid>
 					<Grid container>
 						<Grid item xs={6}>
 							<LineChart data={lineChartData} chartKey="PORT_OPTIMIZATION" />
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={6} style={{ marginTop: -30 }}>
 							<DataTable
 								data={tableData}
-								columns={headCells}
+								columns={portOptimizationCells}
 								tableHeading="PORT_OPTIMIZATION"
-								loading={loading}
 							/>
 						</Grid>
 					</Grid>

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {Box} from '@material-ui/core';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import { getPortfolioEmission } from '../../redux/actions/footprintActions';
+import getRequestData from '../../util/RequestData';
 
 const getEmissionIntesity = (type) => {
 	switch (type) {
@@ -29,24 +30,18 @@ const getContribEmission = (type) => {
 	}
 };
 const CarbonEmission = ({}) => {
+    const dispatch = useDispatch();
+
 	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
 	const filterItem = useSelector((state) => state.auth.filterItem);
-	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
-	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
-	const currentYear = useSelector((state) => state.auth.currentYear);
-	const currentCurrency = useSelector((state) => state.auth.currentCurrency);
-	const currentQuarter = useSelector((state) => state.auth.currentQuarter);
-	const currentUser = useSelector((state) => state.auth.currentUser);
+    const auth=useSelector((state) => state.auth);
 
 	const [ sectorIntensityData, setIntensityData ] = useState([]);
 	const [ contribData, setContribData ] = useState([]);
 	const [ sectorWeightData, setSectorWeightData ] = useState([]);
 	const [ categories, setCategories ] = useState([]);
 	const [ yAxisTitle, setYTitle ] = useState('');
-	const [ loading, setLoading ] = useState(false);
 	const { inferenceType, emission } = filterItem;
-
-	const dispatch = useDispatch();
 
 	useEffect(() => {
 		fetchDetails();
@@ -64,29 +59,8 @@ const CarbonEmission = ({}) => {
 	);
 
 	const fetchDetails = async () => {
-		const { sector, footprintMetric, marketValue, assetClass } = filterItem;
-		setLoading(true);
-		const data = {
-			asset_type: assetClass,
-			benchmark: currentBenchmark.label,
-			benchmark_date: currentBenchmark.value,
-			client: currentUser.client,
-			currency: currentCurrency,
-			emissions_quarter: 'Q1',
-			footprint_metric: footprintMetric,
-			fundamentals_quarter: 'Q1',
-			market_value: marketValue,
-			portfolio: currentPortfolio.label,
-			portfolio_date: currentPortfolio.value,
-			quarter: currentQuarter,
-			sector: sector,
-			version: '',
-			version_emissions: '11',
-			version_fundamentals: '1',
-			year: currentYear
-		};
+        const data = getRequestData('CARBON_EMISSION', auth);
 		await dispatch(getPortfolioEmission(data));
-		setLoading(false);
 	};
 
 	const getChartData = (portData, benchData, emission) => {
@@ -166,7 +140,6 @@ const CarbonEmission = ({}) => {
 			result = getChartData(portData, benchData, emissionContrib);
 			
 		}
-
 		setContribData(result);
 	};
 	const getSectorWeight = () => {
@@ -214,7 +187,6 @@ const CarbonEmission = ({}) => {
 						categories={categories}
 						data={sectorWeightData}
 						chartKey="SECTOR_WEIGHT"
-						yAxisTitle={yAxisTitle}
 					/>
 				</Box>
 			)}

@@ -5,12 +5,12 @@ import CONFIG from '../../../util/config'
 
 function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle }) {
   const title =CONFIG['CHART'][chartKey]['TITLE']
-  let yAxis=yAxisTitle
+  let yAxis=yAxisTitle;
+
   if(!yAxisTitle){
     yAxis=CONFIG['CHART'][chartKey]['Y_AXIS_TITLE']
   }
   const currentTheme = localStorage.getItem('appTheme');
-  console.log("title>>",title)
 
   const options = {
     chart: {
@@ -29,7 +29,7 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle }) {
     xAxis: {
         categories: categories,
         title: {
-          text: null,
+          text: '',
         },
         labels: {
           style: {

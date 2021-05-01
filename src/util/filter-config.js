@@ -61,6 +61,23 @@
         { name: "Sector", value: "matSector", selected: false },
       ],
     },
+    {
+      grpname: "Strategy",
+      grpKey:'strategy',
+      tagsList: [
+        { name: "Carbon Momentum", value: "momentum", selected: true },
+        { name: "Emissions Reduction", value: "emissions_reduction", selected: false },
+      ],
+    },
+    {
+      grpname: "Return Year",
+      grpKey:'returnYear',
+      tagsList: [
+        { name: "5 Year Return", value: "5", selected: false },
+        { name: "3 Year Return", value: "3", selected: true },
+        { name: "1 Year Return", value: "1", selected: false },
+      ],
+    },
   ]
   
   

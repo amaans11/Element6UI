@@ -1,29 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
 import { getScope3Data } from '../../redux/actions/scope3Actions';
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
+import getRequestData from '../../util/RequestData';
 
-const useStyles = makeStyles(() => ({
-	formControl: {
-		width: 200,
-		margin: 15
-	}
-}));
 const Scope3Heatmap = ({}) => {
 	const dispatch = useDispatch();
-	const classes = useStyles();
+
+    const auth = useSelector((state) => state.auth);
+	const filterItem = useSelector((state) => state.auth.filterItem);
+	const heatmapData = useSelector((state) => state.scope3.heatmapData);
 
 	const [ chartData, setChartData ] = useState([]);
-	const [ materialityType, setMatType ] = useState('matPort');
 	const [ yCategories, setYCategories ] = useState([]);
 	const [ xCategories, setXCategories ] = useState([]);
 
-	const filterItem = useSelector((state) => state.auth.filterItem);
-	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
-	const currentUser = useSelector((state) => state.auth.currentUser);
-	const heatmapData = useSelector((state) => state.scope3.heatmapData);
+	const {materiality} =filterItem
 
 	const getCategoryKey = (category) => {
 		switch (category) {
@@ -62,23 +55,7 @@ const Scope3Heatmap = ({}) => {
 		}
 	};
 	const fetchDetails = async () => {
-		const { sector, footprintMetric, marketValue, assetClass, inferenceType, emission } = filterItem;
-		const data = {
-			client: currentUser.client,
-			user: currentUser.userName,
-			database: currentUser.client + '_Portfolios',
-			portfolio: currentPortfolio.label,
-			portfolio_date: currentPortfolio.value,
-			interference_type: inferenceType,
-			emissions: emission,
-			sector: sector,
-			asset_type: assetClass,
-			country_type: 'inc',
-			fundamentals_quarter: 'Q1',
-			emissions_quarter: 'Q1',
-			version_fundamentals: '1',
-			version_emissions: '11'
-		};
+		const data=getRequestData('SCOPE3_MATERILITY',auth)
 		await dispatch(getScope3Data(data));
 	};
 	useEffect(() => {
@@ -86,17 +63,14 @@ const Scope3Heatmap = ({}) => {
 	}, []);
 	useEffect(
 		() => {
-			getChartData(materialityType);
+			getChartData(materiality);
 		},
-		[ heatmapData ]
+		[ heatmapData,materiality ]
 	);
-	const handleMaterialityChange = (e) => {
-		const materiality = e.target.value;
-		setMatType(materiality);
-		getChartData(materiality);
-	};
+
 
 	const getChartData = (matType) => {
+		console.log("matType",matType)
 		const { emission, sector } = filterItem;
 
 		let chartData = [];

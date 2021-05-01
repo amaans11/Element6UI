@@ -2,7 +2,6 @@ import * as actionTypes from '../actionTypes';
 import axios from 'axios';
 
 export const getPortfolioEmission = (data) => {
-	console.log("test1",data)
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
