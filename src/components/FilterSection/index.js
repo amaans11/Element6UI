@@ -72,7 +72,45 @@ export default function FilterGroup() {
 						break;
 				}
 				break;
+			case 'Carbon risk':
+				config = filterConfig['PORTFOLIO_CARBON_RISK'];
+				break;
+			case 'Stranded':
+				switch (tabValue) {
+					case 0:
+						config = filterConfig['FOSSIL_FUEL'];
+						break;
+					case 1:
+						config = filterConfig['COAL_POWER'];
+						break;
+					default:
+						config = filterConfig['FOSSIL_FUEL'];
+						break;
+				}
+				break;
 
+			case 'Temp score':
+				switch (tabValue) {
+					case 0:
+						config = filterConfig['PORTFOLIO_TEMP_SCORE'];
+						break;
+					case 1:
+						config = filterConfig['COMPANY_ANALYSIS'];
+						break;
+					case 2:
+						config = filterConfig['ATTRIBUTION'];
+						break;
+					case 3:
+						config = filterConfig['CONTRIB_ANALYSIS'];
+						break;
+					case 4:
+						config = filterConfig['HEATMAP'];
+						break;
+					default:
+						config = filterConfig['PORTFOLIO_TEMP_SCORE'];
+						break;
+				}
+				break;
 			default:
 				switch (tabValue) {
 					case 0:
@@ -99,6 +137,50 @@ export default function FilterGroup() {
 				}
 		}
 		setConfigs(config);
+	};
+	const getEmission = (tagName) => {
+		switch (moduleName) {
+			case 'Emission':
+				switch (tagName) {
+					case 'Sc12':
+						return true;
+					case 'Sc123':
+						return true;
+					case 'Sc3':
+						return false;
+				}
+				break;
+			case 'Scope3':
+				switch (tagName) {
+					case 'Sc12':
+						return false;
+					case 'Sc123':
+						return true;
+					case 'Sc3':
+						return true;
+				}
+				break;
+			case 'Optimization':
+				switch (tagName) {
+					case 'Sc12':
+						return true;
+					case 'Sc123':
+						return true;
+					case 'Sc3':
+						return true;
+				}
+				break;
+			default:
+				switch (tagName) {
+					case 'Sc12':
+						return true;
+					case 'Sc123':
+						return true;
+					case 'Sc3':
+						return false;
+				}
+				break;
+		}
 	};
 
 	const updateTags = (grpindex, tagindex, selected) => {
@@ -148,15 +230,30 @@ export default function FilterGroup() {
 							<AccordionDetails>
 								<div>
 									{e.tagsList.map((t, i) => {
-										return (
-											<FilterTags
-												name={t.name}
-												selected={t.selected}
-												grpindex={index}
-												tagindex={i}
-												action={updateTags}
-											/>
-										);
+										const val = getEmission(t.value);
+										if (e.grpKey == 'emission') {
+											if (val) {
+												return (
+													<FilterTags
+														name={t.name}
+														selected={t.selected}
+														grpindex={index}
+														tagindex={i}
+														action={updateTags}
+													/>
+												);
+											}
+										} else {
+											return (
+												<FilterTags
+													name={t.name}
+													selected={t.selected}
+													grpindex={index}
+													tagindex={i}
+													action={updateTags}
+												/>
+											);
+										}
 									})}
 								</div>
 							</AccordionDetails>

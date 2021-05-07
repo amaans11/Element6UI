@@ -51,6 +51,7 @@
       tagsList: [
         { name: "Scope 1+2", value: "Sc12", selected: true },
         { name: "Scope 1+2+3", value: "Sc123", selected: false },
+        { name: "Scope 3", value: "Sc3", selected: false },
       ],
     },
     {
@@ -78,6 +79,75 @@
         { name: "1 Year Return", value: "1", selected: false },
       ],
     },
+    {
+      grpname: "Year",
+      grpKey:'year',
+      tagsList: [
+        { name: "1 Year", value: "1Y", selected: true },
+        { name: "3 Years", value: "3Y", selected: false },
+        { name: "5 Years", value: "5Y", selected: false },
+      ],
+    },
+    {
+      grpname: "Intensity Contribution Scope",
+      grpKey:'intensityScope',
+      tagsList: [
+        { name: "Scope 1+2", value: "Sc12", selected: true },
+        { name: "Scope 1+2+3", value: "Sc123", selected: false },
+      ],
+    },
+    {
+      grpname: "Aggregation",
+      grpKey:'aggregation',
+      tagsList: [
+        { name: "Weighted Average", value: "WATS", selected: true },
+        { name: "Total Emissions", value: "TETS", selected: false },
+        { name: "Market Owned Emissions", value: "MOTS", selected: false },
+        { name: "Enterprise Owned Emissions", value: "EOTS", selected: false },
+        { name: "Enterprise Value Including Cash Emissions", value: "ECOTS", selected: false },
+        { name: "Revenue Owned Emissions", value: "ROTS", selected: false },
+
+      ],
+    },
+    {
+      grpname: "What-If Scenario",
+      grpKey:'scenario',
+      tagsList: [
+        { name: "None", value: "0", selected: true },
+        { name: "All companies without targets set a 2 degree target", value: "1", selected: false },
+        { name: "All companies without targets set a 1.75 degree target", value: "2", selected: false },
+        { name: "Enterprise Owned Emissions Weighted Temperature Score", value: "3", selected: false },
+        { name: "Top 10 contributors set 2 degrees targets", value: "4", selected: false },
+        { name: "Top 10 contributors set 1.75 degree targets", value: "5", selected: false },
+      ]
+    },
+    {
+      grpname: "Score Type",
+      grpKey:'scoreType',
+      tagsList: [
+        { name: "Short Term Score", value: "shortTerm", selected: true },
+        { name: "Mid Term Score", value: "midTerm", selected: false },
+        { name: "Mid Term Score", value: "longTerm", selected: false },
+      ]
+    },
+    {
+      grpname: "Default Value",
+      grpKey:'defaultValue',
+      tagsList: [
+        { name: "0.50", value: "0.50", selected: false },
+        { name: "1.00", value: "1.00", selected: false },
+        { name: "1.50", value: "1.50", selected: false },
+        { name: "2.00", value: "2.00", selected: false },
+        { name: "2.50", value: "2.50", selected: false },
+        { name: "3.00", value: "3.00", selected: false },
+        { name: "3.20", value: "3.20", selected: true },
+        { name: "3.50", value: "3.50", selected: false },
+        { name: "4.00", value: "4.00", selected: false },
+        { name: "4.50", value: "4.50", selected: false },
+        { name: "5.00", value: "5.00", selected: false },
+      ]
+    }
+
   ]
   
   

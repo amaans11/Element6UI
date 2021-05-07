@@ -4,7 +4,7 @@ import HighchartsReact from 'highcharts-react-official';
 import { get } from 'lodash';
 import CONFIG from '../../../util/config';
 
-function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle, isSectoral }) {
+function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle, isSectoral,tabValue}) {
 	let title = chartTitle;
 	if (!chartTitle) {
 		title = CONFIG['CHART'][chartKey]['TITLE'];
@@ -13,7 +13,8 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 
 	let options = {
 		chart: {
-			type: 'heatmap'
+			type: 'heatmap',
+			height:520
 		},
 		title: {
 			text: title,
@@ -26,8 +27,19 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			},
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
-				}
+					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
+				},
+				formatter: function () {
+					if(!isSectoral){
+						let val=this.value.match(/.{1,4}/g)
+						let finalValue=val.join(' ')
+						return finalValue.replace(/ /g, '<br />');
+					}
+					else{
+						return this.value.replace(/ /g, '<br />')
+					}
+				},
+				rotation:0
 			}
 		},
 
@@ -45,19 +57,19 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 		},
 		colorAxis: {
 			min: 0,
-			minColor: '#b9c8fa',
-			maxColor: '#597ef7'
+			minColor: '#a7f7c1',
+			maxColor: '#ff4d4f',
+			reversed:false
 		},
 		legend: {
 			align: 'right',
 			layout: 'vertical',
 			verticalAlign: 'top',
 			y: 35,
-			symbolHeight: 310
+			symbolHeight: 385
 		},
 		tooltip: {
 			formatter: function() {
-				console.log(this.point);
 				const xValue = xAxisCategories[this.point.options.x];
 				const yValue = yAxisCategories[this.point.options.y];
 				const zValue = this.point.options.value;
@@ -94,7 +106,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 		};
 	}
 
-	console.log('options>>', options);
+	console.log('data1>>', data);
 	return (
 		<div>
 			<HighchartsReact highcharts={Highcharts} options={options} />

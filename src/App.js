@@ -12,12 +12,14 @@ import { configureStore } from './redux/store';
 import Login from './screens/auth/Login';
 import Base from './layouts/Base';
 import Settings from './screens/Settings';
+import { setLoading } from './redux/actions/authActions';
 
 // React notifications css import
 import 'react-notifications/lib/notifications.css';
 require('highcharts/modules/exporting')(Highcharts);
 require('highcharts/modules/heatmap')(Highcharts);
 require('highcharts/modules/export-data')(Highcharts);
+
 more(Highcharts);
 
 const { store, persistor } = configureStore();
@@ -77,10 +79,28 @@ Highcharts.theme = {
 		}
 	}
 };
+// Add a request interceptor
+axios.interceptors.request.use(
+	function(config) {
+		// Do something before request is sent
+
+		store.dispatch(setLoading(true));
+		return config;
+	},
+	function(error) {
+		// Do something with request error
+		return Promise.reject(error);
+	}
+);
+
+// Add a response interceptor
+axios.interceptors.response.use(async function(response) {
+	store.dispatch(setLoading(false));
+	return response;
+});
 
 function App() {
 	Highcharts.setOptions(Highcharts.theme);
-
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>

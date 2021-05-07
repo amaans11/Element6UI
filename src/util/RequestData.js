@@ -1,3 +1,31 @@
+const getScenarioValue = (currentSc) => {
+	const scenarios = [
+		{ key: '1', value: { number: 1, engagement_type: 1 } },
+		{ key: '2', value: { number: 2, engagement_type: 1 } },
+		{ key: '3', value: { number: 3, engagement_type: 1 } },
+		{ key: '4', value: { number: 3, engagement_type: 2 } }
+	];
+
+	let res = {};
+	scenarios.map((scenario) => {
+		if (scenario.key == currentSc) {
+			res = scenario.value;
+		}
+	});
+	return res;
+};
+const getScoreType=(scoreType)=>{
+	if(scoreType == 'shortTerm'){
+		return 'short';
+	}
+	else if(scoreType == 'longTerm'){
+		return 'long';
+	}
+	else{
+		return 'mid';
+	}
+}
+
 const getRequestData = (type, auth) => {
 	let data = {};
 	const {
@@ -8,10 +36,25 @@ const getRequestData = (type, auth) => {
 		currentYear,
 		currentUser,
 		filterItem,
-		reweightFactor,
+		reweightFactor
 	} = auth;
 
-	const { sector, footprintMetric, marketValue, assetClass, inferenceType, emission,strategy,returnYear } = filterItem;
+	const {
+		sector,
+		footprintMetric,
+		marketValue,
+		assetClass,
+		inferenceType,
+		emission,
+		strategy,
+		returnYear,
+		aggregation,
+		defaultValue,
+		scenario,
+		scoreType
+	} = filterItem;
+
+	const scenarioValue = getScenarioValue(scenario);
 	switch (type) {
 		case 'PORTFOLIO_EMISSION':
 			data = {
@@ -210,7 +253,7 @@ const getRequestData = (type, auth) => {
 				emissions_quarter: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
-				reweight_factor: 0
+				reweight_factor: reweightFactor
 			};
 			break;
 		case 'PERFORMANCE_ATTRIBUTION':
@@ -245,11 +288,11 @@ const getRequestData = (type, auth) => {
 				version_fundamentals: '1',
 				version_emissions: '11',
 				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				emissions_quarter: 'Q1'
 			};
 			break;
 		case 'FOSSIL_FUEL':
-			data={
+			data = {
 				client: currentUser.client,
 				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
@@ -264,10 +307,10 @@ const getRequestData = (type, auth) => {
 				version_fundamentals: '1',
 				version_emissions: '11',
 				reserves_quarter: 'Q1',
-				market_value:marketValue,
-				asset_type:assetClass,
-				footprint_metric:footprintMetric
-			}
+				market_value: marketValue,
+				asset_type: assetClass,
+				footprint_metric: footprintMetric
+			};
 			break;
 		case 'COAL_POWER':
 			data = {
@@ -282,9 +325,99 @@ const getRequestData = (type, auth) => {
 				emissions_quarter: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
-				year_fundamentals: 2019,
+				year_fundamentals: 2019
 			};
 			break;
+
+		case 'PORT_TEMPERATURE_SCORE':
+			data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				benchmark: currentBenchmark.label,
+				benchmark_date: currentBenchmark.value,
+				currency: currentCurrency,
+				year: currentYear,
+				quarter: currentQuarter,
+				aggregation_method: aggregation,
+				default_score: defaultValue
+			};
+			if (scenario != 0) {
+				data = {
+					...data,
+					what_if: scenarioValue
+				};
+			}
+			break;
+
+		case 'COMPANY_ANALYSIS':
+			const score=getScoreType(scoreType)
+			data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				benchmark: currentBenchmark.label,
+				benchmark_date: currentBenchmark.value,
+				currency: currentCurrency,
+				year: currentYear,
+				quarter: currentQuarter,
+				aggregation_method: aggregation,
+				default_score: defaultValue,
+				sector_classification: sector,
+				scope: emission,
+				term: score
+			};
+			break;
+		case 'TEMP_ATTRIBUTION':
+			data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				benchmark: currentBenchmark.label,
+				benchmark_date: currentBenchmark.value,
+				currency: currentCurrency,
+				year: currentYear,
+				quarter: currentQuarter,
+				aggregation_method: aggregation,
+				default_score: defaultValue,
+				sector_classification: sector
+			};
+			break;
+		case 'TEMP_HEATMAP':
+			data = {
+				client: currentUser.client,
+				user: currentUser.userName,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				benchmark: currentBenchmark.label,
+				benchmark_date: currentBenchmark.value,
+				currency: currentCurrency,
+				year: currentYear,
+				quarter: currentQuarter,
+				aggregation_method: aggregation,
+				default_score: defaultValue,
+				sector_classification: sector
+			};
+			break;
+			case 'CONTRIBUTION_ANALYSIS':
+				data = {
+					client: currentUser.client,
+					user: currentUser.userName,
+					portfolio: currentPortfolio.label,
+					portfolio_date: currentPortfolio.value,
+					benchmark: currentBenchmark.label,
+					benchmark_date: currentBenchmark.value,
+					currency: currentCurrency,
+					year: currentYear,
+					quarter: currentQuarter,
+					aggregation_method: aggregation,
+					default_score: defaultValue,
+					sector_classification: sector
+				};
+				break;
 		default:
 			data = {};
 			break;

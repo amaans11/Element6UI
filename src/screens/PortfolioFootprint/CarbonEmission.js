@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {Box} from '@material-ui/core';
+import {Box,CircularProgress} from '@material-ui/core';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import { getPortfolioEmission } from '../../redux/actions/footprintActions';
 import getRequestData from '../../util/RequestData';
@@ -35,6 +35,7 @@ const CarbonEmission = ({}) => {
 	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
 	const filterItem = useSelector((state) => state.auth.filterItem);
     const auth=useSelector((state) => state.auth);
+	const {loading}=auth
 
 	const [ sectorIntensityData, setIntensityData ] = useState([]);
 	const [ contribData, setContribData ] = useState([]);
@@ -165,7 +166,7 @@ const CarbonEmission = ({}) => {
 
 	return (
 		<React.Fragment>
-			{portfolioEmission.error ? (
+			{loading ? <CircularProgress /> : portfolioEmission.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{portfolioEmission.error}
 				</Box>

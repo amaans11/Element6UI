@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box } from '@material-ui/core';
+import { Box,CircularProgress } from '@material-ui/core';
 import { getDisclosureData } from '../../redux/actions/footprintActions';
 import { map } from 'lodash';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
@@ -19,6 +19,7 @@ const Disclosure = ({}) => {
 	const [ columnCategories, setColumnCategories ] = useState([]);
 
 	const dispatch = useDispatch();
+	const {loading}=auth
 
 	const fetchDetails = async () => {
 		const portData = getRequestData('PORT_DISCLOSURE', auth);
@@ -105,9 +106,10 @@ const Disclosure = ({}) => {
 		},
 		[ portDisclosure, benchDisclosure ]
 	);
+	console.log("stackedChartData",stackedChartData)
 	return (
 		<React.Fragment>
-			{portDisclosure.error ? (
+			{loading ? <CircularProgress /> : portDisclosure.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{portDisclosure.error}
 				</Box>

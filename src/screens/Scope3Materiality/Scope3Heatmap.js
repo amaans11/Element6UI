@@ -5,7 +5,7 @@ import { getScope3Data } from '../../redux/actions/scope3Actions';
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
 import getRequestData from '../../util/RequestData';
 
-const Scope3Heatmap = ({}) => {
+const Scope3Heatmap = ({tabValue}) => {
 	const dispatch = useDispatch();
 
     const auth = useSelector((state) => state.auth);
@@ -96,8 +96,9 @@ const Scope3Heatmap = ({}) => {
 					const yValue = sectorList.indexOf(sectorName);
 					chartData.push([ xValue, yValue, data.z ]);
 
-					if (!xCategories.includes(data.y)) {
-						xCategories.push(data.y);
+					const yLabel=data.y.replace('_','')
+					if (!xCategories.includes(yLabel)) {
+						xCategories.push(yLabel);
 					}
 				});
 			}
@@ -107,6 +108,7 @@ const Scope3Heatmap = ({}) => {
 		setYCategories(sectorList);
 		setXCategories(xCategories);
 	};
+	console.log("")
 
 	return (
 		<React.Fragment>

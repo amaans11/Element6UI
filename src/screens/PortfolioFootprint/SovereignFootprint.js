@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Box } from '@material-ui/core';
+import { Grid, Box,CircularProgress } from '@material-ui/core';
 import { getSovereignFootprint } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
@@ -16,7 +16,10 @@ const SovereignFootprint = ({}) => {
 	const [ categories, setCategories ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
 
+	console.log("sovFootprint",sovFootprint)
+
 	const dispatch = useDispatch();
+	const {loading}=auth
 
 	const fetchDetails = async () => {
         const data=getRequestData('SOVEREIGN_FOOTPRINT',auth)
@@ -112,7 +115,7 @@ const SovereignFootprint = ({}) => {
 
 	return (
 		<React.Fragment>
-			{sovFootprint.error ? (
+			{loading ? <CircularProgress /> : sovFootprint.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{sovFootprint.error}
 				</Box>

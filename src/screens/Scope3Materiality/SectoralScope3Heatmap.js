@@ -113,8 +113,9 @@ const SectoralScope3Heatmap = ({}) => {
 					const yValue = sectorList.indexOf(sectorName);
 					chartData.push([ xValue, yValue, data.z ]);
 
-					if (!xCategories.includes(data.y)) {
-						xCategories.push(data.y);
+					const xLabel=data.n.replaceAll('_',' ')
+					if (!xCategories.includes(xLabel)) {
+						xCategories.push(xLabel);
 					}
 				}
 			});

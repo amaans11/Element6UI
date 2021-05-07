@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Slider, Typography,Button } from '@material-ui/core';
 import LineChart from '../../components/ChartsComponents/Line';
 import { getPortOptimizationData } from '../../redux/actions/optimizationActions';
+import {setReweightData} from '../../redux/actions/authActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
 import getRequestData from '../../util/RequestData';
@@ -13,6 +14,11 @@ const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3' ];
 const PortfolioOptimization = () => {
 	const dispatch = useDispatch();
 
+	const optimizationData = useSelector((state) => state.optimization.optimizationData);
+	const auth = useSelector((state) => state.auth);
+
+	const { reweightFactor } = auth
+
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
 	const [ lineChartData, setLineChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
@@ -21,11 +27,9 @@ const PortfolioOptimization = () => {
 	const [ contribCategories, setContribCategories ] = useState([]);
 	const [ weightData, setWeightData ] = useState([]);
 	const [ contribData, setContribData ] = useState([]);
+	const [reWeightFactor,setReweightfactor]=useState(reweightFactor)
 
-	const optimizationData = useSelector((state) => state.optimization.optimizationData);
-	const auth = useSelector((state) => state.auth);
-
-	const { reweightFactor } = auth;
+	;
 
 	const formatDate = (currentDate) => {
 		const year = currentDate.toString().slice(0, 4);
@@ -33,6 +37,12 @@ const PortfolioOptimization = () => {
 		const date = currentDate.toString().slice(6, 8);
 		return { year, month, date };
 	};
+	const handleReweightFactor=(event,newValue)=>{
+		setReweightfactor(newValue)
+	}
+	const submitReweightFactor=()=>{
+		dispatch(setReweightData(reWeightFactor))
+	}
 	const getTableKey = (key) => {
 		switch (key) {
 			case 'Annualised1Y':
@@ -288,17 +298,17 @@ const PortfolioOptimization = () => {
 						<Grid item xs={5}>
 							<Typography>Select Urgentem reweight factor</Typography>
 							<Slider
-								value={reweightFactor}
+								value={reWeightFactor}
 								max={1}
 								min={0}
 								step={0.01}
 								style={{width:'80%'}}
-								getAriaValueText={reweightFactor}
-								// onChange={handleChange}
+								// getAriaValueText={reweightFactor}
+								onChange={handleReweightFactor}
 							/>
 						</Grid>
 						<Grid item xs={4} >
-							<Button type="primary" variant="contained">Submit</Button>
+							<Button type="primary" variant="contained" onClick={submitReweightFactor}>Submit</Button>
 						</Grid>
 					</Grid>
 					<Grid container>

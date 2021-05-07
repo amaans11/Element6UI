@@ -11,11 +11,11 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 	const options = {
 		chart: {
 			type: 'bubble',
-			plotBorderWidth: 1,
-			zoomType: 'xy'
+			zoomType: 'xy',
+			borderWidth:0
 		},
 		legend: {
-			enabled: false
+			enabled: true
 		},
 		title: {
 			text: title,
@@ -83,12 +83,7 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 				borderColor: currentTheme == 'dark' ? '#000000' : '#FFFFFF'
 			}
 		},
-		series: [
-			{
-				data: data,
-				color: '#1890ff'
-			}
-		]
+		series: data
 	};
 
 	return (

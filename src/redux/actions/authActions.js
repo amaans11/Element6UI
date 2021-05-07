@@ -12,6 +12,7 @@ import { getScope3Data } from './scope3Actions';
 import { getPortOptimizationData, getPerformanceAttrData } from './optimizationActions';
 import { getRiskContributorData } from './riskContributionActions';
 import { getCoalPowerData, getFossilFuelData } from './strandedAssetActions';
+import {getTempScoreData} from './tempMetricActions'
 
 const requestApi = async (dispatch, auth) => {
 	const moduleName = auth.moduleName;
@@ -108,6 +109,18 @@ const requestApi = async (dispatch, auth) => {
 				default:
 					data = getRequestData('COAL_POWER', auth);
 					await dispatch(getCoalPowerData(data));
+					break;
+			}
+			break;
+		case 'Temp score':
+			switch (tabValue) {
+				case 0:
+					data = getRequestData('PORT_TEMPERATURE_SCORE', auth);
+					await dispatch(getTempScoreData(data));
+					break;
+				default:
+					data = getRequestData('PORT_TEMPERATURE_SCORE', auth);
+					await dispatch(getTempScoreData(data));
 					break;
 			}
 			break;
@@ -327,4 +340,26 @@ export const setFilterVisibility = (value) => {
 
 export const setFilterVisibilitySuccess = (res) => {
 	return { type: actionTypes.SET_FILTER_VISIBILITY, res };
+};
+export const setReweightData = (value) => {
+	return async (dispatch, getState) => {
+		await dispatch(setReweightDataSuccess(value));
+		const auth = getState().auth;
+		const data = getRequestData('PORTFOLIO_OPTIMIZATION', auth);
+		await dispatch(getPortOptimizationData(data));
+	};
+};
+
+export const setReweightDataSuccess = (res) => {
+	return { type: actionTypes.SET_REWEIGHT_FACTOR, res };
+};
+
+export const setLoading=(value=>{
+	return async (dispatch) => {
+		dispatch(setLoadingSuccess(value))
+	};
+})
+
+export const setLoadingSuccess = (res) => {
+	return { type: actionTypes.SET_LOADING, res };
 };

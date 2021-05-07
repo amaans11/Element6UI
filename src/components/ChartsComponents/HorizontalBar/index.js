@@ -13,7 +13,11 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 		yAxis = CONFIG['CHART'][chartKey]['Y_AXIS_TITLE'];
 	}
 	const currentTheme = localStorage.getItem('appTheme');
+	let tooltipUnit=CONFIG['CHART'][chartKey]['TOOLTIP_UNIT']
 
+	if(!tooltipUnit){
+		tooltipUnit=yAxis
+	}
 	console.log('data>>', data);
 
 	const options = {
@@ -56,7 +60,12 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 				}
 			}
 		},
-
+		tooltip: {
+			formatter: function() {
+				const item=this.colorIndex == 0 ? 'Portfolio' : 'Benchmark'
+				return '<b>' + this.x + '</b>' + '<br/>' + '<b>' + item + ' : ' + '</b>'  + this.y + ' (' + tooltipUnit  + ')';
+			}
+		},
 		plotOptions: {
 			bar: {
 				dataLabels: {

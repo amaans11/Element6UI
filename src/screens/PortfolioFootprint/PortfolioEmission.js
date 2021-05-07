@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {Box} from  '@material-ui/core'
+import {Box,CircularProgress} from  '@material-ui/core'
 import { getPortfolioEmission } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
@@ -18,7 +18,8 @@ const PortfolioEmission = ({}) => {
 
 	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
 	const auth =useSelector(state=>state.auth);
-	const {filterItem}=auth;
+	const {filterItem,loading}=auth;
+
 
 	const fetchDetails = async () => {
 		const data = getRequestData('PORTFOLIO_EMISSION', auth);
@@ -114,7 +115,7 @@ const PortfolioEmission = ({}) => {
 	};
 	return (
 		<React.Fragment>
-			{portfolioEmission.error ? (
+			{loading ? <CircularProgress /> : portfolioEmission.error ? (
 				<Box align="center"  className="error-msg" style={{marginTop:20,fontSize:16}}>
 					{portfolioEmission.error}
 				</Box>

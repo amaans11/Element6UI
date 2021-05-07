@@ -9,7 +9,9 @@ const customStyles = {
 	headCells: {
 	  style: {
 		fontWeight:'bold',
-		fontSize:14
+		fontSize:14,
+		marginBottom:8,
+		textAlign:'right'
 	  },
 	},
 	rows: {
@@ -179,7 +181,7 @@ class ReactDataTable extends React.Component {
 			</React.Fragment>
 		);
 		return (
-			<Card style={{ marginTop: 40 }}>
+			<Card style={{ marginTop: 15 }}>
 				<DataTable
 					title={<Box className="table-header">{title}</Box>}
 					columns={columns}

@@ -59,6 +59,53 @@ const data={
         'sector',
         'assetClass',
         'returnYear'
+    ],
+    'PORTFOLIO_CARBON_RISK':[
+        'footprintMetric',
+        'marketValue',
+        'inferenceType',
+        'year',
+        'intensityScope'
+    ],
+    'FOSSIL_FUEL':[
+        'footprintMetric',
+        'marketValue',
+        'assetClass',
+    ],
+    'COAL_POWER':[],
+    'PORTFOLIO_TEMP_SCORE':[
+        'aggregation',
+        'scenario',
+        'scoreType',
+        'emission',
+        'defaultValue'
+    ],
+    'COMPANY_ANALYSIS':[
+        'sector',
+        'aggregation',
+        'emission',
+        'scoreType',
+    ],
+    'ATTRIBUTION':[
+        'sector',
+        'aggregation',
+        'emission',
+        'scoreType',
+        'defaultValue'
+    ],
+    'CONTRIB_ANALYSIS':[
+        'sector',
+        'aggregation',
+        'emission',
+        'scoreType',
+        'defaultValue'
+    ],
+    'HEATMAP':[
+        'sector',
+        'aggregation',
+        'emission',
+        'scoreType',
+        'defaultValue'
     ]
 }
 

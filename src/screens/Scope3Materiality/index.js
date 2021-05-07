@@ -31,7 +31,7 @@ function Scope3Materiality() {
 						</Tabs>
 					</Paper>
                     <TabPanel value={value} index={0}>
-                        <Scope3Heatmap 
+                        <Scope3Heatmap  
                         />
                     </TabPanel>
                     <TabPanel value={value} index={1}>

@@ -352,13 +352,14 @@ const riskContribCells = [
 		name: 'ISIN',
 		selector: 'isin',
 		sortable: true,
-		right: true
+		right: false
 	},
 	{
 		name: 'SASB Sector',
 		selector: 'sasb_sector',
 		sortable: true,
-		right: true
+		wrap:true,
+		right: false,
 	},
 	{
 		name: 'Weight (%)',
@@ -418,39 +419,124 @@ const countryFossilCells = [
 		name: 'Contribution to total footprint (%)',
 		selector: 'contribution',
 		sortable: true,
-		right: true
+		right: true,
+		wrap:false
 	}
 ];
-const coalPowerCells=[
+const coalPowerCells = [
 	{
 		name: 'Company',
 		selector: 'Company',
 		sortable: true,
 		right: false,
-		wrap:true
+		wrap: true
 	},
 	{
 		name: 'Capacity (MW)',
 		selector: 'Capacity(MW)',
 		sortable: true,
 		right: false,
-		wrap:true
+		wrap: true
 	},
 	{
 		name: 'Ownership (% Market Cap)',
 		selector: 'Ownership(%MarketCap)',
 		sortable: true,
-		right: false,
-		wrap:true
+		right: true,
+		wrap: true
 	},
 	{
 		name: 'Capacity Owned (MW)',
 		selector: 'Capacity Owned (MW)',
 		sortable: true,
+		right: true,
+		wrap: true
+	}
+];
+const tempScoreCells = [
+	{
+		name: 'Portfolio',
+		selector: 'name',
+		sortable: true,
+		right: false,
+		wrap: true,
+		style: {
+			height: 50,
+			fontSize: 13
+		}
+	},
+	{
+		name: 'Short Term Score °C (2021-2025)',
+		selector: 'shortTerm',
+		sortable: true,
+		right: true,
+		cell: (row) => <div>{row.shortTerm.score}</div>
+	},
+	{
+		name: 'Mid Term Score °C (2026-2036)',
+		selector: 'midTerm',
+		sortable: true,
+		right: true,
+		cell: (row) => <div>{row.midTerm.score}</div>
+	},
+	{
+		name: 'Long Term Score °C (>2036)',
+		selector: 'longTerm',
+		sortable: true,
+		right: true,
+		cell: (row) => <div>{row.longTerm.score}</div>
+	},
+	{
+		name: 'Coverage (%)',
+		selector: 'coverage',
+		sortable: true,
+		right: true
+	}
+];
+const companyAnalysisCells = [
+	{
+		name: 'Company Name',
+		selector: 'company_name',
+		sortable: true,
+		right: false,
+		wrap: true,
+		style: {
+			height: 50,
+			fontSize: 13
+		}
+	},
+	{
+		name: 'Sector',
+		selector: 'sector',
+		sortable: true,
 		right: false,
 		wrap:true
 	},
-]
+	{
+		name: 'Contribution (°C)',
+		selector: 'contribution',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Temperature Score (°C)',
+		selector: 'temperature_score',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Ownership Percentage (%)',
+		selector: 'ownership_percentage',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Portfolio Percentage (%)',
+		selector: 'portfolio_percentage',
+		sortable: true,
+		right: true
+	}
+];
 export {
 	portEmissionCells,
 	avoidedEmissionCells,
@@ -460,5 +546,7 @@ export {
 	riskContribCells,
 	fossilFuelCells,
 	countryFossilCells,
-	coalPowerCells
+	coalPowerCells,
+	tempScoreCells,
+	companyAnalysisCells
 };

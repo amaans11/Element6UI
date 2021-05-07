@@ -16,6 +16,7 @@ const intialState = {
 	moduleName: 'Emission',
 	isVisible: true,
 	reweightFactor: 0,
+	loading:false
 };
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -32,7 +33,14 @@ export default function authReducer(state = { ...intialState }, action) {
 					marketValue: 'Equity',
 					assetClass: 'EqCB',
 					inferenceType: 'Avg',
-					emission: 'Sc12'
+					emission: 'Sc12',
+					aggregation:"WATS",
+					scenario:"0",
+					scoreType:'shortTerm',
+					defaultValue:3.20,
+					year:'1Y',
+					materiality:'matPort',
+					intensityScope:'Sc12'
 				};
 			});
 
@@ -96,10 +104,19 @@ export default function authReducer(state = { ...intialState }, action) {
 				draft.moduleName = action.res;
 			});
 		case types.SET_FILTER_VISIBILITY:
-			console.log('test2');
 			return produce(state, (draft) => {
 				draft.isVisible = action.res;
 			});
+		case types.SET_REWEIGHT_FACTOR:
+			return produce(state, (draft) => {
+				console.log("action.",action)
+				draft.reweightFactor = action.res;
+			});
+		case types.SET_LOADING:
+				return produce(state, (draft) => {
+					draft.loading = action.res;
+				});
+
 		default:
 			return state;
 	}

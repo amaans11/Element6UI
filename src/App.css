@@ -200,3 +200,10 @@
 .flex-space-between{
   justify-content: space-between;
 }
+.default-font{
+  font-family:'Helvetica'
+}
+.MuiCircularProgress-root	{
+  position: absolute;
+  left: 800px;
+}

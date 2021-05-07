@@ -5,6 +5,7 @@ import scope3 from './scope3Reducer';
 import optimization from './optimizationReducer';
 import riskContrib from './riskContributorReducer';
 import stranded from './strandedAssetReducer';
+import tempMetric from './tempMetricReducer';
 
 const rootReducer =()=> combineReducers({
   auth:auth,
@@ -12,7 +13,8 @@ const rootReducer =()=> combineReducers({
   scope3:scope3,
   optimization:optimization,
   risk:riskContrib,
-  stranded:stranded
+  stranded:stranded,
+  tempMetric:tempMetric
 });
 
 export default rootReducer;
