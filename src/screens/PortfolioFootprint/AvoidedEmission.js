@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box } from '@material-ui/core';
+import { Box,CircularProgress } from '@material-ui/core';
 import { getAvoidedEmissions } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
@@ -13,7 +13,7 @@ const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3', 'Avoided Emissions',
 const AvoidedEmission = ({}) => {
     const auth = useSelector((state) => state.auth);
 	const avoidedEmissions = useSelector((state) => state.footprint.avoidedEmission);
-    const {filterItem}=auth
+    const {filterItem,loading}=auth
 
 	const [ chartData, setChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
@@ -120,7 +120,7 @@ const AvoidedEmission = ({}) => {
 
 	return (
 		<React.Fragment>
-			{avoidedEmissions.error ? (
+			{loading ? <CircularProgress /> : avoidedEmissions.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{avoidedEmissions.error}
 				</Box>

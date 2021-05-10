@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box,Grid } from '@material-ui/core';
+import { Box,CircularProgress,Grid } from '@material-ui/core';
 import DataTable from '../../components/Table/DataTable';
 import getRequestData from '../../util/RequestData';
 import { coalPowerCells } from '../../util/TableHeadConfig';
@@ -15,6 +15,7 @@ const CoalPower = ({}) => {
 
 	const coalPower = useSelector((state) => state.stranded.coalPower);
 	const auth = useSelector((state) => state.auth);
+	const {loading}=auth
 
 	const fetchDetails = async () => {
 		const data = getRequestData('COAL_POWER', auth);
@@ -51,7 +52,7 @@ const CoalPower = ({}) => {
 	};
 	return (
 		<React.Fragment>
-			{coalPower.error ? (
+			{loading ? <CircularProgress /> : coalPower.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{coalPower.error}
 				</Box>

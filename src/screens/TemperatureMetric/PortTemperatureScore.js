@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid, Typography } from '@material-ui/core';
-import { makeStyles } from "@material-ui/core/styles";
+import { Box, Grid, Typography, CircularProgress } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import DataTable from '../../components/Table/DataTable';
 import getRequestData from '../../util/RequestData';
@@ -12,26 +12,26 @@ import 'react-circular-progressbar/dist/styles.css';
 import SpiralChart from '../../components/ChartsComponents/SpiralChart';
 
 const useStyles = makeStyles(() => ({
-    companyDiv:{
-        width:200,
-        height:200,
-        margin:80
-    }
+	companyDiv: {
+		width: 200,
+		height: 200,
+		margin: 80
+	}
 }));
 const PortTemperatureScore = ({}) => {
 	const dispatch = useDispatch();
+	const classes = useStyles();
 
-    const tempScoreData = useSelector((state) => state.tempMetric.tempScoreData);
+	const tempScoreData = useSelector((state) => state.tempMetric.tempScoreData);
 	const auth = useSelector((state) => state.auth);
-	const { emission, scoreType,defaultValue } = auth.filterItem;
+	const { emission, scoreType, defaultValue } = auth.filterItem;
+	const { loading } = auth;
 
-    const classes=useStyles();
 	const [ companyChartData, setCompanyChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
 	const [ targetData, setTargetData ] = useState('');
-    const [portScore,setPortScore]=useState(defaultValue)
-    const [benchScore,setBenchScore]=useState(defaultValue)
-
+	const [ portScore, setPortScore ] = useState(defaultValue);
+	const [ benchScore, setBenchScore ] = useState(defaultValue);
 
 	const fetchDetails = async () => {
 		const data = getRequestData('PORT_TEMPERATURE_SCORE', auth);
@@ -74,8 +74,8 @@ const PortTemperatureScore = ({}) => {
 			const res = tempScoreData['data'];
 			switch (emission) {
 				case 'Sc12':
-					portScore = res[0][scoreType]['score']
-					benchScore = res[2][scoreType]['score']
+					portScore = res[0][scoreType]['score'];
+					benchScore = res[2][scoreType]['score'];
 					coverage = res[0]['coverage'];
 					companyData = getCompanyData(res[0]);
 					break;
@@ -102,24 +102,26 @@ const PortTemperatureScore = ({}) => {
 		}
 		setTableData(tableData);
 		setTargetData(coverage);
-        setCompanyChartData(companyData);
-        setPortScore(portScore);
-        setBenchScore(benchScore)
+		setCompanyChartData(companyData);
+		setPortScore(portScore);
+		setBenchScore(benchScore);
 	};
-    const tempScoreChartData=[portScore,benchScore,defaultValue]
-    console.log("tempScoreChartData",tempScoreChartData)
+	const tempScoreChartData = [ portScore, benchScore, defaultValue ];
+
 	return (
 		<React.Fragment>
-			{tempScoreData.error ? (
+			{loading ? (
+				<CircularProgress />
+			) : tempScoreData.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{tempScoreData.error}
 				</Box>
 			) : (
 				<React.Fragment>
 					<Grid container>
-						<Grid item xs={3} style={{ marginRight: 20 }} >
-                            <SpiralChart data={tempScoreChartData} chartKey="TEMP_SCORE" />
-                        </Grid>
+						<Grid item xs={3} style={{ marginRight: 20 }}>
+							<SpiralChart data={tempScoreChartData} chartKey="TEMP_SCORE" />
+						</Grid>
 						<Grid item xs={5}>
 							<StackedBar
 								categories={'Number OF Companies'}

@@ -1,5 +1,6 @@
 import * as actionTypes from '../actionTypes';
 import axios from 'axios';
+import { createBrowserHistory } from 'history';
 import getRequestData from '../../util/RequestData';
 import {
 	getAvoidedEmissions,
@@ -12,7 +13,15 @@ import { getScope3Data } from './scope3Actions';
 import { getPortOptimizationData, getPerformanceAttrData } from './optimizationActions';
 import { getRiskContributorData } from './riskContributionActions';
 import { getCoalPowerData, getFossilFuelData } from './strandedAssetActions';
-import {getTempScoreData} from './tempMetricActions'
+import {
+	getTempScoreData,
+	getCompanyAnalysisData,
+	getTempAttribution,
+	getContribAnalysis,
+	getHeatmapData
+} from './tempMetricActions';
+
+const history = createBrowserHistory();
 
 const requestApi = async (dispatch, auth) => {
 	const moduleName = auth.moduleName;
@@ -118,6 +127,22 @@ const requestApi = async (dispatch, auth) => {
 					data = getRequestData('PORT_TEMPERATURE_SCORE', auth);
 					await dispatch(getTempScoreData(data));
 					break;
+				case 1:
+					data = getRequestData('COMPANY_ANALYSIS', auth);
+					await dispatch(getCompanyAnalysisData(data));
+					break;
+				case 2:
+					data = getRequestData('TEMP_ATTRIBUTION', auth);
+					await dispatch(getTempAttribution(data));
+					break;
+				case 3:
+					data = getRequestData('CONTRIBUTION_ANALYSIS', auth);
+					await dispatch(getContribAnalysis(data));
+					break;
+				case 4:
+					data = getRequestData('TEMP_HEATMAP', auth);
+					await dispatch(getHeatmapData(data));
+					break;
 				default:
 					data = getRequestData('PORT_TEMPERATURE_SCORE', auth);
 					await dispatch(getTempScoreData(data));
@@ -160,9 +185,11 @@ const requestApi = async (dispatch, auth) => {
 };
 export const signinUser = (data) => {
 	return async (dispatch) => {
-		return axios.post(`${actionTypes.API_URL}/accounts/sign_in`, data).then((result) => {
+		return axios.post(`${actionTypes.API_URL}/accounts/sign_in`, data).then(async (result) => {
 			if (result.data.success) {
-				dispatch(signinUserSuccess(result.data));
+				await dispatch(signinUserSuccess(result.data));
+				history.push('/');
+				window.location.reload();
 			} else {
 				const error = result.data.message;
 				throw new Error(error);
@@ -354,12 +381,80 @@ export const setReweightDataSuccess = (res) => {
 	return { type: actionTypes.SET_REWEIGHT_FACTOR, res };
 };
 
-export const setLoading=(value=>{
+export const setLoading = (value) => {
 	return async (dispatch) => {
-		dispatch(setLoadingSuccess(value))
+		dispatch(setLoadingSuccess(value));
 	};
-})
+};
 
 export const setLoadingSuccess = (res) => {
 	return { type: actionTypes.SET_LOADING, res };
+};
+
+export const logoutUser = () => {
+	return async (dispatch) => {
+		localStorage.setItem('appTheme', 'basic');
+		await dispatch(logoutUserSuccess());
+		window.location.reload();
+	};
+};
+
+export const logoutUserSuccess = () => {
+	return { type: actionTypes.LOGOUT_USER };
+};
+
+export const getDownloadPortfolios = () => {
+	return async (dispatch,getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+		const user = getState().auth.currentUser.userName;
+
+		return axios
+			.get(`${actionTypes.API_URL}/downloads/user/${user}`, {
+				headers: {
+					'client-key': clientKey
+				}
+			})
+			.then((result) => {
+				console.log("result>>",result)
+				dispatch(getDownloadPortfoliosSuccess(result.data.Portfolios));
+			})
+			.catch((err) => {
+				const error = err.response.data.message;
+				dispatch(getDownloadPortfoliosFailed(error));
+			});
+	};
+};
+
+export const getDownloadPortfoliosSuccess = (res) => {
+	return { type: actionTypes.GET_DOWNLOAD_PORTFOLIOS_SUCCESS, res };
+};
+export const getDownloadPortfoliosFailed = (error) => {
+	return { type: actionTypes.GET_DOWNLOAD_PORTFOLIOS_FAILED, error };
+};
+
+export const getDownloadDetails = (data) => {
+	return async (dispatch,getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+
+		return axios
+			.post(`${actionTypes.API_URL}/files/internal`,data, {
+				headers: {
+					'client-key': clientKey
+				}
+			})
+			.then((result) => {
+				dispatch(getDownloadDetailsSuccess(result.data.data));
+			})
+			.catch((err) => {
+				const error = err.response.data.message;
+				dispatch(getDownloadDetailsFailed(error));
+			});
+	};
+};
+
+export const getDownloadDetailsSuccess = (res) => {
+	return { type: actionTypes.GET_DOWNLOAD_DETAILS_SUCCESS, res };
+};
+export const getDownloadDetailsFailed = (error) => {
+	return { type: actionTypes.GET_DOWNLOAD_DETAILS_FAILED, error };
 };

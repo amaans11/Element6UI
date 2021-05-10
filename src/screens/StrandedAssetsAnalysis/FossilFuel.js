@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box,Grid } from '@material-ui/core';
+import { Box,Grid,CircularProgress } from '@material-ui/core';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
 import getRequestData from '../../util/RequestData';
@@ -19,9 +19,9 @@ const FossilFuel = ({}) => {
 
 	const fossilFuel = useSelector((state) => state.stranded.fossilFuel);
 	const auth = useSelector((state) => state.auth);
+	const {loading}=auth;
 
 	const fetchDetails = async () => {
-        console.log("test")
 		const data = getRequestData('FOSSIL_FUEL', auth);
 		await dispatch(getFossilFuelData(data));
 	};
@@ -98,7 +98,7 @@ const FossilFuel = ({}) => {
 	};
 	return (
 		<React.Fragment>
-			{fossilFuel.error ? (
+			{loading ? <CircularProgress /> :fossilFuel.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{fossilFuel.error}
 				</Box>

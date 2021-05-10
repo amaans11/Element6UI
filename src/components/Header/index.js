@@ -8,6 +8,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { LinkContainer } from 'react-router-bootstrap';
 import Logo from '../../assets/Urgentem_Wordmark.png';
+import {logoutUser} from '../../redux/actions/authActions'
 
 const drawerWidth = 295;
 
@@ -30,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Header = ({ history }) => {
 	const classes = useStyles();
+	const  dispatch = useDispatch();
+	
 	const [ anchorEl, setAnchor ] = useState(null);
 	const auth = useSelector((state) => state.auth);
 	const userInfo = useSelector((state) => state.auth.userInfo);
@@ -58,6 +61,9 @@ const Header = ({ history }) => {
 			window.location.reload()
 		}
 	};
+	const handleLogout=()=>{
+		dispatch(logoutUser())
+	}
 	return (
 		<AppBar position="fixed" className={classes.appBar}>
 			<Toolbar disableGutters={true}>
@@ -107,7 +113,7 @@ const Header = ({ history }) => {
 						<MenuItem onClick={handleSettings}>
 							<SettingsIcon className={classes.icon} />Settings
 						</MenuItem>
-						<MenuItem>
+						<MenuItem onClick={handleLogout}>
 							<ExitToAppIcon className={classes.icon} />Logout
 						</MenuItem>
 					</Menu>

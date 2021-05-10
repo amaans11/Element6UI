@@ -16,8 +16,6 @@ const SovereignFootprint = ({}) => {
 	const [ categories, setCategories ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
 
-	console.log("sovFootprint",sovFootprint)
-
 	const dispatch = useDispatch();
 	const {loading}=auth
 

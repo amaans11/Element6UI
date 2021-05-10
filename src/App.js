@@ -7,7 +7,7 @@ import { NotificationContainer } from 'react-notifications';
 import more from 'highcharts/highcharts-more';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import './App.css';
-// import AuthenticatedRoute from './layouts/AuthenticatedRoute'
+import AuthenticatedRoute from './layouts/AuthenticatedRoute'
 import { configureStore } from './redux/store';
 import Login from './screens/auth/Login';
 import Base from './layouts/Base';
@@ -101,6 +101,7 @@ axios.interceptors.response.use(async function(response) {
 
 function App() {
 	Highcharts.setOptions(Highcharts.theme);
+
 	return (
 		<Provider store={store}>
 			<PersistGate persistor={persistor}>
@@ -108,8 +109,8 @@ function App() {
 					<div className="App">
 						<Switch>
 							<Route exact path="/login" component={Login} />
-							<Route path="/settings" exact component={Settings} />
-							<Route path="/" component={Base} />
+							<AuthenticatedRoute path="/settings" exact component={Settings}   />
+							<AuthenticatedRoute path="/" component={Base}  />
 						</Switch>
 					</div>
 				</BrowserRouter>

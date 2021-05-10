@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box } from '@material-ui/core';
-import {some,findIndex} from 'lodash';
+import { Box, CircularProgress } from '@material-ui/core';
+import { some, findIndex } from 'lodash';
 import DataTable from '../../components/Table/DataTable';
 import getRequestData from '../../util/RequestData';
-import BubbleChart from '../../components/ChartsComponents/BubbleChart'
-import {getCompanyAnalysisData} from '../../redux/actions/tempMetricActions'
-import {companyAnalysisCells} from '../../util/TableHeadConfig'
+import BubbleChart from '../../components/ChartsComponents/BubbleChart';
+import { getCompanyAnalysisData } from '../../redux/actions/tempMetricActions';
+import { companyAnalysisCells } from '../../util/TableHeadConfig';
 
 const CompanyAnalysis = ({}) => {
 	const dispatch = useDispatch();
 
-    const companyData = useSelector((state) => state.tempMetric.companyData);
+	const companyData = useSelector((state) => state.tempMetric.companyData);
 	const auth = useSelector((state) => state.auth);
+	const { loading } = auth;
 
 	const [ chartData, setChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
@@ -37,38 +38,37 @@ const CompanyAnalysis = ({}) => {
 		let chartData = [];
 
 		if (companyData && companyData['data'] && companyData['data'].length > 0) {
-			companyData['data'].map(data=>{
+			companyData['data'].map((data) => {
 				if (some(chartData, { name: data['sector'] })) {
 					const index = findIndex(chartData, { name: data['sector'] });
-					const xVal=data['temperature_score']
-					const yVal=data['emission_intensity']
-					const zVal = data['weight']
-					chartData[index]['data'].push([xVal,yVal,zVal])
-						
+					const xVal = data['temperature_score'];
+					const yVal = data['emission_intensity'];
+					const zVal = data['weight'];
+					chartData[index]['data'].push([ xVal, yVal, zVal ]);
 				} else {
-						const xVal=data['temperature_score']
-						const yVal=data['emission_intensity']
-						const zVal= data['emission_intensity']
-	
+					const xVal = data['temperature_score'];
+					const yVal = data['emission_intensity'];
+					const zVal = data['emission_intensity'];
+
 					chartData = [
 						...chartData,
 						{
 							name: data['sector'],
-							data: [[xVal,yVal,zVal] ]
+							data: [ [ xVal, yVal, zVal ] ]
 						}
-					]
+					];
 				}
-            })
-			tableData=[
-				...companyData['data']
-			]
+			});
+			tableData = [ ...companyData['data'] ];
 		}
 		setTableData(tableData);
 		setChartData(chartData);
 	};
 	return (
 		<React.Fragment>
-			{companyData.error ? (
+			{loading ? (
+				<CircularProgress />
+			) : companyData.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{companyData.error}
 				</Box>
@@ -81,11 +81,7 @@ const CompanyAnalysis = ({}) => {
 						yAxisLabel="S1+2 GHG Emissions(tCO2e)"
 						zAxisLabel="Weight"
 					/>
-                    <DataTable
-						data={tableData}
-						columns={companyAnalysisCells}
-						tableHeading="COMPANY_ANALYSIS"
-					/>
+					<DataTable data={tableData} columns={companyAnalysisCells} tableHeading="COMPANY_ANALYSIS" />
 				</React.Fragment>
 			)}
 		</React.Fragment>

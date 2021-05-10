@@ -11,7 +11,7 @@ const customStyles = {
 		fontWeight:'bold',
 		fontSize:14,
 		marginBottom:8,
-		textAlign:'right'
+		textAlign:'right',
 	  },
 	},
 	rows: {

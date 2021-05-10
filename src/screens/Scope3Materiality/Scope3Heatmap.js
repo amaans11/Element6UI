@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box } from '@material-ui/core';
+import { Box, CircularProgress } from '@material-ui/core';
 import { getScope3Data } from '../../redux/actions/scope3Actions';
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
 import getRequestData from '../../util/RequestData';
 
-const Scope3Heatmap = ({tabValue}) => {
+const Scope3Heatmap = ({ tabValue }) => {
 	const dispatch = useDispatch();
 
-    const auth = useSelector((state) => state.auth);
+	const auth = useSelector((state) => state.auth);
 	const filterItem = useSelector((state) => state.auth.filterItem);
 	const heatmapData = useSelector((state) => state.scope3.heatmapData);
 
@@ -16,7 +16,7 @@ const Scope3Heatmap = ({tabValue}) => {
 	const [ yCategories, setYCategories ] = useState([]);
 	const [ xCategories, setXCategories ] = useState([]);
 
-	const {materiality} =filterItem
+	const { materiality, loading } = filterItem;
 
 	const getCategoryKey = (category) => {
 		switch (category) {
@@ -55,7 +55,7 @@ const Scope3Heatmap = ({tabValue}) => {
 		}
 	};
 	const fetchDetails = async () => {
-		const data=getRequestData('SCOPE3_MATERILITY',auth)
+		const data = getRequestData('SCOPE3_MATERILITY', auth);
 		await dispatch(getScope3Data(data));
 	};
 	useEffect(() => {
@@ -65,12 +65,11 @@ const Scope3Heatmap = ({tabValue}) => {
 		() => {
 			getChartData(materiality);
 		},
-		[ heatmapData,materiality ]
+		[ heatmapData, materiality ]
 	);
 
-
 	const getChartData = (matType) => {
-		console.log("matType",matType)
+		console.log('matType', matType);
 		const { emission, sector } = filterItem;
 
 		let chartData = [];
@@ -96,7 +95,7 @@ const Scope3Heatmap = ({tabValue}) => {
 					const yValue = sectorList.indexOf(sectorName);
 					chartData.push([ xValue, yValue, data.z ]);
 
-					const yLabel=data.y.replace('_','')
+					const yLabel = data.y.replace('_', '');
 					if (!xCategories.includes(yLabel)) {
 						xCategories.push(yLabel);
 					}
@@ -108,11 +107,13 @@ const Scope3Heatmap = ({tabValue}) => {
 		setYCategories(sectorList);
 		setXCategories(xCategories);
 	};
-	console.log("")
+	console.log('');
 
 	return (
 		<React.Fragment>
-			{heatmapData.error ? (
+			{loading ? (
+				<CircularProgress />
+			) : heatmapData.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{heatmapData.error}
 				</Box>

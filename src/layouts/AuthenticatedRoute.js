@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route,Redirect } from 'react-router-dom';
-import configureStore from '../redux/store';
+import {configureStore} from '../redux/store';
 
-const store = configureStore();
+const {store,persistor} = configureStore();
 
 function AuthenticatedRoute({ component: SubComp, authenticated, ...rest }) {
     const currentUser = store.getState().auth.currentUser;

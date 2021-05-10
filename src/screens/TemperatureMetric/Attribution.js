@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box } from '@material-ui/core';
+import { Box, CircularProgress } from '@material-ui/core';
 import { getTempAttribution } from '../../redux/actions/tempMetricActions';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 import getRequestData from '../../util/RequestData';
@@ -9,6 +9,7 @@ const Attribution = ({}) => {
 	const tempAttribution = useSelector((state) => state.tempMetric.tempAttribution);
 	const auth = useSelector((state) => state.auth);
 
+	const {loading}=auth;
 	const { scoreType, emission } = auth.filterItem;
 
 	const [ chartData, setChartData ] = useState([]);
@@ -68,7 +69,9 @@ const Attribution = ({}) => {
 
 	return (
 		<React.Fragment>
-			{tempAttribution.error ? (
+			{loading ? (
+				<CircularProgress />
+			) : tempAttribution.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{tempAttribution.error}
 				</Box>

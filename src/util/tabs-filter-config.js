@@ -106,7 +106,8 @@ const data={
         'emission',
         'scoreType',
         'defaultValue'
-    ]
+    ],
+    'URGENTEM_DOWNLOAD':[]
 }
 
 export default data;

@@ -16,7 +16,8 @@ const intialState = {
 	moduleName: 'Emission',
 	isVisible: true,
 	reweightFactor: 0,
-	loading:false
+	loading: false,
+	downloadPortfolioList:[]
 };
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -34,13 +35,13 @@ export default function authReducer(state = { ...intialState }, action) {
 					assetClass: 'EqCB',
 					inferenceType: 'Avg',
 					emission: 'Sc12',
-					aggregation:"WATS",
-					scenario:"0",
-					scoreType:'shortTerm',
-					defaultValue:3.20,
-					year:'1Y',
-					materiality:'matPort',
-					intensityScope:'Sc12'
+					aggregation: 'WATS',
+					scenario: '0',
+					scoreType: 'shortTerm',
+					defaultValue: 3.2,
+					year: '1Y',
+					materiality: 'matPort',
+					intensityScope: 'Sc12'
 				};
 			});
 
@@ -109,13 +110,37 @@ export default function authReducer(state = { ...intialState }, action) {
 			});
 		case types.SET_REWEIGHT_FACTOR:
 			return produce(state, (draft) => {
-				console.log("action.",action)
+				console.log('action.', action);
 				draft.reweightFactor = action.res;
 			});
 		case types.SET_LOADING:
-				return produce(state, (draft) => {
-					draft.loading = action.res;
-				});
+			return produce(state, (draft) => {
+				draft.loading = action.res;
+			});
+
+		case types.LOGOUT_USER:
+			return produce(state, (draft) => {
+				draft.currentUser = {};
+			});
+		case types.GET_DOWNLOAD_PORTFOLIOS_SUCCESS:
+			return produce(state, (draft) => {
+				console.log("action>>",action.res)
+				draft.downloadPortfolioList = action.res;
+			});
+		case types.GET_DOWNLOAD_PORTFOLIOS_FAILED:
+			return produce(state, (draft) => {
+				draft.downloadPortfolioList = [];
+			});
+
+		case types.GET_DOWNLOAD_DETAILS_SUCCESS:
+			return produce(state, (draft) => {
+				console.log("Action>>",action.res)
+				draft.downloadData = action.res;
+			});
+		case types.GET_DOWNLOAD_DETAILS_FAILED:
+			return produce(state, (draft) => {
+				draft.downloadData = [];
+			});
 
 		default:
 			return state;

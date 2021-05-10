@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 function TemperatureMetric() {
 	const tabValue = useSelector((state) => state.auth.tabValue);
 	const isVisible = useSelector((state) => state.auth.isVisible);
+
 	const [ value, setValue ] = useState(tabValue);
 
 	const classes = useStyles();

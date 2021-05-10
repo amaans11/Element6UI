@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Box, Grid, FormControl, InputLabel, Select, MenuItem, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { getScope3Data } from '../../redux/actions/scope3Actions';
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
 import DataTable from '../../components/Table/DataTable';
 import getRequestData from '../../util/RequestData';
-import {sectoralScope3Cells} from '../../util/TableHeadConfig';
+import { sectoralScope3Cells } from '../../util/TableHeadConfig';
 
 const useStyles = makeStyles(() => ({
 	formControl: {
@@ -24,11 +24,11 @@ const SectoralScope3Heatmap = ({}) => {
 	const [ xCategories, setXCategories ] = useState([]);
 	const [ currentSector, setCurrentSector ] = useState('');
 
-    const auth = useSelector((state) => state.auth);
+	const auth = useSelector((state) => state.auth);
 	const filterItem = useSelector((state) => state.auth.filterItem);
 	const heatmapData = useSelector((state) => state.scope3.heatmapData);
 
-	const {materiality} =filterItem
+	const { materiality,loading } = filterItem;
 
 	const getCategoryKey = (category) => {
 		switch (category) {
@@ -67,7 +67,7 @@ const SectoralScope3Heatmap = ({}) => {
 		}
 	};
 	const fetchDetails = async () => {
-		const data=getRequestData('SECTORAL_SCOPE3_MATERILITY',auth)
+		const data = getRequestData('SECTORAL_SCOPE3_MATERILITY', auth);
 		await dispatch(getScope3Data(data));
 	};
 	useEffect(() => {
@@ -80,7 +80,7 @@ const SectoralScope3Heatmap = ({}) => {
 				getChartData(materiality, sectorName);
 			}
 		},
-		[ heatmapData ,materiality]
+		[ heatmapData, materiality ]
 	);
 	const handleSectorChange = (e) => {
 		const sectorName = e.target.value;
@@ -113,7 +113,7 @@ const SectoralScope3Heatmap = ({}) => {
 					const yValue = sectorList.indexOf(sectorName);
 					chartData.push([ xValue, yValue, data.z ]);
 
-					const xLabel=data.n.replaceAll('_',' ')
+					const xLabel = data.n.replaceAll('_', ' ');
 					if (!xCategories.includes(xLabel)) {
 						xCategories.push(xLabel);
 					}
@@ -152,7 +152,9 @@ const SectoralScope3Heatmap = ({}) => {
 
 	return (
 		<React.Fragment>
-			{heatmapData.error ? (
+			{loading ? (
+				<CircularProgress />
+			) : heatmapData.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{heatmapData.error}
 				</Box>
@@ -162,11 +164,7 @@ const SectoralScope3Heatmap = ({}) => {
 						<Grid item xs={4}>
 							<FormControl variant="outlined" className={classes.formControl}>
 								<InputLabel>Select Sector</InputLabel>
-								<Select
-									label="Select Sector"
-									value={currentSector}
-									onChange={handleSectorChange}
-								>
+								<Select label="Select Sector" value={currentSector} onChange={handleSectorChange}>
 									{yCategories.length > 0 &&
 										yCategories.map((sector) => <MenuItem value={sector}>{sector}</MenuItem>)}
 								</Select>

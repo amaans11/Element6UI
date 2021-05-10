@@ -24,32 +24,40 @@ function getHeadCells() {
 		{
 			name: 'Portfolio Name',
 			selector: 'Portfolio Name',
-			sortable: true
+			sortable: true,
+			wrap: true,
+			right: false
 		},
 		{
 			name: 'Fundamentals Data Coverage (%)',
 			selector: '% of Portfolio Processed',
-			sortable: true
+			sortable: true,
+			right: true
 		},
 		{
 			name: 'Price Data Coverage (%)',
 			selector: '% of Portfolio Covered by Emissions data',
-			sortable: true
+			sortable: true,
+			right: true
 		},
 		{
 			name: 'Portfolio Name',
 			selector: '% of Portfolio Covered by Price data',
-			sortable: true
+			sortable: true,
+			right: true
 		},
 		{
 			name: 'Processed Date',
 			selector: 'Processed Date and Time',
-			sortable: true
+			sortable: true,
+			right: true,
+			wrap: true
 		},
 		{
 			name: 'Processing Status',
 			selector: 'Processing Status',
-			sortable: true
+			sortable: true,
+			right: true
 		}
 	];
 }
@@ -95,14 +103,13 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
-function UrgentemLanding() {
+function UrgentemLanding({ history }) {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
 	const [ uploadedPortfolio, setUploadedPortfolio ] = useState([]);
 	const [ loading, setLoading ] = useState(false);
 	const { currentTheme, setTheme } = useContext(CustomThemeContext);
-	console.log('currentTheme', currentTheme);
 
 	const auth = useSelector((state) => state.auth);
 
@@ -130,21 +137,47 @@ function UrgentemLanding() {
 		getUploadPortfolios();
 	}, []);
 
+	const handleClick = (config) => {
+		switch (config.name) {
+			case 'Portfiolio Fooprint':
+				history.push('/portfolio-footprint');
+				break;
+			case 'Scope 3 Materiality':
+				history.push('/scope3-materiality');
+				break;
+			case 'Portfiolio Optimization':
+				history.push('/portfolio-optimization');
+				break;
+			case 'Portfiolio Carbon Risk':
+				history.push('/portfolio-carbon-risk');
+				break;
+			case 'Temperature Metric':
+				history.push('/temperature-metric');
+				break;
+			case 'Forward Looking Analysis':
+				history.push('/forward-looking-analysis');
+				break;
+			case 'Stranded Asset Analysis':
+				history.push('/stranded-assets-analysis');
+				break;
+			default:
+				history.push('/portfolio-footprint');
+				break;
+		}
+	};
 	const headCells = getHeadCells();
-
-	console.log('uploadedPortfolio', uploadedPortfolio);
 
 	return (
 		<React.Fragment>
 			<Grid container>
 				<Grid item xs={3}>
 					{configs.map((config) => (
-						<Card className={classes.card}>
+						<Card className={classes.card} onClick={() => handleClick(config)}>
 							<Box display="flex" flexDirection="row">
 								<Typography variant="h6" style={{ fontFamily: 'Helvetica', paddingBottom: 10 }}>
 									{config.name}
 								</Typography>
-									<ListItemLink icon={config.icon} />
+								<ListItemLink icon={config.icon} />
 							</Box>
 							<Typography variant="p" style={{ fontFamily: 'Helvetica' }}>
 								{config.content}

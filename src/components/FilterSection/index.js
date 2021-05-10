@@ -111,6 +111,9 @@ export default function FilterGroup() {
 						break;
 				}
 				break;
+			case 'Download':
+				config=filterConfig['URGENTEM_DOWNLOAD'];
+				break
 			default:
 				switch (tabValue) {
 					case 0:

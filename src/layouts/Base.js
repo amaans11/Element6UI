@@ -364,7 +364,7 @@ const MiniDrawer = ({ classes, history }) => {
 						<GenerateReport />
 					</Route>
 					<Route path="/">
-						<UrgentemLanding />
+						<UrgentemLanding history={history} />
 					</Route>
 				</Switch>
 			</main>

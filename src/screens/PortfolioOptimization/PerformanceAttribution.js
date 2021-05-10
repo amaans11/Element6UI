@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box } from '@material-ui/core';
+import { Box, CircularProgress } from '@material-ui/core';
 import { map } from 'lodash';
 import { getPerformanceAttrData } from '../../redux/actions/optimizationActions';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
@@ -13,6 +13,8 @@ const PerformanceAttribution = () => {
 
 	const auth = useSelector((state) => state.auth);
 	const perfAttributionData = useSelector((state) => state.optimization.perfAttributionData);
+
+	const {loading}=auth;
 
 	const getData = () => {
 		let chartData = [];
@@ -49,7 +51,7 @@ const PerformanceAttribution = () => {
 	);
 	return (
 		<React.Fragment>
-			{perfAttributionData.error ? (
+			{loading ? <CircularProgress /> : perfAttributionData.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{perfAttributionData.error}
 				</Box>

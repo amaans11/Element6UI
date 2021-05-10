@@ -31,10 +31,13 @@ const configs = {
 			HEADING: ''
 		},
 		TEMP_SCORE: {
-			HEADING: ''
+			HEADING: 'Temperature Score'
 		},
 		COMPANY_ANALYSIS: {
-			HEADING: ''
+			HEADING: 'Company Metrics'
+		},
+		DOWNLOAD:{
+			HEADING:''
 		}
 	},
 	CHART: {
@@ -115,7 +118,7 @@ const configs = {
 			TITLE: ''
 		},
 		COMPANY_ANALYSIS: {
-			TITLE: '',
+			TITLE: 'Scenario Alignment',
 			Y_AXIS_TITLE: 'Temperature Score'
 		},
 		TEMP_ATTRIBUTION: {
@@ -123,18 +126,18 @@ const configs = {
 			Y_AXIS_TITLE: ''
 		},
 		PORT_HEATMAP: {
-			TITLE: '',
-			Y_AXIS_TITLE: ''
+			TITLE: 'Temperature Score Per Sector and Region',
+			Y_AXIS_TITLE: 'Sector'
 		},
 		CONTRIBUTION_ANALYSIS: {
-			TITLE: '',
-			Y_AXIS_TITLE: ''
+			TITLE: 'Temperature Scores per sector (℃)',
+			Y_AXIS_TITLE: 'Sector'
 		},
 		INVESTMENT: {
-			TITLE: ''
+			TITLE: 'Investments'
 		},
 		CONTRIBUTION: {
-			TITLE: ''
+			TITLE: 'Contributions'
 		}
 	}
 };

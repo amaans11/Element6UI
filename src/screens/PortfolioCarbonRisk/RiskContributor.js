@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box } from '@material-ui/core';
+import { Box,CircularProgress } from '@material-ui/core';
 import { some, findIndex } from 'lodash';
 import { getRiskContributorData } from '../../redux/actions/riskContributionActions';
 import getRequestData from '../../util/RequestData';
@@ -18,6 +18,8 @@ const RiskContributor = ({}) => {
 
 	const [ chartData, setChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
+
+	const {loading}=auth
 
 	useEffect(() => {
 		fetchDetails();
@@ -95,7 +97,7 @@ const RiskContributor = ({}) => {
 
 	return (
 		<React.Fragment>
-			{riskContribData.error ? (
+			{loading ? <CircularProgress /> : riskContribData.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{riskContribData.error}
 				</Box>

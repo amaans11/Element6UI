@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid, Slider, Typography,Button } from '@material-ui/core';
+import { Box, Grid, Slider, Typography,Button, CircularProgress } from '@material-ui/core';
 import LineChart from '../../components/ChartsComponents/Line';
 import { getPortOptimizationData } from '../../redux/actions/optimizationActions';
 import {setReweightData} from '../../redux/actions/authActions';
@@ -17,7 +17,7 @@ const PortfolioOptimization = () => {
 	const optimizationData = useSelector((state) => state.optimization.optimizationData);
 	const auth = useSelector((state) => state.auth);
 
-	const { reweightFactor } = auth
+	const { reweightFactor,loading } = auth
 
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
 	const [ lineChartData, setLineChartData ] = useState([]);
@@ -288,7 +288,7 @@ const PortfolioOptimization = () => {
 	);
 	return (
 		<React.Fragment>
-			{optimizationData.error ? (
+			{loading ? <CircularProgress /> :optimizationData.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{optimizationData.error}
 				</Box>
