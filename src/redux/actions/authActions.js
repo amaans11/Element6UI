@@ -458,3 +458,15 @@ export const getDownloadDetailsSuccess = (res) => {
 export const getDownloadDetailsFailed = (error) => {
 	return { type: actionTypes.GET_DOWNLOAD_DETAILS_FAILED, error };
 };
+export const generateReport = (data) => {
+	return async (dispatch,getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+
+		return axios
+			.post(`${actionTypes.API_URL}/reports_new/full`,data, {
+				headers: {
+					'client-key': clientKey
+				}
+			})
+	};
+};

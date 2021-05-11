@@ -32,12 +32,21 @@ const customStyles = {
 			  width:1
 		  }
 	  },
+	  headCells: {
+		style: {
+		  fontWeight:'bold',
+		  fontSize:14,
+		  marginBottom:8,
+		  textAlign:'right',
+		},
+	  },
 	  rows: {
 		style: {
 		  width:1600, 
 		  minHeight: 60, 
 		}
 	  },
+	 
   }
   
 createTheme('dark', {
@@ -190,10 +199,9 @@ class ReactDataTable extends React.Component {
 					paginationRowsPerPageOptions={[ 10, 25, 100 ]}
 					actions={actionsMemo}
 					highlightOnHover={false}
-					// fixedHeader={fixedHeader ? fixedHeader : false}
 					progressPending={loading}
 					theme={currentTheme}
-					customStyles={isScroll ? {...customStyles,...scollStyle}: customStyles}
+					customStyles={isScroll ? {...scollStyle}: customStyles}
 				/>
 			</Card>
 		);

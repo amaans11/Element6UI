@@ -37,7 +37,7 @@ const configs = {
 			HEADING: 'Company Metrics'
 		},
 		DOWNLOAD:{
-			HEADING:''
+			HEADING:'Selected Data'
 		}
 	},
 	CHART: {

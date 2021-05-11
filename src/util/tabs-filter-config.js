@@ -107,7 +107,8 @@ const data={
         'scoreType',
         'defaultValue'
     ],
-    'URGENTEM_DOWNLOAD':[]
+    'URGENTEM_DOWNLOAD':[],
+    'GENERATE_REPORT':[]
 }
 
 export default data;

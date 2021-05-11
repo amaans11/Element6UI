@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Grid, Box, Checkbox, FormControlLabel, Button } from '@material-ui/core';
-import { NotificationManager } from 'react-notifications';
 import SelectwithSearch from '../../components/Autocomplete';
 import { getDownloadPortfolios, getDownloadDetails } from '../../redux/actions/authActions';
 import DataTable from '../../components/Table/DataTable';

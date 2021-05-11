@@ -418,6 +418,36 @@ const getRequestData = (type, auth) => {
 					sector_classification: sector
 				};
 				break;
+
+			case 'GENERATE_REPORT':
+				data={
+					client: currentUser.client,
+					user: currentUser.userName,
+					portfolio: currentPortfolio.label,
+					portfolio_date: currentPortfolio.value,
+					benchmark: currentBenchmark.label,
+					benchmark_date: currentBenchmark.value,
+					Scenario: 'LowEnergyDemand',
+					footprint_metric: 'Revenue',
+					currency: 'USD',
+					quarter: 'Q1',
+					quarter_avoided: 'Q1',
+					quarter_emissions: 'Q1',
+					quarter_fundamentals: "Q1",
+					quarter_reserves: "Q1",
+					req_year: 1,
+					reweight_factor: 0,
+					scenario: 'IPCC',
+					strategy: 'momentum',
+					version:"",
+					version_avoided: "Q1",
+					version_emissions: "11",
+					version_fundamentals: "1",
+					warming_scenario: "LowEnergyDemand",
+					year: "2020",
+					approach: "MarketShare"
+				}
+				break;
 		default:
 			data = {};
 			break;
