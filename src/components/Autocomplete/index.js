@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SelectwithSearch({ heading, data, defaultValue,handleChange ,type,currentValue}) {
   const classes=useStyles();
-  console.log("amaan",data)
 	return (
 		<div style={{ width: 400, marginRight: '20px' }}>
 			<Autocomplete

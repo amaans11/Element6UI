@@ -146,7 +146,57 @@
         { name: "4.50", value: "4.50", selected: false },
         { name: "5.00", value: "5.00", selected: false },
       ]
-    }
+    },
+    {
+      grpname: "Set 1.5 Scenario",
+      grpKey:'portScenario',
+      tagsList: [
+        { name: "SSP1", value: "SSP126", selected: false },
+        { name: "SSP2", value: "SSP226", selected: false },
+        { name: "Low Energy Demand", value: "LowEnergyDemand", selected: true },
+      ]
+    },
+    {
+      grpname: "Scenario Database",
+      grpKey:'targetScenario',
+      tagsList: [
+        { name: "IPCC 1.5", value: "IPCC", selected: true },
+        { name: "IEA", value: "SSIEAP226", selected: false },
+        { name: "NGFS", value: "NGFS", selected: false },
+      ]
+    },
+    {
+      grpname: "Approach",
+      grpKey:'approach',
+      tagsList: [
+        { name: "Market Share", value: "MarketShare", selected: false },
+        { name: "Relative Alignment", value: "RelativeAlignment", selected: true },
+      ]
+    },
+    {
+      grpname: "Warming Scenario",
+      grpKey:'warmingScenario',
+      tagsList: [
+        { name: "SSP1-26", value: "SSP126", selected: false },
+        { name: "SSP2-26", value: "SSP226", selected: false },
+        { name: "Low Energy Demand", value: "LowEnergyDemand", selected: true },
+        { name: "SSP4-26", value: "SSP426", selected: false },
+        { name: "SSP5-26", value: "SSP526", selected: false },
+      ]
+    },
+    {
+      grpname: "Alignment Year",
+      grpKey:'alignmentYear',
+      tagsList: [
+        { name: "2018", value: "2018", selected: false },
+        { name: "2019", value: "2019", selected: false },
+        { name: "2020", value: "2020", selected: true },
+        { name: "2030", value: "2030", selected: false },
+        { name: "2040", value: "2040", selected: false },
+        { name: "2050", value: "2050", selected: false },
+        { name: "2060", value: "2060", selected: false },
+      ]
+    },
 
   ]
   

@@ -358,8 +358,8 @@ const riskContribCells = [
 		name: 'SASB Sector',
 		selector: 'sasb_sector',
 		sortable: true,
-		wrap:true,
-		right: false,
+		wrap: true,
+		right: false
 	},
 	{
 		name: 'Weight (%)',
@@ -420,7 +420,7 @@ const countryFossilCells = [
 		selector: 'contribution',
 		sortable: true,
 		right: true,
-		wrap:false
+		wrap: false
 	}
 ];
 const coalPowerCells = [
@@ -510,7 +510,7 @@ const companyAnalysisCells = [
 		selector: 'sector',
 		sortable: true,
 		right: false,
-		wrap:true
+		wrap: true
 	},
 	{
 		name: 'Contribution (°C)',
@@ -537,6 +537,49 @@ const companyAnalysisCells = [
 		right: true
 	}
 ];
+const targetSettingCells = [
+	{
+		name: 'Sector',
+		selector: 'sector',
+		sortable: true,
+		right: false
+	},
+	{
+		name: 'Portfolio',
+		selector: 'port',
+		sortable: true,
+		right: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.port)}</div>
+	},
+	{
+		name: 'Allowance',
+		selector: 'allowance',
+		sortable: true,
+		right: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.allowance)}</div>
+	},
+	{
+		name: 'Annual Reduction %',
+		selector: 'annualRed',
+		sortable: true,
+		right: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.annualRed)}</div>
+	}
+];
+const companyProfileCells = [
+	{
+		name: 'Name',
+		selector: 'name',
+		sortable: true,
+		right: false
+	},
+	{
+		name: 'Summary',
+		selector: 'summary',
+		sortable: true,
+		right: true
+	}
+];
 export {
 	portEmissionCells,
 	avoidedEmissionCells,
@@ -548,5 +591,7 @@ export {
 	countryFossilCells,
 	coalPowerCells,
 	tempScoreCells,
-	companyAnalysisCells
+	companyAnalysisCells,
+	targetSettingCells,
+	companyProfileCells
 };

@@ -17,7 +17,7 @@ const intialState = {
 	isVisible: true,
 	reweightFactor: 0,
 	loading: false,
-	downloadPortfolioList:[]
+	downloadPortfolioList:[],
 };
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -41,7 +41,12 @@ export default function authReducer(state = { ...intialState }, action) {
 					defaultValue: 3.2,
 					year: '1Y',
 					materiality: 'matPort',
-					intensityScope: 'Sc12'
+					intensityScope: 'Sc12',
+					portScenario:'LowEnergyDemand',
+					targetScenario:'IPCC',
+					warmingScenario:'LowEnergyDemand',
+					approach:'RelativeAlignment',
+					alignmentYear:'2020',
 				};
 			});
 

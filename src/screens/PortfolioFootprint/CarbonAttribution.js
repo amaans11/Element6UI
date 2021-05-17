@@ -58,6 +58,7 @@ const CarbonAttribution = ({}) => {
 				</Box>
 			) : (
 				<ColumnChart categories={categories} data={chartData} chartKey="CARBON_ATTRIBUTION" />
+				
 			)}
 		</React.Fragment>
 	);

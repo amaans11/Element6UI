@@ -6,6 +6,7 @@ import optimization from './optimizationReducer';
 import riskContrib from './riskContributorReducer';
 import stranded from './strandedAssetReducer';
 import tempMetric from './tempMetricReducer';
+import flmReducer from './flmReducer'
 
 const rootReducer =()=> combineReducers({
   auth:auth,
@@ -14,7 +15,8 @@ const rootReducer =()=> combineReducers({
   optimization:optimization,
   risk:riskContrib,
   stranded:stranded,
-  tempMetric:tempMetric
+  tempMetric:tempMetric,
+  flm:flmReducer
 });
 
 export default rootReducer;

@@ -108,7 +108,32 @@ const data={
         'defaultValue'
     ],
     'URGENTEM_DOWNLOAD':[],
-    'GENERATE_REPORT':[]
+    'GENERATE_REPORT':[],
+    'PORTFOLIO_ALIGNMENT':[
+        'footprintMetric',
+        'portScenario'
+    ],
+    'TARGET_SETTING':[
+        'sector',
+        'footprintMetric',
+        'marketValue',
+        'targetScenario',
+        'warmingScenario',
+        'approach',
+        'alignmentYear'
+    ],
+    'COMPANY_PROFILE':[
+        'footprintMetric',
+        'marketValue',
+        'emission',
+        'approach',
+        'portScenario',
+    ],
+    'CARBON_ADJUSTED_RETURNS':[
+        'footprintMetric',
+        'marketValue',
+        'emission',
+    ]
 }
 
 export default data;

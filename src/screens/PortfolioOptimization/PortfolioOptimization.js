@@ -29,7 +29,7 @@ const PortfolioOptimization = () => {
 	const [ contribData, setContribData ] = useState([]);
 	const [reWeightFactor,setReweightfactor]=useState(reweightFactor)
 
-	;
+	console.log("lineChartDatam,,",lineChartData)
 
 	const formatDate = (currentDate) => {
 		const year = currentDate.toString().slice(0, 4);

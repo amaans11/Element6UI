@@ -117,6 +117,25 @@ export default function FilterGroup() {
 			case 'Report':
 				config = filterConfig['GENERATE_REPORT'];
 				break;
+			case 'FLM':
+				switch (tabValue) {
+					case 0:
+						config = filterConfig['PORTFOLIO_ALIGNMENT'];
+						break;
+					case 1:
+						config = filterConfig['TARGET_SETTING'];
+						break;
+					case 2:
+						config = filterConfig['COMPANY_PROFILE'];
+						break;
+					case 3:
+						config = filterConfig['CARBON_ADJUSTED_RETURNS'];
+						break;
+					default:
+						config = filterConfig['PORTFOLIO_ALIGNMENT'];
+						break;
+				}
+				break;
 			default:
 				switch (tabValue) {
 					case 0:

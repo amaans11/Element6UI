@@ -20,6 +20,7 @@ import {
 	getContribAnalysis,
 	getHeatmapData
 } from './tempMetricActions';
+import { getPortfolioAlignment } from './flmActions';
 
 const history = createBrowserHistory();
 
@@ -78,6 +79,30 @@ const requestApi = async (dispatch, auth) => {
 				default:
 					data = getRequestData('SCOPE3_MATERILITY', auth);
 					await dispatch(getScope3Data(data));
+					break;
+			}
+			break;
+		case 'FLM':
+			switch (tabValue) {
+				case 0:
+					data = getRequestData('PORTFOLIO_ALIGNMENT', auth);
+					await dispatch(getPortfolioAlignment(data));
+					break;
+				case 1:
+					data = getRequestData('TARGET_SETTING', auth);
+					// await dispatch(getTargetSetting(data));
+					break;
+				case 2:
+					data = getRequestData('COMPANY_PROFILE', auth);
+					// await dispatch(getCompanyProfile(data));
+					break;
+				case 3:
+					data = getRequestData('CARBON_ADJUSTED_RETURNS', auth);
+					// await dispatch(getCarbonReturns(data));
+					break;
+				default:
+					data = getRequestData('PORTFOLIO_ALIGNMENT', auth);
+					await dispatch(getPortfolioAlignment(data));
 					break;
 			}
 			break;
@@ -404,7 +429,7 @@ export const logoutUserSuccess = () => {
 };
 
 export const getDownloadPortfolios = () => {
-	return async (dispatch,getState) => {
+	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		const user = getState().auth.currentUser.userName;
 
@@ -415,7 +440,7 @@ export const getDownloadPortfolios = () => {
 				}
 			})
 			.then((result) => {
-				console.log("result>>",result)
+				console.log('result>>', result);
 				dispatch(getDownloadPortfoliosSuccess(result.data.Portfolios));
 			})
 			.catch((err) => {
@@ -433,11 +458,11 @@ export const getDownloadPortfoliosFailed = (error) => {
 };
 
 export const getDownloadDetails = (data) => {
-	return async (dispatch,getState) => {
+	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 
 		return axios
-			.post(`${actionTypes.API_URL}/files/internal`,data, {
+			.post(`${actionTypes.API_URL}/files/internal`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -459,14 +484,13 @@ export const getDownloadDetailsFailed = (error) => {
 	return { type: actionTypes.GET_DOWNLOAD_DETAILS_FAILED, error };
 };
 export const generateReport = (data) => {
-	return async (dispatch,getState) => {
+	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 
-		return axios
-			.post(`${actionTypes.API_URL}/reports_new/full`,data, {
-				headers: {
-					'client-key': clientKey
-				}
-			})
+		return axios.post(`${actionTypes.API_URL}/reports_new/full`, data, {
+			headers: {
+				'client-key': clientKey
+			}
+		});
 	};
 };

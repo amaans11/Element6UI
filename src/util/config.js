@@ -38,6 +38,18 @@ const configs = {
 		},
 		DOWNLOAD:{
 			HEADING:'Selected Data'
+		},
+		TARGET_SETTING:{
+			HEADING: 'Target Setting'
+		},
+		COMPANY_PROFILE:{
+			HEADING: 'Company Profile'
+		},
+		CARBON_ADJUSTED_RETURNS_TABLE1:{
+			HEADING: 'Return (in %)'
+		},
+		CARBON_ADJUSTED_RETURNS_TABLE2:{
+			HEADING: 'Carbon-Adjusted Returns (Carbon price = $100)'
 		}
 	},
 	CHART: {
@@ -138,6 +150,18 @@ const configs = {
 		},
 		CONTRIBUTION: {
 			TITLE: 'Contributions'
+		},
+		PORT_ALIGNMENT:{
+			TITLE: 'Portfolio Alignment'
+		},
+		TARGET_SETTING:{
+			TITLE: 'Target Setting'
+		},
+		COMPANY_PROFILE:{
+			TITLE: 'Company Profile'
+		},
+		CARBON_ADJUSTED_RETURNS:{
+			TITLE: 'Carbon Adjusted Returns'
 		}
 	}
 };
