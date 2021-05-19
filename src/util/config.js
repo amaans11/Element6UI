@@ -143,7 +143,7 @@ const configs = {
 		},
 		CONTRIBUTION_ANALYSIS: {
 			TITLE: 'Temperature Scores per sector (℃)',
-			Y_AXIS_TITLE: 'Sector'
+			Y_AXIS_TITLE: 'Temperature Score'
 		},
 		INVESTMENT: {
 			TITLE: 'Investments'
@@ -152,7 +152,8 @@ const configs = {
 			TITLE: 'Contributions'
 		},
 		PORT_ALIGNMENT:{
-			TITLE: 'Portfolio Alignment'
+			TITLE: 'Portfolio Alignment',
+			Y_AXIS_TITLE: 'Global Emissions (%)'
 		},
 		TARGET_SETTING:{
 			TITLE: 'Target Setting'

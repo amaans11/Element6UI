@@ -3,13 +3,15 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import CONFIG from '../../../util/config'
 
-function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle }) {
+function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend }) {
   const title =CONFIG['CHART'][chartKey]['TITLE']
   let yAxis=yAxisTitle;
+  let legend = isLegend ? isLegend : true
 
   if(!yAxisTitle){
     yAxis=CONFIG['CHART'][chartKey]['Y_AXIS_TITLE']
   }
+  
   const currentTheme = localStorage.getItem('appTheme');
 
   const options = {
@@ -72,6 +74,7 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle }) {
         }
       },
       legend: {
+        enabled:legend,
         itemStyle:{
             color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
         }

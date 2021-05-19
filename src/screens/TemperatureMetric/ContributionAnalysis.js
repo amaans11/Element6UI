@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid,CircularProgress } from '@material-ui/core';
+import { Box, Grid, CircularProgress } from '@material-ui/core';
 import getRequestData from '../../util/RequestData';
 import PieChart from '../../components/ChartsComponents/PieChart';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
-import {getContribAnalysis} from '../../redux/actions/tempMetricActions'
+import { getContribAnalysis } from '../../redux/actions/tempMetricActions';
 
 const ContributionAnalysis = ({}) => {
 	const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const ContributionAnalysis = ({}) => {
 	const [ investmentData, setInvetsmentData ] = useState([]);
 	const [ contribData, setContribData ] = useState([]);
 
-	const {filterItem,loading} = auth;
+	const { filterItem, loading } = auth;
 	const { scoreType, emission } = filterItem;
 
 	const fetchDetails = async () => {
@@ -99,7 +99,9 @@ const ContributionAnalysis = ({}) => {
 
 	return (
 		<React.Fragment>
-			{loading ? <CircularProgress /> :contributionAnalysis.error ? (
+			{loading ? (
+				<CircularProgress />
+			) : contributionAnalysis.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{contributionAnalysis.error}
 				</Box>
@@ -113,8 +115,12 @@ const ContributionAnalysis = ({}) => {
 							<PieChart chartKey="CONTRIBUTION" data={contribData} />
 						</Grid>
 					</Grid>
-					<ColumnChart categories={chartCategories} data={chartData} chartKey="CONTRIBUTION_ANALYSIS" />
-
+					<ColumnChart
+						categories={chartCategories}
+						data={chartData}
+						chartKey="CONTRIBUTION_ANALYSIS"
+						isLegend={false}
+					/>
 				</React.Fragment>
 			)}
 		</React.Fragment>

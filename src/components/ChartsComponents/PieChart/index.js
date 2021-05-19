@@ -27,6 +27,7 @@ function PieChart({ data, chartKey, yAxisTitle, subtitle, loading, chartTitle })
                 valueSuffix: '%'
             }
         },
+        
 		plotOptions: {
             pie: {
                 allowPointSelect: true,

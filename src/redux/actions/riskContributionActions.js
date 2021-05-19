@@ -11,9 +11,11 @@ export const getRiskContributorData = (data) => {
 				}
 			})
 			.then(result => {
+				console.log("result",result)
                 dispatch(getRiskContributorDataSuccess(result.data))
 			})
             .catch(err=>{
+				console.log("err",err)
                 const error=err.response && err.response.data.message
                 dispatch(getRiskContributorDataFailed(error))
             })

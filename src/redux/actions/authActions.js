@@ -440,7 +440,6 @@ export const getDownloadPortfolios = () => {
 				}
 			})
 			.then((result) => {
-				console.log('result>>', result);
 				dispatch(getDownloadPortfoliosSuccess(result.data.Portfolios));
 			})
 			.catch((err) => {

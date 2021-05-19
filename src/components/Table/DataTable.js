@@ -166,11 +166,12 @@ class ReactDataTable extends React.Component {
 	};
 
 	downloadCSV = (array) => {
+		const {title}=this.props
 		const link = document.createElement('a');
 		let csv = this.convertArrayOfObjectsToCSV(array);
 		if (csv == null) return;
 
-		const filename = 'export113.csv';
+		const filename = 'export.csv';
 
 		if (!csv.match(/^data:text\/csv/i)) {
 			csv = `data:text/csv;charset=utf-8,${csv}`;
@@ -186,7 +187,7 @@ class ReactDataTable extends React.Component {
 		const title = CONFIG['TABLE'][tableHeading]['HEADING'];
 		const actionsMemo = (
 			<React.Fragment>
-				<CloudDownloadOutlinedIcon onClick={this.downloadCSV} style={{ fontSize: 30 }} />
+				<CloudDownloadOutlinedIcon onClick={()=>this.downloadCSV(data)} style={{ fontSize: 30 }} />
 			</React.Fragment>
 		);
 		return (

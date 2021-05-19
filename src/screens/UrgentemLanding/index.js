@@ -172,7 +172,8 @@ function UrgentemLanding({ history }) {
 			<Grid container>
 				<Grid item xs={3}>
 					{configs.map((config) => (
-						<Card className={classes.card} onClick={() => handleClick(config)}>
+						<span  onClick={() => handleClick(config)}>
+							<Card className={classes.card}>
 							<Box display="flex" flexDirection="row">
 								<Typography variant="h6" style={{ fontFamily: 'Helvetica', paddingBottom: 10 }}>
 									{config.name}
@@ -183,6 +184,7 @@ function UrgentemLanding({ history }) {
 								{config.content}
 							</Typography>
 						</Card>
+						</span>
 					))}
 				</Grid>
 				<Grid item xs={8} className={classes.contentView}>

@@ -315,7 +315,7 @@ const PortfolioOptimization = () => {
 						<Grid item xs={6}>
 							<LineChart data={lineChartData} chartKey="PORT_OPTIMIZATION" />
 						</Grid>
-						<Grid item xs={6} style={{ marginTop: -30 }}>
+						<Grid item xs={6} style={{ marginTop: -10 }}>
 							<DataTable
 								data={tableData}
 								columns={portOptimizationCells}
