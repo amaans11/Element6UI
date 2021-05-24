@@ -6,12 +6,15 @@ import CONFIG from '../../../util/config'
 function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend }) {
   const title =CONFIG['CHART'][chartKey]['TITLE']
   let yAxis=yAxisTitle;
-  let legend = isLegend ? isLegend : true
+  let legend = isLegend == false ? isLegend : true
+
+  console.log("legend",legend)
+  console.log("isLegend",isLegend)
 
   if(!yAxisTitle){
     yAxis=CONFIG['CHART'][chartKey]['Y_AXIS_TITLE']
   }
-  
+
   const currentTheme = localStorage.getItem('appTheme');
 
   const options = {

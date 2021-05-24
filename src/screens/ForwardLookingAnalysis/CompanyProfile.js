@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, CircularProgress, Grid, InputLabel, FormControl, MenuItem,Select } from '@material-ui/core';
+import { Box, CircularProgress, Grid, InputLabel, FormControl, MenuItem, Select } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { getCompanies, getCompanyProfileData } from '../../redux/actions/flmActions';
 import getRequestData from '../../util/RequestData';
 import DataTable from '../../components/Table/DataTable';
-import LineChart from '../../components/ChartsComponents/Line'
+import LineChart from '../../components/ChartsComponents/Line';
 import { companyProfileCells } from '../../util/TableHeadConfig';
 
 const useStyles = makeStyles(() => ({
@@ -20,9 +20,9 @@ const CompanyProfile = ({}) => {
 
 	const companyProfile = useSelector((state) => state.flm.companyProfile);
 	const companyData = useSelector((state) => state.flm.companyData);
-
 	const auth = useSelector((state) => state.auth);
-	const { loading } = auth;
+	const { loading, filterItem } = auth;
+	const { portScenario } = filterItem;
 	const classes = useStyles();
 
 	const [ chartData, setChartData ] = useState([]);
@@ -31,6 +31,7 @@ const CompanyProfile = ({}) => {
 	const [ sectorList, setSectorList ] = useState([]);
 	const [ currentCompany, setCurrentCompany ] = useState('');
 	const [ currentSector, setCurrentSector ] = useState('');
+    const [ companyName , setCompanyName] = useState ('')
 
 	useEffect(() => {
 		fetchCompanies();
@@ -42,18 +43,18 @@ const CompanyProfile = ({}) => {
 		[ companyData ]
 	);
 	const getCompanyList = async () => {
-        const response=companyData['data']
+		const response = companyData['data'];
 		if (response && Object.keys(response).length > 0) {
 			const sectors = Object.keys(response);
 			const companies = response[sectors[0]];
 			const currentCompany = companies[0]['company_id'];
-            
+
 			setSectorList(sectors);
 			setCompanyList(companies);
 			setCurrentSector(sectors[0]);
 			setCurrentCompany(currentCompany);
 
-            await fetchDetails(currentCompany)
+			await fetchDetails(currentCompany);
 		}
 	};
 
@@ -72,132 +73,129 @@ const CompanyProfile = ({}) => {
 	};
 	const fetchDetails = async (companyId) => {
 		let data = getRequestData('COMPANY_PROFILE', auth);
-        data={
-            ...data,
-            company:companyId
-        }
+		data = {
+			...data,
+			company: companyId
+		};
 		await dispatch(getCompanyProfileData(data));
 	};
 
 	const getData = () => {
 		const chartResponse = companyProfile['data']['CompanyProfile']['Chart'];
-        const tableResponse = companyProfile['data']['CompanyProfile']['Summary'];
+		const tableResponse = companyProfile['data']['CompanyProfile']['Summary'];
 
 		let chartData = [];
 		let tableData = [];
-        let twoDegrees=[]
-        let beyondTwoDegree=[]
-        let referenceTech=[]
-        let companyValues=[]
-        let lowEnergyDemand=[]
-        let companyName=''
+		let twoDegrees = [];
+		let beyondTwoDegree = [];
+		let referenceTech = [];
+		let companyValues = [];
+		let lowEnergyDemand = [];
+		let companyName = '';
 
-		if(chartResponse && chartResponse.length > 0) {
-            chartResponse.map((res,index)=>{
-                let values=[]
-                Object.keys(res).map(key=>{
-                    values=[Date.UTC(key, '01', '01'),res[key]]
-                    if(res["Scenario"] == '2 Degrees'){
-                        twoDegrees.push(values)
-                    }
-                    if(res["Scenario"] == 'Beyond 2 Degrees'){
-                        beyondTwoDegree.push(values)
-                    }
-                    if(res["Scenario"] == 'Reference Technology'){
-                        referenceTech.push(values)
-                    }
-                    if(res["Scenario"] == 'LowEnergyDemand'){
-                        lowEnergyDemand.push(values)
-                    }
-                    if(index == chartResponse.length -1){
-                        companyValues.push(values)
-                        companyName=res['Scenario']
-                    }
-                    
-                })
-                
-            })
-            chartData=[
-                {
-                    name:'Two Degrees',
-                    data:twoDegrees
-                },
-                {
-                    name:'Beyond Two Degrees',
-                    data:twoDegrees
-                },
-                {
-                    name:'Reference Technology',
-                    data:referenceTech
-                },
-                {
-                    name:companyName,
-                    data:companyValues
-                },
-                {
-                    name:'Low Energy Demand',
-                    data:lowEnergyDemand
-                }
-            ]
-        }
+		if (chartResponse && chartResponse.length > 0) {
+			chartResponse.map((res, index) => {
+				let values = [];
+				Object.keys(res).map((key) => {
+					values = [ Date.UTC(key, '01', '01'), res[key] ];
+					if (res['Scenario'] == '2 Degrees') {
+						twoDegrees.push(values);
+					}
+					if (res['Scenario'] == 'Beyond 2 Degrees') {
+						beyondTwoDegree.push(values);
+					}
+					if (res['Scenario'] == 'Reference Technology') {
+						referenceTech.push(values);
+					}
+					if (res['Scenario'] == portScenario) {
+						lowEnergyDemand.push(values);
+					}
+					if (index == chartResponse.length - 1) {
+						companyValues.push(values);
+						companyName = res['Scenario'];
+					}
+				});
+			});
+			chartData = [
+				{
+					name: 'Two Degrees',
+					data: twoDegrees
+				},
+				{
+					name: 'Beyond Two Degrees',
+					data: twoDegrees
+				},
+				{
+					name: 'Reference Technology',
+					data: referenceTech
+				},
+				{
+					name: companyName,
+					data: companyValues
+				},
+				{
+					name: portScenario,
+					data: lowEnergyDemand
+				}
+			];
+		}
 
-        if(tableResponse && Object.keys(tableResponse).length > 0){
-            tableData=[
-                {
-                    name:'Name',
-                    summary:tableResponse['Name']
-                },
-                {
-                    name:'Sector',
-                    summary:tableResponse['SASBSector']
-                },
-                {
-                    name:'Disclosure Scope 1+2 Category',
-                    summary:tableResponse['DisclosureScope12Category']
-                },
-                {
-                    name:'Number of Scope 3 Categories Disclosed',
-                    summary:tableResponse['DisclosureNumberofS3Categories']
-                },
-                {
-                    name:'Emissions Intensity Scope 1+2+3 (tCO2e/m Revenue)',
-                    summary:tableResponse['intensityS123']
-                },
-                {
-                    name:'Emissions Intensity Scope 1+2 (tCO2e/m Revenue)',
-                    summary:tableResponse['intensityS12']
-                },
-                {
-                    name:'Intensity Momentum Scope 1+2 (tCO2e/m Revenue)',
-                    summary:tableResponse['momentum']
-                }
-            ]
-        } 
+		if (tableResponse && Object.keys(tableResponse).length > 0) {
+			tableData = [
+				{
+					name: 'Name',
+					summary: tableResponse['Name']
+				},
+				{
+					name: 'Sector',
+					summary: tableResponse['SASBSector']
+				},
+				{
+					name: 'Disclosure Scope 1+2 Category',
+					summary: tableResponse['DisclosureScope12Category']
+				},
+				{
+					name: 'Number of Scope 3 Categories Disclosed',
+					summary: tableResponse['DisclosureNumberofS3Categories']
+				},
+				{
+					name: 'Emissions Intensity Scope 1+2+3 (tCO2e/m Revenue)',
+					summary: tableResponse['intensityS123']
+				},
+				{
+					name: 'Emissions Intensity Scope 1+2 (tCO2e/m Revenue)',
+					summary: tableResponse['intensityS12']
+				},
+				{
+					name: 'Intensity Momentum Scope 1+2 (tCO2e/m Revenue)',
+					summary: tableResponse['momentum']
+				}
+			];
+		}
 
-        setChartData(chartData)
-        setTableData(tableData)
+		setChartData(chartData);
+		setTableData(tableData);
+        setCompanyName(companyName)
 	};
-    const handleSectorChange = async (e)=>{
-        const sector=e.target.value
-        const response=companyData['data'];
-        const companyList=response[sector];
-        const currentCompany=companyList[0]['company_id']
+	const handleSectorChange = async (e) => {
+		const sector = e.target.value;
+		const response = companyData['data'];
+		const companyList = response[sector];
+		const currentCompany = companyList[0]['company_id'];
 
-        setCurrentSector(sector)
-        setCompanyList(companyList);
-        setCurrentCompany(currentCompany);
+		setCurrentSector(sector);
+		setCompanyList(companyList);
+		setCurrentCompany(currentCompany);
 
-        await fetchDetails(currentCompany)
-    }
-    const handleCompanyChange = async (event)=>{
-        const companyId=event.target.value
-        setCurrentCompany(companyId);
+		await fetchDetails(currentCompany);
+	};
+	const handleCompanyChange = async (event) => {
+		const companyId = event.target.value;
+		setCurrentCompany(companyId);
 
-        await fetchDetails(companyId)
-    }
-
-	console.log('sectorList//', sectorList);
-	console.log('tableData//', tableData);
+		await fetchDetails(companyId);
+	};
+    console.log("currentCompany",currentCompany)
 
 	return (
 		<React.Fragment>
@@ -235,7 +233,11 @@ const CompanyProfile = ({}) => {
 					</Grid>
 					<Grid container>
 						<Grid item xs={6}>
-							<LineChart data={chartData} chartKey="COMPANY_PROFILE" />
+							<LineChart
+								data={chartData}
+								chartKey="COMPANY_PROFILE"
+								chartTitle={`${companyName} Profile`}
+							/>
 						</Grid>
 						<Grid item xs={6}>
 							<DataTable data={tableData} columns={companyProfileCells} tableHeading="COMPANY_PROFILE" />

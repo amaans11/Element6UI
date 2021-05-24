@@ -161,7 +161,7 @@
       grpKey:'targetScenario',
       tagsList: [
         { name: "IPCC 1.5", value: "IPCC", selected: true },
-        { name: "IEA", value: "SSIEAP226", selected: false },
+        { name: "IEA", value: "IEA", selected: false },
         { name: "NGFS", value: "NGFS", selected: false },
       ]
     },
@@ -182,6 +182,17 @@
         { name: "Low Energy Demand", value: "LowEnergyDemand", selected: true },
         { name: "SSP4-26", value: "SSP426", selected: false },
         { name: "SSP5-26", value: "SSP526", selected: false },
+        { name: "Beyond 2 Degrees", value: "Beyond2", selected: true },
+        { name: "2 Degrees", value: "2", selected: false },
+        { name: "Reference Technology", value: "ReferenceTechnology", selected: false },
+        { name: "Current policies (Hot house world, Rep)", value: "Current policies (Hot house world, Rep)", selected: true },
+        { name: "Immediate 2C with CDR (Orderly, Rep)", value: "Immediate 2C with CDR (Orderly, Rep)", selected: false },
+        { name: "Delayed 2C with CDR (Disorderly, Alt)", value: "Delayed 2C with CDR (Disorderly, Alt)", selected: false },
+        { name: "Immediate 1.5C with CDR (Orderly, Alt)", value: "Immediate 1.5C with CDR (Orderly, Alt)", selected: false },
+        { name: "Immediate 1.5C with limited CDR (Disorderly, Alt)", value: "Immediate 1.5C with limited CDR (Disorderly, Alt)", selected: false },
+        { name: "Immediate 2C with limited CDR (Orderly, Alt)", value: "Immediate 2C with limited CDR (Orderly, Alt)", selected: false },
+        { name: "Nationally determined contributions (NDCs) (Hot house world, Alt)", value: "Nationally determined contributions (NDCs) (Hot house world, Alt)", selected: false },
+        { name: "Delayed 2C with limited CDR (Disorderly, Rep)", value: "Delayed 2C with limited CDR (Disorderly, Rep)", selected: false },
       ]
     },
     {

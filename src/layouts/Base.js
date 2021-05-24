@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -44,6 +44,8 @@ import StrandedAssetsAnalysis from '../screens/StrandedAssetsAnalysis';
 import UrgentemDownload from '../screens/UrgentemDownload';
 import GenerateReport from '../screens/GenerateReport';
 import UrgentemLanding from '../screens/UrgentemLanding';
+import { missingCoverageCells } from '../util/TableHeadConfig';
+import DataTable from '../components/Table/DataTable';
 import {
 	getPortfolioList,
 	getUserInfo,
@@ -51,9 +53,12 @@ import {
 	setBenchmark,
 	setTabValue,
 	setModule,
-	setFilterVisibility
+	setFilterVisibility,
+	uploadPortfolioRequest
 } from '../redux/actions/authActions';
 import csvFile from '../assets/Dummy-file.xlsx';
+import axios from 'axios';
+import { Message } from '@material-ui/icons';
 
 const drawerWidth = 295;
 
@@ -170,8 +175,11 @@ const MiniDrawer = ({ classes, history }) => {
 	const [ dialog, setDialog ] = useState(false);
 	const [ portfolioValue, setPortfolioValue ] = useState(1000000000);
 	const [ portfolioName, setPortfolioName ] = useState('');
+	const [ missingCoverageDialog, setMissingCoverageDialog ] = useState(false);
+	const [ missingCoverage, setMissingCoverage ] = useState({});
 
 	const dispatch = useDispatch();
+	const inputRef = useRef(null);
 
 	const auth = useSelector((state) => state.auth);
 	const portfolios = useSelector((state) => state.auth.portfolioList);
@@ -179,8 +187,11 @@ const MiniDrawer = ({ classes, history }) => {
 	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
 	const currentCurrency = useSelector((state) => state.auth.currentCurrency);
 	const isVisible = useSelector((state) => state.auth.isVisible);
+	const uploadPortfolioRes = useSelector((state) => state.auth.uploadPortfolioRes);
 
 	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
+	let userInfo = auth && auth.userInfo ? auth.userInfo : {};
+
 
 	const getUserDetails = async () => {
 		const data = {
@@ -239,9 +250,47 @@ const MiniDrawer = ({ classes, history }) => {
 			NotificationManager.error('Portfolio Name cannot be empty!');
 			return;
 		}
+		inputRef.current.click();
 	};
 	const hideFilterSection = async () => {
 		await dispatch(setFilterVisibility(true));
+	};
+	const handleFileSubmit = async (event) => {
+		const file = event.target.files[0];
+
+		const data = new FormData();
+		const emissionYear =  userInfo.year_emissions ? userInfo.year_emissions : 2019
+		data.append('excel_file', file);
+		data.append('client_name', currentUser.client);
+		data.append('portfolio-value', portfolioValue);
+		data.append('portfolio-name', portfolioName);
+		data.append('portfolio-date', emissionYear);
+		data.append('currency', currentCurrency);
+
+		const uploadData = {
+			portfolioName: portfolioName,
+			portfolioValue: portfolioValue,
+			client: currentUser.client,
+			portfolioDate: emissionYear
+		};
+
+		await dispatch(uploadPortfolioRequest(data, uploadData));
+
+		if (uploadPortfolioRes.error) {
+			NotificationManager.error(uploadPortfolioRes.error);
+			return;
+		} else {
+			if (uploadPortfolioRes.data && uploadPortfolioRes.data.status == 'Success') {
+				NotificationManager.success(
+					'Your portfolio has been uploaded and is being processed. You will see your uploaded portfolio table updated once the processing has been completed.'
+				);
+			} else {
+				NotificationManager.info('Missing Coverage');
+				setDialog(false);
+				setMissingCoverageDialog(true);
+				setMissingCoverage(uploadPortfolioRes.data);
+			}
+		}
 	};
 	useEffect(() => {
 		fetchDetails();
@@ -298,7 +347,7 @@ const MiniDrawer = ({ classes, history }) => {
 				) : (
 					<StyleRoot>
 						<span onClick={hideFilterSection} style={styles.slideInRight}>
-							<ArrowForwardIosIcon style={{ position: 'fixed', left: 80, top: window.innerHeight/3 }} />
+							<ArrowForwardIosIcon style={{ position: 'fixed', left: 80, top: window.innerHeight / 3 }} />
 						</span>
 					</StyleRoot>
 				)}
@@ -370,8 +419,10 @@ const MiniDrawer = ({ classes, history }) => {
 			</main>
 			<Dialog open={dialog} onClose={handleCloseDialog}>
 				<Box className="d-flex flex-space-between">
-					<Typography variant="h5" style={{marginLeft:20,marginTop:10}}>Upload Portfolio</Typography>
-					<IconButton  onClick={handleCloseDialog}>
+					<Typography variant="h5" style={{ marginLeft: 20, marginTop: 10 }}>
+						Upload Portfolio
+					</Typography>
+					<IconButton onClick={handleCloseDialog}>
 						<CloseIcon />
 					</IconButton>
 				</Box>
@@ -431,6 +482,66 @@ const MiniDrawer = ({ classes, history }) => {
 					<Button onClick={uploadPortfolio} color="primary">
 						Upload
 					</Button>
+					<input
+						id="files"
+						accept=".csv, .xls, .xlsx"
+						style={{ display: 'none' }}
+						type="file"
+						name="file"
+						ref={inputRef}
+						onChange={handleFileSubmit}
+						className="btn btn-secondary"
+					/>
+				</DialogActions>
+			</Dialog>
+			<Dialog open={missingCoverageDialog} keepMounted maxWidth="sm">
+				<Typography component={'div'} gutterBottom>
+					The Portfolio was not Uploaded because it did not meet the coverage criteria. Please contact the IT
+					Support team for support to match the remaining securities.
+				</Typography>
+				<DialogContent>
+					<DialogTitle>Summary</DialogTitle>
+					<DialogContentText>
+						<Typography>
+							Securities not covered in Fundamentals Dataset:{' '}
+							{missingCoverage.number_of_securities_not_covered}
+						</Typography>
+						<Typography>
+							Total Weight not covered in Fundamentals Dataset ( in %) :{' '}
+							{missingCoverage.percentage_total_weight_not_covered}
+						</Typography>
+						<Typography>
+							Securities not covered in Emissions Dataset:{' '}
+							{missingCoverage.number_of_securities_not_covered_emissions}
+						</Typography>
+						<Typography>
+							Total Weight not covered in Emissions Dataset ( in %) :{' '}
+							{missingCoverage.percentage_total_weight_not_covered_emissions}
+						</Typography>
+						<Typography>
+							Securities not covered in Price Dataset:{' '}
+							{missingCoverage.number_of_securities_not_covered_price}
+						</Typography>
+						<Typography>
+							Total Weight not covered in Price Dataset ( in %) :{' '}
+							{missingCoverage.percentage_total_weight_not_covered_price}
+						</Typography>
+						<DialogTitle>Securities not covered</DialogTitle>
+						<DataTable
+							data={
+								missingCoverage.list_of_securities_not_covered_all_datasets ? (
+									missingCoverage.list_of_securities_not_covered_all_datasets
+								) : (
+									[]
+								)
+							}
+							columns={missingCoverageCells}
+							tableHeading="MISSING_COVERAGE"
+						/>
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={() => setMissingCoverageDialog(false)}>Close</Button>
 				</DialogActions>
 			</Dialog>
 		</div>

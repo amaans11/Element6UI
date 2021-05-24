@@ -17,7 +17,9 @@ export default function FilterGroup() {
 
 	const moduleName = useSelector((state) => state.auth.moduleName);
 	const tabValue = useSelector((state) => state.auth.tabValue);
+	const filterItem = useSelector((state) => state.auth.filterItem);
 
+	const { targetScenario } = filterItem;
 	const getConfigs = () => {
 		let config = [];
 		switch (moduleName) {
@@ -195,6 +197,15 @@ export default function FilterGroup() {
 						return true;
 				}
 				break;
+			case 'Temp score':
+				switch (tagName) {
+					case 'Sc12':
+						return true;
+					case 'Sc123':
+						return true;
+					case 'Sc3':
+						return true;
+				}
 			default:
 				switch (tagName) {
 					case 'Sc12':
@@ -207,11 +218,111 @@ export default function FilterGroup() {
 				break;
 		}
 	};
+	const getFootprintMetric = (tagName) => {
+		switch (moduleName) {
+			case 'FLM':
+				switch (tagName) {
+					case 'Revenue':
+						return true;
+					case 'MarketVal':
+						return true;
+					case 'FinancedEmis':
+						return true;
+					case 'PortInt':
+						return false;
+					case 'CarbFootMV':
+						return false;
+				}
+				break;
+			default:
+				switch (tagName) {
+					case 'Revenue':
+						return true;
+					case 'MarketVal':
+						return true;
+					case 'FinancedEmis':
+						return true;
+					case 'PortInt':
+						return true;
+					case 'CarbFootMV':
+						return true;
+				}
+				break;
+		}
+	};
+	const getWarmingScenario = (tagName) => {
+		switch (targetScenario) {
+			case 'IPCC':
+				switch (tagName) {
+					case 'SSP126':
+						return true;
+					case 'SSP226':
+						return true;
+					case 'LowEnergyDemand':
+						return true;
+					case 'SSP426':
+						return true;
+					case 'SSP526':
+						return true;
+					default:
+						return false;
+				}
+			case 'IEA':
+				switch (tagName) {
+					case 'Beyond2':
+						return true;
+					case '2':
+						return true;
+					case 'ReferenceTechnology':
+						return true;
+					default:
+						return false;
+				}
+			case 'NGFS':
+				switch (tagName) {
+					case 'Current policies (Hot house world, Rep)':
+						return true;
+					case 'Immediate 2C with CDR (Orderly, Rep)':
+						return true;
+					case 'Delayed 2C with CDR (Disorderly, Alt)':
+						return true;
+					case 'Immediate 1.5C with CDR (Orderly, Alt)':
+						return true;
+					case 'Immediate 1.5C with limited CDR (Disorderly, Alt)':
+						return true;
+					case 'Immediate 2C with limited CDR (Orderly, Alt)':
+						return true;
+
+					case 'Nationally determined contributions (NDCs) (Hot house world, Alt)':
+						return true;
+					case 'Delayed 2C with limited CDR (Disorderly, Rep)':
+						return true;
+
+					default:
+						return false;
+				}
+			default:
+				switch (tagName) {
+					case 'SSP126':
+						return true;
+					case 'SSP226':
+						return true;
+					case 'LowEnergyDemand':
+						return true;
+					case 'SSP426':
+						return true;
+					case 'SSP526':
+						return true;
+					default:
+						return false;
+				}
+				break;
+		}
+	};
 
 	const updateTags = (grpindex, tagindex, selected) => {
+		const newData = [ ...data ];
 		if (selected) {
-			const newData = [ ...data ];
-
 			newData[grpindex].tagsList.map((tags) => {
 				tags.selected = false;
 			});
@@ -227,12 +338,49 @@ export default function FilterGroup() {
 				})
 			);
 		}
+		if (newData[grpindex]['grpKey'] == 'targetScenario') {
+			const scenarioVal = newData[grpindex].tagsList[tagindex].value;
+			switch (scenarioVal) {
+				case 'IPCC':
+					dispatch(
+						setFilterItem({
+							key: 'warmingScenario',
+							value: 'LowEnergyDemand'
+						})
+					);
+					break;
+				case 'IEA':
+					dispatch(
+						setFilterItem({
+							key: 'warmingScenario',
+							value: 'Beyond2'
+						})
+					);
+					break;
+				case 'NGFS':
+					dispatch(
+						setFilterItem({
+							key: 'warmingScenario',
+							value: 'Current policies (Hot house world, Rep)'
+						})
+					);
+					break;
+				default:
+					dispatch(
+						setFilterItem({
+							key: 'warmingScenario',
+							value: 'LowEnergyDemand'
+						})
+					);
+					break;
+			}
+		}
 	};
 	useEffect(
 		() => {
 			getConfigs();
 		},
-		[ tabValue ]
+		[ tabValue, targetScenario ]
 	);
 	const hideFilterSection = async () => {
 		await dispatch(setFilterVisibility(false));
@@ -256,8 +404,34 @@ export default function FilterGroup() {
 								<div>
 									{e.tagsList.map((t, i) => {
 										const val = getEmission(t.value);
+										const fpValue = getFootprintMetric(t.value);
+										const warmingScValue = getWarmingScenario(t.value);
 										if (e.grpKey == 'emission') {
 											if (val) {
+												return (
+													<FilterTags
+														name={t.name}
+														selected={t.selected}
+														grpindex={index}
+														tagindex={i}
+														action={updateTags}
+													/>
+												);
+											}
+										} else if (e.grpKey == 'footprintMetric') {
+											if (fpValue) {
+												return (
+													<FilterTags
+														name={t.name}
+														selected={t.selected}
+														grpindex={index}
+														tagindex={i}
+														action={updateTags}
+													/>
+												);
+											}
+										} else if (e.grpKey == 'warmingScenario') {
+											if (warmingScValue) {
 												return (
 													<FilterTags
 														name={t.name}

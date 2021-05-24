@@ -3,8 +3,11 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
 
-function LineChart({ data, chartKey, yAxisTitle, subtitle }) {
-	const title = CONFIG['CHART'][chartKey]['TITLE'];
+function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
+	let title = chartTitle
+	if(!chartTitle){
+		 title = CONFIG['CHART'][chartKey]['TITLE'];
+	}
 	let yAxis = yAxisTitle;
 	if (!yAxisTitle) {
 		yAxis = CONFIG['CHART'][chartKey]['Y_AXIS_TITLE'];

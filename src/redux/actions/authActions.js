@@ -20,13 +20,15 @@ import {
 	getContribAnalysis,
 	getHeatmapData
 } from './tempMetricActions';
-import { getPortfolioAlignment } from './flmActions';
+import { getPortfolioAlignment, getTargetSetting, getCompanyProfileData,getCompanies} from './flmActions';
 
 const history = createBrowserHistory();
 
-const requestApi = async (dispatch, auth) => {
+const requestApi = async (dispatch, auth, flm) => {
 	const moduleName = auth.moduleName;
 	const tabValue = auth.tabValue;
+	const companyData = flm.companyData;
+
 	let data = {};
 
 	switch (moduleName) {
@@ -90,14 +92,28 @@ const requestApi = async (dispatch, auth) => {
 					break;
 				case 1:
 					data = getRequestData('TARGET_SETTING', auth);
-					// await dispatch(getTargetSetting(data));
+					await dispatch(getTargetSetting(data));
 					break;
 				case 2:
-					data = getRequestData('COMPANY_PROFILE', auth);
-					// await dispatch(getCompanyProfile(data));
+					const data = getRequestData('COMPANY_PROFILE_COMPANIES', auth);
+					await dispatch(getCompanies(data));
+
+					const response = companyData['data'];
+					if (response && Object.keys(response).length > 0) {
+						const sectors = Object.keys(response);
+						const companies = response[sectors[0]];
+						const currentCompany = companies[0]['company_id'];
+						let requestData = getRequestData('COMPANY_PROFILE', auth);
+
+						requestData = {
+							...requestData,
+							company: currentCompany
+						};
+						await dispatch(getCompanyProfileData(requestData));
+					}
+
 					break;
 				case 3:
-					data = getRequestData('CARBON_ADJUSTED_RETURNS', auth);
 					// await dispatch(getCarbonReturns(data));
 					break;
 				default:
@@ -335,7 +351,8 @@ export const setPortfolio = (portfolio) => {
 	return async (dispatch, getState) => {
 		await dispatch(setPortfolioSuccess(portfolio));
 		const auth = getState().auth;
-		requestApi(dispatch, auth);
+		const flm = getState().flm;
+		requestApi(dispatch, auth, flm);
 	};
 };
 
@@ -346,7 +363,8 @@ export const setBenchmark = (benchmark) => {
 	return async (dispatch, getState) => {
 		await dispatch(setBenchmarkSuccess(benchmark));
 		const auth = getState().auth;
-		requestApi(dispatch, auth);
+		const flm = getState().flm;
+		requestApi(dispatch, auth , flm);
 	};
 };
 
@@ -358,7 +376,8 @@ export const setFilterItem = (data) => {
 	return async (dispatch, getState) => {
 		await dispatch(setFilterItemSuccess(data));
 		const auth = getState().auth;
-		requestApi(dispatch, auth);
+		const flm = getState().flm;
+		requestApi(dispatch, auth , flm);
 	};
 };
 
@@ -492,4 +511,36 @@ export const generateReport = (data) => {
 			}
 		});
 	};
+};
+
+export const uploadPortfolioRequest = (data, uploadData) => {
+	return async (dispatch, getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+
+		const { client, portfolioValue, portfolioName, portfolioDate } = uploadData;
+		return axios
+			.post(`${actionTypes.API_URL}/portfolios/upload`, data, {
+				headers: {
+					client: client,
+					'portfolio-value': portfolioValue,
+					'portfolio-name': portfolioName,
+					'portfolio-date': portfolioDate,
+					'client-key': clientKey
+				}
+			})
+			.then((result) => {
+				dispatch(uploadPortfolioSuccess(result.data.data));
+			})
+			.catch((err) => {
+				const error = err.response.data.message;
+				dispatch(uploadPortfolioFailed(error));
+			});
+	};
+};
+
+export const uploadPortfolioSuccess = (res) => {
+	return { type: actionTypes.UPLOAD_PORTFOLIO_SUCCESS, res };
+};
+export const uploadPortfolioFailed = (error) => {
+	return { type: actionTypes.UPLOAD_PORTFOLIO_FAILED, error };
 };

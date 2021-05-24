@@ -8,12 +8,28 @@ import BubbleChart from '../../components/ChartsComponents/BubbleChart';
 import { getCompanyAnalysisData } from '../../redux/actions/tempMetricActions';
 import { companyAnalysisCells } from '../../util/TableHeadConfig';
 
+const getEmissionValue = (emission) => {
+	switch (emission) {
+		case 'Sc12':
+			return 'S1+2';
+		case 'Sc123':
+			return 'S1+2+3';
+		case 'Sc3':
+			return 'S3';
+		default:
+			return 'S1+2';
+	}
+};
+
 const CompanyAnalysis = ({}) => {
 	const dispatch = useDispatch();
 
 	const companyData = useSelector((state) => state.tempMetric.companyData);
 	const auth = useSelector((state) => state.auth);
-	const { loading } = auth;
+	const { loading,filterItem } = auth;
+	const {emission}=filterItem;
+
+	const emissionLabel=getEmissionValue(emission)
 
 	const [ chartData, setChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
@@ -64,6 +80,7 @@ const CompanyAnalysis = ({}) => {
 		setTableData(tableData);
 		setChartData(chartData);
 	};
+
 	return (
 		<React.Fragment>
 			{loading ? (
@@ -80,6 +97,7 @@ const CompanyAnalysis = ({}) => {
 						xAxisLabel="Temperature Score"
 						yAxisLabel="S1+2 GHG Emissions(tCO2e)"
 						zAxisLabel="Weight"
+						yAxisTitle={`${emissionLabel} GHG Emissions (tCo2e)`}
 					/>
 					<DataTable data={tableData} columns={companyAnalysisCells} tableHeading="COMPANY_ANALYSIS" />
 				</React.Fragment>

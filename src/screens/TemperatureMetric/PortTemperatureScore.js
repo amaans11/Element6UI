@@ -137,7 +137,7 @@ const PortTemperatureScore = ({}) => {
 										pathColor: '#1890ff'
 									})}
 								>
-									<Typography className="default-font" color="primary">
+									<Typography className="default-font" color="primary" style={{fontSize:14}}>
 										Companies With Target
 									</Typography>
 									<Typography className="default-font">{`${targetData}%`}</Typography>

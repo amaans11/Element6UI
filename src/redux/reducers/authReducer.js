@@ -17,7 +17,8 @@ const intialState = {
 	isVisible: true,
 	reweightFactor: 0,
 	loading: false,
-	downloadPortfolioList:[],
+	downloadPortfolioList: [],
+	uploadPortfolioRes: {}
 };
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -42,11 +43,11 @@ export default function authReducer(state = { ...intialState }, action) {
 					year: '1Y',
 					materiality: 'matPort',
 					intensityScope: 'Sc12',
-					portScenario:'LowEnergyDemand',
-					targetScenario:'IPCC',
-					warmingScenario:'LowEnergyDemand',
-					approach:'RelativeAlignment',
-					alignmentYear:'2020',
+					portScenario: 'LowEnergyDemand',
+					targetScenario: 'IPCC',
+					warmingScenario: 'LowEnergyDemand',
+					approach: 'RelativeAlignment',
+					alignmentYear: '2020'
 				};
 			});
 
@@ -115,7 +116,6 @@ export default function authReducer(state = { ...intialState }, action) {
 			});
 		case types.SET_REWEIGHT_FACTOR:
 			return produce(state, (draft) => {
-				console.log('action.', action);
 				draft.reweightFactor = action.res;
 			});
 		case types.SET_LOADING:
@@ -129,7 +129,7 @@ export default function authReducer(state = { ...intialState }, action) {
 			});
 		case types.GET_DOWNLOAD_PORTFOLIOS_SUCCESS:
 			return produce(state, (draft) => {
-				console.log("action>>",action.res)
+				console.log('action>>', action.res);
 				draft.downloadPortfolioList = action.res;
 			});
 		case types.GET_DOWNLOAD_PORTFOLIOS_FAILED:
@@ -139,14 +139,25 @@ export default function authReducer(state = { ...intialState }, action) {
 
 		case types.GET_DOWNLOAD_DETAILS_SUCCESS:
 			return produce(state, (draft) => {
-				console.log("Action>>",action.res)
+				console.log('Action>>', action.res);
 				draft.downloadData = action.res;
 			});
 		case types.GET_DOWNLOAD_DETAILS_FAILED:
 			return produce(state, (draft) => {
 				draft.downloadData = [];
 			});
-
+		case types.UPLOAD_PORTFOLIO_SUCCESS:
+			return produce(state, (draft) => {
+				draft.uploadPortfolioRes.data = action.res;
+				draft.uploadPortfolioRes.error = '';
+			});
+		case types.UPLOAD_PORTFOLIO_FAILED:
+			return produce(state, (draft) => {
+				draft.uploadPortfolioRes = {
+					data: {},
+					error: action.error
+				};
+			});
 		default:
 			return state;
 	}

@@ -49,9 +49,7 @@ const CarbonAdjustedReturns = ({}) => {
 		[ companyData ]
 	);
 	const fetchCompanies = async () => {
-		console.log('test');
 		const data = getRequestData('COMPANY_PROFILE_COMPANIES', auth);
-		console.log('data>>', data);
 		await dispatch(getCarbonCompanies(data));
 	};
 	const getCompanyList = async () => {

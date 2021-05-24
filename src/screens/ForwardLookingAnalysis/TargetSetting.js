@@ -29,7 +29,7 @@ const TargetSetting = ({}) => {
 				getData();
 			}
 		},
-		[ targetSetting ]
+		[ targetSetting,alignmentYear ]
 	);
 
 	const fetchDetails = async () => {
@@ -44,7 +44,6 @@ const TargetSetting = ({}) => {
 		let tableData = [];
 		let portValues = [];
 		let allowanceValues = [];
-        console.log("data>>",data)
 
 		if (data['Target_Setting_table'] && Object.keys(data['Target_Setting_table']).length > 0) {
 			let allowanceData = data['Target_Setting_table']['Allowance'][alignmentYear];

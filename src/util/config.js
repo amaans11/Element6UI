@@ -50,6 +50,9 @@ const configs = {
 		},
 		CARBON_ADJUSTED_RETURNS_TABLE2:{
 			HEADING: 'Carbon-Adjusted Returns (Carbon price = $100)'
+		},
+		MISSING_COVERAGE:{
+			HEADING: 'Missing Coverage'
 		}
 	},
 	CHART: {
@@ -127,7 +130,8 @@ const configs = {
 			TITLE: ''
 		},
 		PORT_COMPANIES_SCORE: {
-			TITLE: ''
+			TITLE: '',
+			X_AXIS_TITLE: 'Number Of Companies'
 		},
 		COMPANY_ANALYSIS: {
 			TITLE: 'Scenario Alignment',
@@ -156,10 +160,11 @@ const configs = {
 			Y_AXIS_TITLE: 'Global Emissions (%)'
 		},
 		TARGET_SETTING:{
-			TITLE: 'Target Setting'
+			TITLE: 'Target Setting',
+			Y_AXIS_TITLE: 'Carbon Emissions (tCo2e)'
 		},
 		COMPANY_PROFILE:{
-			TITLE: 'Company Profile'
+			Y_AXIS_TITLE: 'Carbon Emissions (tCo2e)'
 		},
 		CARBON_ADJUSTED_RETURNS:{
 			TITLE: 'Carbon Adjusted Returns'

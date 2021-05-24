@@ -580,6 +580,38 @@ const companyProfileCells = [
 		right: true
 	}
 ];
+const missingCoverageCells=[
+	{
+		name: 'ISIN',
+		selector: 'ISIN',
+		sortable: true,
+		right: false
+	},
+	{
+		name: 'Weight',
+		selector: 'Weight',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Fundamentals Covered',
+		selector: 'Fundamentals_Covered',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Emissions Covered',
+		selector: 'Emissions_Covered',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Price_Covered',
+		selector: 'Price Covered',
+		sortable: true,
+		right: true
+	},
+]
 export {
 	portEmissionCells,
 	avoidedEmissionCells,
@@ -593,5 +625,6 @@ export {
 	tempScoreCells,
 	companyAnalysisCells,
 	targetSettingCells,
-	companyProfileCells
+	companyProfileCells,
+	missingCoverageCells
 };

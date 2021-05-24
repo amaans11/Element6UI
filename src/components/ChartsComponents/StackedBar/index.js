@@ -9,7 +9,10 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 	if (!yAxisTitle) {
 		yAxis = CONFIG['CHART'][chartKey]['Y_AXIS_TITLE'];
 	}
-
+	let xAxis = '';
+	if (CONFIG['CHART'][chartKey]['X_AXIS_TITLE']) {
+		xAxis = CONFIG['CHART'][chartKey]['X_AXIS_TITLE'];
+	}
     const currentTheme = localStorage.getItem('appTheme');
 
 	const options = {
@@ -29,7 +32,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 		xAxis: {
 			categories: categories,
 			title: {
-				text: null
+				text: xAxis
 			},
 			labels: {
 				style: {
