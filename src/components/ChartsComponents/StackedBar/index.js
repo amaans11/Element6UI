@@ -57,6 +57,11 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 				}
 			}
 		},
+		tooltip: {
+			formatter: function() {
+			  return '<b>' + this.x + '</b>' + '<br/>' + '<b>' + 'Disclosure Rate' + ' : ' + '</b>'  + this.y  + ' ' + yAxis ;
+			}
+		  },
 		legend: {
 			reversed: true
 		},

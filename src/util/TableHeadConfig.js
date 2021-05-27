@@ -83,7 +83,7 @@ const sovFootprintCells = [
 		right: false
 	},
 	{
-		name: 'Emissions Intensity of GDP (tCO2/1,000 $USD)',
+		name: 'Emissions Intensity of GDP (tCO2/1M USD)',
 		selector: 'gdpData',
 		sortable: true,
 		right: true,

@@ -66,31 +66,34 @@ const configs = {
 			TITLE: 'Sector Contribution'
 		},
 		SECTOR_WEIGHT: {
-			TITLE: 'Sector Weight',
+			TITLE: 'Sector Weights',
 			Y_AXIS_TITLE: 'Sector Weight (%)',
             TOOLTIP_UNIT:'%'
 		},
 		SOV_GDP_CHART: {
 			TITLE: 'Sovereign Footprint (per GDP)',
-			Y_AXIS_TITLE: 'tCO2 per GDP'
+			Y_AXIS_TITLE: 'Emissions Intensity of GDP (tCO2/1M USD)'
 		},
 		SOV_POP_CHART: {
 			TITLE: 'Sovereign Footprint (per Population)',
-			Y_AXIS_TITLE: 'tCO2 per Population'
+			Y_AXIS_TITLE: 'Emissions Intensity of Population (tCO2/person)'
 		},
 		AVOIDED_EMISSIONS: {
 			TITLE: 'Portfolio Intensity'
 		},
 		DISCLOSURE_SCOPE12: {
-			TITLE: 'Scope 1+2 Carbon Emissions Disclosure'
+			TITLE: 'Scope 1+2 Carbon Emissions Disclosure',
+			Y_AXIS_TITLE: '%',
 		},
 		DISCLOSURE_SCOPE3: {
 			TITLE: 'Scope 3 Carbon Emissions Disclosure',
-			Y_AXIS_TITLE: 'Number of Scope 3 Categories Disclosed'
+			Y_AXIS_TITLE: 'Percentage Disclosed (%)',
+			X_AXIS_TITLE:'Number of Scope 3 Categories Disclosed'
 		},
 		CARBON_ATTRIBUTION: {
 			TITLE: 'Carbon Attribution',
-			Y_AXIS_TITLE: 'GHG Intensity (tCO2e / 1M USD )'
+			Y_AXIS_TITLE: 'GHG Intensity (tCO2e / 1M USD )',
+			X_AXIS_TITLE:'Sector'
 		},
 		SCOPE3_HEATMAP: {
 			TITLE: 'Supply and Value Chain Scope 3 Materiality'

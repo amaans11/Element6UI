@@ -45,7 +45,6 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 			}
 		},
 		yAxis: {
-			min: 0,
 			gridLineWidth: 0,
 			title: {
 				text: yAxis,
@@ -63,7 +62,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 		tooltip: {
 			formatter: function() {
 				const item=this.colorIndex == 0 ? 'Portfolio' : 'Benchmark'
-				return '<b>' + this.x + '</b>' + '<br/>' + '<b>' + item + ' : ' + '</b>'  + this.y + ' (' + tooltipUnit  + ')';
+				return '<b>' + this.x + '</b>' + '<br/>' + '<b>' + item + ' : ' + '</b>'  + new Intl.NumberFormat().format(this.y) + ' (' + tooltipUnit  + ')';
 			}
 		},
 		plotOptions: {

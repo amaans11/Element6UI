@@ -8,15 +8,17 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
   let yAxis=yAxisTitle;
   let legend = isLegend == false ? isLegend : true
 
-  console.log("legend",legend)
-  console.log("isLegend",isLegend)
-
   if(!yAxisTitle){
     yAxis=CONFIG['CHART'][chartKey]['Y_AXIS_TITLE']
+  }
+  let xAxisTitle=''
+  if(CONFIG['CHART'][chartKey]['X_AXIS_TITLE']){
+    xAxisTitle=CONFIG['CHART'][chartKey]['X_AXIS_TITLE']
   }
 
   const currentTheme = localStorage.getItem('appTheme');
 
+  console.log("data>>",data)
   const options = {
     chart: {
       type: "column",
@@ -34,7 +36,10 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
     xAxis: {
         categories: categories,
         title: {
-          text: '',
+          text: xAxisTitle ? xAxisTitle : '',
+          style: {
+            color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+          }
         },
         labels: {
           style: {
@@ -43,7 +48,6 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
         },
       },
     yAxis: {
-        min: 0,
         title: {
           text:yAxis ,
           align: "high",
@@ -58,7 +62,7 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
           }
         },
       },
-
+      
     plotOptions: {
         column: {
           pointPadding: 0.2,
@@ -69,7 +73,8 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
                 enabled: true,
                 color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
                 style: {
-                    fontWeight: 'normal'
+                    fontWeight: 'normal',
+                    shadow: false
                 }
             },
             borderWidth: 1,
@@ -82,6 +87,9 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
             color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
         }
     },
+    credits: {
+      enabled: false
+  },
     series: data,
   };
   

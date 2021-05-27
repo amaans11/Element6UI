@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box,CircularProgress } from '@material-ui/core';
+import { Box, CircularProgress, Typography } from '@material-ui/core';
 import { getDisclosureData } from '../../redux/actions/footprintActions';
 import { map } from 'lodash';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
@@ -14,12 +14,15 @@ const Disclosure = ({}) => {
 	const portDisclosure = useSelector((state) => state.footprint.portDisclosure);
 	const benchDisclosure = useSelector((state) => state.footprint.benchDisclosure);
 
+	console.log('portDisclosure1>>', portDisclosure);
+	console.log('benchDisclosure1>>', benchDisclosure);
+
 	const [ stackedChartData, setStackedChartData ] = useState([]);
 	const [ columnChartData, setColumnChartData ] = useState([]);
 	const [ columnCategories, setColumnCategories ] = useState([]);
 
 	const dispatch = useDispatch();
-	const {loading}=auth
+	const { loading } = auth;
 
 	const fetchDetails = async () => {
 		const portData = getRequestData('PORT_DISCLOSURE', auth);
@@ -35,6 +38,9 @@ const Disclosure = ({}) => {
 		let benchValues = [];
 		let categories = [];
 
+		console.log('portDisclosure', portDisclosure);
+		console.log('benchDisclosure', benchDisclosure);
+
 		if (portDisclosure['data'] && benchDisclosure['data']) {
 			const portData =
 				portDisclosure && Object.keys(portDisclosure).length > 0 ? portDisclosure['data']['Scope3_disc'] : [];
@@ -43,15 +49,24 @@ const Disclosure = ({}) => {
 					? benchDisclosure['data']['Scope3_disc']
 					: [];
 
+			console.log('portData', portData);
+			console.log('benchData', benchData);
+
 			if (portData && portData.length > 0) {
 				portData.map((res) => {
 					portValues.push(res['Portfolio']);
 					categories.push(res['Disclosed.S3']);
 				});
 			}
+
 			if (benchData && benchData.length > 0) {
-				benchValues = map(benchData, 'Portfolio');
+				benchData.map((res) => {
+					const key = res['Disclosed.S3'];
+					benchValues[key] = res['Portfolio'];
+				});
 			}
+			benchValues = Array.from(benchValues, (item) => item || 0);
+			console.log('benchValues', benchValues);
 			chartData = [
 				{
 					name: 'portfolio',
@@ -106,10 +121,12 @@ const Disclosure = ({}) => {
 		},
 		[ portDisclosure, benchDisclosure ]
 	);
-	console.log("stackedChartData",stackedChartData)
+	console.log('stackedChartData', stackedChartData);
 	return (
 		<React.Fragment>
-			{loading ? <CircularProgress /> : portDisclosure.error ? (
+			{loading ? (
+				<CircularProgress />
+			) : portDisclosure.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{portDisclosure.error}
 				</Box>
@@ -121,6 +138,16 @@ const Disclosure = ({}) => {
 				<Box>
 					<StackedBar categories={categories} data={stackedChartData} chartKey="DISCLOSURE_SCOPE12" />
 					<ColumnChart categories={columnCategories} data={columnChartData} chartKey="DISCLOSURE_SCOPE3" />
+					<Typography>
+						This chart highlights the number of Scope 3 categories disclosed out of a possible 15 for
+						company holdings with the portfolio and benchmark as a percentage. This relates to the issuers
+						that Urgentem has directly analysed. A key area of engagement with companies is to encourage
+						disclosure of Scope 3 emissions. Disclosure of Scope 3 emissions reduces the error in estimating
+						carbon risk exposure and allows companies to address areas of high carbon intensity within their
+						value chain. Scope 3 data is becoming increasingly available and is a critical part of
+						understanding company and portfolio-level carbon risks - as it generally accounts for around 85%
+						of a typical company's total emissions.
+					</Typography>
 				</Box>
 			)}
 		</React.Fragment>
