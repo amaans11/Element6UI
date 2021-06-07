@@ -606,8 +606,40 @@ const missingCoverageCells=[
 		right: true
 	},
 	{
-		name: 'Price_Covered',
-		selector: 'Price Covered',
+		name: 'Price Covered',
+		selector: 'Price_Covered',
+		sortable: true,
+		right: true
+	},
+]
+const backgroundCells=[
+	{
+		name: 'Short Name',
+		selector: 'shortName',
+		sortable: true,
+		right: false
+	},
+	{
+		name: 'ISIN',
+		selector: 'isin',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'SASB SICS Industry',
+		selector: 'sasb_industry',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Scope 1+2 Disclosure Category',
+		selector: 'disclousre',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Portfolio Weight',
+		selector: 'portfolio_weight',
 		sortable: true,
 		right: true
 	},
@@ -626,5 +658,6 @@ export {
 	companyAnalysisCells,
 	targetSettingCells,
 	companyProfileCells,
-	missingCoverageCells
+	missingCoverageCells,
+	backgroundCells
 };

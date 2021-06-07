@@ -1,12 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid, FormControl, InputLabel, Select, MenuItem, CircularProgress } from '@material-ui/core';
+import {
+	Box,
+	Grid,
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
+	CircularProgress,
+	Link,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	Button,
+	Typography
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { getScope3Data } from '../../redux/actions/scope3Actions';
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
 import DataTable from '../../components/Table/DataTable';
 import getRequestData from '../../util/RequestData';
 import { sectoralScope3Cells } from '../../util/TableHeadConfig';
+import categoryContent from './CategoryContent';
 
 const useStyles = makeStyles(() => ({
 	formControl: {
@@ -23,12 +39,14 @@ const SectoralScope3Heatmap = ({}) => {
 	const [ yCategories, setYCategories ] = useState([]);
 	const [ xCategories, setXCategories ] = useState([]);
 	const [ currentSector, setCurrentSector ] = useState('');
+	const [ dialog, setDialog ] = useState(false);
 
 	const auth = useSelector((state) => state.auth);
 	const filterItem = useSelector((state) => state.auth.filterItem);
 	const heatmapData = useSelector((state) => state.scope3.heatmapData);
 
-	const { materiality,loading } = filterItem;
+	const { materiality } = filterItem;
+	const { loading } = auth;
 
 	const getCategoryKey = (category) => {
 		switch (category) {
@@ -66,6 +84,10 @@ const SectoralScope3Heatmap = ({}) => {
 				return 0;
 		}
 	};
+	const onDialogHandler = () => {
+		setDialog(!dialog);
+	};
+
 	const fetchDetails = async () => {
 		const data = getRequestData('SECTORAL_SCOPE3_MATERILITY', auth);
 		await dispatch(getScope3Data(data));
@@ -184,6 +206,23 @@ const SectoralScope3Heatmap = ({}) => {
 						tableHeading="SECTORAL_SCOPE3_HEATMAP"
 						isScroll={true}
 					/>
+					<Typography style={{marginTop:20}}>
+						This module provides a granular breakdown of carbon risk exposure within sectoral supply and
+						value chains. This can be reviewed from the sectoral and portfolio perspectives Sector Analysis:
+						Each Sector is scaled by the maximum Scope 3 or Scope 1+2 category by carbon intensity.
+						Portfolio Analysis: All Scope 3 and Scope 1+2 carbon intensity figures are scaled by the maximum
+						category for the portfolio as a whole.
+					</Typography>
+					<Link onClick={onDialogHandler}>Explore the scope 3 categories classification</Link>
+					<Dialog open={dialog} keepMounted fullWidth={true}>
+						<DialogTitle>Category Classification</DialogTitle>
+						<DialogContent>{categoryContent}</DialogContent>
+						<DialogActions>
+							<Button onClick onClick={onDialogHandler}>
+								Cancel
+							</Button>
+						</DialogActions>
+					</Dialog>
 				</React.Fragment>
 			)}
 		</React.Fragment>

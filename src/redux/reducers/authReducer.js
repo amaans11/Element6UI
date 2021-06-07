@@ -31,8 +31,8 @@ export default function authReducer(state = { ...intialState }, action) {
 				draft.currentCurrency = 'USD';
 				draft.filterItem = {
 					sector: 'SASB',
-					footprintMetric: 'Revenue',
-					marketValue: 'Equity',
+					footprintMetric: 'WeightAvgRev',
+					marketValue: 'MarketCap',
 					assetClass: 'EqCB',
 					inferenceType: 'Avg',
 					emission: 'Sc12',

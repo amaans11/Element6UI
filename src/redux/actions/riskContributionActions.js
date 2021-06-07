@@ -5,7 +5,7 @@ export const getRiskContributorData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/port_risk_contributor/prc`, data, {
+			.post(`${actionTypes.API_URL}/portfolio_carbon_risk/portfolio_risk_contributors`, data, {
 				headers: {
 					'client-key': clientKey
 				}

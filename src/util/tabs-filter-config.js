@@ -133,7 +133,7 @@ const data={
         'footprintMetric',
         'marketValue',
         'emission',
-    ]
+    ],
 }
 
 export default data;

@@ -11,6 +11,11 @@ export const RouteData = [
       icon: "VerticalSplitIcon",
     },
     {
+      name: "NLP",
+      url: "/nlp",
+      icon: "FolderIcon",
+    },
+    {
       name: "Optimization",
       url: "/portfolio-optimization",
       icon: "TimelineIcon",

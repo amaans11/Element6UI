@@ -207,3 +207,6 @@
   position: absolute;
   left: 800px;
 }
+.font-bold {
+  font-weight: bold;
+}

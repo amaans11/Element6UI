@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, CircularProgress } from '@material-ui/core';
+import {
+	Box,
+	CircularProgress,
+	Typography,
+	Link,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
+	Button
+} from '@material-ui/core';
 import { getScope3Data } from '../../redux/actions/scope3Actions';
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
 import getRequestData from '../../util/RequestData';
+import categoryContent from './CategoryContent'
 
 const Scope3Heatmap = ({ tabValue }) => {
 	const dispatch = useDispatch();
@@ -15,8 +26,10 @@ const Scope3Heatmap = ({ tabValue }) => {
 	const [ chartData, setChartData ] = useState([]);
 	const [ yCategories, setYCategories ] = useState([]);
 	const [ xCategories, setXCategories ] = useState([]);
+	const [ dialog, setDialog ] = useState(false);
 
-	const { materiality, loading } = filterItem;
+	const { materiality } = filterItem;
+	const { loading } = auth;
 
 	const getCategoryKey = (category) => {
 		switch (category) {
@@ -67,6 +80,9 @@ const Scope3Heatmap = ({ tabValue }) => {
 		},
 		[ heatmapData, materiality ]
 	);
+	const onDialogHandler = () => {
+		setDialog(!dialog);
+	};
 
 	const getChartData = (matType) => {
 		console.log('matType', matType);
@@ -107,7 +123,7 @@ const Scope3Heatmap = ({ tabValue }) => {
 		setYCategories(sectorList);
 		setXCategories(xCategories);
 	};
-	console.log('');
+	console.log('loading', loading);
 
 	return (
 		<React.Fragment>
@@ -125,6 +141,27 @@ const Scope3Heatmap = ({ tabValue }) => {
 						data={chartData}
 						xAxisCategories={xCategories}
 					/>
+					<Typography>
+						This module provides a granular breakdown of carbon risk exposure within sectoral supply and
+						value chains. This can be reviewed from the sectoral and portfolio perspectives Sector Analysis:
+						Each Sector is scaled by the maximum Scope 3 or Scope 1+2 category by carbon intensity.
+						Portfolio Analysis: All Scope 3 and Scope 1+2 carbon intensity figures are scaled by the maximum
+						category for the portfolio as a whole.
+					</Typography>
+					<Link onClick={onDialogHandler}>
+						Explore the scope 3 categories classification
+					</Link>
+					<Dialog open={dialog} keepMounted fullWidth={true}>
+						<DialogTitle>Category Classification</DialogTitle>
+						<DialogContent>
+							{categoryContent}
+						</DialogContent>
+						<DialogActions>
+							<Button onClick onClick={onDialogHandler}>
+								Cancel
+							</Button>
+						</DialogActions>
+					</Dialog>
 				</React.Fragment>
 			)}
 		</React.Fragment>

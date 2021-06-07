@@ -10,6 +10,7 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import ViewWeekIcon from "@material-ui/icons/ViewWeek";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import CodeIcon from "@material-ui/icons/Code";
+import FolderIcon from '@material-ui/icons/Folder';
 import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned";
 
 function ListItemLink(props) {
@@ -21,6 +22,8 @@ function ListItemLink(props) {
         return <GraphicEqIcon />;
       case "VerticalSplitIcon":
         return <VerticalSplitIcon />;
+      case "FolderIcon":
+        return <FolderIcon />;
       case "InsertChartIcon":
         return <InsertChartIcon />;
       case "TimelineIcon":

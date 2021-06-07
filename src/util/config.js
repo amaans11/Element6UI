@@ -53,6 +53,9 @@ const configs = {
 		},
 		MISSING_COVERAGE:{
 			HEADING: 'Missing Coverage'
+		},
+		BACKGROUND:{
+			HEADING: ''
 		}
 	},
 	CHART: {
@@ -171,6 +174,30 @@ const configs = {
 		},
 		CARBON_ADJUSTED_RETURNS:{
 			TITLE: 'Carbon Adjusted Returns'
+		},
+		PORTFOLIO_SENTIMENT:{
+			TITLE: 'Portfolio Sentiment Score',
+			X_AXIS_TITLE:'Sentiment'
+		},
+		BENCHMARK_SENTIMENT:{
+			TITLE: 'Benchmark Sentiment Score',
+			X_AXIS_TITLE:'Sentiment'
+		},
+		PORTFOLIO_SENTIMENT_SERIES:{
+			TITLE: 'Portfolio Sentiment Time Series',
+			Y_AXIS_TITLE:'Aggregated Sentiment Score'
+		},
+		BENCHMARK_SENTIMENT_SERIES:{
+			TITLE: 'Benchmark Sentiment Time Series',
+			Y_AXIS_TITLE:'Aggregated Sentiment Score'
+		},
+		SECTOR_SENTIMENT:{
+			TITLE: 'Sector Sentiment Score',
+			Y_AXIS_TITLE:'Sentiment'
+		},
+		SECTOR_SENTIMENT_SERIES:{
+			TITLE: 'Sector Sentiment Time Series',
+			Y_AXIS_TITLE:'Aggregated Sector Sentiment'
 		}
 	}
 };

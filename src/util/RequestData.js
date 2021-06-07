@@ -34,7 +34,7 @@ const getRequestData = (type, auth) => {
 		currentYear,
 		currentUser,
 		filterItem,
-		reweightFactor,
+		reweightFactor
 	} = auth;
 
 	const {
@@ -60,62 +60,57 @@ const getRequestData = (type, auth) => {
 	switch (type) {
 		case 'PORTFOLIO_EMISSION':
 			data = {
+				client: currentUser.client,
+				footprint: footprintMetric,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				sector: sector,
+				market_value: marketValue,
 				asset_type: assetClass,
 				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
-				client: currentUser.client,
+				year_currency: currentYear,
 				currency: currentCurrency,
-				emissions_quarter: 'Q1',
-				footprint_metric: footprintMetric,
-				fundamentals_quarter: 'Q1',
-				market_value: marketValue,
-				portfolio: currentPortfolio.label,
-				portfolio_date: currentPortfolio.value,
-				quarter: currentQuarter,
-				year: currentYear,
-				sector: sector,
-				version: '',
+				quarter_fundamentals: 'Q1',
+				quarter_emissions: 'Q1',
+				version_fundamentals: '1',
 				version_emissions: '11',
-				version_fundamentals: '1'
+				year_fundamentals: 2020,
+				year_emissions: 2020
 			};
 			break;
 		case 'CARBON_EMISSION':
 			data = {
+				client: currentUser.client,
+				footprint: footprintMetric,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				sector: sector,
+				market_value: marketValue,
 				asset_type: assetClass,
 				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
-				client: currentUser.client,
+				year_currency: currentYear,
 				currency: currentCurrency,
-				emissions_quarter: 'Q1',
-				footprint_metric: footprintMetric,
-				fundamentals_quarter: 'Q1',
-				market_value: marketValue,
-				portfolio: currentPortfolio.label,
-				portfolio_date: currentPortfolio.value,
-				quarter: currentQuarter,
-				year: currentYear,
-				sector: sector,
-				version: '',
+				quarter_fundamentals: 'Q1',
+				quarter_emissions: 'Q1',
+				version_fundamentals: '1',
 				version_emissions: '11',
-				version_fundamentals: '1'
+				year_fundamentals: 2020,
+				year_emissions: 2020
 			};
 			break;
 
 		case 'SOVEREIGN_FOOTPRINT':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
 				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
-				currency: currentCurrency,
-				year: currentYear,
-				quarter: currentQuarter,
-				country_type: 'dom',
-				fundamentals_quarter: 'Q1',
+				quarter_fundamentals: 'Q1',
 				version_fundamentals: '1',
-				asset_type: 'Sov'
+				year_fundamentals: 2020
 			};
 			break;
 
@@ -127,48 +122,46 @@ const getRequestData = (type, auth) => {
 				portfolio_date: currentPortfolio.value,
 				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
-				year: currentYear,
-				quarter: currentQuarter,
-				currency: currentCurrency,
 				sector: sector,
+				currency: currentCurrency,
+				year_currency: currentYear,
+				quarter: currentQuarter,
 				asset_type: assetClass,
-				interference_type: inferenceType,
-				emissions: emission,
-				metric: footprintMetric,
+				inference: inferenceType,
+				scope: emission,
+				footprint: footprintMetric,
 				market_value: marketValue,
 				quarter_fundamentals: 'Q1',
 				quarter_emissions: 'Q1',
 				version_fundamentals: '1',
-				version_emissions: '11'
+				version_emissions: '11',
+				year_fundamentals: 2020,
+				year_emissions: 2020
 			};
 			break;
 
 		case 'PORT_DISCLOSURE':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				quarter_fundamentals: 'Q1',
+				quarter_emissions: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
-				emissions_quarter: 'Q1',
-				version_emissions: '11',
-				portfolio: currentPortfolio.label,
-				portfolio_date: currentPortfolio.value
+				year_fundamentals: 2020
 			};
 			break;
 		case 'BENCH_DISCLOSURE':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				portfolio: currentBenchmark.label,
+				portfolio_date: currentBenchmark.value,
+				quarter_fundamentals: 'Q1',
+				quarter_emissions: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
-				emissions_quarter: 'Q1',
-				version_emissions: '11',
-				portfolio: currentBenchmark.label,
-				portfolio_date: currentBenchmark.value
+				year_fundamentals: 2020
 			};
 			break;
 
@@ -178,81 +171,84 @@ const getRequestData = (type, auth) => {
 				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
-				data_objects: [ 'PF_Avoided_Emissions' ],
-				year: currentYear,
-				quarter: currentQuarter,
+				year_currency: currentYear,
 				currency: currentCurrency,
 				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
-				sector_classification: sector,
-				footprint_metric: footprintMetric,
+				sector: sector,
+				footprint: footprintMetric,
 				market_value: marketValue,
-				asset_class: assetClass,
-				interference_type: inferenceType,
-				emissions: 'Sc12',
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				asset_type: assetClass,
+				inference: inferenceType,
+				scope: 'Sc12',
+				year_fundamentals: 2020,
+				year_emissions: 2020,
+				quarter_fundamentals: 'Q1',
+				quarter_emissions: 'Q1',
+				quarter_avoided: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
-				avoided_quarter: 'Q1',
-				version_avoided: '1',
-				country_type: 'inc'
+				version_avoided: '1'
 			};
 			break;
 		case 'SCOPE3_MATERILITY':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
-				database: currentUser.client + '_Portfolios',
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
-				interference_type: inferenceType,
-				emissions: emission,
+				inference: inferenceType,
+				scope: emission,
 				sector: sector,
 				asset_type: assetClass,
-				country_type: 'inc',
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				country_type: 'incorporation',
+				quarter_fundamentals: 'Q1',
+				quarter_emissions: 'Q1',
+				year_fundamentals: 2020,
+				year_emissions: 2020,
 				version_fundamentals: '1',
-				version_emissions: '11'
+				version_emissions: '11',
+				currency: currentCurrency,
+				currency_year: 2019
 			};
 			break;
 		case 'SECTORAL_SCOPE3_MATERILITY':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
-				database: currentUser.client + '_Portfolios',
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
-				interference_type: inferenceType,
-				emissions: emission,
+				inference: inferenceType,
+				scope: emission,
 				sector: sector,
 				asset_type: assetClass,
-				country_type: 'inc',
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				country_type: 'incorporation',
+				quarter_fundamentals: 'Q1',
+				quarter_emissions: 'Q1',
+				year_fundamentals: 2020,
+				year_emissions: 2020,
 				version_fundamentals: '1',
-				version_emissions: '11'
+				version_emissions: '11',
+				currency: currentCurrency,
+				currency_year: 2019
 			};
 			break;
 		case 'PORTFOLIO_OPTIMIZATION':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
 				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
 				asset_type: assetClass,
-				footprint_metric: footprintMetric,
+				footprint: footprintMetric,
 				sector: sector,
 				market_value: marketValue,
-				emissions: emission,
+				scope: emission,
 				inference: inferenceType,
 				currency: currentCurrency,
+				currency_year: 2019,
 				strategy: 'momentum',
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				quarter_fundamentals: 'Q1',
+				quarter_emissions: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
 				reweight_factor: reweightFactor
@@ -261,73 +257,74 @@ const getRequestData = (type, auth) => {
 		case 'PERFORMANCE_ATTRIBUTION':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
 				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
-				asset_type: assetClass,
-				sector: sector,
-				currency: currentCurrency,
 				quarter_fundamentals: 'Q1',
 				quarter_emissions: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
+				asset_type: assetClass,
+				sector: sector,
+				currency: currentCurrency,
+				req_year: returnYear,
 				attribution_type: 'PerformanceAttribution',
-				req_year: returnYear
+				year_fundamentals: 2020,
+				year_emissions: 2020,
+				year_currency: 2019,
+				period: '3',
+				currency_year: 2019
 			};
 			break;
 		case 'RISK_CONTRIBUTOR':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
-				interference_type: inferenceType,
-				asset_type: 'Eq',
-				footprint_metric: footprintMetric,
-				market_value: marketValue,
 				version_fundamentals: '1',
 				version_emissions: '11',
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1'
+				quarter_fundamentals: 'Q1',
+				quarter_emissions: 'Q1',
+				year_emissions: 2020,
+				year_fundamentals: 2020,
+				market_value: marketValue,
+				asset_type: 'Eq',
+				inference: inferenceType,
+				footprint: footprintMetric,
+				currency: currentCurrency,
+				currency_year: 2019
 			};
 			break;
 		case 'FOSSIL_FUEL':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
 				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
-				year: currentYear,
-				quarter: currentQuarter,
+				year_currency: currentYear,
 				currency: currentCurrency,
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				quarter_fundamentals: 'Q1',
+				year_fundamentals: 2020,
 				version_fundamentals: '1',
-				version_emissions: '11',
-				reserves_quarter: 'Q1',
 				market_value: marketValue,
 				asset_type: assetClass,
-				footprint_metric: footprintMetric
+				footprint: footprintMetric
 			};
 			break;
 		case 'COAL_POWER':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
 				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
 				currency: currentCurrency,
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				quarter_fundamentals: 'Q1',
 				version_fundamentals: '1',
-				version_emissions: '11',
-				year_fundamentals: 2019
+				year_fundamentals: 2020,
+				year_currency: 2019
 			};
 			break;
 
@@ -453,46 +450,49 @@ const getRequestData = (type, auth) => {
 		case 'PORTFOLIO_ALIGNMENT':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
 				benchmark: currentBenchmark.label,
 				benchmark_date: currentBenchmark.value,
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				scenario: portScenario,
+				quarter_emissions: 'Q1',
+				quarter_fundamentals: 'Q1',
+				year_emissions: 2020,
+				year_fundamentals: 2020,
 				version_fundamentals: '1',
 				version_emissions: '11',
 				asset_type: 'EqCB',
 				market_value: marketValue,
-				interference_type: 'Avg',
-				footprint_metric: footprintMetric,
-				emissions: 'Sc123',
-				Scenario: portScenario
+				footprint: footprintMetric,
+				inference: 'Avg',
+				scope: 'Sc123',
+				currency: 'USD',
+				currency_year: 2019
 			};
 			break;
 		case 'TARGET_SETTING':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
+				scenario_type: targetScenario == 'NGFS' ? 'IPCC' : targetScenario,
+				scope_type: emission.substring(2),
+				sector: sector,
+				footprint: footprintMetric,
+				market_value: marketValue,
+				inference: 'Avg',
+				asset_type: 'EqCB',
+				approach: approach,
+				scenario: warmingScenario ? warmingScenario : 'LowEnergyDemand',
 				quarter_fundamentals: 'Q1',
 				quarter_emissions: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
-				asset_type: 'EqCB',
-				metric: footprintMetric,
-				market_value: marketValue,
-				interference_type: 'Avg',
-				emissions: emission,
-				sector: sector,
-				scope: emission.substring(2),
-				scenario: targetScenario == 'NGFS' ? 'IPCC' : targetScenario,
-				warming_scenario: warmingScenario,
-				approach: approach
+				currency: currentCurrency,
+				currency_year: 2019
 			};
 			break;
-			case 'COMPANY_PROFILE_COMPANIES':
+		case 'COMPANY_PROFILE_COMPANIES':
 			data = {
 				client: currentUser.client,
 				portfolio: currentPortfolio.label,
@@ -501,48 +501,74 @@ const getRequestData = (type, auth) => {
 				quarter_emissions: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
-				asset_type: 'EqCB',
+				asset_type: 'EqCB'
 			};
 			break;
 		case 'COMPANY_PROFILE':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
+				scenario_type: 'IEA',
+				scope_type: emission.substring(2),
+				sector: sector,
+				footprint: footprintMetric,
+				market_value: marketValue,
+				inference: 'Avg',
+				asset_type: 'EqCB',
+				approach: approach,
 				quarter_fundamentals: 'Q1',
 				quarter_emissions: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
-				quarter: 'Q1',
-				approach: approach,
-				emissions: emission,
-				asset_type: 'EqCB',
-				interference_type: 'Avg',
-				market_value: marketValue,
-				metric: approach == 'MarketShare' ? 'FinancedEmis' : footprintMetric,
-				sector: sector,
-				scope: emission.substring(2),
-				scenario: 'IEA'
+				year_fundamentals: 2020,
+				year_emissions: 2020,
+				currency: currentCurrency,
+				currency_year: 2019
 			};
 			break;
-		case 'CARBON_ADJUSTED_RETURNS':
+		case 'CARBON_ADJUSTED_COMPANIES':
 			data = {
 				client: currentUser.client,
-				user: currentUser.userName,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
-				fundamentals_quarter: 'Q1',
-				emissions_quarter: 'Q1',
+				quarter_fundamentals: 'Q1',
 				version_fundamentals: '1',
-				version_emissions: '11',
+				asset_type: 'Eq',
+				currency: 'USD',
+				currency_year: 2019
+			};
+			break;
+		case 'CARBON_ADJUSTED_LINE_RETURNS':
+			data = {
+				client: currentUser.client,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
+				asset_type: 'Eq',
+				quarter_fundamentals: 'Q1',
+				year_fundamentals: 2020,
+				version_fundamentals: '1',
+				sector: 'SASB',
+				currency: currentCurrency,
+				currency_year: 2019
+			};
+			break;
+		case 'CARBON_ADJUSTED_TABLE_RETURNS':
+			data = {
+				client: currentUser.client,
+				portfolio: currentPortfolio.label,
+				portfolio_date: currentPortfolio.value,
 				inference: 'Avg',
 				asset_type: 'Eq',
 				quarter_fundamentals: 'Q1',
 				quarter_emissions: 'Q1',
+				year_fundamentals: 2020,
+				year_emissions: 2020,
+				version_fundamentals: '1',
+				version_emissions: '11',
 				sector: 'SASB',
 				market_value: marketValue,
-				footprint_metric: footprintMetric
+				footprint: footprintMetric
 			};
 			break;
 

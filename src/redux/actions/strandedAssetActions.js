@@ -6,7 +6,7 @@ export const getFossilFuelData = (data) => {
 		const clientKey = getState().auth.userInfo.client_key;
         console.log("test1")
 		return axios
-			.post(`${actionTypes.API_URL}/fossil_fuel/ff`, data, {
+			.post(`${actionTypes.API_URL}/stranded_assets/fossil_fuel_footprint`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -31,7 +31,7 @@ export const getCoalPowerData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/coal_power/`, data, {
+			.post(`${actionTypes.API_URL}/stranded_assets/coal_power_analysis`, data, {
 				headers: {
 					'client-key': clientKey
 				}

@@ -19,6 +19,8 @@ const tempMetricTabs = [
 ];
 const forwardTabs = [ 'Portfolio Alignment', 'Target Setting', 'Company Profile', 'Carbon Adjusted Returns' ];
 
+const nlpTabs=['Sector Overview','Portfolio Overview','Article Analysis','Background'];
+
 export {
 	footprintTabs,
 	scope3Tabs,
@@ -26,5 +28,6 @@ export {
 	carbonRiskTabs,
 	strandedAssetTabs,
 	tempMetricTabs,
-	forwardTabs
+	forwardTabs,
+	nlpTabs
 };

@@ -49,7 +49,7 @@ const CarbonAdjustedReturns = ({}) => {
 		[ companyData ]
 	);
 	const fetchCompanies = async () => {
-		const data = getRequestData('COMPANY_PROFILE_COMPANIES', auth);
+		const data = getRequestData('CARBON_ADJUSTED_COMPANIES', auth);
 		await dispatch(getCarbonCompanies(data));
 	};
 	const getCompanyList = async () => {
@@ -95,14 +95,21 @@ const CarbonAdjustedReturns = ({}) => {
 	};
 
 	const fetchDetails = async (company) => {
-		let data = getRequestData('CARBON_ADJUSTED_RETURNS', auth);
-		data = {
-			...data,
+		let lineChartData = getRequestData('CARBON_ADJUSTED_LINE_RETURNS', auth);
+		let tableData = getRequestData('CARBON_ADJUSTED_TABLE_RETURNS', auth);
+
+		lineChartData = {
+			...lineChartData,
 			isin: company['company_id'],
 			ticket: company['ticket']
 		};
-		await dispatch(getCarbonReturnsLineData(data));
-		await dispatch(getCarbonReturnsTableData(data));
+		tableData = {
+			...tableData,
+			isin: company['company_id'],
+			ticket: company['ticket']
+		};
+		await dispatch(getCarbonReturnsLineData(lineChartData));
+		await dispatch(getCarbonReturnsTableData(tableData));
 	};
 	const getTableHeader = (label) => {
 		let name = '';

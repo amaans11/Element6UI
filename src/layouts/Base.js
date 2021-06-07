@@ -13,7 +13,6 @@ import {
 	DialogContent,
 	DialogContentText,
 	Box,
-	InputAdornment,
 	OutlinedInput,
 	InputLabel,
 	Grid,
@@ -26,7 +25,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import { NotificationManager } from 'react-notifications';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { slideInRight } from 'react-animations';
 import Radium, { StyleRoot } from 'radium';
 import ListItemLink from '../components/ListItemLink';
@@ -43,6 +42,7 @@ import ForwardLookingAnalysis from '../screens/ForwardLookingAnalysis';
 import StrandedAssetsAnalysis from '../screens/StrandedAssetsAnalysis';
 import UrgentemDownload from '../screens/UrgentemDownload';
 import GenerateReport from '../screens/GenerateReport';
+import NLP from '../screens/NLP';
 import UrgentemLanding from '../screens/UrgentemLanding';
 import { missingCoverageCells } from '../util/TableHeadConfig';
 import DataTable from '../components/Table/DataTable';
@@ -57,8 +57,6 @@ import {
 	uploadPortfolioRequest
 } from '../redux/actions/authActions';
 import csvFile from '../assets/Dummy-file.xlsx';
-import axios from 'axios';
-import { Message } from '@material-ui/icons';
 
 const drawerWidth = 295;
 
@@ -389,6 +387,9 @@ const MiniDrawer = ({ classes, history }) => {
 					</Route>
 					<Route path="/scope3-materiality" exact>
 						<Scope3Materiality />
+					</Route>
+					<Route path="/nlp" exact>
+						<NLP />
 					</Route>
 					<Route path="/temperature-metric" exact>
 						<TemperatureMetric />

@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 	},
 	text: {
 		color: 'white',
-		fontFamily: 'Helvetica',
+		fontFamily: ']',
 		fontStyle: 'italic'
 	},
 	loginContainer: {
