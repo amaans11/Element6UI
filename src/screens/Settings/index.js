@@ -11,7 +11,7 @@ import {
 	CssBaseline,
 	TextField,
 	Dialog,
-	DialogTitle
+	DialogTitle,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
