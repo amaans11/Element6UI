@@ -16,7 +16,7 @@ import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
 import getRequestData from '../../util/RequestData';
 import categoryContent from './CategoryContent'
 
-const Scope3Heatmap = ({ tabValue }) => {
+const Scope3Heatmap = () => {
 	const dispatch = useDispatch();
 
 	const auth = useSelector((state) => state.auth);
@@ -98,14 +98,14 @@ const Scope3Heatmap = ({ tabValue }) => {
 
 			let res = [];
 
-			if (matType == 'matPort') {
+			if (matType === 'matPort') {
 				res = heatmapData['data'][key][0]['PortfolioScaled'];
 			} else {
 				res = heatmapData['data'][key][1]['SectorScaled'];
 			}
 			if (res.length > 0) {
 				res.map((data) => {
-					const sectorName = sector == 'SASB' ? data['SASB_SICS_Sector'] : data['GICS_SECTOR_NAME'];
+					const sectorName = sector === 'SASB' ? data['SASB_SICS_Sector'] : data['GICS_SECTOR_NAME'];
 
 					const xValue = getCategoryKey(data.y);
 					const yValue = sectorList.indexOf(sectorName);

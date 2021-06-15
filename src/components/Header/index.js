@@ -53,7 +53,7 @@ const Header = ({ history }) => {
 	};
 
 	const handleThemeChange = () => {
-		if (currentTheme == 'dark') {
+		if (currentTheme === 'dark') {
 			localStorage.setItem("appTheme",'basic')
 			window.location.reload()
 		} else {

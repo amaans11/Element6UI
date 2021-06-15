@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import * as actionTypes from '../actionTypes';
 import axios from 'axios';
 import { createBrowserHistory } from 'history';
@@ -86,7 +88,9 @@ const requestApi = async (dispatch, auth, flm) => {
 			break;
 		case 'FLM':
 			switch (tabValue) {
+				// eslint-disable-next-line
 				case 0:
+					// eslint-disable-next-line
 					data = getRequestData('PORTFOLIO_ALIGNMENT', auth);
 					await dispatch(getPortfolioAlignment(data));
 					break;
@@ -263,7 +267,7 @@ export const verifyUserSuccess = (res) => {
 export const getPortfolioList = (client) => {
 	return async (dispatch) => {
 		return axios.get(`${actionTypes.API_URL}/portfolios/client_new/${client}`).then((result) => {
-			if (result.data.status == 'Success') {
+			if (result.data.status === 'Success') {
 				dispatch(getPortfolioListSuccess(result.data.Portfolios));
 			} else {
 				dispatch(getPortfolioListFailure());
@@ -283,7 +287,7 @@ export const getPortfolioListFailure = () => {
 export const getUserInfo = (data) => {
 	return async (dispatch) => {
 		return axios.post(`${actionTypes.API_URL}/userdata/`, data).then((result) => {
-			if (result.data.Status == 'Success') {
+			if (result.data.Status === 'Success') {
 				dispatch(getUserInfoSuccess(result.data.data));
 			}
 		});
@@ -299,7 +303,7 @@ export const getUploadPortfolioList = (client) => {
 		return axios
 			.get(`${actionTypes.API_URL}/statuses/portfolio_new/${client}`)
 			.then((result) => {
-				if (result.data.Status == 'Success') {
+				if (result.data.Status === 'Success') {
 					dispatch(getUploadPortfolioListSuccess(result.data));
 				} else {
 					dispatch(getUploadPortfolioListFailed());
@@ -324,7 +328,7 @@ export const updateCurrency = (data) => {
 		return axios
 			.get(`${actionTypes.API_URL}/currencies/currency/${year}/${quarter}`)
 			.then((result) => {
-				if (result.data.status == 'done') {
+				if (result.data.status === 'done') {
 					const res = {
 						...result.data,
 						currency
@@ -544,3 +548,5 @@ export const uploadPortfolioSuccess = (res) => {
 export const uploadPortfolioFailed = (error) => {
 	return { type: actionTypes.UPLOAD_PORTFOLIO_FAILED, error };
 };
+/* eslint-disable */
+

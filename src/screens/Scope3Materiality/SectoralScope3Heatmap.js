@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
-const SectoralScope3Heatmap = ({}) => {
+const SectoralScope3Heatmap = () => {
 	const dispatch = useDispatch();
 	const classes = useStyles();
 	const [ chartData, setChartData ] = useState([]);
@@ -88,11 +88,11 @@ const SectoralScope3Heatmap = ({}) => {
 		setDialog(!dialog);
 	};
 
-	const fetchDetails = async () => {
-		const data = getRequestData('SECTORAL_SCOPE3_MATERILITY', auth);
-		await dispatch(getScope3Data(data));
-	};
 	useEffect(() => {
+		const fetchDetails = async () => {
+			const data = getRequestData('SECTORAL_SCOPE3_MATERILITY', auth);
+			await dispatch(getScope3Data(data));
+		};
 		fetchDetails();
 	}, []);
 	useEffect(
@@ -121,16 +121,16 @@ const SectoralScope3Heatmap = ({}) => {
 		const key = `${sector}${emission}Port`;
 		const tableResponse = heatmapData['data']['Table']['Sector_Categories'];
 
-		if (materialityType == 'matPort') {
+		if (materialityType === 'matPort') {
 			res = heatmapData['data'][key][0]['PortfolioScaled'];
 		} else {
 			res = heatmapData['data'][key][1]['SectorScaled'];
 		}
 		if (res.length > 0) {
 			res.map((data) => {
-				const sectorName = sector == 'SASB' ? data['SASB_SICS_Sector'] : data['GICS_SECTOR_NAME'];
+				const sectorName = sector === 'SASB' ? data['SASB_SICS_Sector'] : data['GICS_SECTOR_NAME'];
 
-				if (sectorName == currentSectorName) {
+				if (sectorName === currentSectorName) {
 					const xValue = getCategoryKey(data.y);
 					const yValue = sectorList.indexOf(sectorName);
 					chartData.push([ xValue, yValue, data.z ]);

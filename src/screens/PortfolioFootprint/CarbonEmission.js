@@ -29,7 +29,7 @@ const getContribEmission = (type) => {
 			return '12';
 	}
 };
-const CarbonEmission = ({}) => {
+const CarbonEmission = () => {
     const dispatch = useDispatch();
 
 	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
@@ -105,11 +105,11 @@ const CarbonEmission = ({}) => {
 
 		if (response && response.length > 0) {
 			let portData =
-				inferenceType == 'Avg'
+				inferenceType === 'Avg'
 					? response[0][0]['Portfolio_Avg_SectorIntensity']
 					: response[0][1]['Portfolio_Max_SectorIntensity'];
 			let benchData =
-				inferenceType == 'Avg'
+				inferenceType === 'Avg'
 					? response[1][0]['Benchmark_Avg_SectorIntensity']
 					: response[1][1]['Benchmark_Max_SectorIntensity'];
 
@@ -130,11 +130,11 @@ const CarbonEmission = ({}) => {
 
 		if (response && response.length > 0) {
 			let portData =
-				inferenceType == 'Avg'
+				inferenceType === 'Avg'
 					? response[0][0]['Portfolio_Avg_SectorContribution']
 					: response[0][1]['Portfolio_Max_SectorContribution'];
 			let benchData =
-				inferenceType == 'Avg'
+				inferenceType === 'Avg'
 					? response[1][0]['Benchmark_Avg_SectorContribution']
 					: response[1][1]['Benchmark_Max_SectorContribution'];
 
@@ -150,11 +150,11 @@ const CarbonEmission = ({}) => {
 
 		if (response && response.length > 0) {
 			let portData =
-				inferenceType == 'Avg'
+				inferenceType === 'Avg'
 					? response[0][0]['Portfolio_Avg_SectorWeights']
 					: response[0][1]['Portfolio_Max_SectorWeights'];
 			let benchData =
-				inferenceType == 'Avg'
+				inferenceType === 'Avg'
 					? response[1][0]['Benchmark_Avg_SectorWeights']
 					: response[1][1]['Benchmark_Max_SectorWeights'];
 

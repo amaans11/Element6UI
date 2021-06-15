@@ -32,7 +32,7 @@ const tableData = [
 		portfolio_weight: '0.111'
 	}
 ];
-const Background = ({}) => {
+const Background = () => {
 	return (
 		<React.Fragment>
 			<DataTable data={tableData} columns={backgroundCells} tableHeading="BACKGROUND" />

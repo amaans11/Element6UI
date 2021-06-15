@@ -169,7 +169,7 @@ class ReactDataTable extends React.Component {
 		const {title}=this.props
 		const link = document.createElement('a');
 		let csv = this.convertArrayOfObjectsToCSV(array);
-		if (csv == null) return;
+		if (csv === null) return;
 
 		const filename = 'export.csv';
 

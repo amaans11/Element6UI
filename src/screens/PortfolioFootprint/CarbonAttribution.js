@@ -5,7 +5,7 @@ import { getCarbonAttribution } from '../../redux/actions/footprintActions';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 import getRequestData from '../../util/RequestData';
 
-const CarbonAttribution = ({}) => {
+const CarbonAttribution = () => {
 	const carbonAttribution = useSelector((state) => state.footprint.carbonAttribution);
 	const auth = useSelector((state) => state.auth);
 	const { loading } = auth;

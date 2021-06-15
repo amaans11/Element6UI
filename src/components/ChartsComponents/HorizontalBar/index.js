@@ -40,7 +40,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 			},
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			}
 		},
@@ -50,18 +50,18 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 				text: yAxis,
 				align: 'high',
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			},
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			}
 		},
 		tooltip: {
 			formatter: function() {
-				const item=this.colorIndex == 0 ? 'Portfolio' : 'Benchmark'
+				const item=this.colorIndex === 0 ? 'Portfolio' : 'Benchmark'
 				return '<b>' + this.x + '</b>' + '<br/>' + '<b>' + item + ' : ' + '</b>'  + new Intl.NumberFormat().format(this.y) + ' (' + tooltipUnit  + ')';
 			}
 		},
@@ -74,14 +74,14 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 			series: {
 				dataLabels: {
 					enabled: true,
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
 					style: {
 						fontWeight: 'normal',
 						shadow: false
 					}
 				},
 				borderWidth: 1,
-				borderColor: currentTheme == 'dark' ? '#000000' : '#FFFFFF'
+				borderColor: currentTheme === 'dark' ? '#000000' : '#FFFFFF'
 			}
 		},
 		legend: {

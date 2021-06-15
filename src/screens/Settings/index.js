@@ -11,7 +11,6 @@ import {
 	CssBaseline,
 	TextField,
 	Dialog,
-	DialogTitle,
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -68,7 +67,7 @@ const useStyles = makeStyles(() => ({
 		height: 40
 	}
 }));
-const Settings = ({}) => {
+const Settings = () => {
 	const classes = useStyles();
 	const [ year, setYear ] = useState(2020);
 	const [ quarter, setQuarter ] = useState('Q1');

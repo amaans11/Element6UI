@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
-const CarbonAdjustedReturns = ({}) => {
+const CarbonAdjustedReturns = () => {
 	const dispatch = useDispatch();
 	const classes = useStyles();
 
@@ -146,7 +146,7 @@ const CarbonAdjustedReturns = ({}) => {
 		let returnsData = [];
 		let carbonData = [];
 
-		let emissionVal = emission == 'Sc12' ? 'AvgInference_Scope_12' : 'AvgInference_Scope_123';
+		let emissionVal = emission === 'Sc12' ? 'AvgInference_Scope_12' : 'AvgInference_Scope_123';
 
 		let tableData1 = tableResponse['Table1'];
 		let tableData2 = tableResponse['Table2'];

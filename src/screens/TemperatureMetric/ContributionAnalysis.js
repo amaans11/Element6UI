@@ -6,7 +6,7 @@ import PieChart from '../../components/ChartsComponents/PieChart';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 import { getContribAnalysis } from '../../redux/actions/tempMetricActions';
 
-const ContributionAnalysis = ({}) => {
+const ContributionAnalysis = () => {
 	const dispatch = useDispatch();
 
 	const auth = useSelector((state) => state.auth);
@@ -34,9 +34,9 @@ const ContributionAnalysis = ({}) => {
 		[ contributionAnalysis ]
 	);
 	const getScoreType = () => {
-		if (scoreType == 'shortTerm') {
+		if (scoreType === 'shortTerm') {
 			return 'short';
-		} else if (scoreType == 'longTerm') {
+		} else if (scoreType === 'longTerm') {
 			return 'long';
 		} else {
 			return 'mid';

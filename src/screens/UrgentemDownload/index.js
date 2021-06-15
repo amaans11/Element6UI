@@ -35,7 +35,7 @@ function UrgentemDownload() {
 		let portfolio = {};
 		if (downloadPortfolioList && downloadPortfolioList.length > 0) {
 			downloadPortfolioList.map((port) => {
-				if (port.PortfolioName == currentValue) {
+				if (port.PortfolioName === currentValue) {
 					portfolio = { ...port };
 				}
 			});
@@ -104,7 +104,7 @@ function UrgentemDownload() {
 			let columns = Object.keys(downloadData[0]);
 
 			res = columns.map((column, index) => {
-				if (index == 0) {
+				if (index === 0) {
 					return {
 						name: column,
 						selector: column,
@@ -128,8 +128,8 @@ function UrgentemDownload() {
 						},
 						cell: (row) => {
 							let res = '';
-							if (typeof row[column] == 'number') {
-								if (row[column] == '-999999' || row[column] == '999999') {
+							if (typeof row[column] === 'number') {
+								if (row[column] === '-999999' || row[column] === '999999') {
 									res = 'NA';
 								} else {
 									res = row[column];

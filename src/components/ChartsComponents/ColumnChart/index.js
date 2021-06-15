@@ -6,7 +6,7 @@ import CONFIG from '../../../util/config'
 function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend }) {
   const title =CONFIG['CHART'][chartKey]['TITLE']
   let yAxis=yAxisTitle;
-  let legend = isLegend == false ? isLegend : true
+  let legend = isLegend === false ? isLegend : true
 
   if(!yAxisTitle){
     yAxis=CONFIG['CHART'][chartKey]['Y_AXIS_TITLE']
@@ -38,12 +38,12 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
         title: {
           text: xAxisTitle ? xAxisTitle : '',
           style: {
-            color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
           }
         },
         labels: {
           style: {
-            color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
           }
         },
       },
@@ -52,13 +52,13 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
           text:yAxis ,
           align: "high",
           style: {
-            color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
           }
         },
         labels: {
           overflow: "justify",
           style: {
-            color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
           }
         },
       },
@@ -71,20 +71,20 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
         series: {
             dataLabels: {
                 enabled: true,
-                color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
+                color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
                 style: {
                     fontWeight: 'normal',
                     shadow: false
                 }
             },
             borderWidth: 1,
-            borderColor: currentTheme == 'dark' ? '#000000' : '#FFFFFF'
+            borderColor: currentTheme === 'dark' ? '#000000' : '#FFFFFF'
         }
       },
       legend: {
         enabled:legend,
         itemStyle:{
-            color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
         }
     },
     credits: {

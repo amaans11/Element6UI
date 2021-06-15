@@ -7,7 +7,7 @@ import DataTable from '../../components/Table/DataTable';
 import getRequestData from '../../util/RequestData';
 import {sovFootprintCells} from '../../util/TableHeadConfig';
 
-const SovereignFootprint = ({}) => {
+const SovereignFootprint = () => {
     const auth=useSelector(state=>state.auth)
 	const sovFootprint = useSelector((state) => state.footprint.sovFootprint);
 

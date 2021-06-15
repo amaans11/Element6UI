@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { get } from 'lodash';
 import CONFIG from '../../../util/config';
 
 function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle, isSectoral,tabValue}) {
@@ -27,7 +26,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			},
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
 				},
 				formatter: function () {
 					if(!isSectoral){
@@ -51,7 +50,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			},
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			}
 		},
@@ -87,7 +86,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			series: {
 				dataLabels: {
 					enabled: true,
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
 					style: {
 						fontWeight: 'normal',
 						textOutline: 'none'

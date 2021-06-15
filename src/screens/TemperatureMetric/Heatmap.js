@@ -5,7 +5,7 @@ import { getHeatmapData } from '../../redux/actions/tempMetricActions';
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
 import getRequestData from '../../util/RequestData';
 
-const Scope3Heatmap = ({}) => {
+const Scope3Heatmap = () => {
 	const dispatch = useDispatch();
 
 	const auth = useSelector((state) => state.auth);
@@ -33,9 +33,9 @@ const Scope3Heatmap = ({}) => {
 		[ heatmapData ]
 	);
 	const getScoreType = () => {
-		if (scoreType == 'shortTerm') {
+		if (scoreType === 'shortTerm') {
 			return 'short';
-		} else if (scoreType == 'longTerm') {
+		} else if (scoreType === 'longTerm') {
 			return 'long';
 		} else {
 			return 'mid';

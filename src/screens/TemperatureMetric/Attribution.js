@@ -5,7 +5,7 @@ import { getTempAttribution } from '../../redux/actions/tempMetricActions';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 import getRequestData from '../../util/RequestData';
 
-const Attribution = ({}) => {
+const Attribution = () => {
 	const tempAttribution = useSelector((state) => state.tempMetric.tempAttribution);
 	const auth = useSelector((state) => state.auth);
 
@@ -22,9 +22,9 @@ const Attribution = ({}) => {
 		await dispatch(getTempAttribution(data));
 	};
 	const getScoreType = () => {
-		if (scoreType == 'shortTerm') {
+		if (scoreType === 'shortTerm') {
 			return 'short';
-		} else if (scoreType == 'longTerm') {
+		} else if (scoreType === 'longTerm') {
 			return 'long';
 		} else {
 			return 'mid';

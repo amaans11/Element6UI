@@ -30,14 +30,15 @@ axios.defaults.headers.get['x-api-key'] = '_yF0FT6hgogJxSF1G0sAl3d9d4pQwxhuiRSS8
 
 const currentTheme = localStorage.getItem('appTheme') || 'basic';
 
+console.disableYellowBox = true;
 Highcharts.theme = {
 	colors: [ '#597ef7', '#bae637', '#ff4d4f', '#FFB74D','#FF6666','#9ACD32','#40E0D0','#708090','#808080' ],
 	chart: {
-		backgroundColor: currentTheme == 'dark' ? '#303030' : '#f5f5f5'
+		backgroundColor: currentTheme ==='dark' ? '#303030' : '#f5f5f5'
 	},
 	title: {
 		style: {
-			color: currentTheme == 'dark' ? '#f5f5f5' : '#303030',
+			color: currentTheme === 'dark' ? '#f5f5f5' : '#303030',
 			font: 'bold 22px "Trebuchet MS", Verdana, sans-serif'
 		}
 	},

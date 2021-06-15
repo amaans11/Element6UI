@@ -17,7 +17,6 @@ import CodeIcon from '@material-ui/icons/Code';
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import configs from '../../util/landing-page.config';
 import DataTable from '../../components/Table/DataTable';
-import { getPortfolioList } from '../../redux/actions/authActions';
 
 function getHeadCells() {
 	return [
@@ -105,35 +104,34 @@ const useStyles = makeStyles(() => ({
 
 function UrgentemLanding({ history }) {
 	const classes = useStyles();
-	const dispatch = useDispatch();
 
 	const [ uploadedPortfolio, setUploadedPortfolio ] = useState([]);
 	const [ loading, setLoading ] = useState(false);
-	const { currentTheme, setTheme } = useContext(CustomThemeContext);
 
 	const auth = useSelector((state) => state.auth);
 
 	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
 
-	const getUploadPortfolios = async () => {
-		try {
-			setLoading(true);
-			let response = await axios.get(`${actionTypes.API_URL}/statuses/portfolios_new/${currentUser.client}`);
-
-			if (response.data.status == 'Success') {
-				const portfolios = response.data.Portfolios;
-				setUploadedPortfolio(portfolios);
-				setLoading(false);
-			} else {
+	
+	useEffect(() => {
+		const getUploadPortfolios = async () => {
+			try {
+				setLoading(true);
+				let response = await axios.get(`${actionTypes.API_URL}/statuses/portfolios_new/${currentUser.client}`);
+	
+				if (response.data.status === 'Success') {
+					const portfolios = response.data.Portfolios;
+					setUploadedPortfolio(portfolios);
+					setLoading(false);
+				} else {
+					setUploadedPortfolio([]);
+					setLoading(false);
+				}
+			} catch (error) {
 				setUploadedPortfolio([]);
 				setLoading(false);
 			}
-		} catch (error) {
-			setUploadedPortfolio([]);
-			setLoading(false);
-		}
-	};
-	useEffect(() => {
+		};
 		getUploadPortfolios();
 	}, []);
 

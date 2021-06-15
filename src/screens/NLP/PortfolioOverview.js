@@ -29,7 +29,7 @@ const lineChartData = [
 		]
 	}
 ];
-const PortfolioOverview = ({}) => {
+const PortfolioOverview = () => {
 	return (
 		<React.Fragment>
 			<Grid container>

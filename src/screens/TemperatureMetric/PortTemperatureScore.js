@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 		margin: 80
 	}
 }));
-const PortTemperatureScore = ({}) => {
+const PortTemperatureScore = () => {
 	const dispatch = useDispatch();
 	const classes = useStyles();
 

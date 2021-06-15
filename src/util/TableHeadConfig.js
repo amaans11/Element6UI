@@ -113,7 +113,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.purchased == -1 || row.purchased == -999999 ? 'NA' : new Intl.NumberFormat().format(row.purchased)}
+				{row.purchased === -1 || row.purchased === -999999 ? 'NA' : new Intl.NumberFormat().format(row.purchased)}
 			</div>
 		)
 	},
@@ -125,7 +125,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.capital == -1 || row.capital == -999999 ? 'NA' : new Intl.NumberFormat().format(row.capital)}
+				{row.capital === -1 || row.capital === -999999 ? 'NA' : new Intl.NumberFormat().format(row.capital)}
 			</div>
 		)
 	},
@@ -136,7 +136,7 @@ const sectoralScope3Cells = [
 		right: true,
 		wrap: true,
 		cell: (row) => (
-			<div>{row.fuel == -1 || row.fuel == -999999 ? 'NA' : new Intl.NumberFormat().format(row.fuel)}</div>
+			<div>{row.fuel === -1 || row.fuel === -999999 ? 'NA' : new Intl.NumberFormat().format(row.fuel)}</div>
 		)
 	},
 	{
@@ -147,7 +147,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.upstreamTransport == -1 || row.upstreamTransport == -999999 ? (
+				{row.upstreamTransport === -1 || row.upstreamTransport === -999999 ? (
 					'NA'
 				) : (
 					new Intl.NumberFormat().format(row.upstreamTransport)
@@ -162,7 +162,7 @@ const sectoralScope3Cells = [
 		right: true,
 		wrap: true,
 		cell: (row) => (
-			<div>{row.waste == -1 || row.waste == -999999 ? 'NA' : new Intl.NumberFormat().format(row.waste)}</div>
+			<div>{row.waste === -1 || row.waste === -999999 ? 'NA' : new Intl.NumberFormat().format(row.waste)}</div>
 		)
 	},
 	{
@@ -173,7 +173,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.business == -1 || row.business == -999999 ? 'NA' : new Intl.NumberFormat().format(row.business)}
+				{row.business === -1 || row.business === -999999 ? 'NA' : new Intl.NumberFormat().format(row.business)}
 			</div>
 		)
 	},
@@ -185,7 +185,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.employee == -1 || row.employee == -999999 ? 'NA' : new Intl.NumberFormat().format(row.employee)}
+				{row.employee === -1 || row.employee === -999999 ? 'NA' : new Intl.NumberFormat().format(row.employee)}
 			</div>
 		)
 	},
@@ -197,7 +197,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.upstreamLeased == -1 || row.upstreamLeased == -999999 ? (
+				{row.upstreamLeased === -1 || row.upstreamLeased === -999999 ? (
 					'NA'
 				) : (
 					new Intl.NumberFormat().format(row.upstreamLeased)
@@ -213,7 +213,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.downstreamTransport == -1 || row.downstreamTransport == -999999 ? (
+				{row.downstreamTransport === -1 || row.downstreamTransport === -999999 ? (
 					'NA'
 				) : (
 					new Intl.NumberFormat().format(row.downstreamTransport)
@@ -229,7 +229,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.processing == -1 || row.processing == -999999 ? (
+				{row.processing === -1 || row.processing === -999999 ? (
 					'NA'
 				) : (
 					new Intl.NumberFormat().format(row.processing)
@@ -245,7 +245,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.useSolid == -1 || row.useSolid == -999999 ? 'NA' : new Intl.NumberFormat().format(row.useSolid)}
+				{row.useSolid === -1 || row.useSolid === -999999 ? 'NA' : new Intl.NumberFormat().format(row.useSolid)}
 			</div>
 		)
 	},
@@ -257,7 +257,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.endOfLife == -1 || row.endOfLife == -999999 ? 'NA' : new Intl.NumberFormat().format(row.endOfLife)}
+				{row.endOfLife === -1 || row.endOfLife === -999999 ? 'NA' : new Intl.NumberFormat().format(row.endOfLife)}
 			</div>
 		)
 	},
@@ -269,7 +269,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.downstreamLease == -1 || row.downstreamLease == -999999 ? (
+				{row.downstreamLease === -1 || row.downstreamLease === -999999 ? (
 					'NA'
 				) : (
 					new Intl.NumberFormat().format(row.downstreamLease)
@@ -285,7 +285,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.franchise == -1 || row.franchise == -999999 ? 'NA' : new Intl.NumberFormat().format(row.franchise)}
+				{row.franchise === -1 || row.franchise === -999999 ? 'NA' : new Intl.NumberFormat().format(row.franchise)}
 			</div>
 		)
 	},
@@ -297,7 +297,7 @@ const sectoralScope3Cells = [
 		wrap: true,
 		cell: (row) => (
 			<div>
-				{row.investments == -1 || row.investments == -999999 ? (
+				{row.investments === -1 || row.investments === -999999 ? (
 					'NA'
 				) : (
 					new Intl.NumberFormat().format(row.investments)
@@ -372,14 +372,14 @@ const riskContribCells = [
 		selector: 'annualized_return',
 		sortable: true,
 		right: true,
-		cell: (row) => <div>{row.annualized_return == -999999 ? 'NA' : row.annualized_return}</div>
+		cell: (row) => <div>{row.annualized_return === -999999 ? 'NA' : row.annualized_return}</div>
 	},
 	{
 		name: 'Contribution to Annualized Risk',
 		selector: 'annualized_risk',
 		sortable: true,
 		right: true,
-		cell: (row) => <div>{row.annualized_risk == -999999 ? 'NA' : row.annualized_risk}</div>
+		cell: (row) => <div>{row.annualized_risk === -999999 ? 'NA' : row.annualized_risk}</div>
 	},
 	{
 		name: 'Contribution to Intensity',

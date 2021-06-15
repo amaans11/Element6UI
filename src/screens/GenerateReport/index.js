@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
 		fontSize: 16
 	}
 }));
-const GenerateReport = ({}) => {
+const GenerateReport = () => {
 	const classes = useStyles();
     const  dispatch = useDispatch()
 

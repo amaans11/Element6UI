@@ -5,7 +5,7 @@ import { getPortfolioAlignment } from '../../redux/actions/flmActions';
 import getRequestData from '../../util/RequestData';
 import LineChart from '../../components/ChartsComponents/Line'
 
-const PortAlignment = ({}) => {
+const PortAlignment = () => {
 	const dispatch = useDispatch();
 
 	const portAlignment = useSelector((state) => state.flm.portAlignment);

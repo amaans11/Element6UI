@@ -21,7 +21,7 @@ const getEmissionValue = (emission) => {
 	}
 };
 
-const CompanyAnalysis = ({}) => {
+const CompanyAnalysis = () => {
 	const dispatch = useDispatch();
 
 	const companyData = useSelector((state) => state.tempMetric.companyData);

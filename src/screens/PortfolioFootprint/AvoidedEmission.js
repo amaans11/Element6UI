@@ -10,7 +10,7 @@ import {avoidedEmissionCells} from '../../util/TableHeadConfig';
 
 const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3', 'Avoided Emissions', 'Net Emissions' ];
 
-const AvoidedEmission = ({}) => {
+const AvoidedEmission = () => {
     const auth = useSelector((state) => state.auth);
 	const avoidedEmissions = useSelector((state) => state.footprint.avoidedEmission);
     const {filterItem,loading}=auth
@@ -20,11 +20,6 @@ const AvoidedEmission = ({}) => {
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
 
 	const dispatch = useDispatch();
-
-	const fetchDetails = async () => {
-        const data=getRequestData('AVOIDED_EMISSION', auth);
-		await dispatch(getAvoidedEmissions(data));
-	};
 
 	const getTableData = () => {
 		const data =
@@ -95,7 +90,11 @@ const AvoidedEmission = ({}) => {
 		setYAxisTitle(title);
 	};
 	useEffect(() => {
-		fetchDetails();
+		const fetchDetails = async () => {
+			const data=getRequestData('AVOIDED_EMISSION', auth);
+			await dispatch(getAvoidedEmissions(data));
+		};
+		fetchDetails()
 	}, []);
 	useEffect(
 		() => {
@@ -111,7 +110,7 @@ const AvoidedEmission = ({}) => {
 
 	if (fpMetricOptions && fpMetricOptions.length > 0) {
 		fpMetricOptions.map((option) => {
-			if (option.value == footprintMetric) {
+			if (option.value === footprintMetric) {
 				metric = option.name;
 			}
 		});

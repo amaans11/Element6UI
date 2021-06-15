@@ -7,7 +7,7 @@ import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 import DataTable from '../../components/Table/DataTable';
 import { targetSettingCells } from '../../util/TableHeadConfig';
 
-const TargetSetting = ({}) => {
+const TargetSetting = () => {
 	const dispatch = useDispatch();
 
 	const targetSetting = useSelector((state) => state.flm.targetSetting);

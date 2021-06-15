@@ -9,7 +9,7 @@ import getRequestData from '../../util/RequestData';
 
 const categories = [ 'Portfolio Disclosure', 'Benchmark Disclosure' ];
 
-const Disclosure = ({}) => {
+const Disclosure = () => {
 	const auth = useSelector((state) => state.auth);
 	const portDisclosure = useSelector((state) => state.footprint.portDisclosure);
 	const benchDisclosure = useSelector((state) => state.footprint.benchDisclosure);

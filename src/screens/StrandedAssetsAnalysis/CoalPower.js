@@ -7,7 +7,7 @@ import { coalPowerCells } from '../../util/TableHeadConfig';
 import { getCoalPowerData } from '../../redux/actions/strandedAssetActions';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 
-const CoalPower = ({}) => {
+const CoalPower = () => {
 	const dispatch = useDispatch();
 
 	const [ chartData, setChartData ] = useState([]);

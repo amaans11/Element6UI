@@ -26,7 +26,7 @@ export default function SelectwithSearch({ heading, data, defaultValue,handleCha
 				renderInput={(params) => (
 					<TextField {...params} variant="standard" label={heading} 
           // InputProps={{
-          //   className: type == 'portfolio' ? classes.portColor :  classes.benchColor
+          //   className: type === 'portfolio' ? classes.portColor :  classes.benchColor
           // }}
           />
 				)}

@@ -29,7 +29,7 @@ const lineChartData = [
 		]
 	}
 ];
-const SectorOverview = ({}) => {
+const SectorOverview = () => {
 	return (
 		<React.Fragment>
 			<BubbleChart

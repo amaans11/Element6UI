@@ -9,7 +9,7 @@ import { getFossilFuelData } from '../../redux/actions/strandedAssetActions';
 
 const categories = [ 'Gas', 'Oil', 'Coal' ];
 
-const FossilFuel = ({}) => {
+const FossilFuel = () => {
 	const dispatch = useDispatch();
 
 	const [ chartData, setChartData ] = useState([]);

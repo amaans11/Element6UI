@@ -24,7 +24,7 @@ const PerformanceAttribution = () => {
 			perfAttributionData['data'].map((response, index) => {
                 let res=response['points'];
 				let values = map(res, 'y');
-				if (index == 0) {
+				if (index === 0) {
 					categories = map(res, 'x');
 				}
 				chartData.push({

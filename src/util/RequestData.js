@@ -8,16 +8,16 @@ const getScenarioValue = (currentSc) => {
 
 	let res = {};
 	scenarios.map((scenario) => {
-		if (scenario.key == currentSc) {
+		if (scenario.key === currentSc) {
 			res = scenario.value;
 		}
 	});
 	return res;
 };
 const getScoreType = (scoreType) => {
-	if (scoreType == 'shortTerm') {
+	if (scoreType === 'shortTerm') {
 		return 'short';
-	} else if (scoreType == 'longTerm') {
+	} else if (scoreType === 'longTerm') {
 		return 'long';
 	} else {
 		return 'mid';
@@ -475,7 +475,7 @@ const getRequestData = (type, auth) => {
 				client: currentUser.client,
 				portfolio: currentPortfolio.label,
 				portfolio_date: currentPortfolio.value,
-				scenario_type: targetScenario == 'NGFS' ? 'IPCC' : targetScenario,
+				scenario_type: targetScenario === 'NGFS' ? 'IPCC' : targetScenario,
 				scope_type: emission.substring(2),
 				sector: sector,
 				footprint: footprintMetric,

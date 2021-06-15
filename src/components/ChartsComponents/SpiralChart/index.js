@@ -36,7 +36,7 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 			},
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			}
 		},
@@ -45,14 +45,14 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 			tickInterval: 0.5,
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			},
 			showLastLabel: false
 		},
 		tooltip: {
 			formatter: function() {
-				const xValue = this.point.x == 0 ? 'Portfolio' : this.point.x == 1 ? 'Benchmark' : 'Default Score';
+				const xValue = this.point.x === 0 ? 'Portfolio' : this.point.x === 1 ? 'Benchmark' : 'Default Score';
 				const yValue = this.point.options.y;
 
 				return '<b>' + xValue + ':' + '</b>' + yValue  ;

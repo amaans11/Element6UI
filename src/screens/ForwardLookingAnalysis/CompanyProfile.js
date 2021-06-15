@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
-const CompanyProfile = ({}) => {
+const CompanyProfile = () => {
 	const dispatch = useDispatch();
 
 	const companyProfile = useSelector((state) => state.flm.companyProfile);
@@ -98,19 +98,19 @@ const CompanyProfile = ({}) => {
 				let values = [];
 				Object.keys(res).map((key) => {
 					values = [ Date.UTC(key, '01', '01'), res[key] ];
-					if (res['Scenario'] == '2 Degrees') {
+					if (res['Scenario'] === '2 Degrees') {
 						twoDegrees.push(values);
 					}
-					if (res['Scenario'] == 'Beyond 2 Degrees') {
+					if (res['Scenario'] === 'Beyond 2 Degrees') {
 						beyondTwoDegree.push(values);
 					}
-					if (res['Scenario'] == 'Reference Technology') {
+					if (res['Scenario'] === 'Reference Technology') {
 						referenceTech.push(values);
 					}
-					if (res['Scenario'] == portScenario) {
+					if (res['Scenario'] === portScenario) {
 						lowEnergyDemand.push(values);
 					}
-					if (index == chartResponse.length - 1) {
+					if (index === chartResponse.length - 1) {
 						companyValues.push(values);
 						companyName = res['Scenario'];
 					}

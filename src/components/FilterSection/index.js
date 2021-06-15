@@ -338,7 +338,7 @@ export default function FilterGroup() {
 				})
 			);
 		}
-		if (newData[grpindex]['grpKey'] == 'targetScenario') {
+		if (newData[grpindex]['grpKey'] === 'targetScenario') {
 			const scenarioVal = newData[grpindex].tagsList[tagindex].value;
 			switch (scenarioVal) {
 				case 'IPCC':
@@ -406,7 +406,7 @@ export default function FilterGroup() {
 										const val = getEmission(t.value);
 										const fpValue = getFootprintMetric(t.value);
 										const warmingScValue = getWarmingScenario(t.value);
-										if (e.grpKey == 'emission') {
+										if (e.grpKey === 'emission') {
 											if (val) {
 												return (
 													<FilterTags
@@ -418,7 +418,7 @@ export default function FilterGroup() {
 													/>
 												);
 											}
-										} else if (e.grpKey == 'footprintMetric') {
+										} else if (e.grpKey === 'footprintMetric') {
 											if (fpValue) {
 												return (
 													<FilterTags
@@ -430,7 +430,7 @@ export default function FilterGroup() {
 													/>
 												);
 											}
-										} else if (e.grpKey == 'warmingScenario') {
+										} else if (e.grpKey === 'warmingScenario') {
 											if (warmingScValue) {
 												return (
 													<FilterTags

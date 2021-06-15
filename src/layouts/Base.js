@@ -210,7 +210,7 @@ const MiniDrawer = ({ classes, history }) => {
 		let portfolio = {};
 		if (portfolios && portfolios.length > 0) {
 			portfolios.map((port) => {
-				if (port.label == currentValue) {
+				if (port.label === currentValue) {
 					portfolio = { ...port };
 				}
 			});
@@ -221,7 +221,7 @@ const MiniDrawer = ({ classes, history }) => {
 		let benchmark = {};
 		if (portfolios && portfolios.length > 0) {
 			portfolios.map((port) => {
-				if (port.label == currentValue) {
+				if (port.label === currentValue) {
 					benchmark = { ...port };
 				}
 			});
@@ -278,7 +278,7 @@ const MiniDrawer = ({ classes, history }) => {
 			NotificationManager.error(uploadPortfolioRes.error);
 			return;
 		} else {
-			if (uploadPortfolioRes.data && uploadPortfolioRes.data.status == 'Success') {
+			if (uploadPortfolioRes.data && uploadPortfolioRes.data.status === 'Success') {
 				NotificationManager.success(
 					'Your portfolio has been uploaded and is being processed. You will see your uploaded portfolio table updated once the processing has been completed.'
 				);
@@ -324,7 +324,7 @@ const MiniDrawer = ({ classes, history }) => {
 				</List>
 			</Drawer>
 			<main className={classes.content}>
-				{isVisible ? window.location.pathname != '/' ? (
+				{isVisible ? window.location.pathname !== '/' ? (
 					<div className="filter-main">
 						<label className="filter-heading">Filters</label>
 						<div className="filter-part">

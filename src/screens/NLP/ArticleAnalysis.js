@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ArticleCard = ({}) => {
+const ArticleCard = () => {
 	const classes = useStyles();
 	return (
 		<Card className={classes.card}>

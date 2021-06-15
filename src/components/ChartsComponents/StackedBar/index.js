@@ -36,7 +36,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 			},
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			}
 		},
@@ -47,13 +47,13 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 				text: yAxis,
 				align: 'high',
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			},
 			labels: {
 				overflow: 'justify',
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			}
 		},
@@ -70,19 +70,19 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 				stacking: 'normal',
 				dataLabels: {
 					enabled: true,
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
 					style: {
 						fontWeight: 'normal',
                         textOutline: 'none'
 					}
 				},
 				borderWidth: 1,
-				borderColor: currentTheme == 'dark' ? '#000000' : '#FFFFFF'
+				borderColor: currentTheme === 'dark' ? '#000000' : '#FFFFFF'
 			},
         },
         legend: {
             itemStyle:{
-                color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+                color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
             }
         },
 		series: data

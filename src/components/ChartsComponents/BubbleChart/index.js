@@ -33,7 +33,7 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 			},
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			}
 		},
@@ -46,7 +46,7 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 			},
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			},
 			maxPadding: 0.2
@@ -73,14 +73,14 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 				dataLabels: {
 					enabled: true,
 					format: '{point.company}',
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000',
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
 					style: {
 						fontWeight: 'normal',
 						shadow: false
 					}
 				},
 				borderWidth: 1,
-				borderColor: currentTheme == 'dark' ? '#000000' : '#FFFFFF'
+				borderColor: currentTheme === 'dark' ? '#000000' : '#FFFFFF'
 			}
 		},
 		series: data

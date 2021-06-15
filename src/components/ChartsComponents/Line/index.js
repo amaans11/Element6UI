@@ -36,7 +36,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 			},
 			labels: {
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			}
 		},
@@ -46,13 +46,13 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 				text: yAxis,
 				align: 'high',
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			},
 			labels: {
 				overflow: 'justify',
 				style: {
-					color: currentTheme == 'dark' ? '#FFFFFF' : '#000000'
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			},
 			min: 0

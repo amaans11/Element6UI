@@ -8,7 +8,7 @@ import BubbleChart from '../../components/ChartsComponents/BubbleChart';
 import { riskContribCells } from '../../util/TableHeadConfig';
 import DataTable from '../../components/Table/DataTable';
 
-const RiskContributor = ({}) => {
+const RiskContributor = () => {
 	const dispatch = useDispatch();
 
 	const auth = useSelector((state) => state.auth);
@@ -50,37 +50,37 @@ const RiskContributor = ({}) => {
 				sasb_sector: res['SASB_Sector'],
 				weight: res['Weight'],
 				annualized_return:
-					year == '1Y'
+					year === '1Y'
 						? res['ContributionAnnualised1Y']
-						: year == '3Y' ? res['ContributionAnnualised3Y'] : res['ContributionAnnualised5Y'],
+						: year === '3Y' ? res['ContributionAnnualised3Y'] : res['ContributionAnnualised5Y'],
 				annualized_risk:
-					year == '1Y'
+					year === '1Y'
 						? res['ContributionRisk1Y']
-						: year == '3Y' ? res['ContributionRisk3Y'] : res['ContributionRisk5Y'],
-				intensity: intensityScope == 'Sc12' ? res['ContribSc12'] : res['ContribSc123']
+						: year === '3Y' ? res['ContributionRisk3Y'] : res['ContributionRisk5Y'],
+				intensity: intensityScope === 'Sc12' ? res['ContribSc12'] : res['ContribSc123']
 			});
 			if (some(chartData, { name: res['SASB_Sector'] })) {
 				const index = findIndex(chartData, { name: res['SASB_Sector'] });
 				const xVal =
-					year == '1Y'
+					year === '1Y'
 						? res['ContributionRisk1Y']
-						: year == '3Y' ? res['ContributionRisk3Y'] : res['ContributionRisk5Y'];
+						: year === '3Y' ? res['ContributionRisk3Y'] : res['ContributionRisk5Y'];
 				const yVal =
-					year == '1Y'
+					year === '1Y'
 						? res['ContributionAnnualised1Y']
-						: year == '3Y' ? res['ContributionAnnualised3Y'] : res['ContributionAnnualised5Y'];
-				const zVal = intensityScope == 'Sc12' ? res['ContribSc12'] : res['ContribSc123'];
+						: year === '3Y' ? res['ContributionAnnualised3Y'] : res['ContributionAnnualised5Y'];
+				const zVal = intensityScope === 'Sc12' ? res['ContribSc12'] : res['ContribSc123'];
 				chartData[index]['data'].push([ xVal, yVal, zVal ]);
 			} else {
 				const xVal =
-					year == '1Y'
+					year === '1Y'
 						? res['ContributionRisk1Y']
-						: year == '3Y' ? res['ContributionRisk3Y'] : res['ContributionRisk5Y'];
+						: year === '3Y' ? res['ContributionRisk3Y'] : res['ContributionRisk5Y'];
 				const yVal =
-					year == '1Y'
+					year === '1Y'
 						? res['ContributionAnnualised1Y']
-						: year == '3Y' ? res['ContributionAnnualised3Y'] : res['ContributionAnnualised5Y'];
-				const zVal = intensityScope == 'Sc12' ? res['ContribSc12'] : res['ContribSc123'];
+						: year === '3Y' ? res['ContributionAnnualised3Y'] : res['ContributionAnnualised5Y'];
+				const zVal = intensityScope === 'Sc12' ? res['ContribSc12'] : res['ContribSc123'];
 
 				chartData = [
 					...chartData,
