@@ -222,29 +222,29 @@ export default function FilterGroup() {
 		switch (moduleName) {
 			case 'FLM':
 				switch (tagName) {
-					case 'Revenue':
+					case 'WeightAvgRev':
 						return true;
-					case 'MarketVal':
+					case 'WeightAvgMarketVal':
 						return true;
-					case 'FinancedEmis':
+					case 'TotalCarbEmis':
 						return true;
-					case 'PortInt':
+					case 'CarbIntensityMarketVal':
 						return false;
-					case 'CarbFootMV':
+					case 'CarbIntensityRev':
 						return false;
 				}
 				break;
 			default:
 				switch (tagName) {
-					case 'Revenue':
+					case 'WeightAvgRev':
 						return true;
-					case 'MarketVal':
+					case 'WeightAvgMarketVal':
 						return true;
-					case 'FinancedEmis':
+					case 'TotalCarbEmis':
 						return true;
-					case 'PortInt':
+					case 'CarbIntensityMarketVal':
 						return true;
-					case 'CarbFootMV':
+					case 'CarbIntensityRev':
 						return true;
 				}
 				break;
