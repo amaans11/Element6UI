@@ -1,16 +1,16 @@
+/* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Accordion, AccordionSummary, AccordionDetails, Card, Box } from '@material-ui/core';
+import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FilterTags from './tags';
 import data from '../../util/filter-config';
 import filterConfig from '../../util/tabs-filter-config';
-import { setFilterItem, setFilterVisibility, setPortfolio } from '../../redux/actions/authActions';
+import { setFilterItem, setFilterVisibility } from '../../redux/actions/authActions';
 
 export default function FilterGroup() {
 	const [ filterData, setFilterData ] = useState(data);
-	const isVisible = useSelector((state) => state.auth.isVisible);
 	const [ configs, setConfigs ] = useState([]);
 
 	const dispatch = useDispatch();
@@ -175,8 +175,9 @@ export default function FilterGroup() {
 						return true;
 					case 'Sc3':
 						return false;
+					default:
+						return true;
 				}
-				break;
 			case 'Scope3':
 				switch (tagName) {
 					case 'Sc12':
@@ -185,8 +186,9 @@ export default function FilterGroup() {
 						return true;
 					case 'Sc3':
 						return true;
+					default:
+						return true;
 				}
-				break;
 			case 'Optimization':
 				switch (tagName) {
 					case 'Sc12':
@@ -195,8 +197,9 @@ export default function FilterGroup() {
 						return true;
 					case 'Sc3':
 						return true;
+					default:
+						return true;
 				}
-				break;
 			case 'Temp score':
 				switch (tagName) {
 					case 'Sc12':
@@ -204,6 +207,8 @@ export default function FilterGroup() {
 					case 'Sc123':
 						return true;
 					case 'Sc3':
+						return true;
+					default:
 						return true;
 				}
 			default:
@@ -214,8 +219,9 @@ export default function FilterGroup() {
 						return true;
 					case 'Sc3':
 						return false;
+					default:
+						return true;
 				}
-				break;
 		}
 	};
 	const getFootprintMetric = (tagName) => {
@@ -232,8 +238,9 @@ export default function FilterGroup() {
 						return false;
 					case 'CarbIntensityRev':
 						return false;
+					default:
+						return true;
 				}
-				break;
 			default:
 				switch (tagName) {
 					case 'WeightAvgRev':
@@ -246,8 +253,9 @@ export default function FilterGroup() {
 						return true;
 					case 'CarbIntensityRev':
 						return true;
+					default:
+						return true;
 				}
-				break;
 		}
 	};
 	const getWarmingScenario = (tagName) => {
@@ -316,13 +324,13 @@ export default function FilterGroup() {
 					default:
 						return false;
 				}
-				break;
 		}
 	};
 
 	const updateTags = (grpindex, tagindex, selected) => {
 		const newData = [ ...data ];
 		if (selected) {
+			// eslint-disable-next-line
 			newData[grpindex].tagsList.map((tags) => {
 				tags.selected = false;
 			});
@@ -380,6 +388,7 @@ export default function FilterGroup() {
 		() => {
 			getConfigs();
 		},
+
 		[ tabValue, targetScenario ]
 	);
 	const hideFilterSection = async () => {

@@ -55,7 +55,6 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			},
-			min: 0
 		},
 		plotOptions: {
 			series: {

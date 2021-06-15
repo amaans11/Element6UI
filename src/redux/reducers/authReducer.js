@@ -59,11 +59,11 @@ export default function authReducer(state = { ...intialState }, action) {
 			const portfolioList = action.res;
 			let result = [];
 			if (portfolioList && portfolioList.length > 0) {
-				portfolioList.map((portfolio) => {
-					result.push({
+				result = portfolioList.map((portfolio) => {
+					return {
 						label: portfolio.PortfolioName,
 						value: portfolio.Date
-					});
+					};
 				});
 			}
 			const currentData = {

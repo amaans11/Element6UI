@@ -8,6 +8,7 @@ const theme = createMuiTheme({
       root: {
         backgroundColor: "#f5f5f5",
         color: "#cecece",
+        border:"1px solid #b4b4b4"
       },
     },
     MiniDrawer: {
@@ -45,11 +46,6 @@ const theme = createMuiTheme({
         },
       },
     },
-    MuiCard:{
-      root:{
-        border:"1px solid #b4b4b4"
-      }
-    }
   },
   palette: {
     primary: {

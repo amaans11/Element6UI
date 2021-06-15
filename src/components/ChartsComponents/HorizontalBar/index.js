@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
@@ -62,6 +62,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 		tooltip: {
 			formatter: function() {
 				const item=this.colorIndex === 0 ? 'Portfolio' : 'Benchmark'
+				// eslint-disable-next-line
 				return '<b>' + this.x + '</b>' + '<br/>' + '<b>' + item + ' : ' + '</b>'  + new Intl.NumberFormat().format(this.y) + ' (' + tooltipUnit  + ')';
 			}
 		},

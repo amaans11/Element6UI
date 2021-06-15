@@ -59,12 +59,10 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 		},
 		tooltip: {
 			formatter: function() {
+			// eslint-disable-next-line
 			  return '<b>' + this.x + '</b>' + '<br/>' + '<b>' + 'Disclosure Rate' + ' : ' + '</b>'  + this.y  + ' ' + yAxis ;
 			}
 		  },
-		legend: {
-			reversed: true
-		},
 		plotOptions: {
 			series: {
 				stacking: 'normal',
@@ -81,6 +79,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 			},
         },
         legend: {
+			reversed: true,
             itemStyle:{
                 color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
             }

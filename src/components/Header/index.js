@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, IconButton, MenuItem, Menu ,Box} from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, MenuItem, Menu ,Box} from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';

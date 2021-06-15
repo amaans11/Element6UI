@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
@@ -10,7 +10,6 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 	}
 	const currentTheme = localStorage.getItem('appTheme');
 
-	console.log('data>>', data);
 	const options = {
 		chart: {
 			type: 'column',
@@ -28,13 +27,11 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 		},
 		xAxis: {
 			tickInterval: 1,
-			labels: {
-				allowOverlap: true
-			},
 			title: {
 				text: null
 			},
 			labels: {
+				allowOverlap: true,
 				style: {
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
@@ -55,6 +52,7 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 				const xValue = this.point.x === 0 ? 'Portfolio' : this.point.x === 1 ? 'Benchmark' : 'Default Score';
 				const yValue = this.point.options.y;
 
+				// eslint-disable-next-line
 				return '<b>' + xValue + ':' + '</b>' + yValue  ;
 			}
 		},

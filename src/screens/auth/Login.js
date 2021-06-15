@@ -55,7 +55,6 @@ const useStyles = makeStyles(() => ({
 	textInput: {
 		width: 250,
 		height: 50,
-		color: 'white',
 		border: '1px solid white',
 		color: 'black'
 	},

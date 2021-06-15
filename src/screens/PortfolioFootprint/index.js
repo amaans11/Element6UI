@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import classNames from 'classnames';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Grid, Tabs, Tab } from '@material-ui/core';
 import TabPanel from './../../components/TabPanel';
@@ -23,10 +22,6 @@ function PortfolioFootprint() {
 		await dispatch(setTabValue(newValue));
 		setValue(newValue);
 	};
-	let tabClass = classNames({
-		'tab-collapse': isVisible,
-		'tab-expand': !isVisible
-	});
 
 	return (
 		<div className="tabs-section">

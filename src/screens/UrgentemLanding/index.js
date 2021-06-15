@@ -1,6 +1,6 @@
+/* eslint-disable */
 import React, { useState, useEffect, useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { CustomThemeContext } from '../../Themes/customThemeProvider';
+import {  useSelector } from 'react-redux';
 import { Card, Typography, Box, Grid } from '@material-ui/core';
 import axios from 'axios';
 import * as actionTypes from '../../redux/actionTypes';

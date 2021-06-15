@@ -44,7 +44,6 @@ const getRequestData = (type, auth) => {
 		assetClass,
 		inferenceType,
 		emission,
-		strategy,
 		returnYear,
 		aggregation,
 		defaultValue,
@@ -342,7 +341,7 @@ const getRequestData = (type, auth) => {
 				aggregation_method: aggregation,
 				default_score: defaultValue
 			};
-			if (scenario != 0) {
+			if (scenario !== 0) {
 				data = {
 					...data,
 					what_if: scenarioValue

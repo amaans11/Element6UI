@@ -73,6 +73,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 				const yValue = yAxisCategories[this.point.options.y];
 				const zValue = this.point.options.value;
 
+				// eslint-disable-next-line
 				return xValue + '<br />' + yValue + '<br />' + '<b>' + zValue + '</b>';
 			}
 		},

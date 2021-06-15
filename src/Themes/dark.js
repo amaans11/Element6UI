@@ -8,6 +8,7 @@ const theme = createMuiTheme({
       root: {
         backgroundColor: "#303030",
         color: "#cecece",
+        border:"1px solid #b4b4b4"
       },
     },
     MuiAppBar: {
@@ -64,11 +65,6 @@ const theme = createMuiTheme({
         },
       },
       
-    },
-    MuiCard:{
-      root:{
-        border:"1px solid #b4b4b4"
-      }
     },
     MuiListItem: {
       button: {

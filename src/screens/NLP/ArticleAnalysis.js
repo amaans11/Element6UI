@@ -39,7 +39,7 @@ const ArticleCard = () => {
 		</Card>
 	);
 };
-const Background = ({}) => {
+const ArticleAnalysis = () => {
     const classes=useStyles()
 	return (
 		<React.Fragment>
@@ -51,4 +51,4 @@ const Background = ({}) => {
 	);
 };
 
-export default Background;
+export default ArticleAnalysis;

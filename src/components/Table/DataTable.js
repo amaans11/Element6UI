@@ -1,7 +1,6 @@
 import React from 'react';
 import DataTable,{createTheme} from 'react-data-table-component';
-import { makeStyles } from '@material-ui/core/styles';
-import { Grid, TextField, FormControl, InputLabel, Select, MenuItem, Card, Button ,Box} from '@material-ui/core';
+import {  Card ,Box} from '@material-ui/core';
 import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined';
 import CONFIG from '../../util/config';
 
@@ -166,7 +165,6 @@ class ReactDataTable extends React.Component {
 	};
 
 	downloadCSV = (array) => {
-		const {title}=this.props
 		const link = document.createElement('a');
 		let csv = this.convertArrayOfObjectsToCSV(array);
 		if (csv === null) return;
@@ -182,7 +180,7 @@ class ReactDataTable extends React.Component {
 		link.click();
 	};
 	render() {
-		const { columns, data, loading, tableHeading,fixedHeader,isScroll } = this.props;
+		const { columns, data, loading, tableHeading,isScroll } = this.props;
 		const currentTheme = localStorage.getItem('appTheme');
 		const title = CONFIG['TABLE'][tableHeading]['HEADING'];
 		const actionsMemo = (
