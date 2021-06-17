@@ -26,6 +26,8 @@ const CarbonAttribution = () => {
 		let chartData = [];
 		let categories = [];
 
+		console.log("data>>",data)
+
 		if (data && data.length > 0) {
 			data.map((res) => {
 				let xValue = res['points'][0]['x'];
@@ -38,6 +40,8 @@ const CarbonAttribution = () => {
 				categories.push(xValue);
 			});
 		}
+		console.log("chartData>>",chartData)
+
 		setChartData(chartData);
 		setCategories(categories);
 	};

@@ -173,12 +173,12 @@ function UrgentemLanding({ history }) {
 						<span  onClick={() => handleClick(config)}>
 							<Card className={classes.card}>
 							<Box display="flex" flexDirection="row">
-								<Typography variant="h6" style={{ fontFamily: 'Helvetica', paddingBottom: 10 }}>
+								<Typography variant="h6" style={{  paddingBottom: 10 }}>
 									{config.name}
 								</Typography>
 								<ListItemLink icon={config.icon} />
 							</Box>
-							<Typography variant="p" style={{ fontFamily: 'Helvetica' }}>
+							<Typography variant="p">
 								{config.content}
 							</Typography>
 						</Card>

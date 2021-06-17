@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import * as actionTypes from '../actionTypes';
 import axios from 'axios';
 import { createBrowserHistory } from 'history';
@@ -22,7 +20,7 @@ import {
 	getContribAnalysis,
 	getHeatmapData
 } from './tempMetricActions';
-import { getPortfolioAlignment, getTargetSetting, getCompanyProfileData,getCompanies} from './flmActions';
+import { getPortfolioAlignment, getTargetSetting, getCompanyProfileData, getCompanies } from './flmActions';
 
 const history = createBrowserHistory();
 
@@ -88,9 +86,7 @@ const requestApi = async (dispatch, auth, flm) => {
 			break;
 		case 'FLM':
 			switch (tabValue) {
-				// eslint-disable-next-line
 				case 0:
-					// eslint-disable-next-line
 					data = getRequestData('PORTFOLIO_ALIGNMENT', auth);
 					await dispatch(getPortfolioAlignment(data));
 					break;
@@ -99,7 +95,7 @@ const requestApi = async (dispatch, auth, flm) => {
 					await dispatch(getTargetSetting(data));
 					break;
 				case 2:
-					const data = getRequestData('COMPANY_PROFILE_COMPANIES', auth);
+					 data = getRequestData('COMPANY_PROFILE_COMPANIES', auth);
 					await dispatch(getCompanies(data));
 
 					const response = companyData['data'];
@@ -368,7 +364,7 @@ export const setBenchmark = (benchmark) => {
 		await dispatch(setBenchmarkSuccess(benchmark));
 		const auth = getState().auth;
 		const flm = getState().flm;
-		requestApi(dispatch, auth , flm);
+		requestApi(dispatch, auth, flm);
 	};
 };
 
@@ -381,7 +377,7 @@ export const setFilterItem = (data) => {
 		await dispatch(setFilterItemSuccess(data));
 		const auth = getState().auth;
 		const flm = getState().flm;
-		requestApi(dispatch, auth , flm);
+		requestApi(dispatch, auth, flm);
 	};
 };
 
@@ -549,4 +545,3 @@ export const uploadPortfolioFailed = (error) => {
 	return { type: actionTypes.UPLOAD_PORTFOLIO_FAILED, error };
 };
 /* eslint-disable */
-

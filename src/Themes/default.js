@@ -32,6 +32,8 @@ const theme = createMuiTheme({
     },
   MuiTypography:{
     root:{
+      fontFamily: 'Helvetica',
+      color:'black'
     }
   },
     MuiChip: {
