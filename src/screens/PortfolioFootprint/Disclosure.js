@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, CircularProgress, Typography } from '@material-ui/core';
+import {some} from 'lodash'
 import { getDisclosureData } from '../../redux/actions/footprintActions';
 import { map } from 'lodash';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
@@ -50,24 +51,33 @@ const Disclosure = () => {
 					? benchDisclosure['data']['Scope3_disc']
 					: [];
 
-			console.log('portData', portData);
-			console.log('benchData', benchData);
 
-			if (portData && portData.length > 0) {
-				portData.map((res) => {
-					portValues.push(res['Portfolio']);
-					categories.push(res['Disclosed.S3']);
-				});
+
+			for(let i=0;i<=15 ; i++){
+				let portValue=0;
+				let benchValue =0;
+
+				if(portData && portData.length > 0){
+					const isPortExist= some(portData,{'Disclosed.S3':i})
+
+					if(isPortExist){
+						const index=portData.findIndex(x=>x['Disclosed.S3'] == i)
+
+						portValue=portData[index]['Portfolio']
+					}
+				}
+				if(benchData && benchData.length > 0){
+					const isBenchExist= some(benchData,{'Disclosed.S3':i})
+					if(isBenchExist){
+						const index=benchData.findIndex(x=>x['Disclosed.S3'] == i)
+						benchValue=benchData[index]['Portfolio']
+					}
+				}
+				portValues.push(portValue)
+				benchValues.push(benchValue)
+
 			}
 
-			if (benchData && benchData.length > 0) {
-				benchData.map((res) => {
-					const key = res['Disclosed.S3'];
-					benchValues[key] = res['Portfolio'];
-				});
-			}
-			benchValues = Array.from(benchValues, (item) => item || 0);
-			console.log('benchValues', benchValues);
 			chartData = [
 				{
 					name: 'portfolio',

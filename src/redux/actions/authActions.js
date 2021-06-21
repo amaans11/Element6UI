@@ -52,7 +52,7 @@ const requestApi = async (dispatch, auth, flm) => {
 					break;
 				case 4:
 					const portData = getRequestData('PORT_DISCLOSURE', auth);
-					const benchData = getRequestData('PORT_DISCLOSURE', auth);
+					const benchData = getRequestData('BENCH_DISCLOSURE', auth);
 
 					await dispatch(getDisclosureData(portData, 'portfolio'));
 					await dispatch(getDisclosureData(benchData, 'benchmark'));
