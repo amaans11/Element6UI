@@ -107,7 +107,7 @@ const requestApi = async (dispatch, auth, flm) => {
 
 						requestData = {
 							...requestData,
-							company: currentCompany
+							isin: currentCompany
 						};
 						await dispatch(getCompanyProfileData(requestData));
 					}

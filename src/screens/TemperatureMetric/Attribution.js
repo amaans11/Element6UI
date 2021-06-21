@@ -38,18 +38,22 @@ const Attribution = () => {
 		let chartData = [];
 		let categories = [];
 
-		console.log('data', data);
 		if (data && data.length > 0) {
 			data.map((res) => {
-				console.log('res>>', res);
-				let xValue = res['points'][0]['x'];
-				let yValue = res['points'][0]['y'][emission];
-
+				let values=[];
+				if(res && res['points'] && res['points'].length > 0){
+					res['points'].map(value=>{
+						const sector=value['x']
+						if(!categories.includes(sector)){
+							categories.push(sector)
+						}
+						values.push(value['y'][emission])
+					})
+				}
 				chartData.push({
-					name: res['name'],
-					data: [ yValue ]
-				});
-				categories.push(xValue);
+					name:res['name'],
+					data:values
+				})
 			});
 		}
 		setChartData(chartData);
@@ -64,9 +68,6 @@ const Attribution = () => {
 		},
 		[ tempAttribution ]
 	);
-
-	console.log('chartData', chartData);
-	console.log('categories', categories);
 
 	return (
 		<React.Fragment>

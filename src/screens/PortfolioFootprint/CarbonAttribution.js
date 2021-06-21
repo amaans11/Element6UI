@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, CircularProgress, Typography } from '@material-ui/core';
+import {map} from 'lodash'
 import { getCarbonAttribution } from '../../redux/actions/footprintActions';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 import getRequestData from '../../util/RequestData';
@@ -26,18 +27,19 @@ const CarbonAttribution = () => {
 		let chartData = [];
 		let categories = [];
 
-		console.log("data>>",data)
 
 		if (data && data.length > 0) {
 			data.map((res) => {
-				let xValue = res['points'][0]['x'];
-				let yValue = res['points'][0]['y'];
+				let values=[]
 
+				if(res['points'] && res['points'].length > 0){
+					values=map(res['points'],'y')
+					categories  =map(res['points'],'x')
+				}
 				chartData.push({
-					name: res['name'],
-					data: [ yValue ]
-				});
-				categories.push(xValue);
+					name:res['name'],
+					data:values
+				})
 			});
 		}
 		console.log("chartData>>",chartData)

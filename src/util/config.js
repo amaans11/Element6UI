@@ -144,8 +144,8 @@ const configs = {
 			Y_AXIS_TITLE: 'Temperature Score'
 		},
 		TEMP_ATTRIBUTION: {
-			TITLE: '',
-			Y_AXIS_TITLE: ''
+			TITLE: 'Temperature Attribution',
+			Y_AXIS_TITLE: '°C'
 		},
 		PORT_HEATMAP: {
 			TITLE: 'Temperature Score Per Sector and Region',

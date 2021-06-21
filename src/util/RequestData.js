@@ -132,10 +132,10 @@ const getRequestData = (type, auth) => {
 				market_value: marketValue,
 				quarter_fundamentals: 'Q1',
 				quarter_emissions: 'Q1',
-				version_fundamentals: '1',
-				version_emissions: '11',
-				year_fundamentals: 2020,
-				year_emissions: 2020
+				version_fundamentals: 1,
+				version_emissions: 11,
+				year_fundamentals: 2019,
+				year_emissions: 2019
 			};
 			break;
 
@@ -341,7 +341,7 @@ const getRequestData = (type, auth) => {
 				aggregation_method: aggregation,
 				default_score: defaultValue
 			};
-			if (scenario !== 0) {
+			if (scenario != 0) {
 				data = {
 					...data,
 					what_if: scenarioValue
@@ -520,10 +520,10 @@ const getRequestData = (type, auth) => {
 				quarter_emissions: 'Q1',
 				version_fundamentals: '1',
 				version_emissions: '11',
-				year_fundamentals: 2020,
-				year_emissions: 2020,
+				year_fundamentals: 2019,
+				year_emissions: 2019,
 				currency: currentCurrency,
-				currency_year: 2019
+				currency_year: 2020
 			};
 			break;
 		case 'CARBON_ADJUSTED_COMPANIES':

@@ -76,7 +76,7 @@ const CompanyProfile = () => {
 		let data = getRequestData('COMPANY_PROFILE', auth);
 		data = {
 			...data,
-			company: companyId
+			isin: companyId
 		};
 		await dispatch(getCompanyProfileData(data));
 	};
