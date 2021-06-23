@@ -571,7 +571,8 @@ const companyProfileCells = [
 		name: 'Name',
 		selector: 'name',
 		sortable: true,
-		right: false
+		right: false,
+		wrap:true
 	},
 	{
 		name: 'Summary',

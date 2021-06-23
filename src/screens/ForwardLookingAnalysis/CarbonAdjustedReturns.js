@@ -157,9 +157,9 @@ const CarbonAdjustedReturns = () => {
 				const { index, name } = getTableHeader(data1);
 				returnsData[index] = {
 					name: name,
-					sector: tableData1['company'][data1],
-					portfolio: tableData1['sector'][data1],
-					company: tableData1['portfolio'][data1]
+					sector: tableData1['sector'][data1],
+					portfolio: tableData1['portfolio'][data1],
+					company:tableData1['company'][data1]
 				};
 			}
 		});
@@ -168,9 +168,9 @@ const CarbonAdjustedReturns = () => {
 				const { index, name } = getTableHeader(data1);
 				carbonData[index] = {
 					name: name,
-					sector: tableData2['company'][emissionVal][data1],
-					portfolio: tableData2['sector'][emissionVal][data1],
-					company: tableData2['portfolio'][emissionVal][data1]
+					sector: tableData2['sector'][emissionVal][data1],
+					portfolio: tableData2['portfolio'][emissionVal][data1],
+					company: tableData2['company'][emissionVal][data1]
 				};
 			}
 		});
@@ -230,13 +230,15 @@ const CarbonAdjustedReturns = () => {
 		setCurrentCompany(currentCompany);
 		setCompanyName(companyList[0]['name']);
 
-		await fetchDetails(currentCompany);
+		await fetchDetails(companyList[0]);
 	};
 	const handleCompanyChange = async (event) => {
 		const companyId = event.target.value;
 		setCurrentCompany(companyId);
 
-		await fetchDetails(companyId);
+		const company=companyList.filter(company=>company.company_id == companyId)
+
+		await fetchDetails(company[0]);
 	};
 	const cells = [
 		{

@@ -16,9 +16,6 @@ const Disclosure = () => {
 	const portDisclosure = useSelector((state) => state.footprint.portDisclosure);
 	const benchDisclosure = useSelector((state) => state.footprint.benchDisclosure);
 
-	console.log('portDisclosure1>>', portDisclosure);
-	console.log('benchDisclosure1>>', benchDisclosure);
-
 	const [ stackedChartData, setStackedChartData ] = useState([]);
 	const [ columnChartData, setColumnChartData ] = useState([]);
 	const [ columnCategories, setColumnCategories ] = useState([]);
@@ -132,7 +129,6 @@ const Disclosure = () => {
 		},
 		[ portDisclosure, benchDisclosure ]
 	);
-	console.log('stackedChartData', stackedChartData);
 	return (
 		<React.Fragment>
 			{loading ? (

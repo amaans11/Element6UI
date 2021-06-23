@@ -20,7 +20,15 @@ import {
 	getContribAnalysis,
 	getHeatmapData
 } from './tempMetricActions';
-import { getPortfolioAlignment, getTargetSetting, getCompanyProfileData, getCompanies } from './flmActions';
+import {
+	getPortfolioAlignment,
+	getTargetSetting,
+	getCompanyProfileData,
+	getCompanies,
+	getCarbonCompanies,
+	getCarbonReturnsLineData,
+	getCarbonReturnsTableData
+} from './flmActions';
 
 const history = createBrowserHistory();
 
@@ -95,7 +103,7 @@ const requestApi = async (dispatch, auth, flm) => {
 					await dispatch(getTargetSetting(data));
 					break;
 				case 2:
-					 data = getRequestData('COMPANY_PROFILE_COMPANIES', auth);
+					data = getRequestData('COMPANY_PROFILE_COMPANIES', auth);
 					await dispatch(getCompanies(data));
 
 					const response = companyData['data'];
@@ -114,6 +122,32 @@ const requestApi = async (dispatch, auth, flm) => {
 
 					break;
 				case 3:
+					data = getRequestData('CARBON_ADJUSTED_COMPANIES', auth);
+					await dispatch(getCarbonCompanies(data));
+					const result = companyData['data'];
+					if (result && Object.keys(result).length > 0) {
+						const sectors = Object.keys(result);
+						const companies = result[sectors[0]];
+						const company = companies[0];
+
+						let lineChartData = getRequestData('CARBON_ADJUSTED_LINE_RETURNS', auth);
+						let tableData = getRequestData('CARBON_ADJUSTED_TABLE_RETURNS', auth);
+
+						lineChartData = {
+							...lineChartData,
+							isin: company['company_id'],
+							ticket: company['ticket']
+						};
+						tableData = {
+							...tableData,
+							isin: company['company_id'],
+							ticket: company['ticket']
+						};
+						await dispatch(getCarbonReturnsLineData(lineChartData));
+						await dispatch(getCarbonReturnsTableData(tableData));
+					}
+
+					break;
 					// await dispatch(getCarbonReturns(data));
 					break;
 				default:

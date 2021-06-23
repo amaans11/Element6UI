@@ -153,23 +153,23 @@ const CompanyProfile = () => {
 				},
 				{
 					name: 'Disclosure Scope 1+2 Category',
-					summary: tableResponse['DisclosureScope12Category']
+					summary: tableResponse['DisclosureScope12Category'] ? tableResponse['DisclosureScope12Category'] : 'NA'
 				},
 				{
 					name: 'Number of Scope 3 Categories Disclosed',
-					summary: tableResponse['DisclosureNumberofS3Categories']
+					summary: tableResponse['DisclosureNumberofS3Categories'] ? tableResponse['DisclosureNumberofS3Categories'] : 'NA'
 				},
 				{
 					name: 'Emissions Intensity Scope 1+2+3 (tCO2e/m Revenue)',
-					summary: tableResponse['intensityS123']
+					summary: tableResponse['intensityS123'] ? tableResponse['intensityS123'] : 'NA'
 				},
 				{
 					name: 'Emissions Intensity Scope 1+2 (tCO2e/m Revenue)',
-					summary: tableResponse['intensityS12']
+					summary: tableResponse['intensityS12'] ? tableResponse['intensityS12'] : 'NA'
 				},
 				{
 					name: 'Intensity Momentum Scope 1+2 (tCO2e/m Revenue)',
-					summary: tableResponse['momentum']
+					summary: tableResponse['momentum'] ? tableResponse['momentum'] : 'NA'
 				}
 			];
 		}
