@@ -295,14 +295,19 @@ export const verifyUserSuccess = (res) => {
 };
 
 export const getPortfolioList = (client) => {
-	return async (dispatch) => {
-		return axios.get(`${actionTypes.API_URL}/portfolios/client_new/${client}`).then((result) => {
-			if (result.data.status === 'Success') {
-				dispatch(getPortfolioListSuccess(result.data.Portfolios));
-			} else {
+	return async (dispatch, getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+		const headers = {
+			'client-key': clientKey
+		};
+		return axios
+			.get(`${actionTypes.API_URL}/portfolio/`, { headers: headers })
+			.then((result) => {
+				dispatch(getPortfolioListSuccess(result.data));
+			})
+			.catch(() => {
 				dispatch(getPortfolioListFailure());
-			}
-		});
+			});
 	};
 };
 

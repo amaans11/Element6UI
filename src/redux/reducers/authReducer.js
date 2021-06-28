@@ -61,14 +61,16 @@ export default function authReducer(state = { ...intialState }, action) {
 			if (portfolioList && portfolioList.length > 0) {
 				result = portfolioList.map((portfolio) => {
 					return {
-						label: portfolio.PortfolioName,
-						value: portfolio.Date
+						label: portfolio.name,
+						value: portfolio.portfolio_id,
+						version:portfolio.version
 					};
 				});
 			}
 			const currentData = {
-				label: portfolioList[0].PortfolioName,
-				value: portfolioList[0].Date
+				label: portfolioList[0].name,
+				value: portfolioList[0].portfolio_id,
+				version:portfolioList[0].version
 			};
 			return produce(state, (draft) => {
 				draft.portfolioList = [ ...result ];
