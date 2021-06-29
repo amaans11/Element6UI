@@ -333,16 +333,14 @@ export const getUserInfoSuccess = (res) => {
 	return { type: actionTypes.GET_USER_INFO, res };
 };
 
-export const getUploadPortfolioList = (client) => {
-	return async (dispatch) => {
+export const getUploadPortfolioList = () => {
+	return async (dispatch, getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+
 		return axios
-			.get(`${actionTypes.API_URL}/statuses/portfolio_new/${client}`)
+			.get(`${actionTypes.API_URL}/portfolio/?is_full=True`, { headers: { 'client-key': clientKey } })
 			.then((result) => {
-				if (result.data.Status === 'Success') {
 					dispatch(getUploadPortfolioListSuccess(result.data));
-				} else {
-					dispatch(getUploadPortfolioListFailed());
-				}
 			})
 			.catch((error) => {
 				dispatch(getUploadPortfolioListFailed());
@@ -519,7 +517,7 @@ export const getDownloadDetails = (data) => {
 		const clientKey = getState().auth.userInfo.client_key;
 
 		return axios
-			.post(`${actionTypes.API_URL}/files/internal`, data, {
+			.post(`${actionTypes.API_URL}/download/platform`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -552,27 +550,23 @@ export const generateReport = (data) => {
 	};
 };
 
-export const uploadPortfolioRequest = (data, uploadData) => {
+export const uploadPortfolioRequest = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 
-		const { client, portfolioValue, portfolioName, portfolioDate } = uploadData;
 		return axios
-			.post(`${actionTypes.API_URL}/portfolios/upload`, data, {
+			.post(`${actionTypes.API_URL}/portfolio/`, data, {
 				headers: {
-					client: client,
-					'portfolio-value': portfolioValue,
-					'portfolio-name': portfolioName,
-					'portfolio-date': portfolioDate,
 					'client-key': clientKey
 				}
 			})
 			.then((result) => {
-				dispatch(uploadPortfolioSuccess(result.data.data));
+				dispatch(uploadPortfolioSuccess(result.data));
 			})
 			.catch((err) => {
 				const error = err.response.data.message;
 				dispatch(uploadPortfolioFailed(error));
+				throw new Error(error);
 			});
 	};
 };

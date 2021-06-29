@@ -1,9 +1,11 @@
 /* eslint-disable */
 import React, { useState, useEffect, useContext } from 'react';
-import {  useSelector } from 'react-redux';
-import { Card, Typography, Box, Grid } from '@material-ui/core';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { Card, Typography, Box, Grid, Button } from '@material-ui/core';
+import moment from 'moment';
+import { NotificationManager } from 'react-notifications';
 import * as actionTypes from '../../redux/actionTypes';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import GraphicEqIcon from '@material-ui/icons/GraphicEq';
 import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
@@ -17,49 +19,8 @@ import CodeIcon from '@material-ui/icons/Code';
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import configs from '../../util/landing-page.config';
 import DataTable from '../../components/Table/DataTable';
+import { getUploadPortfolioList } from '../../redux/actions/authActions';
 
-function getHeadCells() {
-	return [
-		{
-			name: 'Portfolio Name',
-			selector: 'Portfolio Name',
-			sortable: true,
-			wrap: true,
-			right: false
-		},
-		{
-			name: 'Fundamentals Data Coverage (%)',
-			selector: '% of Portfolio Processed',
-			sortable: true,
-			right: true
-		},
-		{
-			name: 'Price Data Coverage (%)',
-			selector: '% of Portfolio Covered by Emissions data',
-			sortable: true,
-			right: true
-		},
-		{
-			name: 'Portfolio Name',
-			selector: '% of Portfolio Covered by Price data',
-			sortable: true,
-			right: true
-		},
-		{
-			name: 'Processed Date',
-			selector: 'Processed Date and Time',
-			sortable: true,
-			right: true,
-			wrap: true
-		},
-		{
-			name: 'Processing Status',
-			selector: 'Processing Status',
-			sortable: true,
-			right: true
-		}
-	];
-}
 function ListItemLink({ icon }) {
 	switch (icon) {
 		case 'GraphicEqIcon':
@@ -104,36 +65,127 @@ const useStyles = makeStyles(() => ({
 
 function UrgentemLanding({ history }) {
 	const classes = useStyles();
+	const dispatch = useDispatch();
 
-	const [ uploadedPortfolio, setUploadedPortfolio ] = useState([]);
 	const [ loading, setLoading ] = useState(false);
+	const portfolioTableRes = useSelector((state) => state.auth.portfolioTableRes);
+	const userInfo = useSelector((state) => state.auth.userInfo);
 
-	const auth = useSelector((state) => state.auth);
+	const { year, quarter, version } = userInfo;
 
-	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
+	const yearFundamentals = year.fundamentals ? year.fundamentals : '2019';
+	const yearEmissions = year.emissions ? year.emissions : '2019';
+	const quarterFundamentals = quarter.fundamentals ? quarter.fundamentals : 'Q1';
+	const quarterEmissions = quarter.emissions ? quarter.emissions : 'Q1';
+	const versionFundamentals = version.fundamentals ? version.fundamentals : '';
+	const versionEmissions = version.emissions ? version.emissions : '';
 
-	
+	const fetchDetails = async () => {
+		setLoading(true);
+		await dispatch(getUploadPortfolioList());
+		setLoading(false);
+	};
 	useEffect(() => {
-		const getUploadPortfolios = async () => {
-			try {
-				setLoading(true);
-				let response = await axios.get(`${actionTypes.API_URL}/statuses/portfolios_new/${currentUser.client}`);
-	
-				if (response.data.status === 'Success') {
-					const portfolios = response.data.Portfolios;
-					setUploadedPortfolio(portfolios);
-					setLoading(false);
-				} else {
-					setUploadedPortfolio([]);
-					setLoading(false);
-				}
-			} catch (error) {
-				setUploadedPortfolio([]);
-				setLoading(false);
-			}
-		};
-		getUploadPortfolios();
+		fetchDetails();
 	}, []);
+
+	const getHeadCells = () => {
+		return [
+			{
+				name: 'Portfolio Id',
+				selector: 'portfolio_id',
+				sortable: true,
+				right: false,
+				wrap: true
+			},
+			{
+				name: 'Portfolio Name',
+				selector: 'name',
+				sortable: true,
+				right: false,
+				wrap: true
+			},
+			{
+				name: 'Fundamentals Data Coverage (%)',
+				selector: 'versionFundamental',
+				sortable: true,
+				right: true,
+				wrap: true,
+				cell: (row) => (
+					<div>{row['coverage_fundamentals'].length > 0 && row['coverage_fundamentals'][0]['coverage']}</div>
+				)
+			},
+			{
+				name: 'Emissions Data Coverage (%)',
+				selector: 'emissionFundamental',
+				sortable: true,
+				right: true,
+				wrap: true,
+				cell: (row) => (
+					<div>{row['coverage_emissions'].length > 0 && row['coverage_emissions'][0]['coverage']}</div>
+				)
+			},
+			{
+				name: 'Version',
+				selector: 'version',
+				sortable: true,
+				right: true,
+				wrap: true
+			},
+			{
+				name: 'Processing Date',
+				selector: 'portfolioDate',
+				sortable: true,
+				right: false,
+				wrap: true,
+				cell: (row) => (
+					<div>{row['date_created'] && moment(row['date_created']).format('DD-MM-YYYY hh:mm:ss A')}</div>
+				)
+			},
+			{
+				cell: (row) => (
+					<Button
+						color="primary"
+						variant="contained"
+						size="small"
+						style={{ marginRight: 10 }}
+						onClick={() => getCoverageDetails(row)}
+					>
+						Coverage Details
+					</Button>
+				),
+				button: true
+			}
+		];
+	};
+	const getCoverageDetails = async (data) => {
+		const portfolioId = data.portfolio_id;
+		const url = `${actionTypes.API_URL}/portfolio/coverage/${portfolioId}/`;
+
+		const requestData = {
+			version_portfolio: '0',
+			year_fundamentals: yearFundamentals,
+			quarter_fundamentals: quarterFundamentals,
+			version_fundamentals: versionFundamentals,
+			year_emissions: yearEmissions,
+			quarter_emissions: quarterEmissions,
+			version_emissions: versionEmissions
+		};
+		axios
+			.post(url, requestData, { headers: { 'client-key': userInfo.client_key } })
+			.then(response => {
+				const blob = new Blob([response.data], {
+					type: 'application/csv',
+				  });
+				  const link = document.createElement('a');
+				  link.href = window.URL.createObjectURL(blob);
+				  link.download = `${data.name}.csv`;
+				  link.click();	
+			})
+			.catch((error) => {
+				NotificationManager.error(error.response.data.message);
+			});
+	};
 
 	const handleClick = (config) => {
 		switch (config.name) {
@@ -170,18 +222,16 @@ function UrgentemLanding({ history }) {
 			<Grid container>
 				<Grid item xs={3}>
 					{configs.map((config) => (
-						<span  onClick={() => handleClick(config)}>
+						<span onClick={() => handleClick(config)}>
 							<Card className={classes.card}>
-							<Box display="flex" flexDirection="row">
-								<Typography variant="h6" style={{  paddingBottom: 10 }}>
-									{config.name}
-								</Typography>
-								<ListItemLink icon={config.icon} />
-							</Box>
-							<Typography variant="p">
-								{config.content}
-							</Typography>
-						</Card>
+								<Box display="flex" flexDirection="row">
+									<Typography variant="h6" style={{ paddingBottom: 10 }}>
+										{config.name}
+									</Typography>
+									<ListItemLink icon={config.icon} />
+								</Box>
+								<Typography variant="p">{config.content}</Typography>
+							</Card>
 						</span>
 					))}
 				</Grid>
@@ -196,7 +246,7 @@ function UrgentemLanding({ history }) {
 					</Typography>
 					<Box mt={2}>
 						<DataTable
-							data={uploadedPortfolio}
+							data={portfolioTableRes}
 							columns={headCells}
 							tableHeading="UPLOAD_PORTFOLIO"
 							loading={loading}

@@ -576,6 +576,7 @@ const getRequestData = (type, auth) => {
 			};
 			break;
 
+
 		default:
 			data = {};
 			break;

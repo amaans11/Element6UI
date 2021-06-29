@@ -18,7 +18,8 @@ const intialState = {
 	reweightFactor: 0,
 	loading: false,
 	downloadPortfolioList: [],
-	uploadPortfolioRes: {}
+	uploadPortfolioRes: {},
+	portfolioTableRes:[]
 };
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -63,14 +64,14 @@ export default function authReducer(state = { ...intialState }, action) {
 					return {
 						label: portfolio.name,
 						value: portfolio.portfolio_id,
-						version:portfolio.version
+						version: portfolio.version
 					};
 				});
 			}
 			const currentData = {
 				label: portfolioList[0].name,
 				value: portfolioList[0].portfolio_id,
-				version:portfolioList[0].version
+				version: portfolioList[0].version
 			};
 			return produce(state, (draft) => {
 				draft.portfolioList = [ ...result ];
@@ -131,7 +132,6 @@ export default function authReducer(state = { ...intialState }, action) {
 			});
 		case types.GET_DOWNLOAD_PORTFOLIOS_SUCCESS:
 			return produce(state, (draft) => {
-				console.log('action>>', action.res);
 				draft.downloadPortfolioList = action.res;
 			});
 		case types.GET_DOWNLOAD_PORTFOLIOS_FAILED:
@@ -141,7 +141,6 @@ export default function authReducer(state = { ...intialState }, action) {
 
 		case types.GET_DOWNLOAD_DETAILS_SUCCESS:
 			return produce(state, (draft) => {
-				console.log('Action>>', action.res);
 				draft.downloadData = action.res;
 			});
 		case types.GET_DOWNLOAD_DETAILS_FAILED:
@@ -155,10 +154,16 @@ export default function authReducer(state = { ...intialState }, action) {
 			});
 		case types.UPLOAD_PORTFOLIO_FAILED:
 			return produce(state, (draft) => {
-				draft.uploadPortfolioRes = {
-					data: {},
-					error: action.error
-				};
+				draft.uploadPortfolioRes.data = {};
+				draft.uploadPortfolioRes.error = action.error;
+			});
+		case types.GET_UPLOAD_PORTFOLIO_LIST_SUCCESS:
+			return produce(state, (draft) => {
+				draft.portfolioTableRes = action.res;
+			});
+		case types.GET_UPLOAD_PORTFOLIO_LIST_FAILED:
+			return produce(state, (draft) => {
+				draft.portfolioTableRes = [];
 			});
 		default:
 			return state;

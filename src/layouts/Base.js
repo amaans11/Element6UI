@@ -19,10 +19,11 @@ import {
 	Grid,
 	Select,
 	MenuItem,
-	FormControl,
+	TextField,
 	Typography,
 	IconButton
 } from '@material-ui/core';
+import CustomSwitch from '@material-ui/core/Switch';
 import CloseIcon from '@material-ui/icons/Close';
 import { NotificationManager } from 'react-notifications';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -176,6 +177,8 @@ const MiniDrawer = ({ classes, history }) => {
 	const [ portfolioName, setPortfolioName ] = useState('');
 	const [ missingCoverageDialog, setMissingCoverageDialog ] = useState(false);
 	const [ missingCoverage, setMissingCoverage ] = useState({});
+	const [ description, setDescription ] = useState('');
+	const [ isBenchmark, setBenchmark ] = useState(false);
 
 	const dispatch = useDispatch();
 	const inputRef = useRef(null);
@@ -184,13 +187,11 @@ const MiniDrawer = ({ classes, history }) => {
 	const portfolios = useSelector((state) => state.auth.portfolioList);
 	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
 	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
-	const currentCurrency = useSelector((state) => state.auth.currentCurrency);
 	const isVisible = useSelector((state) => state.auth.isVisible);
 	const uploadPortfolioRes = useSelector((state) => state.auth.uploadPortfolioRes);
 
 	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
 	let userInfo = auth && auth.userInfo ? auth.userInfo : {};
-
 
 	const getUserDetails = async () => {
 		const data = {
@@ -258,37 +259,22 @@ const MiniDrawer = ({ classes, history }) => {
 		const file = event.target.files[0];
 
 		const data = new FormData();
-		const emissionYear =  userInfo.year_emissions ? userInfo.year_emissions : 2019
-		data.append('excel_file', file);
-		data.append('client_name', currentUser.client);
-		data.append('portfolio-value', portfolioValue);
-		data.append('portfolio-name', portfolioName);
-		data.append('portfolio-date', emissionYear);
-		data.append('currency', currentCurrency);
+		data.append('compositions', file);
+		data.append('value', portfolioValue);
+		data.append('name', portfolioName);
+		data.append('currency', 'USD');
+		data.append('description', description);
+		data.append('is_benchmark', isBenchmark);
 
-		const uploadData = {
-			portfolioName: portfolioName,
-			portfolioValue: portfolioValue,
-			client: currentUser.client,
-			portfolioDate: emissionYear
-		};
-
-		await dispatch(uploadPortfolioRequest(data, uploadData));
-
-		if (uploadPortfolioRes.error) {
-			NotificationManager.error(uploadPortfolioRes.error);
-			return;
-		} else {
-			if (uploadPortfolioRes.data && uploadPortfolioRes.data.status === 'Success') {
-				NotificationManager.success(
-					'Your portfolio has been uploaded and is being processed. You will see your uploaded portfolio table updated once the processing has been completed.'
-				);
-			} else {
-				NotificationManager.info('Missing Coverage');
-				setDialog(false);
-				setMissingCoverageDialog(true);
-				setMissingCoverage(uploadPortfolioRes.data);
-			}
+		try{
+			await dispatch(uploadPortfolioRequest(data));
+			NotificationManager.success(
+				'Your portfolio has been uploaded and is being processed. You will see your uploaded portfolio table updated once the processing has been completed.'
+			);
+			setDialog(true)
+		}
+		catch(error) {
+			NotificationManager.error(error.message);
 		}
 	};
 	useEffect(() => {
@@ -443,15 +429,20 @@ const MiniDrawer = ({ classes, history }) => {
 							<InputLabel className={classes.labelText}>Currency :</InputLabel>
 						</Grid>
 						<Grid item xs={3}>
-							<FormControl variant="outlined">
-								<Select label="Select Currency" className={classes.select} placeholder="currency">
-									<MenuItem value="USD">USD ($)</MenuItem>
-									<MenuItem value="EUR">EUR (€)</MenuItem>
-									<MenuItem value="GBP">GBP (£)</MenuItem>
-									<MenuItem value="AUD">AUD ($)</MenuItem>
-									<MenuItem value="NZD">NZ ($)</MenuItem>
-								</Select>
-							</FormControl>
+							<Select
+								variant="outlined"
+								label="Select Currency"
+								className={classes.select}
+								placeholder="currency"
+								disabled
+								value="USD"
+							>
+								<MenuItem value="USD">USD ($)</MenuItem>
+								<MenuItem value="EUR">EUR (€)</MenuItem>
+								<MenuItem value="GBP">GBP (£)</MenuItem>
+								<MenuItem value="AUD">AUD ($)</MenuItem>
+								<MenuItem value="NZD">NZ ($)</MenuItem>
+							</Select>
 						</Grid>
 					</Grid>
 					<Grid container style={{ marginTop: 10 }}>
@@ -479,9 +470,45 @@ const MiniDrawer = ({ classes, history }) => {
 							/>
 						</Grid>
 					</Grid>
+					<Grid container style={{ marginTop: 10 }}>
+						<Grid item xs={3}>
+							<InputLabel className={classes.labelText}>Description</InputLabel>
+						</Grid>
+						<Grid item xs={3}>
+							<TextField
+								label="Description"
+								multiline
+								rows={3}
+								variant="outlined"
+								value={description}
+								style={{width: 200}}
+								onChange={(e) => {
+									setDescription(e.target.value);
+								}}
+							/>
+						</Grid>
+					</Grid>
+					<Grid container>
+						<Grid item xs={3}>
+							<InputLabel style={{ paddingTop: 10 }}>
+								Is this portfolio supposed to be a benchmark?
+							</InputLabel>
+						</Grid>
+						<Grid item xs={3}>
+							<CustomSwitch
+								checked={isBenchmark}
+								onChange={(e) => {
+									setBenchmark(e.target.checked);
+								}}
+								color="primary"
+								name="isBenchmark"
+								disabled={userInfo.is_admin ? false : true}
+							/>
+						</Grid>
+					</Grid>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={uploadPortfolio} color="primary">
+					<Button onClick={uploadPortfolio} color="primary" variant="outlined">
 						Upload
 					</Button>
 					<input
