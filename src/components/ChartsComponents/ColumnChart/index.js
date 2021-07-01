@@ -18,7 +18,6 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
 
   const currentTheme = localStorage.getItem('appTheme');
 
-  console.log("data>>",data)
   const options = {
     chart: {
       type: "column",

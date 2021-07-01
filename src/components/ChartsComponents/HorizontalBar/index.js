@@ -18,8 +18,6 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 	if(!tooltipUnit){
 		tooltipUnit=yAxis
 	}
-	console.log('data>>', data);
-
 	const options = {
 		chart: {
 			type: 'bar'

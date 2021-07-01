@@ -30,7 +30,6 @@ axios.defaults.headers.get['x-api-key'] = '_yF0FT6hgogJxSF1G0sAl3d9d4pQwxhuiRSS8
 
 const currentTheme = localStorage.getItem('appTheme') || 'basic';
 
-console.disableYellowBox = true;
 Highcharts.theme = {
 	colors: [ '#597ef7', '#bae637', '#ff4d4f', '#FFB74D','#FF6666','#9ACD32','#40E0D0','#708090','#808080' ],
 	chart: {

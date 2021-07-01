@@ -105,8 +105,6 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			}
 		};
 	}
-
-	console.log('data1>>', data);
 	return (
 		<div>
 			<HighchartsReact highcharts={Highcharts} options={options} />

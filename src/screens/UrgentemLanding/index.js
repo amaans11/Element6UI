@@ -73,12 +73,12 @@ function UrgentemLanding({ history }) {
 
 	const { year, quarter, version } = userInfo;
 
-	const yearFundamentals = year.fundamentals ? year.fundamentals : '2019';
-	const yearEmissions = year.emissions ? year.emissions : '2019';
-	const quarterFundamentals = quarter.fundamentals ? quarter.fundamentals : 'Q1';
-	const quarterEmissions = quarter.emissions ? quarter.emissions : 'Q1';
-	const versionFundamentals = version.fundamentals ? version.fundamentals : '';
-	const versionEmissions = version.emissions ? version.emissions : '';
+	const yearFundamentals = year && year.fundamentals ? year.fundamentals : '2019';
+	const yearEmissions = year && year.emissions ? year.emissions : '2019';
+	const quarterFundamentals = quarter && quarter.fundamentals ? quarter.fundamentals : 'Q1';
+	const quarterEmissions = quarter && quarter.emissions ? quarter.emissions : 'Q1';
+	const versionFundamentals = version && version.fundamentals ? version.fundamentals : '';
+	const versionEmissions = version && version.emissions ? version.emissions : '';
 
 	const fetchDetails = async () => {
 		setLoading(true);
