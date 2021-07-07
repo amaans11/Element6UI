@@ -17,18 +17,21 @@ const theme = createMuiTheme({
       },
     },
     MuiButton: {
-      outlinedSecondary: {
-        color: "#ff4d4f",
-        "&:hover": {
-          backgroundColor: "#ff4d4f !important",
-          color:"#FFFFFF !important"
-        },
-      },
+      // outlinedSecondary: {
+      //   color: "#ff4d4f",
+      //   "&:hover": {
+      //     backgroundColor: "#ff4d4f !important",
+      //     color:"#FFFFFF !important"
+      //   },
+      // },
       root: {
-        "&:hover": {
-          backgroundColor: "#1890ff !important",
-          color:"#FFFFFF !important"},
+          backgroundColor: "#1E2732 !important",
+          color:"#F7DC81 !important",
+          border:"none"
       },
+    },
+    MuiAppBar:{
+      root:{ backgroundColor:'#1E2732 !important'}
     },
   MuiTypography:{
     root:{

@@ -81,8 +81,8 @@ const Header = ({ history }) => {
 					</LinkContainer>
 
 					<Box variant="body1" color="inherit" noWrap>
-						<div> {`${currentUser.displayName} / ${currentUser.client}`} </div>
-						<div style={{ fontSize: 12 }}> Emission Year - {emissionYear} </div>
+						<div style={{color:'#F7DC81'}}> {`${currentUser.displayName} / ${currentUser.client}`} </div>
+						<div style={{ fontSize: 12,color:'#F7DC81' }}> Emission Year - {emissionYear} </div>
 					</Box>
 				</div>
 				<div>
