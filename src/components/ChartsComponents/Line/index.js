@@ -17,7 +17,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 	const options = {
 		chart: {
 			type: 'spline',
-      height:500
+      		height:500
 		},
 		title: {
 			text: title,
@@ -60,10 +60,9 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 			series: {
 				marker: {
 					enabled: true
-				}
+				},
 			}
 		},
-		colors: [ '#597ef7', '#bae637', '#1890ff' ],
 		series: data
 	};
 

@@ -21,7 +21,10 @@ import {
 	MenuItem,
 	TextField,
 	Typography,
-	IconButton
+	IconButton,
+	RadioGroup,
+	Radio,
+	FormControlLabel
 } from '@material-ui/core';
 import CustomSwitch from '@material-ui/core/Switch';
 import CloseIcon from '@material-ui/icons/Close';
@@ -188,7 +191,7 @@ const MiniDrawer = ({ classes, history }) => {
 	const currentPortfolio = useSelector((state) => state.auth.currentPortfolio);
 	const currentBenchmark = useSelector((state) => state.auth.currentBenchmark);
 	const isVisible = useSelector((state) => state.auth.isVisible);
-	const uploadPortfolioRes = useSelector((state) => state.auth.uploadPortfolioRes);
+	const isAdmin = useSelector((state) => state.auth.userInfo.is_admin);
 
 	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
 	let userInfo = auth && auth.userInfo ? auth.userInfo : {};
@@ -266,14 +269,13 @@ const MiniDrawer = ({ classes, history }) => {
 		data.append('description', description);
 		data.append('is_benchmark', isBenchmark);
 
-		try{
+		try {
 			await dispatch(uploadPortfolioRequest(data));
 			NotificationManager.success(
 				'Your portfolio has been uploaded and is being processed. You will see your uploaded portfolio table updated once the processing has been completed.'
 			);
-			setDialog(true)
-		}
-		catch(error) {
+			setDialog(true);
+		} catch (error) {
 			NotificationManager.error(error.message);
 		}
 	};
@@ -481,7 +483,7 @@ const MiniDrawer = ({ classes, history }) => {
 								rows={3}
 								variant="outlined"
 								value={description}
-								style={{width: 200}}
+								style={{ width: 200 }}
 								onChange={(e) => {
 									setDescription(e.target.value);
 								}}
@@ -490,20 +492,31 @@ const MiniDrawer = ({ classes, history }) => {
 					</Grid>
 					<Grid container>
 						<Grid item xs={3}>
-							<InputLabel style={{ paddingTop: 10 }}>
-								Is this portfolio supposed to be a benchmark?
-							</InputLabel>
+							<InputLabel style={{ paddingTop: 10 }}>Benchmark</InputLabel>
 						</Grid>
 						<Grid item xs={3}>
-							<CustomSwitch
-								checked={isBenchmark}
+							<RadioGroup
+								value={isBenchmark}
 								onChange={(e) => {
-									setBenchmark(e.target.checked);
+									setBenchmark(e.target.value);
 								}}
-								color="primary"
-								name="isBenchmark"
-								disabled={userInfo.is_admin ? false : true}
-							/>
+								row
+								name="position"
+								defaultValue="top"
+							>
+								<Box display="flex" flexDirection="row">
+									<FormControlLabel
+										value="true"
+										control={<Radio disabled={isAdmin ? false : true} color="default" />}
+										label="Yes"
+									/>
+									<FormControlLabel
+										value="false"
+										control={<Radio disabled={isAdmin ? false : true} color="default" />}
+										label="No"
+									/>
+								</Box>
+							</RadioGroup>
 						</Grid>
 					</Grid>
 				</DialogContent>
