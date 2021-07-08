@@ -128,7 +128,7 @@
       tagsList: [
         { name: "Short Term Score", value: "shortTerm", selected: true },
         { name: "Mid Term Score", value: "midTerm", selected: false },
-        { name: "Mid Term Score", value: "longTerm", selected: false },
+        { name: "Long Term Score", value: "longTerm", selected: false },
       ]
     },
     {

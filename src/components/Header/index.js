@@ -40,8 +40,8 @@ const Header = ({ history }) => {
 
 	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
 	let emissionYear=2019;
-	if(userInfo && userInfo.year_emissions){
-		emissionYear=userInfo.year_emissions
+	if(userInfo && userInfo.year && userInfo.year.emissions){
+		emissionYear=userInfo.year.emissions
 	}
 	const open = Boolean(anchorEl);
 

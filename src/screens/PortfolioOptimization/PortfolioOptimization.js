@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Slider, Typography,Button, CircularProgress } from '@material-ui/core';
 import LineChart from '../../components/ChartsComponents/Line';
 import { getPortOptimizationData } from '../../redux/actions/optimizationActions';
-import {setReweightData} from '../../redux/actions/authActions';
+import {setReweightData,setLoading} from '../../redux/actions/authActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
 import getRequestData from '../../util/RequestData';
@@ -30,7 +30,6 @@ const PortfolioOptimization = () => {
 	const [ contribData, setContribData ] = useState([]);
 	const [reWeightFactor,setReweightfactor]=useState(reweightFactor)
 
-	console.log("lineChartDatam,,",lineChartData)
 
 	const formatDate = (currentDate) => {
 		const year = currentDate.toString().slice(0, 4);
@@ -202,7 +201,8 @@ const PortfolioOptimization = () => {
 		];
 		return intensityData;
 	};
-	const getData = () => {
+	const getData = async () => {
+
 		let yAxisLabel = '';
 		let lineChartData = [];
 		let tableData = [];
@@ -273,8 +273,12 @@ const PortfolioOptimization = () => {
 		setContribCategories(contribCategories);
 		setWeightData(weightData);
 		setContribData(contribData);
+
+		await dispatch(setLoading(false));
+
 	};
 	const fetchDetails = async () => {
+		await dispatch(setLoading(true));
 		const data = getRequestData('PORTFOLIO_OPTIMIZATION', auth);
 		await dispatch(getPortOptimizationData(data));
 	};
@@ -287,9 +291,10 @@ const PortfolioOptimization = () => {
 		},
 		[ optimizationData ]
 	);
+	console.log("loading>>",loading)
 	return (
 		<React.Fragment>
-			{loading ? <CircularProgress /> :optimizationData.error ? (
+			{loading ? <CircularProgress /> : optimizationData.error ? (
 				<Box align="center" className="error-msg" style={{ marginTop: 20, fontSize: 16 }}>
 					{optimizationData.error}
 				</Box>

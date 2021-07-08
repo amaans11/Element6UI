@@ -13,6 +13,7 @@ import Login from './screens/auth/Login';
 import Base from './layouts/Base';
 import Settings from './screens/Settings';
 import { setLoading } from './redux/actions/authActions';
+import * as actionTypes from './redux/actionTypes';
 
 // React notifications css import
 import 'react-notifications/lib/notifications.css';
@@ -95,7 +96,10 @@ axios.interceptors.request.use(
 
 // Add a response interceptor
 axios.interceptors.response.use(async function(response) {
-	store.dispatch(setLoading(false));
+	console.log("response>>",response)
+	if(response.config.url !== `${actionTypes.API_URL}/portfolio/`){
+		store.dispatch(setLoading(false));
+	}
 	return response;
 },function(error){
 	store.dispatch(setLoading(false));

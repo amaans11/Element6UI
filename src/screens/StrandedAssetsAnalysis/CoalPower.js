@@ -65,6 +65,7 @@ const CoalPower = () => {
 								categories={['portfolio','benchmark']}
 								data={chartData}
 								chartKey="COAL_POWER"
+								isLegend={false}
 							/>
 						</Grid>
 						<Grid item xs={6}>

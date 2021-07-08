@@ -274,7 +274,7 @@ const getRequestData = (type, auth) => {
 				version_emissions: versionEmissions,
 				year_fundamentals: yearFundamentals,
 				year_emissions: yearEmissions,
-				asset_type: assetClass,
+				asset_type: 'Eq',
 				sector: sector,
 				currency: currentCurrency,
 				req_year: returnYear,

@@ -109,7 +109,7 @@ function UrgentemLanding({ history }) {
       },
       {
         name: 'Fundamentals Data Coverage (%)',
-        selector: 'versionFundamental',
+        selector: 'coverage_fundamentals[0].coverage',
         sortable: true,
         right: true,
         wrap: true,
@@ -122,7 +122,7 @@ function UrgentemLanding({ history }) {
       },
       {
         name: 'Emissions Data Coverage (%)',
-        selector: 'emissionFundamental',
+        selector: 'coverage_emissions[0].coverage',
         sortable: true,
         right: true,
         wrap: true,
@@ -142,7 +142,7 @@ function UrgentemLanding({ history }) {
       },
       {
         name: 'Processing Date',
-        selector: 'portfolioDate',
+        selector: 'date_created',
         sortable: true,
         right: true,
         wrap: true,
@@ -250,7 +250,7 @@ function UrgentemLanding({ history }) {
         </Grid>
         <Grid item xs={8} className={classes.contentView}>
           <Typography align="center" variant="h4">
-            Welcome to the Urgentem Element 6TM Platform.
+            Welcome to the Urgentem Element 6<sup style={{ verticalAlign: 'super', fontSize: 12 }}>TM</sup> Platform.
           </Typography>
           <Typography variant="h6" className={classes.description}>
             Upload and select your portfolio and benchmark. Navigate our climate
@@ -263,7 +263,6 @@ function UrgentemLanding({ history }) {
               data={portfolioTableRes}
               columns={headCells}
               tableHeading="UPLOAD_PORTFOLIO"
-              loading={loading}
             />
           </Box>
         </Grid>

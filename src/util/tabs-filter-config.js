@@ -1,6 +1,5 @@
 const data={
     'PORTFOLIO_EMISSION':[
-        'sector',
         'footprintMetric',
         'marketValue',
         'assetClass',
@@ -8,7 +7,6 @@ const data={
         'emission'
     ],
     'CARBON_EMISSION':[
-        'sector',
         'footprintMetric',
         'marketValue',
         'assetClass',
@@ -57,7 +55,6 @@ const data={
     ],
     'PERFORMANCE_ATTRIBUTION':[
         'sector',
-        'assetClass',
         'returnYear'
     ],
     'PORTFOLIO_CARBON_RISK':[
