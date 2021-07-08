@@ -398,10 +398,9 @@ export const setPortfolioSuccess = (res) => {
 };
 export const setBenchmark = (benchmark) => {
 	return async (dispatch, getState) => {
+		await dispatch(setBenchmarkSuccess(benchmark));
 		const auth = getState().auth;
 		const flm = getState().flm;
-		await dispatch(setBenchmarkSuccess(benchmark));
-		
 		requestApi(dispatch, auth, flm);
 	};
 };

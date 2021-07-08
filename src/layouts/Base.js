@@ -181,7 +181,7 @@ const MiniDrawer = ({ classes, history }) => {
 	const [ missingCoverageDialog, setMissingCoverageDialog ] = useState(false);
 	const [ missingCoverage, setMissingCoverage ] = useState({});
 	const [ description, setDescription ] = useState('');
-	const [ isBenchmark, setBenchmark ] = useState(false);
+	const [ isBenchmark, setBenchmarkValue ] = useState(false);
 
 	const dispatch = useDispatch();
 	const inputRef = useRef(null);
@@ -211,7 +211,7 @@ const MiniDrawer = ({ classes, history }) => {
 		await getUserDetails();
 		await getPortfolio();
 	};
-	const onPortfolioChange = (currentValue) => {
+	const onPortfolioChange = async(currentValue) => {
 		let portfolio = {};
 		if (portfolios && portfolios.length > 0) {
 			portfolios.map((port) => {
@@ -220,9 +220,9 @@ const MiniDrawer = ({ classes, history }) => {
 				}
 			});
 		}
-		dispatch(setPortfolio(portfolio));
+		await dispatch(setPortfolio(portfolio));
 	};
-	const onBenchmarkChange = (currentValue) => {
+	const onBenchmarkChange = async(currentValue) => {
 		let benchmark = {};
 		if (portfolios && portfolios.length > 0) {
 			portfolios.map((port) => {
@@ -231,7 +231,7 @@ const MiniDrawer = ({ classes, history }) => {
 				}
 			});
 		}
-		dispatch(setBenchmark(benchmark));
+		await dispatch(setBenchmark(benchmark));
 	};
 	const setDefaultTab = async (e) => {
 		await dispatch(setTabValue(0));
@@ -498,7 +498,7 @@ const MiniDrawer = ({ classes, history }) => {
 							<RadioGroup
 								value={isBenchmark}
 								onChange={(e) => {
-									setBenchmark(e.target.value);
+									setBenchmarkValue(e.target.value);
 								}}
 								row
 								name="position"

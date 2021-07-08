@@ -37,22 +37,27 @@ const getRequestData = (type, auth) => {
 		userInfo
 	} = auth;
 
+	const {client,userName} = currentUser
+
 	const { year, quarter, version } = userInfo;
 
 	const portfolioId = currentPortfolio.value;
 	const benchmarkId = currentBenchmark.value;
 	const versionPortfolio = currentPortfolio.version;
 	const versionBenchmark = currentBenchmark.version;
+	const portfolioName = currentPortfolio.label
+	const benchmarkName = currentBenchmark.label
 
-	const yearFundamentals = year.fundamentals ? year.fundamentals : '2019';
-	const yearEmissions = year.emissions ? year.emissions : '2019';
-	const quarterFundamentals = quarter.fundamentals ? quarter.fundamentals : 'Q1';
-	const quarterEmissions = quarter.emissions ? quarter.emissions : 'Q1';
-	const versionFundamentals = version.fundamentals ? version.fundamentals : '';
-	const versionEmissions = version.emissions ? version.emissions : '';
-	const quarterAvoided = quarter.avoided ? quarter.avoided : 'Q1';
+	const yearFundamentals = year && year.fundamentals ? year.fundamentals : '2019';
+	const yearEmissions = year &&year.emissions ? year.emissions : '2019';
+	const quarterFundamentals = quarter && quarter.fundamentals ? quarter.fundamentals : 'Q1';
+	const quarterEmissions = quarter &&quarter.emissions ? quarter.emissions : 'Q1';
+	const versionFundamentals = version && version.fundamentals ? version.fundamentals : '';
+	const versionEmissions = version && version.emissions ? version.emissions : '';
+	const quarterAvoided = quarter && quarter.avoided ? quarter.avoided : 'Q1';
 	const versionAvoided = version.avoided ? version.avoided : '';
-	
+	const quarterReserves = quarter && quarter.reserves ? quarter.reserves : '';
+
 	const {
 		sector,
 		footprintMetric,
@@ -432,30 +437,33 @@ const getRequestData = (type, auth) => {
 			break;
 
 		case 'GENERATE_REPORT':
+			
 			data = {
+				client:client,
+				user:userName,
 				portfolio_id: portfolioId,
 				benchmark_id: benchmarkId,
 				version_portfolio: versionPortfolio,
 				version_benchmark: versionBenchmark,
-				Scenario: 'LowEnergyDemand',
-				footprint_metric: 'Revenue',
+				portfolio:portfolioName,
+				benchmark:benchmarkName,
+				footprint_metric: 'WeightAvgRev',
 				currency: 'USD',
-				quarter: 'Q1',
-				quarter_avoided: 'Q1',
-				quarter_emissions: 'Q1',
-				quarter_fundamentals: 'Q1',
-				quarter_reserves: 'Q1',
-				req_year: 1,
+				quarter_currency:"Q1",
+				year_currency:"2020",
+				period: 1,
 				reweight_factor: 0,
-				scenario: 'IPCC',
 				strategy: 'momentum',
-				version: '',
-				version_avoided: 'Q1',
-				version_emissions: '11',
-				version_fundamentals: '1',
-				warming_scenario: 'LowEnergyDemand',
-				year: '2020',
-				approach: 'MarketShare'
+				scenario_type: 'IPCC',
+				scenario: 'LowEnergyDemand',
+				approach: 'RelativeAlignment',
+				version_fundamentals: versionFundamentals,
+				version_emissions: versionEmissions,
+				quarter_fundamentals: quarterFundamentals,
+				quarter_emissions: quarterEmissions,
+				quarter_avoided: quarterAvoided,
+				version_avoided: versionAvoided ? versionAvoided : 0,
+				quarter_reserves: quarterReserves,
 			};
 			break;
 		case 'PORTFOLIO_ALIGNMENT':
