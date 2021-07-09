@@ -131,6 +131,7 @@ const data={
         'marketValue',
         'emission',
     ],
+    'URGENTEM_API':[]
 }
 
 export default data;

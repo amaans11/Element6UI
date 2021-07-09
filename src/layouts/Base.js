@@ -47,6 +47,7 @@ import ForwardLookingAnalysis from '../screens/ForwardLookingAnalysis';
 import StrandedAssetsAnalysis from '../screens/StrandedAssetsAnalysis';
 import UrgentemDownload from '../screens/UrgentemDownload';
 import GenerateReport from '../screens/GenerateReport';
+import UrgentemApi from '../screens/UrgentemApi';
 import NLP from '../screens/NLP';
 import UrgentemLanding from '../screens/UrgentemLanding';
 import { missingCoverageCells } from '../util/TableHeadConfig';
@@ -234,6 +235,7 @@ const MiniDrawer = ({ classes, history }) => {
 		await dispatch(setBenchmark(benchmark));
 	};
 	const setDefaultTab = async (e) => {
+		console.log("e..",e.name)
 		await dispatch(setTabValue(0));
 		await dispatch(setModule(e.name));
 		window.location.reload();
@@ -274,7 +276,7 @@ const MiniDrawer = ({ classes, history }) => {
 			NotificationManager.success(
 				'Your portfolio has been uploaded and is being processed. You will see your uploaded portfolio table updated once the processing has been completed.'
 			);
-			setDialog(true);
+			setDialog(false);
 		} catch (error) {
 			NotificationManager.error(error.message);
 		}
@@ -398,7 +400,9 @@ const MiniDrawer = ({ classes, history }) => {
 					<Route path="/urgentem-download" exact>
 						<UrgentemDownload />
 					</Route>
-					<Route path="/urgentem-api" exact />
+					<Route path="/urgentem-api" exact>
+						<UrgentemApi />
+					</Route>
 					<Route path="/generate-report" exact>
 						<GenerateReport />
 					</Route>

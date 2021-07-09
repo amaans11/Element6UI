@@ -15,28 +15,21 @@ function UrgentemDownload() {
 	const [ absoluteEmission, setAbsoluteEmission ] = useState(false);
 	const [ selectedPortfolio, setPortfolio ] = useState({});
 	const [ columns, setColumns ] = useState([]);
+	const [ portfolioList, setPortfolioList ] = useState([]);
 	const [ loading, setLoading ] = useState(false);
 
 	const isVisible = useSelector((state) => state.auth.isVisible);
 	const auth = useSelector((state) => state.auth);
 
-	const { downloadPortfolioList, downloadData } = auth;
-	const portfolioList = [];
+	const { downloadPortfolioList, downloadData, userInfo } = auth;
 
-	if (downloadPortfolioList && downloadPortfolioList.length > 0) {
-		downloadPortfolioList.map((portfolio) =>
-			portfolioList.push({
-				label: portfolio['PortfolioName'],
-				value: portfolio['Date']
-			})
-		);
-	}
+	const yearEmissions = userInfo.year && userInfo.year.emissions ? userInfo.year.emissions : '2019';
 
 	const onPortfolioChange = async (currentValue) => {
 		let portfolio = {};
-		if (downloadPortfolioList && downloadPortfolioList.length > 0) {
-			downloadPortfolioList.map((port) => {
-				if (port.PortfolioName === currentValue) {
+		if (portfolioList && portfolioList.length > 0) {
+			portfolioList.map((port) => {
+				if (port.label === currentValue) {
 					portfolio = { ...port };
 				}
 			});
@@ -57,9 +50,6 @@ function UrgentemDownload() {
 
 	const fetchDetails = async () => {
 		await dispatch(getDownloadPortfolios());
-		setPortfolio({
-			...downloadPortfolioList[0]
-		});
 	};
 	const getSelectedField = () => {
 		let value = '';
@@ -87,14 +77,10 @@ function UrgentemDownload() {
 		setLoading(true);
 		const selectedField = getSelectedField();
 		const data = {
-			client: auth.currentUser.client,
-			user: auth.currentUser.userName,
-			database: auth.currentUser.client + '_Portfolios',
-			collection: 'Portfolios_Latest',
-			portfolio: currentPortfolio.PortfolioName,
-			portfolio_date: currentPortfolio.Date,
+			portfolio_id: currentPortfolio.value,
+			version_portfolio: currentPortfolio.version,
 			field: selectedField,
-			year: currentPortfolio.DataYear
+			year: yearEmissions
 		};
 		await dispatch(getDownloadDetails(data));
 		setLoading(false);
@@ -124,8 +110,8 @@ function UrgentemDownload() {
 						sortable: true,
 						right: true,
 						wrap: true,
-                        style: {
-							height: 80,
+						style: {
+							height: 80
 						},
 						cell: (row) => {
 							let res = '';
@@ -150,16 +136,46 @@ function UrgentemDownload() {
 		}
 		setColumns(res);
 	};
+	const getPortfolioData = async() =>{
+		const portfolioList = [];
+			let currentPortfolio = {};
+			if (downloadPortfolioList && downloadPortfolioList.length > 0) {
+				downloadPortfolioList.map((portfolio, index) => {
+					if (index === 0) {
+						currentPortfolio = {
+							label: portfolio['name'],
+							value: portfolio['portfolio_id'],
+							version: portfolio['version']
+						};
+					}
+					portfolioList.push({
+						label: portfolio['name'],
+						value: portfolio['portfolio_id'],
+						version: portfolio['version']
+					});
+				});
+			}
+			setPortfolioList(portfolioList);
+			setPortfolio(currentPortfolio);
+			await getDownloadData(currentPortfolio); 
+	}
 	useEffect(
 		() => {
 			getTableColumns();
 		},
 		[ downloadData ]
 	);
+	useEffect(
+		() => {
+			getPortfolioData()
+		},
+		[ downloadPortfolioList ]
+	);
 
 	useEffect(() => {
 		fetchDetails();
 	}, []);
+	console.log("selectedPortfolio",selectedPortfolio)
 
 	return (
 		<React.Fragment>
@@ -177,7 +193,7 @@ function UrgentemDownload() {
 									data={portfolioList && portfolioList.length > 0 ? portfolioList : []}
 									handleChange={onPortfolioChange}
 									type="portfolio"
-									currentValue={selectedPortfolio.Date}
+									currentValue={selectedPortfolio}
 								/>
 							</Box>
 							<Grid container>
@@ -234,7 +250,7 @@ function UrgentemDownload() {
 									<FormControlLabel
 										control={
 											<Checkbox
-												checked={reportedEmissions}
+												checked={absoluteEmission}
 												onChange={() => {
 													setAbsoluteEmission(!absoluteEmission);
 												}}
@@ -268,12 +284,8 @@ function UrgentemDownload() {
 								</Grid>
 							</Grid>
 						</Box>
-						<DataTable
-							data={downloadData}
-							columns={columns}
-							tableHeading="DOWNLOAD"
-							isScroll={true}
-							loading={loading}
+						<DataTable data={downloadData} columns={columns} tableHeading="DOWNLOAD" isScroll={true}
+						loading={loading}
 						/>
 					</Box>
 				</Grid>

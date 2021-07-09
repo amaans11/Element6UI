@@ -40,7 +40,7 @@ const requestApi = async (dispatch, auth, flm) => {
 	let data = {};
 
 	switch (moduleName) {
-		case 'Emission':
+		case 'Emissions':
 			switch (tabValue) {
 				case 0:
 					data = getRequestData('PORTFOLIO_EMISSION', auth);
@@ -487,16 +487,15 @@ export const logoutUserSuccess = () => {
 export const getDownloadPortfolios = () => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
-		const user = getState().auth.currentUser.userName;
 
 		return axios
-			.get(`${actionTypes.API_URL}/downloads/user/${user}`, {
+			.get(`${actionTypes.API_URL}/portfolio/?is_benchmark=False`,{
 				headers: {
 					'client-key': clientKey
 				}
 			})
 			.then((result) => {
-				dispatch(getDownloadPortfoliosSuccess(result.data.Portfolios));
+				dispatch(getDownloadPortfoliosSuccess(result.data));
 			})
 			.catch((err) => {
 				const error = err.response.data.message;
@@ -517,7 +516,7 @@ export const getDownloadDetails = (data) => {
 		const clientKey = getState().auth.userInfo.client_key;
 
 		return axios
-			.post(`${actionTypes.API_URL}/download/platform`, data, {
+			.post(`${actionTypes.API_URL}/emissions/platform`, data, {
 				headers: {
 					'client-key': clientKey
 				}

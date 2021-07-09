@@ -13,7 +13,7 @@ const intialState = {
 	currentCurrency: '',
 	filterItem: {},
 	tabValue: 0,
-	moduleName: 'Emission',
+	moduleName: 'Emissions',
 	isVisible: true,
 	reweightFactor: 0,
 	loading: false,

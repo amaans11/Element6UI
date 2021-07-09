@@ -333,7 +333,7 @@ const portOptimizationCells = [
 		selector: 'tilted',
 		sortable: true,
 		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc123)}</div>
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.tilted)}</div>
 	}
 ];
 const riskContribCells = [

@@ -11,6 +11,8 @@ import {
 	CssBaseline,
 	TextField,
 	Dialog,
+	InputLabel,
+	DialogActions
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -374,18 +376,30 @@ const Settings = () => {
 				</Grid>
 			</Grid>
 			<Dialog onClose={closeEmailDialog} open={emailDialog}>
-				<Typography align="center" variant="h5">Change Email</Typography>
-				<Typography variant="p">
-					Please enter your new email.Note : The entered email must be different from the current email.
-				</Typography>
-				<Grid container>
-					<Grid item xs={4}>
-						<Typography> New EMail : </Typography>
+				<Box m={2}>
+					<Typography variant="h5">Change Email</Typography>
+				</Box>
+				<Box ml={2} mr={2}>
+					<Typography>Please enter your new email.</Typography>
+					<Typography style={{ color: '#1890ff', fontSize: 13 }}>
+						Note : The entered email must be different from the current email.
+					</Typography>
+				</Box>
+				<Box m={2}>
+					<Grid container>
+						<Grid item xs={4}>
+							<InputLabel style={{ paddingTop: 10 }}>Email Address: </InputLabel>
+						</Grid>
+						<Grid item xs={8}>
+							<TextField label="New Email" variant="outlined" />
+						</Grid>
 					</Grid>
-					<Grid item xs={8}>
-						<TextField label="New Email" variant="outlined" />
-					</Grid>
-				</Grid>
+				</Box>
+				<DialogActions>
+					<Button color="primary" variant="outlined">
+						Close
+					</Button>
+				</DialogActions>
 			</Dialog>
 		</Box>
 	);

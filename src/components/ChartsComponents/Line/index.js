@@ -59,7 +59,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 		plotOptions: {
 			series: {
 				marker: {
-					enabled: true
+					enabled: false
 				},
 			}
 		},

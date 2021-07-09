@@ -41,7 +41,6 @@ const customStyles = {
 	  },
 	  rows: {
 		style: {
-		  width:1600, 
 		  minHeight: 60, 
 		}
 	  },

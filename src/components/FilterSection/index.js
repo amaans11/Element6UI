@@ -22,8 +22,9 @@ export default function FilterGroup() {
 	const { targetScenario } = filterItem;
 	const getConfigs = () => {
 		let config = [];
+		console.log("module>>",moduleName)
 		switch (moduleName) {
-			case 'Emission':
+			case 'Emissions':
 				switch (tabValue) {
 					case 0:
 						config = filterConfig['PORTFOLIO_EMISSION'];
@@ -138,6 +139,9 @@ export default function FilterGroup() {
 						break;
 				}
 				break;
+				case 'Api':
+					config=filterConfig['URGENTEM_API']
+					break;
 			default:
 				switch (tabValue) {
 					case 0:
@@ -167,7 +171,7 @@ export default function FilterGroup() {
 	};
 	const getEmission = (tagName) => {
 		switch (moduleName) {
-			case 'Emission':
+			case 'Emissions':
 				switch (tagName) {
 					case 'Sc12':
 						return true;

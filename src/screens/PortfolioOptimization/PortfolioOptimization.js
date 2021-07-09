@@ -126,7 +126,6 @@ const PortfolioOptimization = () => {
 				}
 			});
 		}
-		console.log('tableData', tableData);
 		return tableData;
 	};
 	const getLineChartData = (response) => {

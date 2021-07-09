@@ -96,7 +96,6 @@ axios.interceptors.request.use(
 
 // Add a response interceptor
 axios.interceptors.response.use(async function(response) {
-	console.log("response>>",response)
 	if(response.config.url !== `${actionTypes.API_URL}/portfolio/`){
 		store.dispatch(setLoading(false));
 	}

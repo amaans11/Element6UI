@@ -1,7 +1,7 @@
 export const RouteData = [
   
     {
-      name: "Emission",
+      name: "Emissions",
       url: "/portfolio-footprint",
       icon: "GraphicEqIcon",
     },

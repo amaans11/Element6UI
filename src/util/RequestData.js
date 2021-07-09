@@ -583,8 +583,6 @@ const getRequestData = (type, auth) => {
 				footprint: footprintMetric
 			};
 			break;
-
-
 		default:
 			data = {};
 			break;
