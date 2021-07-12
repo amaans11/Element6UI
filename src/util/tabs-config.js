@@ -12,7 +12,7 @@ const carbonRiskTabs = [ 'Portfolio Carbon Risk' ];
 const strandedAssetTabs = [ 'Fossil-Fuel Reserves Footprint', 'Coal Power Analysis' ];
 const tempMetricTabs = [
 	'Portfolio Temperature Score',
-	'Company Level Anlysis',
+	'Company Level Analysis',
 	'Attribution',
 	'COntribution Analysis',
 	'Heatmap'

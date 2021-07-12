@@ -12,13 +12,16 @@ import {
 	TextField,
 	Dialog,
 	InputLabel,
-	DialogActions
+	DialogActions,
+	IconButton
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import { NotificationManager } from 'react-notifications';
+import CloseIcon from '@material-ui/icons/Close';
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
-import { updateCurrency } from '../../redux/actions/authActions';
+import { updateCurrency,changeEmail } from '../../redux/actions/authActions';
 
 const yearOptions = [ 2020, 2019, 2018 ];
 const quarterOptions = [ 'Q1', 'Q2', 'Q3', 'Q4' ];
@@ -75,6 +78,7 @@ const Settings = () => {
 	const [ quarter, setQuarter ] = useState('Q1');
 	const [ currency, setCurrency ] = useState('USD');
 	const [ emailDialog, setEmailDialog ] = useState(false);
+	const [ email, setEmail ] = useState('');
 
 	const dispatch = useDispatch();
 
@@ -89,7 +93,31 @@ const Settings = () => {
 		dispatch(updateCurrency(data));
 	};
 	const closeEmailDialog = () => {
-		setEmailDialog(true);
+		setEmailDialog(false);
+		setEmail('');
+	};
+	const changeEmailHandler = async() => {
+		const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+		if (!regex.test(email)) {
+			NotificationManager.error('Please enter a valid email');
+			return;
+		}
+		try{
+			const data={
+				email:email,
+				user:userInfo.userName,
+				client:userInfo.client
+			}
+			await dispatch(changeEmail(data))
+			NotificationManager.success("Email Updated successfully!")
+			setEmailDialog(false);
+			setEmail("")
+		}
+		catch(error){
+			NotificationManager.error(error)
+		}
+
 	};
 	return (
 		<Box>
@@ -376,8 +404,13 @@ const Settings = () => {
 				</Grid>
 			</Grid>
 			<Dialog onClose={closeEmailDialog} open={emailDialog}>
-				<Box m={2}>
-					<Typography variant="h5">Change Email</Typography>
+				<Box className="d-flex flex-space-between">
+					<Typography variant="h5" style={{ marginLeft: 20, marginTop: 10 }}>
+						Change Email
+					</Typography>
+					<IconButton onClick={closeEmailDialog}>
+						<CloseIcon />
+					</IconButton>
 				</Box>
 				<Box ml={2} mr={2}>
 					<Typography>Please enter your new email.</Typography>
@@ -391,13 +424,21 @@ const Settings = () => {
 							<InputLabel style={{ paddingTop: 10 }}>Email Address: </InputLabel>
 						</Grid>
 						<Grid item xs={8}>
-							<TextField label="New Email" variant="outlined" />
+							<TextField
+								label="Email Address"
+								variant="outlined"
+								size="small"
+								onChange={(e) => {
+									setEmail(e.target.value);
+								}}
+								value={email}
+							/>
 						</Grid>
 					</Grid>
 				</Box>
 				<DialogActions>
-					<Button color="primary" variant="outlined">
-						Close
+					<Button color="primary" variant="outlined" onClick={changeEmailHandler}>
+						Submit
 					</Button>
 				</DialogActions>
 			</Dialog>

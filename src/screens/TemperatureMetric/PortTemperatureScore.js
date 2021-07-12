@@ -135,10 +135,10 @@ const PortTemperatureScore = () => {
 								<CircularProgressbarWithChildren
 									value={targetData}
 									styles={buildStyles({
-										pathColor: '#1890ff'
+										pathColor: '#1E2732'
 									})}
 								>
-									<Typography className="default-font" color="primary" style={{fontSize:14}}>
+									<Typography className="default-font" style={{fontSize:14}}>
 										Companies With Target
 									</Typography>
 									<Typography className="default-font">{`${targetData}%`}</Typography>

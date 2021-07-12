@@ -576,4 +576,27 @@ export const uploadPortfolioSuccess = (res) => {
 export const uploadPortfolioFailed = (error) => {
 	return { type: actionTypes.UPLOAD_PORTFOLIO_FAILED, error };
 };
+export const changeEmail = (data) => {
+	return async (dispatch, getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+
+		return axios
+			.post(`${actionTypes.API_URL}/accounts/change_primary_email`, data, {
+				headers: {
+					'client-key': clientKey
+				}
+			})
+			.then((result) => {
+				dispatch(changeEmailSuccess(result.data.data));
+			})
+			.catch((err) => {
+				const error = err.response.data.message;
+				throw new Error(error)
+			});
+	};
+};
+
+export const changeEmailSuccess = (res) => {
+	return { type: actionTypes.CHANGE_EMAIL_SUCCESS, res };
+};
 /* eslint-disable */

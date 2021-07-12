@@ -13,7 +13,7 @@ const configs = {
 			HEADING: 'Avoided Emission'
 		},
 		SECTORAL_SCOPE3_HEATMAP: {
-			HEADING: 'Supply and Value Chain Scope 3 Materiality'
+			HEADING: 'Company Scope 3 Category Breakdown'
 		},
 		PORT_OPTIMIZATION: {
 			HEADING: ''
@@ -130,7 +130,7 @@ const configs = {
 		},
 		COAL_POWER: {
 			TITLE: 'Coal Power Analysis',
-			Y_AXIS_TITLE: 'MV'
+			Y_AXIS_TITLE: 'MW'
 		},
 		TEMP_SCORE: {
 			TITLE: ''

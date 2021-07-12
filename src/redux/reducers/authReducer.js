@@ -19,7 +19,8 @@ const intialState = {
 	loading: false,
 	downloadPortfolioList: [],
 	uploadPortfolioRes: {},
-	portfolioTableRes:[]
+	portfolioTableRes:[],
+	changeEmailRes:''
 };
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -164,6 +165,10 @@ export default function authReducer(state = { ...intialState }, action) {
 		case types.GET_UPLOAD_PORTFOLIO_LIST_FAILED:
 			return produce(state, (draft) => {
 				draft.portfolioTableRes = [];
+			});
+		case types.CHANGE_EMAIL_SUCCESS:
+			return produce(state, (draft) => {
+				draft.changeEmailRes = '';
 			});
 		default:
 			return state;
