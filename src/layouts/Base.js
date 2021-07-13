@@ -238,7 +238,6 @@ const MiniDrawer = ({ classes, history }) => {
 		console.log("e..",e.name)
 		await dispatch(setTabValue(0));
 		await dispatch(setModule(e.name));
-		window.location.reload();
 	};
 	const handleUploadPortfolio = () => {
 		setDialog(true);

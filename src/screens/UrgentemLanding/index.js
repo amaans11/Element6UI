@@ -109,29 +109,17 @@ function UrgentemLanding({ history }) {
       },
       {
         name: 'Fundamentals Data Coverage (%)',
-        selector: 'coverage_fundamentals[0].coverage',
+        selector: 'coverageFundamentals',
         sortable: true,
         right: true,
         wrap: true,
-        cell: (row) => (
-          <div>
-            {row['coverage_fundamentals'].length > 0 &&
-              row['coverage_fundamentals'][0]['coverage']}
-          </div>
-        ),
       },
       {
         name: 'Emissions Data Coverage (%)',
-        selector: 'coverage_emissions[0].coverage',
+        selector: 'coverageEmissions',
         sortable: true,
         right: true,
         wrap: true,
-        cell: (row) => (
-          <div>
-            {row['coverage_emissions'].length > 0 &&
-              row['coverage_emissions'][0]['coverage']}
-          </div>
-        ),
       },
       {
         name: 'Version',

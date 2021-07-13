@@ -15,6 +15,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 	}
     const currentTheme = localStorage.getItem('appTheme');
 
+	console.log("data1>",data)
 	const options = {
 		chart: {
 			type: 'bar'
@@ -57,12 +58,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 				}
 			}
 		},
-		tooltip: {
-			formatter: function() {
-			// eslint-disable-next-line
-			  return '<b>' + this.x + '</b>' + '<br/>' + '<b>' + 'Disclosure Rate' + ' : ' + '</b>'  + this.y  + ' ' + yAxis ;
-			}
-		  },
+		
 		plotOptions: {
 			series: {
 				stacking: 'normal',
@@ -86,6 +82,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
         },
 		series: data
 	};
+
 
 	return (
 		<div>

@@ -137,7 +137,7 @@ const configs = {
 		},
 		PORT_COMPANIES_SCORE: {
 			TITLE: '',
-			X_AXIS_TITLE: 'Number Of Companies'
+			X_AXIS_TITLE: ''
 		},
 		COMPANY_ANALYSIS: {
 			TITLE: 'Scenario Alignment',

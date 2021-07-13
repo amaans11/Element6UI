@@ -76,8 +76,9 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
 					style: {
 						fontWeight: 'normal',
-						shadow: false
-					}
+						shadow: false,
+					},
+
 				},
 				borderWidth: 1,
 				borderColor: currentTheme === 'dark' ? '#000000' : '#FFFFFF'

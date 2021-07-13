@@ -27,20 +27,14 @@ function PieChart({ data, chartKey, yAxisTitle, subtitle, loading, chartTitle })
                 valueSuffix: '%'
             }
         },
-        
-		plotOptions: {
+        plotOptions: {
             pie: {
+                size:'60%',
                 allowPointSelect: true,
                 cursor: 'pointer',
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b><br>{point.percentage:.1f} %',
-                    distance: -50,
-                    filter: {
-                        property: 'percentage',
-                        operator: '>',
-                        value: 4
-                    }
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
                 }
             }
         },

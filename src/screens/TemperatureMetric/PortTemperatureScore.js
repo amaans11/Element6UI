@@ -125,7 +125,7 @@ const PortTemperatureScore = () => {
 						</Grid>
 						<Grid item xs={5}>
 							<StackedBar
-								categories={'Number OF Companies'}
+								categories={['Number Of Companies']}
 								data={companyChartData}
 								chartKey="PORT_COMPANIES_SCORE"
 							/>

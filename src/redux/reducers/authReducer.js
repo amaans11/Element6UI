@@ -160,7 +160,45 @@ export default function authReducer(state = { ...intialState }, action) {
 			});
 		case types.GET_UPLOAD_PORTFOLIO_LIST_SUCCESS:
 			return produce(state, (draft) => {
-				draft.portfolioTableRes = action.res;
+				const userInfo = state.userInfo
+				const yearEmissions = userInfo.year && userInfo.year.emissions ? userInfo.year.emissions : '2019';
+				let result=[]
+				let response=action.res
+
+				console.log("yearEmissions",yearEmissions)
+
+				
+
+				if(response && response.length > 0){
+					response.map(res=>{
+						let coverageEmissions=0;
+						let coverageFundamentals=0;
+						if(res.coverage_emissions && res.coverage_emissions.length > 0){
+							res.coverage_emissions.map(emission=>{
+								if(emission.year == yearEmissions){
+									coverageEmissions= emission.coverage
+								}
+							})
+						}
+						if(res.coverage_fundamentals && res.coverage_fundamentals.length > 0){
+							res.coverage_fundamentals.map(fundamental=>{
+								if(fundamental.year == yearEmissions){
+									coverageFundamentals= fundamental.coverage
+								}
+							})
+						}
+						result.push({
+							name:res.name,
+							portfolio_id:res.portfolio_id,
+							version:res.version,
+							coverageEmissions:coverageEmissions,
+							coverageFundamentals:coverageFundamentals,
+							date_created:res.date_created
+						})
+					})
+				}
+				console.log("result",result)
+				draft.portfolioTableRes = result;
 			});
 		case types.GET_UPLOAD_PORTFOLIO_LIST_FAILED:
 			return produce(state, (draft) => {

@@ -103,10 +103,6 @@ const Disclosure = () => {
 
 			if (portData && portData.length > 0) {
 				portData.map((res, index) => {
-					console.log('res>>', res);
-					console.log('benchData>>', index);
-					console.log('benchData1>>', benchData);
-
 					let portValue = res['Proportion'];
 					let benchValue = benchData && benchData.length > 0 && benchData[index]['Proportion'];
 

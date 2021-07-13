@@ -393,7 +393,7 @@ export default function FilterGroup() {
 			getConfigs();
 		},
 
-		[ tabValue, targetScenario ]
+		[ tabValue, targetScenario,moduleName ]
 	);
 	const hideFilterSection = async () => {
 		await dispatch(setFilterVisibility(false));

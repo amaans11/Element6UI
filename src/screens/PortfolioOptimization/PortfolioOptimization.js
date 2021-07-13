@@ -87,7 +87,7 @@ const PortfolioOptimization = () => {
 					console.log('portKey', key);
 					tableData[count] = {
 						name: tableKey,
-						portfolio: data[key]
+						portfolio: parseFloat(data[key]).toFixed(2)
 					};
 					count++;
 				}
@@ -105,7 +105,7 @@ const PortfolioOptimization = () => {
 					console.log('benchKey', key);
 					tableData[count] = {
 						...tableData[count],
-						benchmark: data[key]
+						benchmark: parseFloat(data[key]).toFixed(2)
 					};
 					count++;
 				}
@@ -120,7 +120,8 @@ const PortfolioOptimization = () => {
 					console.log('tiltedKey', key);
 					tableData[count] = {
 						...tableData[count],
-						tilted: data[key]
+						tilted: parseFloat(data[key]).toFixed(2)
+						
 					};
 					count++;
 				}
