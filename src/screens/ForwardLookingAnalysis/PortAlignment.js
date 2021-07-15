@@ -72,7 +72,7 @@ const PortAlignment = () => {
         const data=alignmentData['Portfolio Alignment']
 
         if(data && Object.keys(data).length > 0){
-            Object.keys(data).map(year=>{
+            Object.keys(data).map((year)=>{
                 chartData[0]['data'].push(
                     [Date.UTC(year, '01', '01'),data[year]['TwoPointSeven']]
                 )

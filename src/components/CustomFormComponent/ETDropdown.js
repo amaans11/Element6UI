@@ -18,7 +18,6 @@ class ETDropdown extends Component {
 			this.setState({ selected: event.target.value });
 			this.props.onChange(event.target.value);
 		};
-		console.log('this is the labels and keys', this.state.values, 'Current', this.state.selected);
 		return (
 			<Box p={1}>
 				<div container style={{ display: 'flex' }}>

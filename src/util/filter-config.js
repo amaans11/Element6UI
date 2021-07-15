@@ -200,8 +200,6 @@
       grpname: "Alignment Year",
       grpKey:'alignmentYear',
       tagsList: [
-        { name: "2018", value: "2018", selected: false },
-        { name: "2019", value: "2019", selected: false },
         { name: "2020", value: "2020", selected: true },
         { name: "2030", value: "2030", selected: false },
         { name: "2040", value: "2040", selected: false },

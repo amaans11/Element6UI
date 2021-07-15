@@ -235,7 +235,6 @@ const MiniDrawer = ({ classes, history }) => {
 		await dispatch(setBenchmark(benchmark));
 	};
 	const setDefaultTab = async (e) => {
-		console.log("e..",e.name)
 		await dispatch(setTabValue(0));
 		await dispatch(setModule(e.name));
 	};

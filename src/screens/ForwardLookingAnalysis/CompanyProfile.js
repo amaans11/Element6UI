@@ -196,8 +196,6 @@ const CompanyProfile = () => {
 
 		await fetchDetails(companyId);
 	};
-    console.log("currentCompany",currentCompany)
-
 	return (
 		<React.Fragment>
 			{loading ? (

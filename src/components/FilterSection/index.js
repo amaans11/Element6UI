@@ -22,7 +22,6 @@ export default function FilterGroup() {
 	const { targetScenario } = filterItem;
 	const getConfigs = () => {
 		let config = [];
-		console.log("module>>",moduleName)
 		switch (moduleName) {
 			case 'Emissions':
 				switch (tabValue) {

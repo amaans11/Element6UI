@@ -102,7 +102,6 @@ export default function authReducer(state = { ...intialState }, action) {
 				draft.currentBenchmark = action.res;
 			});
 		case types.SET_FILTER_ITEM:
-			console.log('test');
 			return produce(state, (draft) => {
 				draft['filterItem'][action.res.key] = action.res.value;
 			});
@@ -164,11 +163,7 @@ export default function authReducer(state = { ...intialState }, action) {
 				const yearEmissions = userInfo.year && userInfo.year.emissions ? userInfo.year.emissions : '2019';
 				let result=[]
 				let response=action.res
-
-				console.log("yearEmissions",yearEmissions)
-
 				
-
 				if(response && response.length > 0){
 					response.map(res=>{
 						let coverageEmissions=0;
@@ -197,7 +192,6 @@ export default function authReducer(state = { ...intialState }, action) {
 						})
 					})
 				}
-				console.log("result",result)
 				draft.portfolioTableRes = result;
 			});
 		case types.GET_UPLOAD_PORTFOLIO_LIST_FAILED:

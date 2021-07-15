@@ -66,7 +66,6 @@ class MuiDataTable extends Component {
         }
     })
     render() {
-        console.log("rows>>>",this.props.rows)
         var columns = this.props.columns[0].map(x => {
 
             return ({
@@ -88,10 +87,9 @@ class MuiDataTable extends Component {
     })
 
         let data=this.props.rows.map(x=>{
-             var rowItems = Object.values(x)
+             let rowItems = Object.values(x)
             return rowItems
         })
-        console.log("data>>>",data)
         if (this.props.custom) {
             return (
                 <MuiThemeProvider theme={this.getMuiTheme()}>

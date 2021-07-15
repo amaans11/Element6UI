@@ -11,11 +11,9 @@ export const getPortfolioEmission = (data) => {
 				}
 			})
 			.then(result => {
-                console.log("result",result)
                 dispatch(getPortfolioEmissionSuccess(result.data))
 			})
             .catch(err=>{
-                console.log("err>>",err)
                 const error=err.response && err.response.data.message
                 dispatch(getPortfolioEmissionFailed(error))
             })

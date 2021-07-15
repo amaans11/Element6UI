@@ -58,11 +58,15 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 		},
 		plotOptions: {
 			series: {
+				label: {
+					connectorAllowed: false
+				},
 				marker: {
 					enabled: false
 				},
 			}
 		},
+		
 		series: data
 	};
 

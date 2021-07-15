@@ -4,7 +4,6 @@ import axios from 'axios';
 export const getFossilFuelData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
-        console.log("test1")
 		return axios
 			.post(`${actionTypes.API_URL}/stranded_assets/fossil_fuel_footprint`, data, {
 				headers: {

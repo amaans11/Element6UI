@@ -15,7 +15,6 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 	}
     const currentTheme = localStorage.getItem('appTheme');
 
-	console.log("data1>",data)
 	const options = {
 		chart: {
 			type: 'bar'

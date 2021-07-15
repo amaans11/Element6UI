@@ -53,8 +53,6 @@ export default function footprintReducer(state = intialState, action) {
 			});
 		case types.GET_DISCLOSURE_FAILED:
 			return produce(state, (draft) => {
-				console.log('action1>>', action);
-
 				if (action.portType === 'portfolio') {
 					draft.portDisclosure.data = {};
 					draft.portDisclosure.error = action.error;

@@ -45,7 +45,6 @@ const FilterComponent = ({
   handleFilterValue,
   exportCsv
 }) => {
-  console.log("selectedFilterOption1", selectedFilterOption);
   const classes = useStyles();
   return (
     <Grid container className={classes.actionItem}>
@@ -126,8 +125,6 @@ class ReactDataTable extends React.Component {
     const filename = "export113.csv";
 
     if (!csv.match(/^data:text\/csv/i)) {
-      console.log("test1");
-
       csv = `data:text/csv;charset=utf-8,${csv}`;
     }
 
