@@ -84,7 +84,6 @@ const PortfolioOptimization = () => {
 			Object.keys(data).map((key) => {
 				const tableKey = getTableKey(key);
 				if (!key.includes('3Y')) {
-					console.log('portKey', key);
 					tableData[count] = {
 						name: tableKey,
 						portfolio: parseFloat(data[key]).toFixed(2)

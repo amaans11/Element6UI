@@ -37,9 +37,6 @@ const Disclosure = () => {
 		let benchValues = [];
 		let categories = [];
 
-		console.log('portDisclosure', portDisclosure);
-		console.log('benchDisclosure', benchDisclosure);
-
 		if (portDisclosure['data'] && benchDisclosure['data']) {
 			const portData =
 				portDisclosure && Object.keys(portDisclosure).length > 0 ? portDisclosure['data']['Scope3_disc'] : [];

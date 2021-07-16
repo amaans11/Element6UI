@@ -17,8 +17,6 @@ function Scope3Materiality() {
 		await dispatch(setTabValue(newValue))
 		setValue(newValue);
 	};
-    console.log("isVisible",isVisible)
-
 	return (
 		<div className="tabs-section">
 			<Grid container>

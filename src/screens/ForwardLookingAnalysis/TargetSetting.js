@@ -85,9 +85,6 @@ const TargetSetting = () => {
 		setTableData(tableData);
 	};
 
-    console.log("chartData//",chartData)
-    console.log("tableData//",tableData)
-
 	return (
 		<React.Fragment>
 			{loading ? (
