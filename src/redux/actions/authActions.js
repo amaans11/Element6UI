@@ -366,7 +366,7 @@ export const updateCurrency = (data) => {
 						...result.data,
 						currency
 					};
-					dispatch(updateCurrencySuccess(res));
+					dispatch(updateCurrencySuccess(data));
 				} else {
 					dispatch(updateCurrencyFailed({ currency }));
 				}

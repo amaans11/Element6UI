@@ -93,6 +93,13 @@ export default function authReducer(state = { ...intialState }, action) {
 			return produce(state, (draft) => {
 				draft.userInfo = action.res;
 			});
+		case types.UPDATE_CURRENCY_SUCCESS:
+			return produce(state, (draft) => {
+				console.log("action>>",action.res)
+				draft.currentYear = action.res.year;
+				draft.currentQuarter = action.res.quarter;
+				draft.currentCurrency = action.res.currency;
+			});
 		case types.SET_PORTFOLIO:
 			return produce(state, (draft) => {
 				draft.currentPortfolio = action.res;

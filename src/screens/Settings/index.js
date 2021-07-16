@@ -17,6 +17,7 @@ import {
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
+import {get} from 'lodash'
 import { NotificationManager } from 'react-notifications';
 import CloseIcon from '@material-ui/icons/Close';
 import Header from '../../components/Header';
@@ -74,15 +75,21 @@ const useStyles = makeStyles(() => ({
 }));
 const Settings = () => {
 	const classes = useStyles();
-	const [ year, setYear ] = useState(2020);
-	const [ quarter, setQuarter ] = useState('Q1');
-	const [ currency, setCurrency ] = useState('USD');
+	const dispatch = useDispatch();
+
+	const auth = useSelector((state) => state.auth);
+	const {userInfo}=auth
+	
+	const currentYear = get(auth,'currentYear',2020)
+	const currentCurrency = get(auth,'currentCurrency','USD')
+	const currentQuarter = get(auth,'currentQuarter','Q1')
+
+	const [ year, setYear ] = useState(currentYear);
+	const [ quarter, setQuarter ] = useState(currentQuarter);
+	const [ currency, setCurrency ] = useState(currentCurrency);
 	const [ emailDialog, setEmailDialog ] = useState(false);
 	const [ email, setEmail ] = useState('');
 
-	const dispatch = useDispatch();
-
-	const userInfo = useSelector((state) => state.auth.userInfo);
 
 	const updateCurrencyHandler = () => {
 		const data = {
