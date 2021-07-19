@@ -62,7 +62,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 					connectorAllowed: false
 				},
 				marker: {
-					enabled: false
+					enabled: true
 				},
 			}
 		},

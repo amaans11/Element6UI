@@ -599,4 +599,45 @@ export const changeEmail = (data) => {
 export const changeEmailSuccess = (res) => {
 	return { type: actionTypes.CHANGE_EMAIL_SUCCESS, res };
 };
+export const changePassword = (data) => {
+	return async (dispatch, getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+
+		return axios
+			.post(`${actionTypes.API_URL}/accounts/change_password`, data, {
+				headers: {
+					'client-key': clientKey
+				}
+			})
+			.then((result) => {
+				// console.log("result>>",result)
+			})
+			.catch((err) => {
+				const error = err.response.data.message;
+				throw new Error(error)
+			});
+	};
+};
+export const deletePortfolioRequest = (portfolio) => {
+	return async (dispatch, getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+
+		return axios
+			.delete(`${actionTypes.API_URL}/portfolio/${portfolio}/`, {
+				headers: {
+					'client-key': clientKey
+				}
+			})
+			.then((result) => {
+				// console.log("result>>",result)
+			})
+			.catch((err) => {
+				const error = err.response.data.message;
+				console.log("error>>",error)
+				throw new Error(error)
+			});
+	};
+};
+
+
 /* eslint-disable */

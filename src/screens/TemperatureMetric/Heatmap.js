@@ -88,6 +88,7 @@ const Scope3Heatmap = () => {
 						yAxisCategories={yCategories}
 						data={chartData}
 						xAxisCategories={xCategories}
+						isSectoral={true}
 					/>
 				</React.Fragment>
 			)}

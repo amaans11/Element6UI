@@ -55,7 +55,7 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 			useHTML: true,
 			headerFormat: '<table>',
 			pointFormat:
-				'<tr><th colspan="2"><h3>{point.company}</h3></th></tr>' +
+				'<tr><th colspan="2"><h3>{this.company}</h3></th></tr>' +
 				'<tr><th>' +
 				xAxisLabel +
 				':</th><td>{point.x}</td></tr>' +

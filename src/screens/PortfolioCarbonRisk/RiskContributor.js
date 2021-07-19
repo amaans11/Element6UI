@@ -82,12 +82,12 @@ const RiskContributor = () => {
 						? res['ContributionAnnualised1Y']
 						: year === '3Y' ? res['ContributionAnnualised3Y'] : res['ContributionAnnualised5Y'];
 				const zVal = intensityScope === 'Sc12' ? res['ContribSc12'] : res['ContribSc123'];
-
+				const company =res['Company']
 				chartData = [
 					...chartData,
 					{
 						name: res['SASB_Sector'],
-						data: [ [ xVal, yVal, zVal ] ]
+						data: [ [ xVal, yVal, zVal,company ] ]
 					}
 				];
 			}

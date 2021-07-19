@@ -330,6 +330,7 @@ const MiniDrawer = ({ classes, history }) => {
 						>
 							Upload Portfolio
 						</Button>
+						
 					</div>
 				) : (
 					<StyleRoot>

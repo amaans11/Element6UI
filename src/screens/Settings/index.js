@@ -22,7 +22,7 @@ import { NotificationManager } from 'react-notifications';
 import CloseIcon from '@material-ui/icons/Close';
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
-import { updateCurrency,changeEmail } from '../../redux/actions/authActions';
+import { updateCurrency,changeEmail,changePassword } from '../../redux/actions/authActions';
 
 const yearOptions = [ 2020, 2019, 2018 ];
 const quarterOptions = [ 'Q1', 'Q2', 'Q3', 'Q4' ];
@@ -79,17 +79,28 @@ const Settings = () => {
 
 	const auth = useSelector((state) => state.auth);
 	const {userInfo}=auth
-	
+
 	const currentYear = get(auth,'currentYear',2020)
 	const currentCurrency = get(auth,'currentCurrency','USD')
 	const currentQuarter = get(auth,'currentQuarter','Q1')
 
+	const emissionYear = get(userInfo.year,'emissions','2019')
+	const emissionQuarter = get(userInfo.quarter,'emissions','Q1')
+	const emissionVersion = get(userInfo.version,'emissions',11)
+
+	const fundamentalYear = get(userInfo.year,'fundamentals','2019')
+	const fundamentalQuarter = get(userInfo.quarter,'fundamentals','Q1')
+	const fundamentalVersion = get(userInfo.version,'fundamentals','11')
+
+
 	const [ year, setYear ] = useState(currentYear);
 	const [ quarter, setQuarter ] = useState(currentQuarter);
 	const [ currency, setCurrency ] = useState(currentCurrency);
+
 	const [ emailDialog, setEmailDialog ] = useState(false);
 	const [ email, setEmail ] = useState('');
-
+	const [ passwordDialog, setPasswordDialog ] = useState(false);
+	const [ password, setPassword ] = useState('');
 
 	const updateCurrencyHandler = () => {
 		const data = {
@@ -103,6 +114,10 @@ const Settings = () => {
 		setEmailDialog(false);
 		setEmail('');
 	};
+	const closePasswordDialog=()=>{
+		setPasswordDialog(false);
+		setPassword('');
+	}
 	const changeEmailHandler = async() => {
 		const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -110,6 +125,23 @@ const Settings = () => {
 			NotificationManager.error('Please enter a valid email');
 			return;
 		}
+		try{
+			const data={
+				password:password,
+				user:userInfo.userName,
+				client:userInfo.client
+			}
+			await dispatch(changePassword(data))
+			NotificationManager.success("Password Updated successfully!")
+			setPasswordDialog(false);
+			setPassword("")
+		}
+		catch(error){
+			NotificationManager.error(error)
+		}
+
+	};
+	const changePasswordHandler=async()=>{
 		try{
 			const data={
 				email:email,
@@ -124,8 +156,7 @@ const Settings = () => {
 		catch(error){
 			NotificationManager.error(error)
 		}
-
-	};
+	}
 	return (
 		<Box>
 			<CssBaseline />
@@ -188,7 +219,12 @@ const Settings = () => {
 								<Typography className={classes.contentText}>********</Typography>
 							</Grid>
 							<Grid item xs={3}>
-								<Button color="primary" variant="outlined" className={classes.btn}>
+								<Button color="primary" variant="outlined" className={classes.btn}
+								onClick={() => {
+									setPasswordDialog(true);
+									setPassword("")
+								}}
+								>
 									Change Password
 								</Button>
 							</Grid>
@@ -303,9 +339,9 @@ const Settings = () => {
 							>
 								Emission Settings
 							</Typography>
-							<Button variant="outlined" color="primary" style={{ marginBottom: 10 }}>
+							{/* <Button variant="outlined" color="primary" style={{ marginBottom: 10 }}>
 								Update
-							</Button>
+							</Button> */}
 						</Box>
 						<Grid container spacing={3}>
 							<Grid item xs={4}>
@@ -313,7 +349,7 @@ const Settings = () => {
 							</Grid>
 							<Grid item xs={6}>
 								<FormControl variant="outlined">
-									<Select placeholder="Select year" value={year} className={classes.dropdown}>
+									<Select placeholder="Select year" value={emissionYear} className={classes.dropdown} disabled>
 										{yearOptions.map((year) => <MenuItem value={year}>{year}</MenuItem>)}
 									</Select>
 								</FormControl>
@@ -325,7 +361,7 @@ const Settings = () => {
 							</Grid>
 							<Grid item xs={6}>
 								<FormControl variant="outlined">
-									<Select placeholder="Select quarter" value={quarter} className={classes.dropdown}>
+									<Select placeholder="Select quarter" value={emissionQuarter} className={classes.dropdown} disabled>
 										{quarterOptions.map((quarter) => (
 											<MenuItem value={quarter}>{quarter}</MenuItem>
 										))}
@@ -339,9 +375,9 @@ const Settings = () => {
 							</Grid>
 							<Grid item xs={6}>
 								<FormControl variant="outlined">
-									<Select placeholder="Select quarter" value="1" className={classes.dropdown}>
-										<MenuItem value="1">1</MenuItem>
-										<MenuItem value="2">2</MenuItem>
+									<Select placeholder="Select quarter" value={emissionVersion} className={classes.dropdown} disabled>
+										<MenuItem value="11">11</MenuItem>
+										<MenuItem value="12">12</MenuItem>
 									</Select>
 								</FormControl>
 							</Grid>
@@ -364,9 +400,9 @@ const Settings = () => {
 							>
 								Fundamental Settings
 							</Typography>
-							<Button variant="outlined" color="primary" style={{ marginBottom: 10 }}>
+							{/* <Button variant="outlined" color="primary" style={{ marginBottom: 10 }}>
 								Update
-							</Button>
+							</Button> */}
 						</Box>
 						<Grid container spacing={3}>
 							<Grid item xs={4}>
@@ -374,7 +410,7 @@ const Settings = () => {
 							</Grid>
 							<Grid item xs={6}>
 								<FormControl variant="outlined">
-									<Select placeholder="Select year" value={year} className={classes.dropdown}>
+									<Select placeholder="Select year" value={fundamentalYear} className={classes.dropdown} disabled>
 										{yearOptions.map((year) => <MenuItem value={year}>{year}</MenuItem>)}
 									</Select>
 								</FormControl>
@@ -386,7 +422,7 @@ const Settings = () => {
 							</Grid>
 							<Grid item xs={6}>
 								<FormControl variant="outlined">
-									<Select placeholder="Select quarter" value={quarter} className={classes.dropdown}>
+									<Select placeholder="Select quarter" value={fundamentalQuarter} className={classes.dropdown} disabled>
 										{quarterOptions.map((quarter) => (
 											<MenuItem value={quarter}>{quarter}</MenuItem>
 										))}
@@ -400,9 +436,9 @@ const Settings = () => {
 							</Grid>
 							<Grid item xs={6}>
 								<FormControl variant="outlined">
-									<Select placeholder="Select quarter" value="1" className={classes.dropdown}>
-										<MenuItem value="1">1</MenuItem>
-										<MenuItem value="2">2</MenuItem>
+									<Select placeholder="Select quarter" value={emissionVersion} className={classes.dropdown} disabled>
+										<MenuItem value="11">11</MenuItem>
+										<MenuItem value="12">12</MenuItem>
 									</Select>
 								</FormControl>
 							</Grid>
@@ -445,6 +481,43 @@ const Settings = () => {
 				</Box>
 				<DialogActions>
 					<Button color="primary" variant="outlined" onClick={changeEmailHandler}>
+						Submit
+					</Button>
+				</DialogActions>
+			</Dialog>
+			<Dialog onClose={closePasswordDialog} open={passwordDialog}>
+				<Box className="d-flex flex-space-between">
+					<Typography variant="h5" style={{ marginLeft: 20, marginTop: 10 }}>
+						Change Password
+					</Typography>
+					<IconButton onClick={closePasswordDialog}>
+						<CloseIcon />
+					</IconButton>
+				</Box>
+				<Box ml={2} mr={2}>
+					<Typography>Please enter your new password.</Typography>
+				</Box>
+				<Box m={2}>
+					<Grid container>
+						<Grid item xs={4}>
+							<InputLabel style={{ paddingTop: 10 }}>Password: </InputLabel>
+						</Grid>
+						<Grid item xs={8}>
+							<TextField
+								label="Password"
+								type="password"
+								variant="outlined"
+								size="small"
+								onChange={(e) => {
+									setPassword(e.target.value);
+								}}
+								value={password}
+							/>
+						</Grid>
+					</Grid>
+				</Box>
+				<DialogActions>
+					<Button color="primary" variant="outlined" onClick={changePasswordHandler}>
 						Submit
 					</Button>
 				</DialogActions>
