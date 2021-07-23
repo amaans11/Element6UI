@@ -69,7 +69,7 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
         },
         series: {
             dataLabels: {
-                enabled: true,
+                enabled: false,
                 color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
                 style: {
                     fontWeight: 'normal',

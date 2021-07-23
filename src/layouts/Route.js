@@ -10,11 +10,11 @@ export const RouteData = [
       url: "/scope3-materiality",
       icon: "VerticalSplitIcon",
     },
-    {
-      name: "NLP",
-      url: "/nlp",
-      icon: "FolderIcon",
-    },
+    // {
+    //   name: "NLP",
+    //   url: "/nlp",
+    //   icon: "FolderIcon",
+    // },
     {
       name: "Optimization",
       url: "/portfolio-optimization",

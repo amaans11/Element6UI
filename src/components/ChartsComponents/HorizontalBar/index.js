@@ -67,7 +67,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 		plotOptions: {
 			bar: {
 				dataLabels: {
-					enabled: true
+					enabled: false
 				}
 			},
 			series: {

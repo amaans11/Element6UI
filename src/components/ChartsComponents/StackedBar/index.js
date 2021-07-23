@@ -62,7 +62,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
 			series: {
 				stacking: 'normal',
 				dataLabels: {
-					enabled: true,
+					enabled: false,
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
 					style: {
 						fontWeight: 'normal',

@@ -32,9 +32,9 @@ function PortfolioFootprint() {
 						<Tabs
 							value={value}
 							onChange={handleChange}
-							indicatorColor="primary"
-							textColor="primary"
+							indicatorColor="default"
 							variant="fullWidth"
+							inkBarStyle={{background: 'blue'}}
 						>
 							{footprintTabs && footprintTabs.map((e, i) => <Tab label={e} {...e} />)}
 						</Tabs>

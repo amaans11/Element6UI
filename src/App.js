@@ -35,7 +35,7 @@ axios.defaults.headers.get['x-api-key'] = '_yF0FT6hgogJxSF1G0sAl3d9d4pQwxhuiRSS8
 const currentTheme = localStorage.getItem('appTheme') || 'basic';
 
 Highcharts.theme = {
-	colors: [ '#1E2732', '#F7DC81', '#7d7551', '#b3a266','#cdb870','#9ACD32','#40E0D0','#708090','#808080' ],
+	colors: [ '#1E2732', '#F7DC81', '#7d7551', '#31d6c9','#bbbfbf','#9ACD32','#40E0D0','#708090','#808080' ],
 	chart: {
 		backgroundColor: currentTheme ==='dark' ? '#303030' : '#f5f5f5'
 	},

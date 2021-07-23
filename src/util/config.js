@@ -4,7 +4,7 @@ const configs = {
 			HEADING: 'Uploaded Portfolio'
 		},
 		PORTFOLIO_INTENSITY: {
-			HEADING: 'Portfolio Intensity'
+			HEADING: 'Portfolio Footprint'
 		},
 		SOVEREIGN_FOOTPRINT: {
 			HEADING: 'Sovereign Footprint'
@@ -60,7 +60,7 @@ const configs = {
 	},
 	CHART: {
 		PORTFOLIO_INTENSITY: {
-			TITLE: 'Portfolio Intensity',
+			TITLE: 'Portfolio Footprint',
 		},
 		SECTOR_INTENSITY: {
 			TITLE: 'Sector Intensity'
