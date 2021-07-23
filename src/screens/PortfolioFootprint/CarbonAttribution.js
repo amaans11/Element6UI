@@ -42,8 +42,6 @@ const CarbonAttribution = () => {
 				})
 			});
 		}
-		console.log("chartData>>",chartData)
-
 		setChartData(chartData);
 		setCategories(categories);
 	};

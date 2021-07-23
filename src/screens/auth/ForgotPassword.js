@@ -3,7 +3,6 @@ import { Stepper, Step, StepLabel, StepContent, TextField, Grid, Button } from '
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { makeStyles } from '@material-ui/core/styles';
 
-
 const useStyles = makeStyles(() => ({
 	infoText:{
         fontSize: 12,

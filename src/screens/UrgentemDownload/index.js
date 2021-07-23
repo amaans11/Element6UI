@@ -136,29 +136,29 @@ function UrgentemDownload() {
 		}
 		setColumns(res);
 	};
-	const getPortfolioData = async() =>{
+	const getPortfolioData = async () => {
 		const portfolioList = [];
-			let currentPortfolio = {};
-			if (downloadPortfolioList && downloadPortfolioList.length > 0) {
-				downloadPortfolioList.map((portfolio, index) => {
-					if (index === 0) {
-						currentPortfolio = {
-							label: portfolio['name'],
-							value: portfolio['portfolio_id'],
-							version: portfolio['version']
-						};
-					}
-					portfolioList.push({
+		let currentPortfolio = {};
+		if (downloadPortfolioList && downloadPortfolioList.length > 0) {
+			downloadPortfolioList.map((portfolio, index) => {
+				if (index === 0) {
+					currentPortfolio = {
 						label: portfolio['name'],
 						value: portfolio['portfolio_id'],
 						version: portfolio['version']
-					});
+					};
+				}
+				portfolioList.push({
+					label: portfolio['name'],
+					value: portfolio['portfolio_id'],
+					version: portfolio['version']
 				});
-			}
-			setPortfolioList(portfolioList);
-			setPortfolio(currentPortfolio);
-			await getDownloadData(currentPortfolio); 
-	}
+			});
+		}
+		setPortfolioList(portfolioList);
+		setPortfolio(currentPortfolio);
+		await getDownloadData(currentPortfolio);
+	};
 	useEffect(
 		() => {
 			getTableColumns();
@@ -167,7 +167,7 @@ function UrgentemDownload() {
 	);
 	useEffect(
 		() => {
-			getPortfolioData()
+			getPortfolioData();
 		},
 		[ downloadPortfolioList ]
 	);
@@ -175,8 +175,6 @@ function UrgentemDownload() {
 	useEffect(() => {
 		fetchDetails();
 	}, []);
-	console.log("selectedPortfolio",selectedPortfolio)
-
 	return (
 		<React.Fragment>
 			<Grid container>
@@ -222,7 +220,6 @@ function UrgentemDownload() {
 										}
 										label="Average Intensity"
 									/>
-
 									<FormControlLabel
 										control={
 											<Checkbox
@@ -259,15 +256,8 @@ function UrgentemDownload() {
 										}
 										label="Absolute Emissions Average"
 									/>
-
 									<FormControlLabel
-										control={
-											<Checkbox
-												// checked={selectAll}
-												onChange={handleSelectAll}
-												value="selectAll"
-											/>
-										}
+										control={<Checkbox onChange={handleSelectAll} value="selectAll" />}
 										label="Selected All"
 									/>
 								</Grid>
@@ -284,8 +274,12 @@ function UrgentemDownload() {
 								</Grid>
 							</Grid>
 						</Box>
-						<DataTable data={downloadData} columns={columns} tableHeading="DOWNLOAD" isScroll={true}
-						loading={loading}
+						<DataTable
+							data={downloadData}
+							columns={columns}
+							tableHeading="DOWNLOAD"
+							isScroll={true}
+							loading={loading}
 						/>
 					</Box>
 				</Grid>

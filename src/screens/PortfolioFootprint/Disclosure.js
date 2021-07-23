@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, CircularProgress, Typography } from '@material-ui/core';
 import {some} from 'lodash'
 import { getDisclosureData } from '../../redux/actions/footprintActions';
-import { map } from 'lodash';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 import StackedBar from '../../components/ChartsComponents/StackedBar';
 import getRequestData from '../../util/RequestData';

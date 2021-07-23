@@ -20,7 +20,6 @@ import {
 import moment from 'moment';
 import { NotificationManager } from 'react-notifications';
 import {Link} from 'react-router-dom'
-import * as actionTypes from '../../redux/actionTypes';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import GraphicEqIcon from '@material-ui/icons/GraphicEq';
@@ -33,6 +32,7 @@ import ViewWeekIcon from '@material-ui/icons/ViewWeek';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import CodeIcon from '@material-ui/icons/Code';
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
+import * as actionTypes from '../../redux/actionTypes';
 import configs from '../../util/landing-page.config';
 import DataTable from '../../components/Table/DataTable';
 import { getUploadPortfolioList,deletePortfolioRequest } from '../../redux/actions/authActions';

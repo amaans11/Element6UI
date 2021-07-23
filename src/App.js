@@ -17,6 +17,8 @@ import * as actionTypes from './redux/actionTypes';
 
 // React notifications css import
 import 'react-notifications/lib/notifications.css';
+
+// Highcharts import 
 require('highcharts/modules/exporting')(Highcharts);
 require('highcharts/modules/heatmap')(Highcharts);
 require('highcharts/modules/export-data')(Highcharts);
@@ -25,6 +27,7 @@ more(Highcharts);
 
 const { store, persistor } = configureStore();
 
+// axios headers for all the APIs
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['x-api-key'] = '_yF0FT6hgogJxSF1G0sAl3d9d4pQwxhuiRSS8FxAWb8';
 axios.defaults.headers.get['x-api-key'] = '_yF0FT6hgogJxSF1G0sAl3d9d4pQwxhuiRSS8FxAWb8';
@@ -89,7 +92,7 @@ axios.interceptors.request.use(
 		return config;
 	},
 	function(error) {
-		// Do something with request error
+		// Do something with  error
 		return Promise.reject(error);
 	}
 );

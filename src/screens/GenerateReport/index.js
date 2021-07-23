@@ -13,9 +13,9 @@ import {
 	Select
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { NotificationManager } from 'react-notifications';
 import { generateReport } from '../../redux/actions/authActions';
 import getRequestData from '../../util/RequestData';
-import { NotificationManager } from 'react-notifications';
 
 const useStyles = makeStyles(() => ({
 	description: {

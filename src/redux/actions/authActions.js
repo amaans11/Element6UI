@@ -610,7 +610,6 @@ export const changePassword = (data) => {
 				}
 			})
 			.then((result) => {
-				// console.log("result>>",result)
 			})
 			.catch((err) => {
 				const error = err.response.data.message;
@@ -633,7 +632,6 @@ export const deletePortfolioRequest = (portfolio) => {
 			})
 			.catch((err) => {
 				const error = err.response.data.message;
-				console.log("error>>",error)
 				throw new Error(error)
 			});
 	};

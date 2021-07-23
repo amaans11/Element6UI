@@ -19,7 +19,6 @@ const Scope3Heatmap = () => {
 	const { loading, filterItem } = auth;
 	const { scoreType, emission } = filterItem;
 
-	console.log('heatmapData', heatmapData);
 	const fetchDetails = async () => {
 		const data = getRequestData('TEMP_HEATMAP', auth);
 		await dispatch(getHeatmapData(data));

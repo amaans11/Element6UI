@@ -38,7 +38,6 @@ export const getCompanyAnalysisData = (data) => {
 				}
 			})
 			.then(result => {
-				console.log("result>>",result)
                 dispatch(getCompanyAnalysisDataSuccess(result.data))
 			})
             .catch(err=>{

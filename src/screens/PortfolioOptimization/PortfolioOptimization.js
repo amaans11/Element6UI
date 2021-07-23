@@ -101,7 +101,6 @@ const PortfolioOptimization = () => {
 			count = 0;
 			Object.keys(data).map((key) => {
 				if (!key.includes('3Y')) {
-					console.log('benchKey', key);
 					tableData[count] = {
 						...tableData[count],
 						benchmark: parseFloat(data[key]).toFixed(2)
@@ -116,7 +115,6 @@ const PortfolioOptimization = () => {
 
 			Object.keys(data).map((key) => {
 				if (!key.includes('3Y')) {
-					console.log('tiltedKey', key);
 					tableData[count] = {
 						...tableData[count],
 						tilted: parseFloat(data[key]).toFixed(2)
@@ -290,7 +288,6 @@ const PortfolioOptimization = () => {
 		},
 		[ optimizationData ]
 	);
-	console.log("loading>>",loading)
 	return (
 		<React.Fragment>
 			{loading ? <CircularProgress /> : optimizationData.error ? (
@@ -308,7 +305,6 @@ const PortfolioOptimization = () => {
 								min={0}
 								step={0.01}
 								style={{width:'80%'}}
-								// getAriaValueText={reweightFactor}
 								onChange={handleReweightFactor}
 							/>
 						</Grid>

@@ -86,7 +86,6 @@ const Scope3Heatmap = () => {
 	};
 
 	const getChartData = (matType) => {
-		console.log('matType', matType);
 		const { emission, sector } = filterItem;
 
 		let chartData = [];
