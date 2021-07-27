@@ -5,6 +5,7 @@ import CONFIG from '../../../util/config';
 
 function PieChart({ data, chartKey, yAxisTitle, subtitle, loading, chartTitle }) {
 	const title = CONFIG['CHART'][chartKey]['TITLE'];
+	const currentTheme = localStorage.getItem('appTheme');
 
 	const options = {
 		chart: {
@@ -34,8 +35,14 @@ function PieChart({ data, chartKey, yAxisTitle, subtitle, loading, chartTitle })
                 cursor: 'pointer',
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                }
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+                    style: {
+						fontWeight: 'normal',
+						shadow: false
+					}
+                },
+               
             }
         },
         series: data

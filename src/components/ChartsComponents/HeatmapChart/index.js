@@ -56,7 +56,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 		},
 		colorAxis: {
 			min: 0,
-			minColor: '#a7f7c1',
+			minColor: currentTheme === 'dark' ? '#8bbc21':'#a7f7c1',
 			maxColor: '#ff4d4f',
 			reversed:false
 		},
@@ -65,7 +65,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			layout: 'vertical',
 			verticalAlign: 'top',
 			y: 35,
-			symbolHeight: 385
+			symbolHeight: 385,
 		},
 		tooltip: {
 			formatter: function() {

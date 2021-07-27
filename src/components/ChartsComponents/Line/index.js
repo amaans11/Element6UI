@@ -56,6 +56,12 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 				}
 			},
 		},
+		legend: {
+			enabled: true,
+			itemStyle:{
+				color:currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+			}
+		},
 		plotOptions: {
 			series: {
 				label: {

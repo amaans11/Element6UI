@@ -8,6 +8,7 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 
 	const currentTheme = localStorage.getItem('appTheme');
 
+	console.log("data>>",JSON.stringify(data))
 	const options = {
 		chart: {
 			type: 'bubble',
@@ -15,7 +16,10 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 			borderWidth:0
 		},
 		legend: {
-			enabled: true
+			enabled: true,
+			itemStyle:{
+				color:currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+			}
 		},
 		title: {
 			text: title,
@@ -55,7 +59,7 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 			useHTML: true,
 			headerFormat: '<table>',
 			pointFormat:
-				'<tr><th colspan="2"><h3>{this.company}</h3></th></tr>' +
+				'<tr><th colspan="2"><h3>{point.company}</h3></th></tr>' +
 				'<tr><th>' +
 				xAxisLabel +
 				':</th><td>{point.x}</td></tr>' +
@@ -71,8 +75,8 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 		plotOptions: {
 			series: {
 				dataLabels: {
-					enabled: true,
-					format: '{point.company}',
+					enabled: false,
+					// format: '{point.company}',
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
 					style: {
 						fontWeight: 'normal',

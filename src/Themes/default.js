@@ -27,7 +27,10 @@ const theme = createMuiTheme({
       root: {
           backgroundColor: "#1E2732 !important",
           color:"#F7DC81 !important",
-          border:"none"
+          border:"none",
+          "&:hover": {
+            border: "none !important",
+          },
       },
     },
     MuiAppBar:{
