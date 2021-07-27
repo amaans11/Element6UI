@@ -60,7 +60,8 @@ import {
 	setTabValue,
 	setModule,
 	setFilterVisibility,
-	uploadPortfolioRequest
+	uploadPortfolioRequest,
+	getUploadPortfolioList
 } from '../redux/actions/authActions';
 import csvFile from '../assets/Dummy-file.xlsx';
 
@@ -211,6 +212,7 @@ const MiniDrawer = ({ classes, history }) => {
 	const fetchDetails = async () => {
 		await getUserDetails();
 		await getPortfolio();
+		await dispatch(getUploadPortfolioList());
 	};
 	const onPortfolioChange = async(currentValue) => {
 		let portfolio = {};

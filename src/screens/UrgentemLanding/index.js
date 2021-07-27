@@ -98,15 +98,14 @@ function UrgentemLanding({ history }) {
 	const versionFundamentals = version && version.fundamentals ? version.fundamentals : '';
 	const versionEmissions = version && version.emissions ? version.emissions : '';
 
-	useEffect(() => {
-		fetchDetails();
-	}, []);
+	// useEffect(() => {
+	// 	fetchDetails();
+	// }, []);
 
-	const fetchDetails = async () => {
-		setLoading(true);
-		await dispatch(getUploadPortfolioList());
-		setLoading(false);
-	};
+	// const fetchDetails = async () => {
+	// 	setLoading(true);
+	// 	setLoading(false);
+	// };
 
 	const deletePortfolioHandler = () => {
 		setDialog(true);

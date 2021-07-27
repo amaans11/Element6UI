@@ -5,7 +5,7 @@ const intialState = {
 	currentUser: {},
 	verifyUserRes: {},
 	portfolioList: [],
-	userInfo: [],
+	userInfo: {},
 	currentPortfolio: {},
 	currentBenchmark: {},
 	currentYear: '',
@@ -135,6 +135,7 @@ export default function authReducer(state = { ...intialState }, action) {
 		case types.LOGOUT_USER:
 			return produce(state, (draft) => {
 				draft.currentUser = {};
+				draft.userInfo ={}
 			});
 		case types.GET_DOWNLOAD_PORTFOLIOS_SUCCESS:
 			return produce(state, (draft) => {

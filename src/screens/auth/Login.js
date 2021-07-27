@@ -145,9 +145,9 @@ function Login(props) {
 									{errorMsg}
 								</Box>
 							)}
-							<Box align="center" mt={1} onClick={handleForgetPassword}>
+							{/* <Box align="center" mt={1} onClick={handleForgetPassword}>
 								<Link>Forget Password</Link>
-							</Box>
+							</Box> */}
 						</Box>
 					</Box>
 				</Box>
