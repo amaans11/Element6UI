@@ -106,9 +106,9 @@ const RiskContributor = () => {
 					<BubbleChart
 						chartKey="RISK_CONTRIBUTOR"
 						data={chartData}
-						xAxisLabel="Contribution to Intensity"
-						yAxisLabel="Contribution to Annualized Risk"
-						zAxisLabel="Contribution to Annualized Return"
+						xAxisLabel="Contribution to Annualized Risk"
+						yAxisLabel="Contribution to Annualized Return"
+						zAxisLabel="Contribution to Intensity"
 						xAxisTitle={`Contribution to Annualized Risk (${year})`}
 						yAxisTitle={`Contribution to Annualized Return (${year})`}
 					/>

@@ -123,8 +123,6 @@ const Scope3Heatmap = () => {
 		setYCategories(sectorList);
 		setXCategories(xCategories);
 	};
-	console.log('loading', loading);
-
 	return (
 		<React.Fragment>
 			{loading ? (

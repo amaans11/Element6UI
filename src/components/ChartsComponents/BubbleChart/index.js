@@ -7,8 +7,6 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 	const title = CONFIG['CHART'][chartKey]['TITLE'];
 
 	const currentTheme = localStorage.getItem('appTheme');
-
-	console.log("data>>",JSON.stringify(data))
 	const options = {
 		chart: {
 			type: 'bubble',
