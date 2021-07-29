@@ -29,14 +29,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
 				},
 				formatter: function () {
-					if(!isSectoral){
-						let val=this.value.match(/.{1,4}/g)
-						let finalValue=val.join(' ')
-						return finalValue.replace(/ /g, '<br />');
-					}
-					else{
-						return this.value.replace(/ /g, '<br />')
-					}
+					return this.value.replace(/ /g, '<br />')
 				},
 				rotation:0
 			}

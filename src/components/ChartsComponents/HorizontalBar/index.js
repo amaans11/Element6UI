@@ -20,7 +20,8 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 	}
 	const options = {
 		chart: {
-			type: 'bar'
+			type: 'bar',
+			height:280
 		},
 		title: {
 			text: title,

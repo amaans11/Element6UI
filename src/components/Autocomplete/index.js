@@ -20,6 +20,7 @@ export default function SelectwithSearch({ heading, data, defaultValue,handleCha
         onChange={(e,newValue)=>{if(e){handleChange(newValue.label)}}}
         value={currentValue}
         disableClearable={true}
+		// style={{background:'white',height:40,marginTop:5,borderRadius:5}}
 			/>
 		</div>
 	);

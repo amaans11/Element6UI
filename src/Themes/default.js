@@ -54,6 +54,11 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiChip:{
+      colorPrimary:{
+        backgroundColor:'#1E2732 !important'
+      }
+    }
   },
   palette: {
     primary: {

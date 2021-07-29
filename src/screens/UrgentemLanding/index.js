@@ -183,10 +183,10 @@ function UrgentemLanding({ history }) {
 						color="primary"
 						variant="contained"
 						size="small"
-						style={{ marginRight: 10 }}
+						style={{ marginRight: 10,fontSize:10 }}
 						onClick={() => getCoverageDetails(row)}
 					>
-						Coverage Details
+						ISINS NOT COVERED
 					</Button>
 				),
 				button: true

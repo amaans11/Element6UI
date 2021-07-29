@@ -49,7 +49,8 @@ export default function authReducer(state = { ...intialState }, action) {
 					targetScenario: 'IPCC',
 					warmingScenario: 'LowEnergyDemand',
 					approach: 'RelativeAlignment',
-					alignmentYear: '2020'
+					alignmentYear: '2020',
+					returnYear:"3"
 				};
 			});
 

@@ -188,7 +188,7 @@ class ReactDataTable extends React.Component {
 			</React.Fragment>
 		);
 		return (
-			<Card style={{ marginTop: 15 }}>
+			<Card>
 				<DataTable
 					title={<Box className="table-header">{title}</Box>}
 					columns={columns}

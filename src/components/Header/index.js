@@ -9,6 +9,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { LinkContainer } from 'react-router-bootstrap';
 import Logo from '../../assets/Urgentem_Wordmark.png';
 import {logoutUser} from '../../redux/actions/authActions'
+import SelectwithSearch from '../../components/Autocomplete'
 
 const drawerWidth = 295;
 
@@ -36,6 +37,8 @@ const Header = ({ history }) => {
 	const [ anchorEl, setAnchor ] = useState(null);
 	const auth = useSelector((state) => state.auth);
 	const userInfo = useSelector((state) => state.auth.userInfo);
+	const portfolios = useSelector((state) => state.auth.portfolioList);
+
 	const currentTheme = localStorage.getItem('appTheme');
 
 	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
@@ -79,10 +82,11 @@ const Header = ({ history }) => {
 					<LinkContainer to="/" style={{ cursor: 'pointer' }}>
 						<img src={Logo} alt="website logo" height="40px" style={{ width: '22%' }} />
 					</LinkContainer>
-
+					
 					<Box variant="body1" color="inherit" noWrap>
 						<div style={{color:'#F7DC81'}}> {`${currentUser.displayName} / ${currentUser.client}`} </div>
 						<div style={{ fontSize: 12,color:'#F7DC81' }}> Emission Year - {emissionYear} </div>
+						<div style={{ fontSize: 12,color:'#F7DC81' }}> Currency - {auth.currentCurrency ? auth.currentCurrency : 'USD'} </div>
 					</Box>
 				</div>
 				<div>

@@ -277,7 +277,7 @@ const getRequestData = (type, auth) => {
 				asset_type: 'Eq',
 				sector: sector,
 				currency: currentCurrency,
-				period: returnYear,
+				period: returnYear ? returnYear : "3",
 				attribution_type: 'PerformanceAttribution',
 				year_currency: 2019,
 				currency_year: currentYear

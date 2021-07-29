@@ -138,6 +138,7 @@ const Scope3Heatmap = () => {
 						yAxisCategories={yCategories}
 						data={chartData}
 						xAxisCategories={xCategories}
+						// isSectoral={true}
 					/>
 					<Typography>
 						This module provides a granular breakdown of carbon risk exposure within sectoral supply and

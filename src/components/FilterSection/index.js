@@ -410,7 +410,9 @@ export default function FilterGroup() {
 								aria-controls="additional-actions1-content"
 								id="additional-actions1-header"
 							>
-								<label className="tags-label">{e.grpname}</label>
+								<div className="tags-label">{e.grpname}</div>
+								<div style={{fontSize:12,color:"#1890ff"}}>{filterItem[e.grpKey]}</div>
+
 							</AccordionSummary>
 							<AccordionDetails>
 								<div>
