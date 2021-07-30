@@ -403,7 +403,7 @@ export default function FilterGroup() {
 			{filterData.map((e, index) => {
 				if (configs.includes(e.grpKey)) {
 					return (
-						<Accordion style={{ position: 'relative' }}>
+						<Accordion style={{ position: 'relative',background:'none' }}>
 							<AccordionSummary
 								expandIcon={<ExpandMoreIcon />}
 								aria-label="Expand"
@@ -411,7 +411,7 @@ export default function FilterGroup() {
 								id="additional-actions1-header"
 							>
 								<div className="tags-label">{e.grpname}</div>
-								<div style={{fontSize:12,color:"#1890ff"}}>{filterItem[e.grpKey]}</div>
+								<div style={{fontSize:12,fontWeight:'bold'}}>{filterItem[e.grpKey]}</div>
 
 							</AccordionSummary>
 							<AccordionDetails>
@@ -474,7 +474,7 @@ export default function FilterGroup() {
 					);
 				}
 			})}
-			{configs.length > 0 ? (
+			{/* {configs.length > 0 ? (
 				<span onClick={hideFilterSection}>
 					<ArrowBackIosIcon style={{ position: 'fixed', left: 400, top: window.innerHeight / 3 }} />
 				</span>
@@ -482,7 +482,7 @@ export default function FilterGroup() {
 				<span onClick={hideFilterSection}>
 					<ArrowBackIosIcon style={{ position: 'fixed', left: 80, top: window.innerHeight / 3 }} />
 				</span>
-			)}
+			)} */}
 		</React.Fragment>
 	);
 }

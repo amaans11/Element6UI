@@ -38,8 +38,9 @@ const theme = createMuiTheme({
     },
   MuiTypography:{
     root:{
-      fontFamily: 'Helvetica',
-      color:'black'
+      // fontFamily: 'Helvetica',
+      color:'black',
+      fontSize:12
     }
   },
     MuiChip: {
@@ -55,8 +56,26 @@ const theme = createMuiTheme({
       },
     },
     MuiChip:{
+      root:{
+        borderRadius:'none !important'
+      },
       colorPrimary:{
         backgroundColor:'#1E2732 !important'
+      }
+    },
+    MuiList:{
+      root:{
+        paddingTop:'0px !important'
+      }
+    },
+    MuiAccordionSummary:{
+      content:{
+        display:'block !important'
+      }
+    },
+    MUiAutocomplete:{
+      root:{
+        paddingTop:-3
       }
     }
   },

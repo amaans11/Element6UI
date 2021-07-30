@@ -140,13 +140,13 @@ const Scope3Heatmap = () => {
 						xAxisCategories={xCategories}
 						// isSectoral={true}
 					/>
-					<Typography>
+					<div style={{font:'inherit'}}>
 						This module provides a granular breakdown of carbon risk exposure within sectoral supply and
 						value chains. This can be reviewed from the sectoral and portfolio perspectives Sector Analysis:
 						Each Sector is scaled by the maximum Scope 3 or Scope 1+2 category by carbon intensity.
 						Portfolio Analysis: All Scope 3 and Scope 1+2 carbon intensity figures are scaled by the maximum
 						category for the portfolio as a whole.
-					</Typography>
+					</div>
 					<Link onClick={onDialogHandler}>
 						Explore the scope 3 categories classification
 					</Link>

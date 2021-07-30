@@ -66,7 +66,7 @@ const CarbonAttribution = () => {
 			) : (
 				<React.Fragment>
 					<ColumnChart categories={categories} data={chartData} chartKey="CARBON_ATTRIBUTION" />
-					<Typography>
+					<div style={{font:'inherit'}}>
 						This module allows investors to interrogate the role of sector allocation and stock selection
 						that lead to differences in the carbon intensity of the portfolio and chosen benchmark. In this
 						graph, you can isolate the contributions to the differences in footprint between the portfolio
@@ -74,7 +74,7 @@ const CarbonAttribution = () => {
 						portfolio compared to the benchmark are changed by selecting lower or higher carbon stocks or
 						sectors. This technique is employed to help identify the most effective combination of stock and
 						sectoral allocations to reduce the carbon risk of the portfolio.
-					</Typography>
+					</div>
 				</React.Fragment>
 			)}
 		</React.Fragment>

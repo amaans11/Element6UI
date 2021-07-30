@@ -325,7 +325,6 @@ const MiniDrawer = ({ classes, history }) => {
             <div className="filter-main">
               <Box>
                 <Box  mb={2}>
-				<label className="filter-heading">Change Portfolio & Benchmark</label>
                   <SelectwithSearch
                     heading={'Select Portfolio'}
                     data={portfolios && portfolios.length > 0 ? portfolios : []}

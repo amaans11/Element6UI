@@ -38,7 +38,7 @@ function PortfolioFootprint() {
             >
               {footprintTabs &&
                 footprintTabs.map((e, i) => (
-                  <Tab label={e} {...e} style={{ fontSize: 12 }} />
+                  <Tab label={e} {...e} style={{ fontSize: 11 }} />
                 ))}
             </Tabs>
           </Paper>

@@ -21,11 +21,12 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
   const options = {
     chart: {
       type: "column",
+      height:550
     },
     title: {
       text: title,
       align:'left',
-      x:20,
+      x:5,
       y:25
     },
     subtitle:{

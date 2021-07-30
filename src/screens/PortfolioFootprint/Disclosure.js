@@ -137,7 +137,7 @@ const Disclosure = () => {
 				<Box>
 					<StackedBar categories={categories} data={stackedChartData} chartKey="DISCLOSURE_SCOPE12" />
 					<ColumnChart categories={columnCategories} data={columnChartData} chartKey="DISCLOSURE_SCOPE3" />
-					<Typography>
+					<div style={{font:'inherit'}}>
 						This chart highlights the number of Scope 3 categories disclosed out of a possible 15 for
 						company holdings with the portfolio and benchmark as a percentage. This relates to the issuers
 						that Urgentem has directly analysed. A key area of engagement with companies is to encourage
@@ -146,7 +146,7 @@ const Disclosure = () => {
 						value chain. Scope 3 data is becoming increasingly available and is a critical part of
 						understanding company and portfolio-level carbon risks - as it generally accounts for around 85%
 						of a typical company's total emissions.
-					</Typography>
+					</div>
 				</Box>
 			)}
 		</React.Fragment>

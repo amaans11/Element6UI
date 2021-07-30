@@ -17,6 +17,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 		},
 		title: {
 			text: title,
+			x:5,
 			align: 'left'
 		},
 		xAxis: {

@@ -21,12 +21,13 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 	const options = {
 		chart: {
 			type: 'bar',
-			height:280
+			height:350
 		},
 		title: {
 			text: title,
 			align: 'left',
-			y: 25
+			x:5,
+			y: 15
 		},
 		subtitle: {
 			text: subtitle ? subtitle : null,
