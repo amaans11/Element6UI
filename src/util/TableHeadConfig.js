@@ -2,7 +2,7 @@ import React from 'react';
 
 const portEmissionCells = [
 	{
-		name: 'Portfolios',
+		name: 'Portfolios (tCO2e / 1M USD)',
 		selector: 'name',
 		sortable: true,
 		right: false,

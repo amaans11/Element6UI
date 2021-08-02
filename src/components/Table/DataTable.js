@@ -15,7 +15,7 @@ const customStyles = {
 	},
 	rows: {
 		style: {
-		  minHeight: 60, // override the row height
+		  minHeight: 40, // override the row height
 		}
 	  },
 	cells: {
@@ -93,7 +93,7 @@ createTheme('dark', {
       disabled: 'rgba(0, 0, 0, 0.38)',
     },
     background: {
-      default: '#FFFFFF',
+      default: '#F5F5F5',
     },
     context: {
       background: '#e3f2fd',
@@ -190,12 +190,12 @@ class ReactDataTable extends React.Component {
 		return (
 			<Card>
 				<DataTable
-					title={<Box className="table-header">{title}</Box>}
+				noHeader={true}
 					columns={columns}
 					data={data}
 					pagination={true}
 					paginationRowsPerPageOptions={[ 10, 25, 100 ]}
-					actions={actionsMemo}
+					// actions={actionsMemo}
 					highlightOnHover={false}
 					progressPending={loading}
 					theme={currentTheme}

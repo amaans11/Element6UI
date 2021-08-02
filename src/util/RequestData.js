@@ -168,7 +168,7 @@ const getRequestData = (type, auth) => {
 			break;
 		case 'BENCH_DISCLOSURE':
 			data = {
-				portfolio_id: portfolioId,
+				portfolio_id: benchmarkId,
 				version_portfolio: versionPortfolio,
 				quarter_fundamentals: quarterFundamentals,
 				quarter_emissions: quarterEmissions,

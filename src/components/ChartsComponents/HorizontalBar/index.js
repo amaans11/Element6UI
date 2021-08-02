@@ -93,8 +93,10 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 			y: 30,
 			floating: true,
 			borderWidth: 1,
-			backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-			shadow: true
+			borderColor:'#F5F5F5',
+			backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#F5F5F5',
+			shadow: false,
+
 		},
 		credits: {
 			enabled: false

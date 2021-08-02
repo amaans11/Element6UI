@@ -193,7 +193,7 @@ const MiniDrawer = ({ classes, history }) => {
   const currentPortfolio = useSelector((state) => state.auth.currentPortfolio)
   const currentBenchmark = useSelector((state) => state.auth.currentBenchmark)
   const isVisible = useSelector((state) => state.auth.isVisible)
-  const isAdmin = useSelector((state) => state.auth.userInfo.is_admin)
+  const isAdmin = useSelector((state) => state.auth.userInfo && state.auth.userInfo.is_admin)
 
   let currentUser = auth && auth.currentUser ? auth.currentUser : {}
   let userInfo = auth && auth.userInfo ? auth.userInfo : {}
@@ -324,7 +324,7 @@ const MiniDrawer = ({ classes, history }) => {
           window.location.pathname !== '/' ? (
             <div className="filter-main">
               <Box>
-                <Box  mb={2}>
+                <Box>
                   <SelectwithSearch
                     heading={'Select Portfolio'}
                     data={portfolios && portfolios.length > 0 ? portfolios : []}
@@ -334,7 +334,7 @@ const MiniDrawer = ({ classes, history }) => {
                     currentValue={currentPortfolio}
                   />
                 </Box>
-                <Box mt={2} mb={4}>
+                <Box mt={2}>
                   <SelectwithSearch
                     heading={'Select Benchmark'}
                     data={portfolios && portfolios.length > 0 ? portfolios : []}
@@ -345,7 +345,6 @@ const MiniDrawer = ({ classes, history }) => {
                   />
                 </Box>
               </Box>
-              <label className="filter-heading">Filters</label>
               <div className="filter-part">
                 <FilterGroup />
               </div>
@@ -375,7 +374,7 @@ const MiniDrawer = ({ classes, history }) => {
             </span>
           </StyleRoot>
         )}
-        <div className={contentClass}>
+		<div className={contentClass}>
           {/* <div>
 						<div style={{ display: 'flex', width: '100%' }}>
 							<div style={{ display: 'flex', width: '75%' }}>

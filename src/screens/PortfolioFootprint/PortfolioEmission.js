@@ -85,25 +85,25 @@ const PortfolioEmission = () => {
 			];
 			intensityTableData = [
 				{
-					name: 'Portfolio Avg GHG Intensity in tCO2e / 1M USD',
+					name: 'Portfolio Avg GHG Intensity',
 					Sc12: response[0][0]['Portfolio_Avg_Intensity']['Sc12'],
 					Sc3: response[0][0]['Portfolio_Avg_Intensity']['Sc3'],
 					Sc123: response[0][0]['Portfolio_Avg_Intensity']['Sc123']
 				},
 				{
-					name: 'Benchmark Avg GHG Intensity in tCO2e / 1M USD',
+					name: 'Benchmark Avg GHG Intensity',
 					Sc12: response[1][0]['Benchmark_Avg_Intensity']['Sc12'],
 					Sc3: response[1][0]['Benchmark_Avg_Intensity']['Sc3'],
 					Sc123: response[1][0]['Benchmark_Avg_Intensity']['Sc123']
 				},
 				{
-					name: 'Portfolio Max GHG Intensity in tCO2e / 1M USD',
+					name: 'Portfolio Max GHG Intensity',
 					Sc12: response[0][1]['Portfolio_Max_Intensity']['Sc12'],
 					Sc3: response[0][1]['Portfolio_Max_Intensity']['Sc3'],
 					Sc123: response[0][1]['Portfolio_Max_Intensity']['Sc123']
 				},
 				{
-					name: 'Benchmark Max GHG Intensity in tCO2e / 1M USD	',
+					name: 'Benchmark Max GHG Intensity',
 					Sc12: response[1][1]['Benchmark_Max_Intensity']['Sc12'],
 					Sc3: response[1][1]['Benchmark_Max_Intensity']['Sc3'],
 					Sc123: response[1][1]['Benchmark_Max_Intensity']['Sc123']

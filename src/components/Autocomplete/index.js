@@ -5,13 +5,14 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function SelectwithSearch({ heading, data, defaultValue,handleChange ,type,currentValue}) {
 	return (
-		<div style={{ width: 400, marginRight: '20px'}}>
+		<div style={{ width: 300, marginRight: '20px'}}>
 			<Autocomplete
 				id={heading}
+				openOnFocus
 				options={data}
 				getOptionLabel={(option) => option.label}
 				renderInput={(params) => (
-					<TextField {...params} variant="standard" label={heading}  style={{paddingTop:4}}
+					<TextField {...params} variant="standard" label={heading} 
           // InputProps={{
           //   className: type === 'portfolio' ? classes.portColor :  classes.benchColor
           // }}
