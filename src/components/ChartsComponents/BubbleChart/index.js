@@ -31,11 +31,18 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 		xAxis: {
 			gridLineWidth: 1,
 			title: {
-				text: xAxisTitle
+				text: xAxisTitle,
+				style:{
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+					fontSize:14,
+					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+				}
 			},
 			labels: {
-				style: {
-					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+				style:{
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+					fontSize:14,
+					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			}
 		},
@@ -44,11 +51,18 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 			startOnTick: false,
 			endOnTick: false,
 			title: {
-				text: yAxisTitle
+				text: yAxisTitle,
+				style:{
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+					fontSize:14,
+					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+				}
 			},
 			labels: {
-				style: {
-					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+				style:{
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+					fontSize:14,
+					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
 			maxPadding: 0.2

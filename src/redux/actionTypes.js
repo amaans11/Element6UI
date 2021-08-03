@@ -1,4 +1,4 @@
-export const API_URL = 'http://clientapi-test.urgentem.net';
+export const API_URL = 'https://qaapi.urgentem.net';
 export const TEMP_API_URL = 'https://tm-test.urgentem.net';
 
 // --------- Auth --------------//

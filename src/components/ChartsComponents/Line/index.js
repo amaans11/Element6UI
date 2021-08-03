@@ -32,11 +32,18 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 		xAxis: {
 			type: 'datetime',
 			title: {
-				text: 'Date'
+				text: 'Year',
+				style:{
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+					fontSize:14,
+					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+				}
 			},
 			labels: {
-				style: {
-					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+				style:{
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+					fontSize:14,
+					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			}
 		},
@@ -45,21 +52,27 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 			title: {
 				text: yAxis,
 				align: 'high',
-				style: {
-					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+				style:{
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+					fontSize:14,
+					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
 			labels: {
 				overflow: 'justify',
-				style: {
-					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+				style:{
+					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+					fontSize:14,
+					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
 		},
 		legend: {
 			enabled: true,
 			itemStyle:{
-				color:currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+				color:currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+				fontSize:14,
+				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 			}
 		},
 		plotOptions: {

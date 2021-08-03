@@ -33,11 +33,18 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
       categories: categories,
       title: {
         text: xAxis,
+		style:{
+			color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+			fontSize:14,
+			fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+		}
       },
       labels: {
-        style: {
-          color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-        },
+		style:{
+			color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+			fontSize:14,
+			fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+		}
       },
     },
     yAxis: {
@@ -46,15 +53,19 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
       title: {
         text: yAxis,
         align: 'high',
-        style: {
-          color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-        },
+        style:{
+			color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+			fontSize:14,
+			fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+		}
       },
       labels: {
         overflow: 'justify',
-        style: {
-          color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-        },
+        style:{
+			color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+			fontSize:14,
+			fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+		}
       },
     },
 

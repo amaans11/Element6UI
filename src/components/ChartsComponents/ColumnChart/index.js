@@ -37,13 +37,17 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
         categories: categories,
         title: {
           text: xAxisTitle ? xAxisTitle : '',
-          style: {
-            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+          style:{
+            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+            fontSize:14,
+            fontFamily:"Roboto, Helvetica, Arial, sans-serif",
           }
         },
         labels: {
-          style: {
-            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+          style:{
+            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+            fontSize:14,
+            fontFamily:"Roboto, Helvetica, Arial, sans-serif",
           }
         },
       },
@@ -51,14 +55,18 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
         title: {
           text:yAxis ,
           align: "high",
-          style: {
-            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+          style:{
+            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+            fontSize:14,
+            fontFamily:"Roboto, Helvetica, Arial, sans-serif",
           }
         },
         labels: {
           overflow: "justify",
-          style: {
-            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+          style:{
+            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+            fontSize:14,
+            fontFamily:"Roboto, Helvetica, Arial, sans-serif",
           }
         },
       },
