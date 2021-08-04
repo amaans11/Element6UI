@@ -435,7 +435,7 @@ const coalPowerCells = [
 		name: 'Capacity (MW)',
 		selector: 'Capacity(MW)',
 		sortable: true,
-		right: false,
+		right: true,
 		wrap: true
 	},
 	{

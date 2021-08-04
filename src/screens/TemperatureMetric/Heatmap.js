@@ -82,6 +82,7 @@ const Scope3Heatmap = () => {
 				</Box>
 			) : (
 				<React.Fragment>
+					<Box >
 					<HeatmapChart
 						chartKey="PORT_HEATMAP"
 						yAxisCategories={yCategories}
@@ -89,6 +90,7 @@ const Scope3Heatmap = () => {
 						xAxisCategories={xCategories}
 						isSectoral={true}
 					/>
+					</Box>
 				</React.Fragment>
 			)}
 		</React.Fragment>

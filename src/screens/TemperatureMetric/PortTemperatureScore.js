@@ -107,7 +107,7 @@ const PortTemperatureScore = () => {
 		setPortScore(portScore);
 		setBenchScore(benchScore);
 	};
-	const tempScoreChartData = [ portScore, benchScore, defaultValue ];
+	const tempScoreChartData = [ portScore, benchScore, 3.20 ];
 
 	return (
 		<React.Fragment>

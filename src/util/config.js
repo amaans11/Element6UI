@@ -140,7 +140,7 @@ const configs = {
 			X_AXIS_TITLE: ''
 		},
 		COMPANY_ANALYSIS: {
-			TITLE: 'COmpany Level Analysis',
+			TITLE: 'Company Level Analysis',
 			Y_AXIS_TITLE: 'Temperature Score'
 		},
 		TEMP_ATTRIBUTION: {

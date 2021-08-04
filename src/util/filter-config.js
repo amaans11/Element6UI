@@ -25,7 +25,7 @@
         { name: "Market Capitalization", value: "MarketCap", selected: true },
         { name: "Market Capitalization + Total Debt", value: "MarketCapDebt", selected: false },
         { name: "Total Debt", value: "Debt", selected: false },
-        { name: "Enterprise Value", value: "EnterpriseVal", selected: false },
+        { name: "Enterprise Value", value: "'EnterpriseVal'", selected: false },
         { name: "Enterprise Value Including Cash", value: "EnterpriseValCash", selected: false },
       ],
     },

@@ -10,6 +10,7 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 	}
 	const currentTheme = localStorage.getItem('appTheme');
 
+	console.log("data>>",data)
 	const options = {
 		chart: {
 			type: 'column',
@@ -31,6 +32,7 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 				text: null
 			},
 			labels: {
+				enabled:false,
 				allowOverlap: true,
 				style: {
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
@@ -39,13 +41,16 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 		},
 		yAxis: {
 			max: 5,
-			tickInterval: 0.5,
+			tickInterval: 1,
 			labels: {
 				style: {
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
 				}
 			},
-			showLastLabel: false
+			showLastLabel: true
+		},
+		legend: {
+			enabled: false,
 		},
 		tooltip: {
 			formatter: function() {

@@ -27,7 +27,8 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
       text: title,
       align:'left',
       x:5,
-      y:25
+			y: 15,
+			margin:30
     },
     subtitle:{
         text: subtitle ? subtitle : null,

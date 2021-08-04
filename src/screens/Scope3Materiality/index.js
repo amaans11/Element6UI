@@ -30,7 +30,6 @@ function Scope3Materiality() {
 			  fullWidth="true"
               inkBarStyle={{ background: 'blue' }}
             >
-              {' '}
               {scope3Tabs &&
                 scope3Tabs.map((e, i) => (
                   <Tab label={e} {...e} style={{ fontSize:11 }} />

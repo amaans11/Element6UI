@@ -111,9 +111,10 @@ const Scope3Heatmap = () => {
 					const yValue = sectorList.indexOf(sectorName);
 					chartData.push([ xValue, yValue, data.z ]);
 
-					const yLabel = data.y.replace('_', '');
-					if (!xCategories.includes(yLabel)) {
-						xCategories.push(yLabel);
+					const yLabel = data.y.split('_');
+					const label = 'Cat' + ' ' + yLabel[1]
+					if (!xCategories.includes(label)) {
+						xCategories.push(label);
 					}
 				});
 			}
@@ -140,6 +141,9 @@ const Scope3Heatmap = () => {
 						xAxisCategories={xCategories}
 						// isSectoral={true}
 					/>
+					<Link onClick={onDialogHandler}>
+						Explore the scope 3 categories classification
+					</Link>
 					<div style={{font:'inherit'}}>
 						This module provides a granular breakdown of carbon risk exposure within sectoral supply and
 						value chains. This can be reviewed from the sectoral and portfolio perspectives Sector Analysis:
@@ -147,9 +151,7 @@ const Scope3Heatmap = () => {
 						Portfolio Analysis: All Scope 3 and Scope 1+2 carbon intensity figures are scaled by the maximum
 						category for the portfolio as a whole.
 					</div>
-					<Link onClick={onDialogHandler}>
-						Explore the scope 3 categories classification
-					</Link>
+					
 					<Dialog open={dialog} keepMounted fullWidth={true}>
 						<DialogTitle>Category Classification</DialogTitle>
 						<DialogContent>

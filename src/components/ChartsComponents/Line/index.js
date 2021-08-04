@@ -22,8 +22,9 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 		title: {
 			text: title,
 			align: 'left',
-			x: 20,
-			y: 25
+			x:5,
+			y: 15,
+			margin:30
 		},
 		subtitle: {
 			text: subtitle ? subtitle : null,

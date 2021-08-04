@@ -313,11 +313,13 @@ const CarbonAdjustedReturns = () => {
 							<LineChart data={chartData} chartKey="CARBON_ADJUSTED_RETURNS" />
 						</Grid>
 						<Grid item xs={6}>
+							<Box mb={2}>
 							<DataTable
 								data={returnData}
 								columns={cells}
 								tableHeading="CARBON_ADJUSTED_RETURNS_TABLE1"
 							/>
+							</Box>
 							<DataTable
 								data={carbonData}
 								columns={cells}

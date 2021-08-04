@@ -13,11 +13,12 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 	let options = {
 		chart: {
 			type: 'heatmap',
-			height:520
+			height:630 
 		},
 		title: {
 			text: title,
 			x:5,
+			y:15,
 			align: 'left'
 		},
 		xAxis: {
@@ -63,6 +64,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 		},
 		colorAxis: {
 			min: 0,
+			max:100,
 			minColor: currentTheme === 'dark' ? '#8bbc21':'#a7f7c1',
 			maxColor: '#ff4d4f',
 			reversed:false

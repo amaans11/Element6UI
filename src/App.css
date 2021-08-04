@@ -170,8 +170,8 @@
   border-radius: 2px;
 }
 .error-msg{
-  color:red;
   font-size:12px;
+  font-family:"Roboto, Helvetica, Arial, sans-serif",
 }
 .icon{
   color:black;
@@ -198,7 +198,7 @@
   justify-content: space-between;
 }
 .default-font{
-  font-family:'Helvetica'
+  font-family:'Roboto, Helvetica, Arial, sans-serif'
 }
 .MuiCircularProgress-root	{
   position: absolute;
