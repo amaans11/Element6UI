@@ -88,7 +88,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 		},
 		series: [
 			{
-				borderWidth: 1,
+				borderWidth: 0.4,
 				data: data
 			}
 		],

@@ -8,6 +8,7 @@ import FilterTags from './tags';
 import data from '../../util/filter-config';
 import filterConfig from '../../util/tabs-filter-config';
 import { setFilterItem, setFilterVisibility } from '../../redux/actions/authActions';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const filterRes={
 	'SASB': 'SASB',
@@ -486,12 +487,13 @@ export default function FilterGroup() {
 			{filterData.map((e, index) => {
 				if (configs.includes(e.grpKey)) {
 					return (
-						<Accordion style={{ position: 'relative',background:'none',width:300 }}>
+						<Accordion style={{ position: 'relative',background:'none',width:300 }}
+						>
 							<AccordionSummary
-								expandIcon={<ExpandMoreIcon />}
 								aria-label="Expand"
 								aria-controls="additional-actions1-content"
 								id="additional-actions1-header"
+								expandIcon={<ArrowDropDownIcon />}
 							>
 								<div className="tags-label">{e.grpname}</div>
 								<div style={{fontSize:12,font:'inherit',fontFamily:"Roboto,Helvetica,Arial,sans-serif",fontWeight:'500'}}>{filterRes[filterItem[e.grpKey]]}</div>

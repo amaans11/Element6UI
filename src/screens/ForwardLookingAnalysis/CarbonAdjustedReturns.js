@@ -14,7 +14,7 @@ import LineChart from '../../components/ChartsComponents/Line';
 
 const useStyles = makeStyles(() => ({
 	formControl: {
-		width: 200,
+		width: 300,
 		margin: 15
 	}
 }));
@@ -259,13 +259,13 @@ const CarbonAdjustedReturns = () => {
 			right: true
 		},
 		{
-			name: 'Market',
+			name: 'Sector',
 			selector: 'sector',
 			sortable: true,
 			right: true
 		},
 		{
-			name: 'Difference',
+			name: 'Portfolio',
 			selector: 'portfolio',
 			sortable: true,
 			right: true
@@ -309,22 +309,23 @@ const CarbonAdjustedReturns = () => {
 						</Grid>
 					</Grid>
 					<Grid container>
-						<Grid item xs={6}>
+						<Grid item xs={12}>
 							<LineChart data={chartData} chartKey="CARBON_ADJUSTED_RETURNS" />
+							<span style={{fontSize:11,paddingTop:-20}}>* Companies highlighted in grey doesn't have price data.</span>
 						</Grid>
-						<Grid item xs={6}>
-							<Box mb={2}>
+						<Grid item xs={12}>
+							<Box mb={2} mt={2}>
 							<DataTable
 								data={returnData}
 								columns={cells}
 								tableHeading="CARBON_ADJUSTED_RETURNS_TABLE1"
 							/>
 							</Box>
-							<DataTable
+							{/* <DataTable
 								data={carbonData}
 								columns={cells}
 								tableHeading="CARBON_ADJUSTED_RETURNS_TABLE2"
-							/>
+							/> */}
 						</Grid>
 					</Grid>
 				</Box>

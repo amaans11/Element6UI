@@ -7,10 +7,11 @@ import CONFIG from '../../util/config'
 const customStyles = {
   headCells: {
     style: {
-      fontWeight: 'bold',
       fontSize: 14,
-      marginBottom: 8,
       textAlign: 'right',
+      background: '#1E2732',
+      color: '#F7DC81',
+      fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
     },
   },
   rows: {
@@ -32,10 +33,11 @@ const scollStyle = {
   },
   headCells: {
     style: {
-      fontWeight: 'bold',
       fontSize: 14,
-      marginBottom: 8,
       textAlign: 'right',
+      background: '#1E2732',
+      color: '#F7DC81',
+      fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
     },
   },
   rows: {

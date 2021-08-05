@@ -6,6 +6,7 @@ import { portOptimizationTabs } from '../../util/tabs-config'
 import { setTabValue } from '../../redux/actions/authActions'
 import PortOptimization from './PortfolioOptimization'
 import PerformanceAttribution from './PerformanceAttribution'
+import OptimizedEmission from './OptimizedEmission'
 
 function PortfolioOptimization() {
   const tabValue = useSelector((state) => state.auth.tabValue)
@@ -42,7 +43,10 @@ function PortfolioOptimization() {
           <TabPanel value={value} index={0}>
             <PortOptimization />
           </TabPanel>
-          <TabPanel value={value} index={1}>
+		  <TabPanel value={value} index={1}>
+            <OptimizedEmission />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
             <PerformanceAttribution />
           </TabPanel>
         </Grid>

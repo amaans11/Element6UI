@@ -436,21 +436,24 @@ const coalPowerCells = [
 		selector: 'Capacity(MW)',
 		sortable: true,
 		right: true,
-		wrap: true
+		wrap: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row['Capacity(MW)'])}</div>
 	},
 	{
 		name: 'Ownership (% Market Cap)',
 		selector: 'Ownership(%MarketCap)',
 		sortable: true,
 		right: true,
-		wrap: true
+		wrap: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row['Ownership(%MarketCap)'])}</div>
 	},
 	{
 		name: 'Capacity Owned (MW)',
 		selector: 'Capacity Owned (MW)',
 		sortable: true,
 		right: true,
-		wrap: true
+		wrap: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row['Capacity Owned (MW)'])}</div>
 	}
 ];
 const tempScoreCells = [
@@ -568,14 +571,14 @@ const targetSettingCells = [
 ];
 const companyProfileCells = [
 	{
-		name: 'Name',
+		name: 'Summary',
 		selector: 'name',
 		sortable: true,
 		right: false,
 		wrap:true
 	},
 	{
-		name: 'Summary',
+		name: '',
 		selector: 'summary',
 		sortable: true,
 		right: true

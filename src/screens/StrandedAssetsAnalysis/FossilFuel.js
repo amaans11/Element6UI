@@ -111,42 +111,47 @@ const FossilFuel = () => {
       ) : (
         <React.Fragment>
           <Grid container>
-            <Grid item xs={5} style={{ marginRight: 20 }}>
+            <Grid item xs={12}>
               <HorizontalBar
                 categories={categories}
                 data={chartData}
                 chartKey="FOSSIL_FUEL"
                 yAxisTitle={yAxisTitle}
               />
-              <DataTable
-                data={tableData}
-                columns={fossilFuelCells}
-                tableHeading="FOSSIL_FUEL"
-              />
             </Grid>
             <Grid item xs={6}>
-              <Box
-                style={{
-                  fontSize: 14,
-                  fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-                }}
-				mt={1}
-				mb={8}
-              >
-                The fossil fuel footprint measures the portfolio's exposure to
-                Coal, Oil and Gas reserves. The Coal, Oil and Gas emissions
-                underlying the footprint calculation are based on a list of 100
-                companies with the largest reserves. The breakdown of the
-                footprint by country shows the contribution of the country
-                (based on the country of domicile) to the total footprint.
+              <Box style={{ marginRight: 10 }}>
+                <DataTable
+                  data={tableData}
+                  columns={fossilFuelCells}
+                  tableHeading="FOSSIL_FUEL"
+                />
               </Box>
+            </Grid>
+            <Grid item xs={6}>
               <DataTable
                 data={countryTableData}
                 columns={countryFossilCells}
                 tableHeading="FOSSIL_FUEL_COUNTRY"
               />
-			  <div style={{fontSize:11}}>* Where applicable only top 10 countries shown.</div>
+              <div style={{ fontSize: 11 }}>
+                * Where applicable only top 10 countries shown.
+              </div>
             </Grid>
+            <div
+              style={{
+                fontSize: 14,
+                fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+				marginTop:10
+              }}
+            >
+              The fossil fuel footprint measures the portfolio's exposure to
+              Coal, Oil and Gas reserves. The Coal, Oil and Gas emissions
+              underlying the footprint calculation are based on a list of 100
+              companies with the largest reserves. The breakdown of the
+              footprint by country shows the contribution of the country (based
+              on the country of domicile) to the total footprint.
+            </div>
           </Grid>
         </React.Fragment>
       )}

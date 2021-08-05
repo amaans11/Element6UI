@@ -92,6 +92,8 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
       },
       legend: {
         enabled:legend,
+        align: 'right',
+        verticalAlign: 'top',
         itemStyle:{
             color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
         }

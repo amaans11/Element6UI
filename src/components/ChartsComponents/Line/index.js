@@ -3,7 +3,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
 
-function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
+function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHeight }) {
 	let title = chartTitle
 	if(!chartTitle){
 		 title = CONFIG['CHART'][chartKey]['TITLE'];
@@ -17,7 +17,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 	const options = {
 		chart: {
 			type: 'spline',
-      		height:500
+      		height:isCustomHeight ? 589 : 500
 		},
 		title: {
 			text: title,
@@ -82,7 +82,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle }) {
 					connectorAllowed: false
 				},
 				marker: {
-					enabled: true
+					enabled: false
 				},
 			}
 		},

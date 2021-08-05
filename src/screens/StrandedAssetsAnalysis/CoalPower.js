@@ -6,7 +6,7 @@ import DataTable from '../../components/Table/DataTable'
 import getRequestData from '../../util/RequestData'
 import { coalPowerCells } from '../../util/TableHeadConfig'
 import { getCoalPowerData } from '../../redux/actions/strandedAssetActions'
-import ColumnChart from '../../components/ChartsComponents/ColumnChart'
+import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
 
 const CoalPower = () => {
   const dispatch = useDispatch()
@@ -38,15 +38,20 @@ const CoalPower = () => {
       const benchValue = coalPower['data']['chart']['benchmark']
       chartData = [
         {
-          name: '',
-          data: [portValue, benchValue],
+          name: 'portfolio',
+          data: [portValue],
         },
+		{
+			name: 'benchmark',
+			data: [benchValue],
+		  },
       ]
       tableData = coalPower['data']['table']
     }
     setChartData(chartData)
     setTableData(tableData)
   }
+  console.log("chartData",chartData)
   return (
     <React.Fragment>
       {loading ? (
@@ -62,15 +67,14 @@ const CoalPower = () => {
       ) : (
         <React.Fragment>
           <Grid container>
-            <Grid item xs={6}>
-              <ColumnChart
-                categories={['portfolio', 'benchmark']}
+            <Grid item xs={12}>
+              <HorizontalBar
+                categories={['']}
                 data={chartData}
                 chartKey="COAL_POWER"
-                isLegend={false}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <Box mt={1}>
                 <DataTable
                   data={tableData}

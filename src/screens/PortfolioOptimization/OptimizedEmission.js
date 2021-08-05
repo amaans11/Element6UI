@@ -2,13 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Slider, Typography,Button, CircularProgress } from '@material-ui/core';
-import LineChart from '../../components/ChartsComponents/Line';
-import { getPortOptimizationData } from '../../redux/actions/optimizationActions';
 import {setReweightData,setLoading} from '../../redux/actions/authActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
-import DataTable from '../../components/Table/DataTable';
-import getRequestData from '../../util/RequestData';
-import { portOptimizationCells } from '../../util/TableHeadConfig';
 
 const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3' ];
 
@@ -274,14 +269,6 @@ const PortfolioOptimization = () => {
 		await dispatch(setLoading(false));
 
 	};
-	const fetchDetails = async () => {
-		await dispatch(setLoading(true));
-		const data = getRequestData('PORTFOLIO_OPTIMIZATION', auth);
-		await dispatch(getPortOptimizationData(data));
-	};
-	useEffect(() => {
-		fetchDetails();
-	}, []);
 	useEffect(
 		() => {
 			getData();
@@ -296,31 +283,28 @@ const PortfolioOptimization = () => {
 				</Box>
 			) : (
 				<Box>
-					<Grid container style={{marginLeft:40,marginTop:10}}>
-						<Grid item xs={5}>
-							<Typography>Select Urgentem reweight factor</Typography>
-							<Slider
-								value={reWeightFactor}
-								max={1}
-								min={0}
-								step={0.01}
-								style={{width:'80%'}}
-								onChange={handleReweightFactor}
-							/>
-						</Grid>
-						<Grid item xs={4} >
-							<Button type="primary" variant="contained" onClick={submitReweightFactor}>Submit</Button>
-						</Grid>
-					</Grid>
+					<Box >
+						<HorizontalBar
+							categories={categories}
+							data={intensityData}
+							chartKey="PORT_OPTIMIZATION_INTENSITY"
+							yAxisTitle={yAxisTitle}
+						/>
+					</Box>
 					<Grid container>
 						<Grid item xs={12}>
-							<LineChart data={lineChartData} chartKey="PORT_OPTIMIZATION" />
+							<HorizontalBar
+								categories={weightCategories}
+								data={weightData}
+								chartKey="PORT_OPTIMIZATION_WEIGHT"
+							/>
 						</Grid>
-						<Grid item xs={12} style={{ marginTop: 10 }}>
-							<DataTable
-								data={tableData}
-								columns={portOptimizationCells}
-								tableHeading="PORT_OPTIMIZATION"
+						<Grid item xs={12}>
+							<HorizontalBar
+								categories={contribCategories}
+								data={contribData}
+								chartKey="PORT_OPTIMIZATION_CONTRIB"
+								yAxisTitle={yAxisTitle}
 							/>
 						</Grid>
 					</Grid>

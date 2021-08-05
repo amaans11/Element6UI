@@ -11,7 +11,7 @@ import { companyProfileCells } from '../../util/TableHeadConfig';
 
 const useStyles = makeStyles(() => ({
 	formControl: {
-		width: 200,
+		width: 300,
 		margin: 15
 	}
 }));
@@ -231,14 +231,15 @@ const CompanyProfile = () => {
 						</Grid>
 					</Grid>
 					<Grid container>
-						<Grid item xs={6}>
+						<Grid item xs={8}>
 							<LineChart
 								data={chartData}
 								chartKey="COMPANY_PROFILE"
 								chartTitle={`${companyName} Profile`}
+								isCustomHeight={true}
 							/>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={4}>
 							<DataTable data={tableData} columns={companyProfileCells} tableHeading="COMPANY_PROFILE" />
 						</Grid>
 					</Grid>
