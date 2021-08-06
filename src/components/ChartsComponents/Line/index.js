@@ -24,7 +24,10 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 			align: 'left',
 			x:5,
 			y: 15,
-			margin:30
+			margin:30,
+			style:{
+				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+			}
 		},
 		subtitle: {
 			text: subtitle ? subtitle : null,
@@ -36,14 +39,14 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 				text: 'Year',
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
 			labels: {
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			}
@@ -55,7 +58,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 				align: 'high',
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
@@ -63,7 +66,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 				overflow: 'justify',
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},

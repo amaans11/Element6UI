@@ -27,7 +27,10 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 			text: title,
 			align: 'left',
 			x:5,
-			y: 15
+			y: 15,
+			style:{
+				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+			}
 		},
 		subtitle: {
 			text: subtitle ? subtitle : null,
@@ -46,7 +49,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 			labels: {
 				style: {
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			}
@@ -58,14 +61,14 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 				align: 'high',
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
 			labels: {
 				style: {
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			}
@@ -107,7 +110,10 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 			borderColor:'#F5F5F5',
 			backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#F5F5F5',
 			shadow: false,
-
+			itemStyle:{
+				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+				fontSize:12
+			}
 		},
 		credits: {
 			enabled: false

@@ -26,7 +26,7 @@ function Scope3Materiality() {
             <Tabs
               value={value}
               onChange={handleChange}
-              indicatorColor="default"
+              indicatorColor="secondary"
 			  fullWidth="true"
               inkBarStyle={{ background: 'blue' }}
             >

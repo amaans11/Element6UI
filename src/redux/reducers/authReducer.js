@@ -41,7 +41,7 @@ export default function authReducer(state = { ...intialState }, action) {
 					aggregation: 'WATS',
 					scenario: '0',
 					scoreType: 'shortTerm',
-					defaultValue: 3.2,
+					defaultValue: "3.2",
 					year: '1Y',
 					materiality: 'matPort',
 					intensityScope: 'Sc12',
@@ -50,7 +50,8 @@ export default function authReducer(state = { ...intialState }, action) {
 					warmingScenario: 'LowEnergyDemand',
 					approach: 'RelativeAlignment',
 					alignmentYear: '2020',
-					returnYear:"3"
+					returnYear:"3",
+					strategy:'momentum'
 				};
 			});
 

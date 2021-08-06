@@ -19,7 +19,10 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			text: title,
 			x:5,
 			y:15,
-			align: 'left'
+			align: 'left',
+			style:{
+				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+			}
 		},
 		xAxis: {
 			categories: xAxisCategories,
@@ -27,14 +30,14 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 				text: null,
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
 			labels: {
 				style: {
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				},
 				formatter: function () {
@@ -51,14 +54,14 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 				text: null,
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
 			labels: {
 				style: {
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",				}
 			}
 		},

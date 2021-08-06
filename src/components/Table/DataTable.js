@@ -43,8 +43,10 @@ const scollStyle = {
   rows: {
     style: {
       minHeight: 60,
+	  borderBottom:'1px solid red'
     },
   },
+  
 }
 
 createTheme('dark', {
@@ -193,7 +195,7 @@ class ReactDataTable extends React.Component {
           highlightOnHover={false}
           progressPending={loading}
           theme={currentTheme}
-          customStyles={isScroll ? { ...scollStyle } : customStyles}
+          customStyles={isScroll ? scollStyle : customStyles}
         />
         <CloudDownloadOutlinedIcon
           onClick={() => this.downloadCSV(data)}

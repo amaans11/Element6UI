@@ -13,16 +13,13 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 			zoomType: 'xy',
 			borderWidth:0
 		},
-		legend: {
-			enabled: true,
-			itemStyle:{
-				color:currentTheme === 'dark' ? '#FFFFFF' : '#000000'
-			}
-		},
 		title: {
 			text: title,
 			align: 'left',
-			y: 25
+			y: 25,
+			style:{
+				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+			}
 		},
 		subtitle: {
 			text: subtitle ? subtitle : null,
@@ -34,14 +31,14 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 				text: xAxisTitle,
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
 			labels: {
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			}
@@ -54,14 +51,14 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 				text: yAxisTitle,
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
 			labels: {
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-					fontSize:14,
+					fontSize:12,
 					fontFamily:"Roboto, Helvetica, Arial, sans-serif",
 				}
 			},
@@ -96,7 +93,14 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 					}
 				},
 				borderWidth: 1,
-				borderColor: currentTheme === 'dark' ? '#000000' : '#FFFFFF'
+				borderColor: currentTheme === 'dark' ? '#000000' : '#FFFFFF',
+				legend: {
+					itemStyle:{
+						color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+						fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+					    fontSize:12
+					}
+				},
 			}
 		},
 		series: data

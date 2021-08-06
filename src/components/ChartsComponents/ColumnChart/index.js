@@ -28,7 +28,10 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
       align:'left',
       x:5,
 			y: 15,
-			margin:30
+			margin:30,
+      style:{
+				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+			}
     },
     subtitle:{
         text: subtitle ? subtitle : null,
@@ -40,14 +43,14 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
           text: xAxisTitle ? xAxisTitle : '',
           style:{
             color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-            fontSize:14,
+            fontSize:12,
             fontFamily:"Roboto, Helvetica, Arial, sans-serif",
           }
         },
         labels: {
           style:{
             color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-            fontSize:14,
+            fontSize:12,
             fontFamily:"Roboto, Helvetica, Arial, sans-serif",
           }
         },
@@ -58,7 +61,7 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
           align: "high",
           style:{
             color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-            fontSize:14,
+            fontSize:12,
             fontFamily:"Roboto, Helvetica, Arial, sans-serif",
           }
         },
@@ -66,7 +69,7 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
           overflow: "justify",
           style:{
             color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-            fontSize:14,
+            fontSize:12,
             fontFamily:"Roboto, Helvetica, Arial, sans-serif",
           }
         },
@@ -95,7 +98,9 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
         align: 'right',
         verticalAlign: 'top',
         itemStyle:{
-            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000'
+            color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+            fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+          fontSize:12
         }
     },
     credits: {

@@ -24,6 +24,9 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
       align: 'left',
       x: 5,
       y: 25,
+      style: {
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+      },
     },
     subtitle: {
       text: subtitle ? subtitle : null,
@@ -33,18 +36,18 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
       categories: categories,
       title: {
         text: xAxis,
-		style:{
-			color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-			fontSize:14,
-			fontFamily:"Roboto, Helvetica, Arial, sans-serif",
-		}
+        style: {
+          color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+          fontSize: 12,
+          fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        },
       },
       labels: {
-		style:{
-			color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-			fontSize:14,
-			fontFamily:"Roboto, Helvetica, Arial, sans-serif",
-		}
+        style: {
+          color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+          fontSize: 12,
+          fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        },
       },
     },
     yAxis: {
@@ -53,19 +56,19 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
       title: {
         text: yAxis,
         align: 'high',
-        style:{
-			color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-			fontSize:14,
-			fontFamily:"Roboto, Helvetica, Arial, sans-serif",
-		}
+        style: {
+          color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+          fontSize: 12,
+          fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        },
       },
       labels: {
         overflow: 'justify',
-        style:{
-			color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-			fontSize:14,
-			fontFamily:"Roboto, Helvetica, Arial, sans-serif",
-		}
+        style: {
+          color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+          fontSize: 12,
+          fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        },
       },
     },
 
@@ -88,6 +91,8 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
       reversed: true,
       itemStyle: {
         color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        fontSize: 12,
       },
     },
     series: data,

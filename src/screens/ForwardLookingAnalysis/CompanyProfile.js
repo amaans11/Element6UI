@@ -231,7 +231,7 @@ const CompanyProfile = () => {
 						</Grid>
 					</Grid>
 					<Grid container>
-						<Grid item xs={8}>
+						<Grid item xs={12}>
 							<LineChart
 								data={chartData}
 								chartKey="COMPANY_PROFILE"
@@ -239,7 +239,7 @@ const CompanyProfile = () => {
 								isCustomHeight={true}
 							/>
 						</Grid>
-						<Grid item xs={4}>
+						<Grid item xs={12}>
 							<DataTable data={tableData} columns={companyProfileCells} tableHeading="COMPANY_PROFILE" />
 						</Grid>
 					</Grid>

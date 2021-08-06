@@ -25,6 +25,9 @@ function PieChart({
       text: title,
       align: 'left',
       y: 25,
+      style:{
+        fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+    }
     },
     subtitle: {
       text: subtitle ? subtitle : null,
@@ -49,7 +52,7 @@ function PieChart({
           style: {
             shadow: false,
             color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-            fontSize: 14,
+            fontSize: 12,
             fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
             fontWeight: '400'
           },
