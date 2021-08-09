@@ -71,9 +71,10 @@ const useStyles = makeStyles(() => ({
   card: {
     margin: 20,
     padding: 20,
+	width:300
   },
   contentView: {
-    margin: 20,
+    margin: 12,
   },
   description: {
     paddingTop: 20,
@@ -150,18 +151,18 @@ function UrgentemLanding({ history }) {
         ),
       },
       {
-        name: 'Fundamentals Data Coverage (%)',
+        name: 'Data Coverage (%)',
         selector: 'coverageFundamentals',
         sortable: true,
         right: true,
         wrap: true,
-      },
-      {
-        name: 'Emissions Data Coverage (%)',
-        selector: 'coverageEmissions',
-        sortable: true,
-        right: true,
-        wrap: true,
+		cell: (row) => (
+			<div style={{minWidth:200,textAlign:'right'}}>
+				<div>Fundamental Coverage : {row.coverageFundamentals}</div>
+				<div>Emission Coverage : {row.coverageEmissions}</div>
+			</div>
+		  ),
+		  
       },
       {
         name: 'Version',
@@ -192,7 +193,7 @@ function UrgentemLanding({ history }) {
             style={{ marginRight: 10, fontSize: 10 }}
             onClick={() => getCoverageDetails(row)}
           >
-            ISINS NOT COVERED
+            MISSING ISINS
           </Button>
         ),
         button: true,
@@ -281,18 +282,29 @@ function UrgentemLanding({ history }) {
           </Box>
         </Grid>
         <Grid item xs={8} className={classes.contentView}>
-          <Typography align="center" variant="h4">
+          <div
+            style={{
+              font: 'bold 22px "Trebuchet MS", Verdana, sans-serif',
+              fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+            }}
+          >
             Welcome to the Urgentem Element 6
             <sup style={{ verticalAlign: 'super', fontSize: 12 }}>TM</sup>{' '}
             Platform.
-          </Typography>
-          <Typography variant="h6" className={classes.description}>
+          </div>
+          <div
+            style={{
+              fontSize: 14,
+              fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+			  marginTop:10
+            }}
+          >
             Upload and select your portfolio and benchmark. Navigate our climate
             portfolio analytics to: calculate the portfolio carbon footprint,
             backtest low carbon investment strategies and identify securities
             with high exposure to carbon risk.
-          </Typography>
-          <Box mt={1}>
+          </div>
+          {/* <Box mt={1}>
             <Typography gutterBottom variant="h5" component="h2">
               Delete portfolios
             </Typography>
@@ -303,7 +315,7 @@ function UrgentemLanding({ history }) {
             <Link to="" onClick={deletePortfolioHandler}>
               Delete portfolio
             </Link>
-          </Box>
+          </Box> */}
           <Box mt={2}>
             <DataTable
               data={portfolioTableRes}

@@ -116,12 +116,7 @@ const ContributionAnalysis = () => {
 							<PieChart chartKey="CONTRIBUTION" data={contribData} />
 						</Grid>
 					</Grid>
-					<ColumnChart
-						categories={chartCategories}
-						data={chartData}
-						chartKey="CONTRIBUTION_ANALYSIS"
-						isLegend={false}
-					/>
+					
 				</React.Fragment>
 			)}
 		</React.Fragment>

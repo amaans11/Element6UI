@@ -40,7 +40,7 @@ function PieChart({
     },
     plotOptions: {
       pie: {
-        size: '60%',
+        size: '100%',
         allowPointSelect: true,
         cursor: 'pointer',
         dataLabels: {

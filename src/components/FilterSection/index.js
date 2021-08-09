@@ -92,6 +92,9 @@ const filterRes={
 	'Immediate 1.5C with limited CDR (Disorderly, Alt)':'Immediate 1.5C with limited CDR (Disorderly, Alt)',
 	'Immediate 1.5C with limited CDR (Disorderly, Alt)':'Immediate 1.5C with limited CDR (Disorderly, Alt)',
 	'Nationally determined contributions (NDCs) (Hot house world, Alt)':'Nationally determined contributions (NDCs) (Hot house world, Alt)',
+	'IPCC':'IPCC 1.5',
+	'IEA':'IEA',
+	'NGFS':'NGFS'
 }
 export default function FilterGroup() {
 	const [ filterData, setFilterData ] = useState(data);

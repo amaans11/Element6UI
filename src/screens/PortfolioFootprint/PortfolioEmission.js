@@ -21,6 +21,40 @@ const PortfolioEmission = () => {
 	const auth =useSelector(state=>state.auth);
 	const {filterItem,loading}=auth;
 
+	const {footprintMetric} = filterItem
+	console.log("footprintMetric",footprintMetric)
+	const tableLabel =  footprintMetric === 'TotalCarbEmis' ? 'tCO2e' : 'tCO2e / 1M USD'
+
+	const portEmissionCells = [
+		{
+			name: `Portfolios(${tableLabel})`,
+			selector: 'name',
+			sortable: true,
+			right: false,
+			wrap: true
+		},
+		{
+			name: 'Scope 1+2',
+			selector: 'Sc12',
+			sortable: true,
+			right: true,
+			cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc12)}</div>
+		},
+		{
+			name: 'Scope 3',
+			selector: 'Sc3',
+			sortable: true,
+			right: true,
+			cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc3)}</div>
+		},
+		{
+			name: 'Scope 1+2+3',
+			selector: 'Sc123',
+			sortable: true,
+			right: true,
+			cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc123)}</div>
+		}
+	];
 
 	const fetchDetails = async () => {
 		const data = getRequestData('PORTFOLIO_EMISSION', auth);

@@ -27,6 +27,31 @@ export const getTempScoreDataFailed=(error)=>{
     return { type: actionTypes.GET_TEMP_SCORE_FAILED, error };
 }
 
+export const getSectoralTempScore = (data) => {
+	return async (dispatch, getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+		return axios
+			.post(`${actionTypes.TEMP_API_URL}/sectoral_temp_score/`, data, {
+				headers: {
+					'client-key': clientKey
+				}
+			})
+			.then(result => {
+                dispatch(getSectoralTempScoreSuccess(result.data))
+			})
+            .catch(err=>{
+                const error=err.response && err.response.data.message
+                dispatch(getSectoralTempScoreFailed(error))
+            })
+	};
+};
+
+export const getSectoralTempScoreSuccess=(res)=>{
+    return { type: actionTypes.GET_SECTORAL_TEMP_SCORE_SUCCESS, res };
+}
+export const getSectoralTempScoreFailed=(error)=>{
+    return { type: actionTypes.GET_SECTORAL_TEMP_SCORE_FAILED, error };
+}
 
 export const getCompanyAnalysisData = (data) => {
 	return async (dispatch, getState) => {

@@ -236,7 +236,7 @@ const CompanyProfile = () => {
 								data={chartData}
 								chartKey="COMPANY_PROFILE"
 								chartTitle={`${companyName} Profile`}
-								isCustomHeight={true}
+								// isCustomHeight={true}
 							/>
 						</Grid>
 						<Grid item xs={12}>

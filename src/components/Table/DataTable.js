@@ -13,6 +13,16 @@ const customStyles = {
       color: '#F7DC81',
       fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
     },
+	activeSortStyle: {
+		'&:focus': {
+			color:  '#F7DC81'
+		}
+	},
+	inactiveSortStyle: {
+		'&:hover': {
+			color:'#F7DC81'
+		}
+	}
   },
   rows: {
     style: {
@@ -39,6 +49,16 @@ const scollStyle = {
       color: '#F7DC81',
       fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
     },
+	activeSortStyle: {
+		'&:focus': {
+			color:  '#F7DC81'
+		}
+	},
+	inactiveSortStyle: {
+		'&:hover': {
+			color:'#F7DC81'
+		}
+	}
   },
   rows: {
     style: {

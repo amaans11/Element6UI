@@ -71,10 +71,10 @@ const GenerateReport = () => {
     <Grid container>
       {isVisible && <Grid item xs={3} />}
       <Grid item xs={isVisible ? 9 : 12}>
-        <Box m={4}>
-          <Typography align="center" variant="h4">
+        <Box>
+          <div style={{ font: 'bold 22px "Trebuchet MS", Verdana, sans-serif',paddingBottom:10,fontFamily: "Roboto, Helvetica, Arial, sans-serif" }}>
             Generate your portfolio Urgentem report
-          </Typography>
+          </div>
           <div
             style={{
               fontSize: 14,

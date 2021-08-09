@@ -85,7 +85,7 @@ const Header = ({ history }) => {
 					
 					<Box variant="body1" color="inherit" noWrap>
 						<div style={{color:'#F7DC81'}}> {`${currentUser.displayName} / ${currentUser.client}`} </div>
-						<div style={{ fontSize: 12,color:'#F7DC81' }}> Emission Year - {emissionYear} </div>
+						<div style={{ fontSize: 12,color:'#F7DC81' }}> Urgentem Emissions Year - {emissionYear} </div>
 						<div style={{ fontSize: 12,color:'#F7DC81' }}> Currency - {auth.currentCurrency ? auth.currentCurrency : 'USD'} </div>
 					</Box>
 				</div>

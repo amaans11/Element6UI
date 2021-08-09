@@ -1,35 +1,6 @@
 import React from 'react';
 
-const portEmissionCells = [
-	{
-		name: 'Portfolios (tCO2e / 1M USD)',
-		selector: 'name',
-		sortable: true,
-		right: false,
-		wrap: true
-	},
-	{
-		name: 'Scope 1+2',
-		selector: 'Sc12',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc12)}</div>
-	},
-	{
-		name: 'Scope 3',
-		selector: 'Sc3',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc3)}</div>
-	},
-	{
-		name: 'Scope 1+2+3',
-		selector: 'Sc123',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.Sc123)}</div>
-	}
-];
+
 const avoidedEmissionCells = [
 	{
 		name: '',
@@ -382,7 +353,7 @@ const riskContribCells = [
 		cell: (row) => <div>{row.annualized_risk === -999999 ? 'NA' : row.annualized_risk}</div>
 	},
 	{
-		name: 'Contribution to Intensity',
+		name: 'Contribution to Emissions Footprint',
 		selector: 'intensity',
 		sortable: true,
 		right: true
@@ -649,7 +620,6 @@ const backgroundCells=[
 	},
 ]
 export {
-	portEmissionCells,
 	avoidedEmissionCells,
 	sovFootprintCells,
 	sectoralScope3Cells,

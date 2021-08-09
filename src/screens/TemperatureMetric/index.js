@@ -11,6 +11,7 @@ import CompanyAnalysis from './CompanyAnalysis'
 import Attribution from './Attribution'
 import Heatmap from './Heatmap'
 import ContributionAnalysis from './ContributionAnalysis'
+import SectoralTempScore from './SectoralTempScore'
 
 const useStyles = makeStyles((theme) => ({
   tabPane: {
@@ -62,10 +63,13 @@ function TemperatureMetric() {
           <TabPanel value={value} index={2}>
             <Attribution />
           </TabPanel>
-          <TabPanel value={value} index={3}>
-            <ContributionAnalysis />
+		  <TabPanel value={value} index={3}>
+            <SectoralTempScore />
           </TabPanel>
           <TabPanel value={value} index={4}>
+            <ContributionAnalysis />
+          </TabPanel>
+          <TabPanel value={value} index={5}>
             <Heatmap />
           </TabPanel>
         </Grid>

@@ -6,15 +6,16 @@ const footprintTabs = [
 	'Disclosure',
 	'Avoided Emissions'
 ];
-const scope3Tabs = [ 'Portfolio Scope 3 Heatmap', 'Portfolio Sectoral Scope 3 Heatmap' ];
+const scope3Tabs = [ 'Portfolio Scope 3 Heatmap', 'Sectoral Scope 3 Heatmap' ];
 const portOptimizationTabs = [ 'Portfolio Optimization','Optimized emission', 'Performance Attribution' ];
 const carbonRiskTabs = [ 'Portfolio Carbon Risk' ];
 const strandedAssetTabs = [ 'Fossil-Fuel Reserves Footprint', 'Coal Power Analysis' ];
 const tempMetricTabs = [
-	'Portfolio Temperature Score',
+	'Portfolio Temp Score',
 	'Company Level Analysis',
 	'Attribution',
-	'COntribution Analysis',
+	'Sectoral Temp Score',
+	'Contribution Analysis',
 	'Heatmap'
 ];
 const forwardTabs = [ 'Portfolio Alignment', 'Target Setting', 'Company Profile', 'Carbon Adjusted Returns' ];
