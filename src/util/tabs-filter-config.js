@@ -53,6 +53,8 @@ const data={
         'emission',
         'strategy'
     ],
+    'OPTIMIZED_EMISSION':[
+    ],
     'PERFORMANCE_ATTRIBUTION':[
         'sector',
         'returnYear'

@@ -193,7 +193,9 @@ const MiniDrawer = ({ classes, history }) => {
   const currentPortfolio = useSelector((state) => state.auth.currentPortfolio)
   const currentBenchmark = useSelector((state) => state.auth.currentBenchmark)
   const isVisible = useSelector((state) => state.auth.isVisible)
-  const isAdmin = useSelector((state) => state.auth.userInfo && state.auth.userInfo.is_admin)
+  const isAdmin = useSelector(
+    (state) => state.auth.userInfo && state.auth.userInfo.is_admin,
+  )
 
   let currentUser = auth && auth.currentUser ? auth.currentUser : {}
   let userInfo = auth && auth.userInfo ? auth.userInfo : {}
@@ -349,18 +351,7 @@ const MiniDrawer = ({ classes, history }) => {
                 <FilterGroup />
               </div>
             </div>
-          ) : (
-            <div className={classes.uploadDiv}>
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.uploadBtn}
-                onClick={handleUploadPortfolio}
-              >
-                Upload Portfolio
-              </Button>
-            </div>
-          )
+          ) : null
         ) : (
           <StyleRoot>
             <span onClick={hideFilterSection} style={styles.slideInRight}>
@@ -374,7 +365,7 @@ const MiniDrawer = ({ classes, history }) => {
             </span>
           </StyleRoot>
         )}
-		<div className={contentClass}>
+        <div className={contentClass}>
           {/* <div>
 						<div style={{ display: 'flex', width: '100%' }}>
 							<div style={{ display: 'flex', width: '75%' }}>
@@ -434,7 +425,10 @@ const MiniDrawer = ({ classes, history }) => {
             <GenerateReport />
           </Route>
           <Route path="/">
-            <UrgentemLanding history={history} />
+            <UrgentemLanding
+              history={history}
+              handleUploadPortfolio={handleUploadPortfolio}
+            />
           </Route>
         </Switch>
       </main>

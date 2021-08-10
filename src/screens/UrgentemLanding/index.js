@@ -67,11 +67,11 @@ function ListItemLink({ icon }) {
   }
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   card: {
-    margin: 20,
+    margin: 15,
     padding: 20,
-	width:300
+    width: 300,
   },
   contentView: {
     margin: 12,
@@ -80,9 +80,14 @@ const useStyles = makeStyles(() => ({
     paddingTop: 20,
     fontSize: 16,
   },
+  uploadBtn: {
+    height: 50,
+    width: 300,
+    marginLeft: theme.spacing(2),
+  },
 }))
 
-function UrgentemLanding({ history }) {
+function UrgentemLanding({ history, handleUploadPortfolio }) {
   const classes = useStyles()
   const dispatch = useDispatch()
 
@@ -151,18 +156,11 @@ function UrgentemLanding({ history }) {
         ),
       },
       {
-        name: 'Data Coverage (%)',
-        selector: 'coverageFundamentals',
+        name: 'Emission Coverage (%)',
+        selector: 'coverageEmissions',
         sortable: true,
         right: true,
         wrap: true,
-		cell: (row) => (
-			<div style={{minWidth:200,textAlign:'right'}}>
-				<div>Fundamental Coverage : {row.coverageFundamentals}</div>
-				<div>Emission Coverage : {row.coverageEmissions}</div>
-			</div>
-		  ),
-		  
       },
       {
         name: 'Version',
@@ -180,7 +178,7 @@ function UrgentemLanding({ history }) {
         cell: (row) => (
           <div style={{ marginLeft: 40 }}>
             {row['date_created'] &&
-              moment(row['date_created']).format('DD-MM-YYYY hh:mm:ss A')}
+              moment(row['date_created']).format('DD-MM-YYYY hh:mm:ss')}
           </div>
         ),
       },
@@ -190,7 +188,7 @@ function UrgentemLanding({ history }) {
             color="primary"
             variant="contained"
             size="small"
-            style={{ marginRight: 10, fontSize: 10 }}
+            style={{ marginRight: 10, fontSize: 8 }}
             onClick={() => getCoverageDetails(row)}
           >
             MISSING ISINS
@@ -264,24 +262,7 @@ function UrgentemLanding({ history }) {
   return (
     <React.Fragment>
       <Grid container>
-        <Grid item xs={3}>
-          <Box mt={11}>
-            {configs.map((config) => (
-              <span onClick={() => handleClick(config)}>
-                <Card className={classes.card}>
-                  <Box display="flex" flexDirection="row">
-                    <Typography variant="h6" style={{ paddingBottom: 10 }}>
-                      {config.name}
-                    </Typography>
-                    <ListItemLink icon={config.icon} />
-                  </Box>
-                  <Typography variant="p">{config.content}</Typography>
-                </Card>
-              </span>
-            ))}
-          </Box>
-        </Grid>
-        <Grid item xs={8} className={classes.contentView}>
+        <Grid item xs={9}>
           <div
             style={{
               font: 'bold 22px "Trebuchet MS", Verdana, sans-serif',
@@ -296,7 +277,7 @@ function UrgentemLanding({ history }) {
             style={{
               fontSize: 14,
               fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-			  marginTop:10
+              marginTop: 10,
             }}
           >
             Upload and select your portfolio and benchmark. Navigate our climate
@@ -324,7 +305,37 @@ function UrgentemLanding({ history }) {
             />
           </Box>
         </Grid>
+        <Grid item xs={3}>
+          <Box ml={3}>
+            <Box mt={3}>
+              <Button
+                variant="outlined"
+                color="primary"
+                className={classes.uploadBtn}
+                onClick={handleUploadPortfolio}
+              >
+                Upload Portfolio
+              </Button>
+            </Box>
+            <Box>
+              {configs.map((config) => (
+                <span onClick={() => handleClick(config)}>
+                  <Card className={classes.card}>
+                    <Box display="flex" flexDirection="row">
+                      <Typography variant="h6" style={{ paddingBottom: 10 }}>
+                        {config.name}
+                      </Typography>
+                      <ListItemLink icon={config.icon} />
+                    </Box>
+                    <Typography variant="p">{config.content}</Typography>
+                  </Card>
+                </span>
+              ))}
+            </Box>
+          </Box>
+        </Grid>
       </Grid>
+
       <Dialog open={dialog} keepMounted onClose={handleClose} maxWidth="sm">
         <DialogTitle>Delete Portfolio</DialogTitle>
         <DialogContent>

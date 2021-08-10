@@ -194,9 +194,10 @@ function UrgentemDownload() {
           <Box>
             <div
               style={{
-                font: 'bold 22px "Trebuchet MS", Verdana, sans-serif',
+                fontWeight: 'bold',
+				fontSize:18,
                 paddingBottom: 10,
-                fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
                 paddingLeft: 10,
               }}
             >

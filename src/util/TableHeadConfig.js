@@ -364,19 +364,21 @@ const fossilFuelCells = [
 		name: 'Fossil Fuel Type',
 		selector: 'type',
 		sortable: true,
-		right: false
+		right: false,
 	},
 	{
 		name: 'Portfolio',
 		selector: 'portfolio',
 		sortable: true,
-		right: true
+		right: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.portfolio)}</div>
 	},
 	{
 		name: 'Benchmark',
 		selector: 'benchmark',
 		sortable: true,
-		right: true
+		right: true,
+		cell: (row) => <div>{new Intl.NumberFormat().format(row.benchmark)}</div>
 	}
 ];
 const countryFossilCells = [

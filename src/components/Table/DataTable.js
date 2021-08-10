@@ -7,7 +7,7 @@ import CONFIG from '../../util/config'
 const customStyles = {
   headCells: {
     style: {
-      fontSize: 14,
+      fontSize: 12,
       textAlign: 'right',
       background: '#1E2732',
       color: '#F7DC81',
@@ -32,6 +32,7 @@ const customStyles = {
   cells: {
     style: {
       lineHeight: 2,
+	  fontSize:12
     },
   },
 }
@@ -43,7 +44,7 @@ const scollStyle = {
   },
   headCells: {
     style: {
-      fontSize: 14,
+      fontSize: 12,
       textAlign: 'right',
       background: '#1E2732',
       color: '#F7DC81',
@@ -59,6 +60,11 @@ const scollStyle = {
 			color:'#F7DC81'
 		}
 	}
+  },
+  cells: {
+    style: {
+	  fontSize:12
+    },
   },
   rows: {
     style: {

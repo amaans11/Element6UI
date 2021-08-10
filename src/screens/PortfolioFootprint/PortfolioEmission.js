@@ -27,7 +27,7 @@ const PortfolioEmission = () => {
 
 	const portEmissionCells = [
 		{
-			name: `Portfolios(${tableLabel})`,
+			name: `Portfolios (${tableLabel})`,
 			selector: 'name',
 			sortable: true,
 			right: false,

@@ -45,13 +45,14 @@ Highcharts.theme = {
 	title: {
 		style: {
 			color: currentTheme === 'dark' ? '#f5f5f5' : '#303030',
-			font: 'bold 22px "Trebuchet MS", Verdana, sans-serif'
+			font: 'bold 18px "Trebuchet MS", Verdana, sans-serif'
 		}
 	},
 	subtitle: {
 		style: {
 			color: '#666666',
-			font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+			fontSize:18,
+			fontWeight:'bold'
 		}
 	},
 	legend: {

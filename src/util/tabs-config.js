@@ -1,7 +1,7 @@
 const footprintTabs = [
 	'Portfolio Emissions',
 	'Sector Emissions',
-	'Sovereign Footprint',
+	'Sovereign',
 	'Carbon Attribution',
 	'Disclosure',
 	'Avoided Emissions'
@@ -11,10 +11,10 @@ const portOptimizationTabs = [ 'Portfolio Optimization','Optimized emission', 'P
 const carbonRiskTabs = [ 'Portfolio Carbon Risk' ];
 const strandedAssetTabs = [ 'Fossil-Fuel Reserves Footprint', 'Coal Power Analysis' ];
 const tempMetricTabs = [
-	'Portfolio Temp Score',
+	'Portfolio Score',
 	'Company Level Analysis',
 	'Attribution',
-	'Sectoral Temp Score',
+	'Sectoral Score',
 	'Contribution Analysis',
 	'Heatmap'
 ];
