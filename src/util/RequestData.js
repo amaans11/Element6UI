@@ -35,6 +35,8 @@ const getRequestData = (type, auth) => {
     filterItem,
     reweightFactor,
     userInfo,
+	selectedDownloadMenu,
+	selectedDownloadPort
   } = auth
 
   const { client, userName } = currentUser
@@ -595,6 +597,14 @@ const getRequestData = (type, auth) => {
         footprint: footprintMetric,
       }
       break
+	  case 'URGENTEM_DOWNLOAD':
+		data = {
+			year:yearEmissions,
+			field:selectedDownloadMenu.join(";"),
+			portfolio_id:selectedDownloadPort.value,
+			version_portfolio:selectedDownloadPort.version
+		  }
+		  break;
     default:
       data = {}
       break

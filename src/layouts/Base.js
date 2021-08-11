@@ -57,6 +57,7 @@ import NLP from '../screens/NLP'
 import UrgentemLanding from '../screens/UrgentemLanding'
 import { missingCoverageCells } from '../util/TableHeadConfig'
 import DataTable from '../components/Table/DataTable'
+import getRequestData from '../util/RequestData'
 import {
   getPortfolioList,
   getUserInfo,
@@ -70,19 +71,26 @@ import {
   getDownloadPortfolios,
   setDownloadPortfolio,
   setDownloadTags,
+  getDownloadDetails,
 } from '../redux/actions/authActions'
 import csvFile from '../assets/Dummy-file.xlsx'
 
 const drawerWidth = 295
 
 const options = [
-  { label: 'Summary data', value: 'summary' },
-  { label: 'Average Intensity', value: 'averageIntensity' },
-  { label: 'Reported Intensity', value: 'reportedIntensity' },
-  { label: 'Reported Emissions', value: 'reportedEmissions' },
-  { label: 'Absolute Emissions Average', value: 'absoluteEmission' },
-  { label: 'Selected All', value: 'selectedAll' },
+  { label: 'Summary Data', value: 'summary' },
+  { label: 'Average Intensity', value: 'avg_int_cols' },
+  { label: 'Reported Intensity', value: 'rep_int_cols' },
+  { label: 'Reported Emissions', value: 'rep_emis_cols' },
+  { label: 'Absolute Emissions Average', value: 'absolute_avg' },
 ]
+const menus = {
+  summary: 'Summary Data',
+  avg_int_cols: 'Average Intensity',
+  rep_int_cols: 'Reported Intensity',
+  rep_emis_cols: 'Reported Emissions',
+  absolute_avg: 'Absolute Emissions Average',
+}
 
 const styles = (theme) => ({
   root: {
@@ -214,12 +222,15 @@ const MiniDrawer = ({ classes, history }) => {
     (state) => state.auth.userInfo && state.auth.userInfo.is_admin,
   )
 
-  const { downloadPortfolioList, selectedDownloadMenu } = auth
+  const {
+    downloadPortfolioList,
+    selectedDownloadMenu,
+    selectedDownloadPort,
+  } = auth
 
   let currentUser = auth && auth.currentUser ? auth.currentUser : {}
   let userInfo = auth && auth.userInfo ? auth.userInfo : {}
 
-  console.log('selectedDownloadMenu', selectedDownloadMenu)
   const getUserDetails = async () => {
     const data = {
       userName: currentUser.userName,
@@ -251,13 +262,11 @@ const MiniDrawer = ({ classes, history }) => {
   const updateTag = async (value) => {
     const tags = [...selectedDownloadMenu]
     if (tags.includes(value)) {
-      console.log('test')
       const index = tags.indexOf(value)
-      // tags.spli ce(index,1)
+      tags.splice(index, 1)
     } else {
       tags.push(value)
     }
-
     await dispatch(setDownloadTags(tags))
   }
   const ondownloadPortfolioChange = async (currentValue) => {
@@ -269,7 +278,16 @@ const MiniDrawer = ({ classes, history }) => {
         }
       })
     }
+    const yearEmissions = userInfo.year.emissions
+
+    const data = {
+      year: yearEmissions,
+      field: selectedDownloadMenu.join(';'),
+      portfolio_id: portfolio.value,
+      version_portfolio: portfolio.version,
+    }
     await dispatch(setDownloadPortfolio(portfolio))
+    await dispatch(getDownloadDetails(data))
   }
   const onBenchmarkChange = async (currentValue) => {
     let benchmark = {}
@@ -335,6 +353,15 @@ const MiniDrawer = ({ classes, history }) => {
     'content-part-not-visible': !isVisible,
   })
 
+  let result = ''
+
+  selectedDownloadMenu.map((menu, index) => {
+    if (index !== 0) {
+      result = `${result},${menus[menu]}`
+    } else {
+      result = menus[menu]
+    }
+  })
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -405,10 +432,9 @@ const MiniDrawer = ({ classes, history }) => {
                       ? downloadPortfolioList
                       : []
                   }
-                  // defaultValue={currentPortfolio}
                   handleChange={ondownloadPortfolioChange}
                   type="portfolio"
-                  currentValue={currentPortfolio}
+                  currentValue={selectedDownloadPort}
                 />
               </Box>
               <Box>
@@ -416,7 +442,7 @@ const MiniDrawer = ({ classes, history }) => {
                   style={{
                     position: 'relative',
                     background: 'none',
-                    width: 300,
+                    width: 280,
                   }}
                   //   expanded={isExpand[e.grpKey]}
                 >
@@ -427,7 +453,7 @@ const MiniDrawer = ({ classes, history }) => {
                     expandIcon={<ArrowDropDownIcon />}
                     // onClick={()=>handleExpandAccordion(e.grpKey)}
                   >
-                    <div className="tags-label"></div>
+                    <div className="tags-label">Download Options</div>
                     <div
                       style={{
                         fontSize: 12,
@@ -435,7 +461,9 @@ const MiniDrawer = ({ classes, history }) => {
                         fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
                         fontWeight: '500',
                       }}
-                    ></div>
+                    >
+                      {result}
+                    </div>
                   </AccordionSummary>
                   <AccordionDetails>
                     <div>

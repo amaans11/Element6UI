@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import getRequestData from '../../util/RequestData'
 import {
   Typography,
   Grid,
@@ -90,15 +91,9 @@ function UrgentemDownload() {
     }
     return value
   }
-  const getDownloadData = async (currentPortfolio) => {
+  const getDownloadData = async () => {
     setLoading(true)
-    const selectedField = getSelectedField()
-    const data = {
-      portfolio_id: currentPortfolio.value,
-      version_portfolio: currentPortfolio.version,
-      field: selectedField,
-      year: yearEmissions,
-    }
+	const data = getRequestData('URGENTEM_DOWNLOAD', auth);
     await dispatch(getDownloadDetails(data))
     setLoading(false)
   }
@@ -153,38 +148,13 @@ function UrgentemDownload() {
     }
     setColumns(res)
   }
-  const getPortfolioData = async () => {
-    const portfolioList = []
-    let currentPortfolio = {}
-    if (downloadPortfolioList && downloadPortfolioList.length > 0) {
-      downloadPortfolioList.map((portfolio, index) => {
-        if (index === 0) {
-          currentPortfolio = {
-            label: portfolio['name'],
-            value: portfolio['portfolio_id'],
-            version: portfolio['version'],
-          }
-        }
-        portfolioList.push({
-          label: portfolio['name'],
-          value: portfolio['portfolio_id'],
-          version: portfolio['version'],
-        })
-      })
-    }
-    setPortfolioList(portfolioList)
-    setPortfolio(currentPortfolio)
-    await getDownloadData(currentPortfolio)
-  }
+  
   useEffect(() => {
     getTableColumns()
   }, [downloadData])
-  useEffect(() => {
-    getPortfolioData()
-  }, [downloadPortfolioList])
 
   useEffect(() => {
-    fetchDetails()
+    getDownloadData()
   }, [])
   return (
     <React.Fragment>
@@ -203,114 +173,6 @@ function UrgentemDownload() {
             >
               Urgentem Emissions Data Download
             </div>
-            <Box m={2}>
-              <Box mb={2}>
-                <SelectwithSearch
-                  heading={'Select Portfolio'}
-                  data={
-                    portfolioList && portfolioList.length > 0
-                      ? portfolioList
-                      : []
-                  }
-                  handleChange={onPortfolioChange}
-                  type="portfolio"
-                  currentValue={selectedPortfolio}
-                />
-              </Box>
-              <Grid container>
-                <Grid item xs={9}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={summary}
-                        onChange={() => {
-                          setSummary(!summary)
-                        }}
-                        value="summary"
-                      />
-                    }
-                    label="Summary data"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={averageIntensity}
-                        onChange={() => {
-                          setAverageIntensity(!averageIntensity)
-                        }}
-                        value="averageIntensity"
-                      />
-                    }
-                    label="Average Intensity"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={reportedIntensity}
-                        onChange={() => {
-                          setReportedIntensity(!reportedIntensity)
-                        }}
-                        value="reportedIntensity"
-                      />
-                    }
-                    label="Reported Intensity"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={reportedEmissions}
-                        onChange={() => {
-                          setReportedEmissions(!reportedEmissions)
-                        }}
-                        value="reportedEmissions"
-                      />
-                    }
-                    label="Reported Emissions"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={absoluteEmission}
-                        onChange={() => {
-                          setAbsoluteEmission(!absoluteEmission)
-                        }}
-                        value="absoluteEmission"
-                      />
-                    }
-                    label="Absolute Emissions Average"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox onChange={handleSelectAll} value="selectAll" />
-                    }
-                    label="Selected All"
-                  />
-                </Grid>
-                <Grid item xs={2}>
-                  {auth.userInfo &&
-                  Object.keys(auth.userInfo).length > 0 &&
-                  auth.userInfo.Trial ? (
-                    <Button
-                      size="large"
-                      disabled="true"
-                      variant="contained"
-                      color="primary"
-                    >
-                      Submit
-                    </Button>
-                  ) : (
-                    <Button
-                      size="large"
-                      variant="contained"
-                      color="primary"
-                      onClick={handleSubmit}
-                    >
-                      Submit
-                    </Button>
-                  )}
-                </Grid>
-              </Grid>
-            </Box>
             <DataTable
               data={downloadData}
               columns={columns}

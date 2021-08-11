@@ -667,15 +667,24 @@ export const setDownloadPortfolioSuccess = (res) => {
   return { type: actionTypes.SET_DOWNLOAD_PORTFOLIO, res }
 }
 export const setDownloadTags = (tags) => {
-	return async (dispatch, getState) => {
-	  dispatch(setDownloadTagsSuccess(tags))
-	}
-  }
-  
-  export const setDownloadTagsSuccess = (res) => {
-	return { type: actionTypes.SET_DOWNLOAD_TAGS, res }
-  }
+  return async (dispatch, getState) => {
+    const auth = getState().auth
+    const { userInfo, selectedDownloadPort } = auth
+    const yearEmissions = userInfo.year.emissions
 
+    const data = {
+      year: yearEmissions,
+      field: tags.join(';'),
+      portfolio_id: selectedDownloadPort.value,
+      version_portfolio: selectedDownloadPort.version,
+    }
+    await dispatch(setDownloadTagsSuccess(tags))
+    await dispatch(getDownloadDetails(data))
+  }
+}
 
+export const setDownloadTagsSuccess = (res) => {
+  return { type: actionTypes.SET_DOWNLOAD_TAGS, res }
+}
 
 /* eslint-disable */
