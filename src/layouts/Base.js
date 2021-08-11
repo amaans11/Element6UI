@@ -355,13 +355,16 @@ const MiniDrawer = ({ classes, history }) => {
 
   let result = ''
 
-  selectedDownloadMenu.map((menu, index) => {
-    if (index !== 0) {
-      result = `${result},${menus[menu]}`
-    } else {
-      result = menus[menu]
-    }
-  })
+  if(selectedDownloadMenu.length > 0){
+	selectedDownloadMenu.map((menu, index) => {
+		if (index !== 0) {
+		  result = `${result},${menus[menu]}`
+		} else {
+		  result = menus[menu]
+		}
+	  })
+  }
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
