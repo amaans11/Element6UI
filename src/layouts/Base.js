@@ -355,7 +355,7 @@ const MiniDrawer = ({ classes, history }) => {
 
   let result = ''
 
-  if(selectedDownloadMenu.length > 0){
+  if(selectedDownloadMenu && selectedDownloadMenu.length > 0){
 	selectedDownloadMenu.map((menu, index) => {
 		if (index !== 0) {
 		  result = `${result},${menus[menu]}`
