@@ -33,7 +33,6 @@ function PortfolioFootprint() {
               value={value}
               onChange={handleChange}
               indicatorColor="secondary"
-              variant="fullWidth"
               inkBarStyle={{ background: 'blue' }}
             >
               {footprintTabs &&

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import {
   Accordion,
   AccordionSummary,
@@ -11,6 +12,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import FilterTags from './tags'
 import data from '../../util/filter-config'
 import filterConfig from '../../util/tabs-filter-config'
+import flmFilterConfig from '../../util/flm-tabs-filter-config'
+import { findIndex, get,some } from 'lodash'
 import {
   setFilterItem,
   setFilterVisibility,
@@ -116,6 +119,8 @@ export default function FilterGroup() {
   const [isExpand, setExpand] = useState({})
 
   const dispatch = useDispatch()
+  const history = useHistory()
+  const pathname = get(history.location, 'pathname', '')
 
   const moduleName = useSelector((state) => state.auth.moduleName)
   const tabValue = useSelector((state) => state.auth.tabValue)
@@ -124,6 +129,7 @@ export default function FilterGroup() {
   const { targetScenario } = filterItem
   const getConfigs = () => {
     let config = []
+	console.log("moduleName",moduleName)
     switch (moduleName) {
       case 'Emissions':
         switch (tabValue) {
@@ -227,19 +233,20 @@ export default function FilterGroup() {
       case 'FLM':
         switch (tabValue) {
           case 0:
-            config = filterConfig['PORTFOLIO_ALIGNMENT']
+			  console.log("test")
+            config = flmFilterConfig['PORTFOLIO_ALIGNMENT']
             break
           case 1:
-            config = filterConfig['TARGET_SETTING']
+            config = flmFilterConfig['TARGET_SETTING']
             break
           case 2:
-            config = filterConfig['COMPANY_PROFILE']
+            config = flmFilterConfig['COMPANY_PROFILE']
             break
           case 3:
-            config = filterConfig['CARBON_ADJUSTED_RETURNS']
+            config = flmFilterConfig['CARBON_ADJUSTED_RETURNS']
             break
           default:
-            config = filterConfig['PORTFOLIO_ALIGNMENT']
+            config = flmFilterConfig['PORTFOLIO_ALIGNMENT']
             break
         }
         break
@@ -435,7 +442,7 @@ export default function FilterGroup() {
     }
   }
 
-  const updateTags = (grpindex, tagindex, selected,grpKey) => {
+  const updateTags = (grpindex, tagindex, selected, grpKey) => {
     const newData = [...data]
     if (selected) {
       // eslint-disable-next-line
@@ -447,10 +454,10 @@ export default function FilterGroup() {
 
       const grpName = newData[grpindex].grpKey
 
-	//   setExpand({
-	// 	  ...isExpand,
-	// 	  [grpKey]:false
-	//   })
+      //   setExpand({
+      // 	  ...isExpand,
+      // 	  [grpKey]:false
+      //   })
 
       dispatch(
         setFilterItem({
@@ -500,116 +507,262 @@ export default function FilterGroup() {
   useEffect(() => {
     getConfigs()
   }, [tabValue, targetScenario, moduleName])
-  
+
   const hideFilterSection = async () => {
     await dispatch(setFilterVisibility(false))
   }
-  const handleExpandAccordion = (key)=>{
+  const handleExpandAccordion = (key) => {
     const value = isExpand.hasOwnProperty(key) ? isExpand[key] : false
 
-	setExpand({
-		...isExpand,
-		[key]:!value
-	})
+    setExpand({
+      ...isExpand,
+      [key]: !value,
+    })
   }
 
+  console.log('filterData>>', filterData)
+  console.log('configs>>', configs)
+  console.log("flmFilterConfig",flmFilterConfig)
   return (
     <React.Fragment>
-      {filterData.map((e, index) => {
-        if (configs.includes(e.grpKey)) {
-          return (
-            <Accordion
-              style={{ position: 'relative', background: 'none', width: 300 }}
-			//   expanded={isExpand[e.grpKey]}
-            >
-              <AccordionSummary
-                aria-label="Expand"
-                aria-controls="additional-actions1-content"
-                id="additional-actions1-header"
-                expandIcon={<ArrowDropDownIcon />}
-				// onClick={()=>handleExpandAccordion(e.grpKey)}
-              >
-                <div className="tags-label">{e.grpname}</div>
-                <div
+      {pathname !== '/forward-looking-analysis'
+        ? filterData.map((e, index) => {
+            if (configs.includes(e.grpKey)) {
+              return (
+                <Accordion
                   style={{
-                    fontSize: 12,
-                    font: 'inherit',
-                    fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
-                    fontWeight: '500',
+                    position: 'relative',
+                    background: 'none',
+                    width: 280,
                   }}
+                  //   expanded={isExpand[e.grpKey]}
                 >
-                  {filterRes[filterItem[e.grpKey]]}
-                </div>
-              </AccordionSummary>
-              <AccordionDetails>
-                <div>
-                  {e.tagsList.map((t, i) => {
-                    const val = getEmission(t.value)
-                    const fpValue = getFootprintMetric(t.value)
-                    const warmingScValue = getWarmingScenario(t.value)
-                    if (e.grpKey === 'emission') {
-                      if (val) {
-                        return (
-                          <FilterTags
-                            name={t.name}
-                            selected={t.selected}
-                            grpindex={index}
-                            tagindex={i}
-                            action={(grpindex, tagindex, selected)=>updateTags(grpindex, tagindex, selected,e.grpKey)}
-                          />
-                        )
-                      }
-                    } else if (e.grpKey === 'footprintMetric') {
-                      if (fpValue) {
-                        return (
-                          <FilterTags
-                            name={t.name}
-                            selected={t.selected}
-                            grpindex={index}
-                            tagindex={i}
-                            action={(grpindex, tagindex, selected)=>updateTags(grpindex, tagindex, selected,e.grpKey)}
-                          />
-                        )
-                      }
-                    } else if (e.grpKey === 'warmingScenario') {
-                      if (warmingScValue) {
-                        return (
-                          <FilterTags
-                            name={t.name}
-                            selected={t.selected}
-                            grpindex={index}
-                            tagindex={i}
-                            action={(grpindex, tagindex, selected)=>updateTags(grpindex, tagindex, selected,e.grpKey)}
-                          />
-                        )
-                      }
-                    } else {
-                      return (
-                        <FilterTags
-                          name={t.name}
-                          selected={t.selected}
-                          grpindex={index}
-                          tagindex={i}
-                          action={(grpindex, tagindex, selected)=>updateTags(grpindex, tagindex, selected,e.grpKey)}
-                        />
-                      )
-                    }
-                  })}
-                </div>
-              </AccordionDetails>
-            </Accordion>
-          )
-        }
-      })}
-      {/* {configs.length > 0 ? (
-				<span onClick={hideFilterSection}>
-					<ArrowBackIosIcon style={{ position: 'fixed', left: 400, top: window.innerHeight / 3 }} />
-				</span>
-			) : (
-				<span onClick={hideFilterSection}>
-					<ArrowBackIosIcon style={{ position: 'fixed', left: 80, top: window.innerHeight / 3 }} />
-				</span>
-			)} */}
+                  <AccordionSummary
+                    aria-label="Expand"
+                    aria-controls="additional-actions1-content"
+                    id="additional-actions1-header"
+                    expandIcon={<ArrowDropDownIcon />}
+                    // onClick={()=>handleExpandAccordion(e.grpKey)}
+                  >
+                    <div className="tags-label">{e.grpname}</div>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        font: 'inherit',
+                        fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
+                        fontWeight: '500',
+                      }}
+                    >
+                      {filterRes[filterItem[e.grpKey]]}
+                    </div>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div>
+                      {e.tagsList.map((t, i) => {
+                        const val = getEmission(t.value)
+                        const fpValue = getFootprintMetric(t.value)
+                        const warmingScValue = getWarmingScenario(t.value)
+                        if (e.grpKey === 'emission') {
+                          if (val) {
+                            return (
+                              <FilterTags
+                                name={t.name}
+                                selected={t.value === filterItem[e.grpKey]}
+                                grpindex={index}
+                                tagindex={i}
+                                action={(grpindex, tagindex, selected) =>
+                                  updateTags(
+                                    grpindex,
+                                    tagindex,
+                                    selected,
+                                    e.grpKey,
+                                  )
+                                }
+                              />
+                            )
+                          }
+                        } else if (e.grpKey === 'footprintMetric') {
+                          if (fpValue) {
+                            return (
+                              <FilterTags
+                                name={t.name}
+                                selected={t.value === filterItem[e.grpKey]}
+                                grpindex={index}
+                                tagindex={i}
+                                action={(grpindex, tagindex, selected) =>
+                                  updateTags(
+                                    grpindex,
+                                    tagindex,
+                                    selected,
+                                    e.grpKey,
+                                  )
+                                }
+                              />
+                            )
+                          }
+                        } else if (e.grpKey === 'warmingScenario') {
+                          if (warmingScValue) {
+                            return (
+                              <FilterTags
+                                name={t.name}
+                                selected={t.value === filterItem[e.grpKey]}
+                                grpindex={index}
+                                tagindex={i}
+                                action={(grpindex, tagindex, selected) =>
+                                  updateTags(
+                                    grpindex,
+                                    tagindex,
+                                    selected,
+                                    e.grpKey,
+                                  )
+                                }
+                              />
+                            )
+                          }
+                        } else {
+                          return (
+                            <FilterTags
+                              name={t.name}
+							  selected={t.value === filterItem[e.grpKey]}
+                              grpindex={index}
+                              tagindex={i}
+                              action={(grpindex, tagindex, selected) =>
+                                updateTags(
+                                  grpindex,
+                                  tagindex,
+                                  selected,
+                                  e.grpKey,
+                                )
+                              }
+                            />
+                          )
+                        }
+                      })}
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+              )
+            }
+          })
+        : filterData.map((e, index) => {
+            if (some(configs,{ name: e.grpKey })) {
+              const index = findIndex(configs,{ name: e.grpKey })
+              return (
+                <Accordion
+                  style={{
+                    position: 'relative',
+                    background: 'none',
+                    width: 280,
+                  }}
+                  disabled={configs[index]['disabled']}
+                >
+                  <AccordionSummary
+                    aria-label="Expand"
+                    aria-controls="additional-actions1-content"
+                    id="additional-actions1-header"
+                    expandIcon={<ArrowDropDownIcon />}
+                    // onClick={()=>handleExpandAccordion(e.grpKey)}
+                  >
+                    <div className="tags-label">{e.grpname}</div>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        font: 'inherit',
+                        fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
+                        fontWeight: '500',
+                      }}
+                    >
+                      {configs[index]['disabled'] ? filterRes[configs[index]['value']] :filterRes[filterItem[e.grpKey]]}
+                    </div>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div>
+                      {e.tagsList.map((t, i) => {
+                        const val = getEmission(t.value)
+                        const fpValue = getFootprintMetric(t.value)
+                        const warmingScValue = getWarmingScenario(t.value)
+                        if (e.grpKey === 'emission') {
+                          if (val) {
+                            return (
+                              <FilterTags
+                                name={t.name}
+                                selected={t.selected}
+                                grpindex={index}
+                                tagindex={i}
+                                action={(grpindex, tagindex, selected) =>
+                                  updateTags(
+                                    grpindex,
+                                    tagindex,
+                                    selected,
+                                    e.grpKey,
+                                  )
+                                }
+                              />
+                            )
+                          }
+                        } else if (e.grpKey === 'footprintMetric') {
+                          if (fpValue) {
+                            return (
+                              <FilterTags
+                                name={t.name}
+                                selected={t.selected}
+                                grpindex={index}
+                                tagindex={i}
+                                action={(grpindex, tagindex, selected) =>
+                                  updateTags(
+                                    grpindex,
+                                    tagindex,
+                                    selected,
+                                    e.grpKey,
+                                  )
+                                }
+                              />
+                            )
+                          }
+                        } else if (e.grpKey === 'warmingScenario') {
+                          if (warmingScValue) {
+                            return (
+                              <FilterTags
+                                name={t.name}
+                                selected={t.selected}
+                                grpindex={index}
+                                tagindex={i}
+                                action={(grpindex, tagindex, selected) =>
+                                  updateTags(
+                                    grpindex,
+                                    tagindex,
+                                    selected,
+                                    e.grpKey,
+                                  )
+                                }
+                              />
+                            )
+                          }
+                        } else {
+                          return (
+                            <FilterTags
+                              name={t.name}
+                              selected={t.selected}
+                              grpindex={index}
+                              tagindex={i}
+                              action={(grpindex, tagindex, selected) =>
+                                updateTags(
+                                  grpindex,
+                                  tagindex,
+                                  selected,
+                                  e.grpKey,
+                                )
+                              }
+                            />
+                          )
+                        }
+                      })}
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+              )
+            }
+          })}
     </React.Fragment>
   )
 }

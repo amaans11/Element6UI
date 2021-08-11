@@ -5,7 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 export default function SelectwithSearch({ heading, data, defaultValue,handleChange ,type,currentValue}) {
 	return (
-		<div style={{ width: 300, marginRight: '20px'}}>
+		<div style={{ width: 280, marginRight: '20px'}}>
 			<Autocomplete
 				id={heading}
 				openOnFocus

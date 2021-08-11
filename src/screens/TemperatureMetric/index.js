@@ -43,7 +43,6 @@ function TemperatureMetric() {
               value={value}
               onChange={handleChange}
               indicatorColor="secondary"
-              fullWidth="true"
               inkBarStyle={{ background: 'blue' }}
             >
               {' '}

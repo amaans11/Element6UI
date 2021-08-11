@@ -25,7 +25,12 @@ import {
   RadioGroup,
   Radio,
   FormControlLabel,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
 } from '@material-ui/core'
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
+import FilterTags from '../components/FilterSection/tags'
 import CustomSwitch from '@material-ui/core/Switch'
 import CloseIcon from '@material-ui/icons/Close'
 import { NotificationManager } from 'react-notifications'
@@ -62,10 +67,22 @@ import {
   setFilterVisibility,
   uploadPortfolioRequest,
   getUploadPortfolioList,
+  getDownloadPortfolios,
+  setDownloadPortfolio,
+  setDownloadTags,
 } from '../redux/actions/authActions'
 import csvFile from '../assets/Dummy-file.xlsx'
 
 const drawerWidth = 295
+
+const options = [
+  { label: 'Summary data', value: 'summary' },
+  { label: 'Average Intensity', value: 'averageIntensity' },
+  { label: 'Reported Intensity', value: 'reportedIntensity' },
+  { label: 'Reported Emissions', value: 'reportedEmissions' },
+  { label: 'Absolute Emissions Average', value: 'absoluteEmission' },
+  { label: 'Selected All', value: 'selectedAll' },
+]
 
 const styles = (theme) => ({
   root: {
@@ -197,9 +214,12 @@ const MiniDrawer = ({ classes, history }) => {
     (state) => state.auth.userInfo && state.auth.userInfo.is_admin,
   )
 
+  const { downloadPortfolioList, selectedDownloadMenu } = auth
+
   let currentUser = auth && auth.currentUser ? auth.currentUser : {}
   let userInfo = auth && auth.userInfo ? auth.userInfo : {}
 
+  console.log('selectedDownloadMenu', selectedDownloadMenu)
   const getUserDetails = async () => {
     const data = {
       userName: currentUser.userName,
@@ -215,6 +235,7 @@ const MiniDrawer = ({ classes, history }) => {
     await getUserDetails()
     await getPortfolio()
     await dispatch(getUploadPortfolioList())
+    await dispatch(getDownloadPortfolios())
   }
   const onPortfolioChange = async (currentValue) => {
     let portfolio = {}
@@ -226,6 +247,29 @@ const MiniDrawer = ({ classes, history }) => {
       })
     }
     await dispatch(setPortfolio(portfolio))
+  }
+  const updateTag = async (value) => {
+    const tags = [...selectedDownloadMenu]
+    if (tags.includes(value)) {
+      console.log('test')
+      const index = tags.indexOf(value)
+      // tags.spli ce(index,1)
+    } else {
+      tags.push(value)
+    }
+
+    await dispatch(setDownloadTags(tags))
+  }
+  const ondownloadPortfolioChange = async (currentValue) => {
+    let portfolio = {}
+    if (downloadPortfolioList && downloadPortfolioList.length > 0) {
+      downloadPortfolioList.map((port) => {
+        if (port.label === currentValue) {
+          portfolio = { ...port }
+        }
+      })
+    }
+    await dispatch(setDownloadPortfolio(portfolio))
   }
   const onBenchmarkChange = async (currentValue) => {
     let benchmark = {}
@@ -322,8 +366,8 @@ const MiniDrawer = ({ classes, history }) => {
         </List>
       </Drawer>
       <main className={classes.content}>
-        {isVisible ? (
-          window.location.pathname !== '/' ? (
+        {window.location.pathname !== '/' ? (
+          window.location.pathname !== '/urgentem-download' ? (
             <div className="filter-main">
               <Box>
                 <Box>
@@ -351,20 +395,66 @@ const MiniDrawer = ({ classes, history }) => {
                 <FilterGroup />
               </div>
             </div>
-          ) : null
-        ) : (
-          <StyleRoot>
-            <span onClick={hideFilterSection} style={styles.slideInRight}>
-              <ArrowForwardIosIcon
-                style={{
-                  position: 'fixed',
-                  left: 80,
-                  top: window.innerHeight / 3,
-                }}
-              />
-            </span>
-          </StyleRoot>
-        )}
+          ) : (
+            <div className="filter-main">
+              <Box>
+                <SelectwithSearch
+                  heading={'Select Portfolio'}
+                  data={
+                    downloadPortfolioList && downloadPortfolioList.length > 0
+                      ? downloadPortfolioList
+                      : []
+                  }
+                  // defaultValue={currentPortfolio}
+                  handleChange={ondownloadPortfolioChange}
+                  type="portfolio"
+                  currentValue={currentPortfolio}
+                />
+              </Box>
+              <Box>
+                <Accordion
+                  style={{
+                    position: 'relative',
+                    background: 'none',
+                    width: 300,
+                  }}
+                  //   expanded={isExpand[e.grpKey]}
+                >
+                  <AccordionSummary
+                    aria-label="Expand"
+                    aria-controls="additional-actions1-content"
+                    id="additional-actions1-header"
+                    expandIcon={<ArrowDropDownIcon />}
+                    // onClick={()=>handleExpandAccordion(e.grpKey)}
+                  >
+                    <div className="tags-label"></div>
+                    <div
+                      style={{
+                        fontSize: 12,
+                        font: 'inherit',
+                        fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
+                        fontWeight: '500',
+                      }}
+                    ></div>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <div>
+                      {options.map((option, index) => (
+                        <FilterTags
+                          name={option.label}
+                          selected={selectedDownloadMenu.includes(option.value)}
+                          grpindex={index}
+                          tagindex={index}
+                          action={() => updateTag(option.value)}
+                        />
+                      ))}
+                    </div>
+                  </AccordionDetails>
+                </Accordion>
+              </Box>
+            </div>
+          )
+        ) : null}
         <div className={contentClass}>
           {/* <div>
 						<div style={{ display: 'flex', width: '100%' }}>
