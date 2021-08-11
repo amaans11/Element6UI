@@ -445,7 +445,7 @@ const MiniDrawer = ({ classes, history }) => {
                   style={{
                     position: 'relative',
                     background: 'none',
-                    width: 280,
+                    width: 250,
                   }}
                   //   expanded={isExpand[e.grpKey]}
                 >

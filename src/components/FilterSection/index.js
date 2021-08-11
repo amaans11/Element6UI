@@ -520,9 +520,6 @@ export default function FilterGroup() {
     })
   }
 
-  console.log('filterData>>', filterData)
-  console.log('configs>>', configs)
-  console.log("flmFilterConfig",flmFilterConfig)
   return (
     <React.Fragment>
       {pathname !== '/forward-looking-analysis'
@@ -533,7 +530,7 @@ export default function FilterGroup() {
                   style={{
                     position: 'relative',
                     background: 'none',
-                    width: 280,
+                    width: 250,
                   }}
                   //   expanded={isExpand[e.grpKey]}
                 >
@@ -652,7 +649,7 @@ export default function FilterGroup() {
                   style={{
                     position: 'relative',
                     background: 'none',
-                    width: 280,
+                    width: 250,
                   }}
                   disabled={configs[index]['disabled']}
                 >
