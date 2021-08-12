@@ -85,7 +85,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 					connectorAllowed: false
 				},
 				marker: {
-					enabled: false
+					enabled: true
 				},
 			}
 		},

@@ -129,7 +129,6 @@ export default function FilterGroup() {
   const { targetScenario } = filterItem
   const getConfigs = () => {
     let config = []
-	console.log("moduleName",moduleName)
     switch (moduleName) {
       case 'Emissions':
         switch (tabValue) {
@@ -233,7 +232,6 @@ export default function FilterGroup() {
       case 'FLM':
         switch (tabValue) {
           case 0:
-			  console.log("test")
             config = flmFilterConfig['PORTFOLIO_ALIGNMENT']
             break
           case 1:
@@ -519,7 +517,6 @@ export default function FilterGroup() {
       [key]: !value,
     })
   }
-
   return (
     <React.Fragment>
       {pathname !== '/forward-looking-analysis'
@@ -641,7 +638,7 @@ export default function FilterGroup() {
               )
             }
           })
-        : filterData.map((e, index) => {
+        : filterData.map((e, grpIndex) => {
             if (some(configs,{ name: e.grpKey })) {
               const index = findIndex(configs,{ name: e.grpKey })
               return (
@@ -683,8 +680,8 @@ export default function FilterGroup() {
                             return (
                               <FilterTags
                                 name={t.name}
-                                selected={t.selected}
-                                grpindex={index}
+                                selected={t.value === filterItem[e.grpKey]}
+                                grpindex={grpIndex}
                                 tagindex={i}
                                 action={(grpindex, tagindex, selected) =>
                                   updateTags(
@@ -702,8 +699,8 @@ export default function FilterGroup() {
                             return (
                               <FilterTags
                                 name={t.name}
-                                selected={t.selected}
-                                grpindex={index}
+                                selected={t.value === filterItem[e.grpKey]}
+                                grpindex={grpIndex}
                                 tagindex={i}
                                 action={(grpindex, tagindex, selected) =>
                                   updateTags(
@@ -721,8 +718,8 @@ export default function FilterGroup() {
                             return (
                               <FilterTags
                                 name={t.name}
-                                selected={t.selected}
-                                grpindex={index}
+                                selected={t.value === filterItem[e.grpKey]}
+                                grpindex={grpIndex}
                                 tagindex={i}
                                 action={(grpindex, tagindex, selected) =>
                                   updateTags(
@@ -739,16 +736,17 @@ export default function FilterGroup() {
                           return (
                             <FilterTags
                               name={t.name}
-                              selected={t.selected}
-                              grpindex={index}
+                              selected={t.value === filterItem[e.grpKey]}
+                              grpindex={grpIndex}
                               tagindex={i}
-                              action={(grpindex, tagindex, selected) =>
+                              action={(grpindex, tagindex, selected) =>{
                                 updateTags(
                                   grpindex,
                                   tagindex,
                                   selected,
                                   e.grpKey,
                                 )
+                              }
                               }
                             />
                           )

@@ -22,7 +22,6 @@ const PortfolioEmission = () => {
 	const {filterItem,loading}=auth;
 
 	const {footprintMetric} = filterItem
-	console.log("footprintMetric",footprintMetric)
 	const tableLabel =  footprintMetric === 'TotalCarbEmis' ? 'tCO2e' : 'tCO2e / 1M USD'
 
 	const portEmissionCells = [

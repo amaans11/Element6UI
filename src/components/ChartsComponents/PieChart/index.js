@@ -20,14 +20,15 @@ function PieChart({
       plotBackgroundColor: null,
       plotBorderWidth: null,
       plotShadow: false,
+
     },
     title: {
       text: title,
       align: 'left',
       y: 25,
-      style:{
-        fontFamily:"Roboto, Helvetica, Arial, sans-serif",
-    }
+      style: {
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+      },
     },
     subtitle: {
       text: subtitle ? subtitle : null,
@@ -38,17 +39,20 @@ function PieChart({
         valueSuffix: '%',
       },
     },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+    },
+ 
     plotOptions: {
       pie: {
         size: '100%',
         allowPointSelect: true,
         cursor: 'pointer',
+        showInLegend: true,
         dataLabels: {
           enabled: true,
-          format: '{point.name}: {point.percentage:.1f} %',
+          format: '{point.percentage:.1f} %',
           color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-          
-       
           style: {
             shadow: false,
             color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',

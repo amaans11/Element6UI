@@ -10,7 +10,6 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 	}
 	const currentTheme = localStorage.getItem('appTheme');
 
-	console.log("data>>",data)
 	const options = {
 		chart: {
 			type: 'column',

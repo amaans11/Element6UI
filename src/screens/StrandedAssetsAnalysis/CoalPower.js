@@ -51,7 +51,6 @@ const CoalPower = () => {
     setChartData(chartData)
     setTableData(tableData)
   }
-  console.log("chartData",chartData)
   return (
     <React.Fragment>
       {loading ? (
