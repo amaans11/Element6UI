@@ -163,6 +163,13 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
         wrap: true,
       },
       {
+        name: 'Emission Weight Coverage (%)',
+        selector: 'coverageWeightEmissions',
+        sortable: true,
+        right: true,
+        wrap: true,
+      },
+      {
         name: 'Version',
         selector: 'version',
         sortable: true,

@@ -200,10 +200,12 @@ export default function authReducer(state = { ...intialState }, action) {
           response.map((res) => {
             let coverageEmissions = 0
             let coverageFundamentals = 0
+            let weightEmissions=0;
             if (res.coverage_emissions && res.coverage_emissions.length > 0) {
               res.coverage_emissions.map((emission) => {
                 if (emission.year == yearEmissions) {
                   coverageEmissions = emission.coverage
+                  weightEmissions = emission.weight_coverage
                 }
               })
             }
@@ -224,6 +226,7 @@ export default function authReducer(state = { ...intialState }, action) {
               coverageEmissions: coverageEmissions,
               coverageFundamentals: coverageFundamentals,
               date_created: res.date_created,
+              coverageWeightEmissions:weightEmissions
             })
           })
         }
