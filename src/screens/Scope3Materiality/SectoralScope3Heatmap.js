@@ -201,6 +201,7 @@ const SectoralScope3Heatmap = () => {
                   label="Select Sector"
                   value={currentSector}
                   onChange={handleSectorChange}
+                  style={{fontSize:14}}
                 >
                   {yCategories.length > 0 &&
                     yCategories.map((sector) => (

@@ -7,6 +7,7 @@ const data={
         'emission'
     ],
     'CARBON_EMISSION':[
+        'sector',
         'footprintMetric',
         'marketValue',
         'assetClass',
@@ -54,6 +55,13 @@ const data={
         'strategy'
     ],
     'OPTIMIZED_EMISSION':[
+        'sector',
+        'footprintMetric',
+        'marketValue',
+        'assetClass',
+        'inferenceType',
+        'emission',
+        'strategy'
     ],
     'PERFORMANCE_ATTRIBUTION':[
         'sector',

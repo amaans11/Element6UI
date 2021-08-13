@@ -245,6 +245,10 @@ export default function authReducer(state = { ...intialState }, action) {
 		return produce(state, (draft) => {
 			draft.selectedDownloadMenu = action.res
 		  })
+    case types.SET_EMISSIONS_SUCCESS:
+      return produce(state, (draft) => {
+        draft.filterItem.emission = 'Sc123'
+        })
     default:
       return state
   }

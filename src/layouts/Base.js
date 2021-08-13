@@ -72,6 +72,7 @@ import {
   setDownloadPortfolio,
   setDownloadTags,
   getDownloadDetails,
+  setEmissions
 } from '../redux/actions/authActions'
 import csvFile from '../assets/Dummy-file.xlsx'
 
@@ -301,8 +302,13 @@ const MiniDrawer = ({ classes, history }) => {
     await dispatch(setBenchmark(benchmark))
   }
   const setDefaultTab = async (e) => {
+    if(e.name === 'Scope3'){
+      await dispatch(setEmissions())
+    }
     await dispatch(setTabValue(0))
     await dispatch(setModule(e.name))
+
+ 
   }
   const handleUploadPortfolio = () => {
     setDialog(true)

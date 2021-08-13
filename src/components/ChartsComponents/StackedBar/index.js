@@ -15,7 +15,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
   }
   const currentTheme = localStorage.getItem('appTheme')
 
-  const options = {
+  let options = {
     chart: {
       type: 'bar',
     },
@@ -97,6 +97,16 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
     },
     series: data,
   }
+  if(chartKey === 'PORT_COMPANIES_SCORE'){
+    options={
+      ...options,
+      chart: {
+        type: 'bar',
+        height:250
+      }
+  }
+  }
+  console.log("options>>",options)
 
   return (
     <div>

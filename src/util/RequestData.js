@@ -213,7 +213,7 @@ const getRequestData = (type, auth) => {
         portfolio_id: portfolioId,
         version_portfolio: versionPortfolio,
         inference: inferenceType,
-        scope: emission,
+        scope: emission == 'Sc12' ? 'Sc123' : emission,
         sector: sector,
         asset_type: assetClass,
         country_type: 'incorporation',

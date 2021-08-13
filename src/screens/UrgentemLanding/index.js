@@ -297,17 +297,10 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
               Delete portfolio
             </Link>
           </Box> */}
-          <Box mt={2}>
-            <DataTable
-              data={portfolioTableRes}
-              columns={headCells}
-              tableHeading="UPLOAD_PORTFOLIO"
-            />
-          </Box>
+          
         </Grid>
         <Grid item xs={3}>
-          <Box ml={3}>
-            <Box mt={3}>
+            <Box mt={3} ml={1} >
               <Button
                 variant="outlined"
                 color="primary"
@@ -317,22 +310,17 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
                 Upload Portfolio
               </Button>
             </Box>
-            <Box>
-              {configs.map((config) => (
-                <span onClick={() => handleClick(config)}>
-                  <Card className={classes.card}>
-                    <Box display="flex" flexDirection="row">
-                      <Typography variant="h6" style={{ paddingBottom: 10 }}>
-                        {config.name}
-                      </Typography>
-                      <ListItemLink icon={config.icon} />
-                    </Box>
-                    <Typography variant="p">{config.content}</Typography>
-                  </Card>
-                </span>
-              ))}
-            </Box>
+        </Grid>
+        <Grid container>
+          <Grid item xs={12}>
+          <Box mt={2}>
+            <DataTable
+              data={portfolioTableRes}
+              columns={headCells}
+              tableHeading="UPLOAD_PORTFOLIO"
+            />
           </Box>
+          </Grid>
         </Grid>
       </Grid>
 

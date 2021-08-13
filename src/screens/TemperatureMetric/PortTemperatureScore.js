@@ -15,8 +15,8 @@ import SpiralChart from '../../components/ChartsComponents/SpiralChart';
 const useStyles = makeStyles(() => ({
 	companyDiv: {
 		width: 200,
-		height: 200,
-		margin: 80
+		height: 170,
+		margin: 90,
 	}
 }));
 const PortTemperatureScore = () => {
@@ -120,10 +120,10 @@ const PortTemperatureScore = () => {
 			) : (
 				<React.Fragment>
 					<Grid container>
-						<Grid item xs={3} style={{ marginRight: 20 }}>
+						<Grid item xs={3} style={{ marginRight: 5 }}>
 							<SpiralChart data={tempScoreChartData} chartKey="TEMP_SCORE" />
 						</Grid>
-						<Grid item xs={5}>
+						<Grid item xs={5} style={{marginTop:70}}>
 							<StackedBar
 								categories={['Number Of Companies']}
 								data={companyChartData}

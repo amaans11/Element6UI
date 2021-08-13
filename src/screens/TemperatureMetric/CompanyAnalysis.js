@@ -65,7 +65,7 @@ const CompanyAnalysis = () => {
 				} else {
 					const xVal = data['temperature_score'];
 					const yVal = data['emission_intensity'];
-					const zVal = data['emission_intensity'];
+					const zVal = data['weight'];
 
 					chartData = [
 						...chartData,

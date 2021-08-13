@@ -76,8 +76,8 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			align: 'right',
 			layout: 'vertical',
 			verticalAlign: 'top',
-			y: 35,
-			symbolHeight: 385,
+			y: 30,
+			symbolHeight: chartKey === 'SCOPE3_HEATMAP' ? 540 : 150,
 		},
 		tooltip: {
 			formatter: function() {

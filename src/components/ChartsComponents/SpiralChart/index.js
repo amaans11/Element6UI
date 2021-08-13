@@ -19,7 +19,7 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 		title: {
 			text: title,
 			align: 'left',
-			y: 25
+			y: 10
 		},
 		subtitle: {
 			text: subtitle ? subtitle : null,

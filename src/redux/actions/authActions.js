@@ -172,7 +172,11 @@ const requestApi = async (dispatch, auth, flm) => {
           data = getRequestData('PORTFOLIO_OPTIMIZATION', auth)
           await dispatch(getPortOptimizationData(data))
           break
-        case 1:
+          case 1:
+            data = getRequestData('PORTFOLIO_OPTIMIZATION', auth)
+            await dispatch(getPortOptimizationData(data))
+            break
+        case 2:
           data = getRequestData('PERFORMANCE_ATTRIBUTION', auth)
           await dispatch(getPerformanceAttrData(data))
           break
@@ -686,5 +690,16 @@ export const setDownloadTags = (tags) => {
 export const setDownloadTagsSuccess = (res) => {
   return { type: actionTypes.SET_DOWNLOAD_TAGS, res }
 }
+export const setEmissions = () => {
+  return async (dispatch) => {
+    await dispatch(setEmissionsSuccess())
+  }
+}
+
+export const setEmissionsSuccess = (res) => {
+  return { type: actionTypes.SET_EMISSIONS_SUCCESS, res }
+}
+
+
 
 /* eslint-disable */

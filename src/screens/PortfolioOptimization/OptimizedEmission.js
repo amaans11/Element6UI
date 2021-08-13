@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Slider, Typography,Button, CircularProgress } from '@material-ui/core';
 import {setReweightData,setLoading} from '../../redux/actions/authActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
+import {getPortOptimizationData} from '../../redux/actions/optimizationActions'
+import getRequestData from '../../util/RequestData';
 
 const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3' ];
 
@@ -269,6 +271,14 @@ const PortfolioOptimization = () => {
 		await dispatch(setLoading(false));
 
 	};
+	const fetchDetails = async () => {
+		await dispatch(setLoading(true));
+		const data = getRequestData('PORTFOLIO_OPTIMIZATION', auth);
+		await dispatch(getPortOptimizationData(data));
+	};
+	useEffect(() => {
+		fetchDetails();
+	}, []);
 	useEffect(
 		() => {
 			getData();

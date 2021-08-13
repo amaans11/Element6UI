@@ -36,6 +36,7 @@ function SideNav() {
   const setDefaultTab = async (e) => {
     await dispatch(setTabValue(0))
     await dispatch(setModule(e.name))
+    
   }
   
   return (
