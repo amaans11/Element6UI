@@ -13,7 +13,7 @@ import FilterTags from './tags'
 import data from '../../util/filter-config'
 import filterConfig from '../../util/tabs-filter-config'
 import flmFilterConfig from '../../util/flm-tabs-filter-config'
-import { findIndex, get,some } from 'lodash'
+import { findIndex, get, some } from 'lodash'
 import {
   setFilterItem,
   setFilterVisibility,
@@ -452,10 +452,10 @@ export default function FilterGroup() {
 
       const grpName = newData[grpindex].grpKey
 
-      //   setExpand({
-      // 	  ...isExpand,
-      // 	  [grpKey]:false
-      //   })
+        setExpand({
+      	  ...isExpand,
+      	  [grpKey]:false
+        })
 
       dispatch(
         setFilterItem({
@@ -529,7 +529,8 @@ export default function FilterGroup() {
                     background: 'none',
                     width: 250,
                   }}
-                  //   expanded={isExpand[e.grpKey]}
+                  expanded={isExpand[e.grpKey] == undefined ? false :isExpand[e.grpKey] }
+                  onChange={()=>{handleExpandAccordion(e.grpKey)}}
                 >
                   <AccordionSummary
                     aria-label="Expand"
@@ -617,7 +618,7 @@ export default function FilterGroup() {
                           return (
                             <FilterTags
                               name={t.name}
-							  selected={t.value === filterItem[e.grpKey]}
+                              selected={t.value === filterItem[e.grpKey]}
                               grpindex={index}
                               tagindex={i}
                               action={(grpindex, tagindex, selected) =>
@@ -639,8 +640,8 @@ export default function FilterGroup() {
             }
           })
         : filterData.map((e, grpIndex) => {
-            if (some(configs,{ name: e.grpKey })) {
-              const index = findIndex(configs,{ name: e.grpKey })
+            if (some(configs, { name: e.grpKey })) {
+              const index = findIndex(configs, { name: e.grpKey })
               return (
                 <Accordion
                   style={{
@@ -649,6 +650,8 @@ export default function FilterGroup() {
                     width: 250,
                   }}
                   disabled={configs[index]['disabled']}
+                  expanded={isExpand[e.grpKey] == undefined ? false :isExpand[e.grpKey] }
+                  onChange={()=>{handleExpandAccordion(e.grpKey)}}
                 >
                   <AccordionSummary
                     aria-label="Expand"
@@ -666,7 +669,9 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      {configs[index]['disabled'] ? filterRes[configs[index]['value']] :filterRes[filterItem[e.grpKey]]}
+                      {configs[index]['disabled']
+                        ? filterRes[configs[index]['value']]
+                        : filterRes[filterItem[e.grpKey]]}
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -739,15 +744,14 @@ export default function FilterGroup() {
                               selected={t.value === filterItem[e.grpKey]}
                               grpindex={grpIndex}
                               tagindex={i}
-                              action={(grpindex, tagindex, selected) =>{
+                              action={(grpindex, tagindex, selected) => {
                                 updateTags(
                                   grpindex,
                                   tagindex,
                                   selected,
                                   e.grpKey,
                                 )
-                              }
-                              }
+                              }}
                             />
                           )
                         }
