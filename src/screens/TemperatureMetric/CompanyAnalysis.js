@@ -61,7 +61,7 @@ const CompanyAnalysis = () => {
 					const xVal = data['temperature_score'];
 					const yVal = data['emission_intensity'];
 					const zVal = data['weight'];
-					chartData[index]['data'].push([ xVal, yVal, zVal ]);
+					chartData[index]['data'].push(({x:xVal,y:yVal,z:zVal ,company:data['company_name']}));
 				} else {
 					const xVal = data['temperature_score'];
 					const yVal = data['emission_intensity'];
@@ -71,7 +71,7 @@ const CompanyAnalysis = () => {
 						...chartData,
 						{
 							name: data['sector'],
-							data: [ [ xVal, yVal, zVal ] ]
+							data:[{x:xVal,y:yVal,z:zVal,company:data['company_name']}]
 						}
 					];
 				}
@@ -82,6 +82,7 @@ const CompanyAnalysis = () => {
 		setChartData(chartData);
 	};
 
+	console.log("chartData>>",chartData)
 	return (
 		<React.Fragment>
 			{loading ? (
