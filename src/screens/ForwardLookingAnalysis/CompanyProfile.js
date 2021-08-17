@@ -48,21 +48,6 @@ const CompanyProfile = () => {
   useEffect(() => {
     fetchCompanies()
   }, [])
-  const getCompanyList = async () => {
-    const response = companyData['data']
-    if (response && Object.keys(response).length > 0) {
-      const sectors = Object.keys(response)
-      const companies = response[sectors[0]]
-      const currentCompany = companies[0]['company_id']
-
-      setSectorList(sectors)
-      setCompanyList(companies)
-      setCurrentSector(sectors[0])
-      setCurrentCompany(currentCompany)
-
-      await fetchDetails(currentCompany)
-    }
-  }
 
   useEffect(() => {
     if (
@@ -76,8 +61,19 @@ const CompanyProfile = () => {
 
   const fetchCompanies = async () => {
     const data = getRequestData('COMPANY_PROFILE_COMPANIES', auth)
-    await dispatch(getCompanies(data))
-    await getCompanyList()
+    const response = await dispatch(getCompanies(data))
+    if (response && Object.keys(response).length > 0) {
+      const sectors = Object.keys(response)
+      const companies = response[sectors[0]]
+      const currentCompany = companies[0]['company_id']
+
+      setSectorList(sectors)
+      setCompanyList(companies)
+      setCurrentSector(sectors[0])
+      setCurrentCompany(currentCompany)
+
+      await fetchDetails(currentCompany)
+    }
   }
   const fetchDetails = async (companyId) => {
     let data = getRequestData('COMPANY_PROFILE', auth)

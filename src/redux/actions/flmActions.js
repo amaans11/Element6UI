@@ -63,6 +63,7 @@ export const getCompanies = (data) => {
 			})
 			.then(result => {
                 dispatch(getCompaniesSuccess(result.data))
+				return result.data
 			})
             .catch(err=>{
                 const error=err.response && err.response.data.message
@@ -114,6 +115,7 @@ export const getCarbonCompanies = (data) => {
 			})
 			.then(result => {
                 dispatch(getCarbonCompaniesSuccess(result.data))
+				return result.data
 			})
             .catch(err=>{
                 const error=err.response && err.response.data.message

@@ -108,9 +108,8 @@ const requestApi = async (dispatch, auth, flm) => {
           break
         case 2:
           data = getRequestData('COMPANY_PROFILE_COMPANIES', auth)
-          await dispatch(getCompanies(data))
+          const response= await dispatch(getCompanies(data))
 
-          const response = companyData['data']
           if (response && Object.keys(response).length > 0) {
             const sectors = Object.keys(response)
             const companies = response[sectors[0]]
@@ -127,8 +126,7 @@ const requestApi = async (dispatch, auth, flm) => {
           break
         case 3:
           data = getRequestData('CARBON_ADJUSTED_COMPANIES', auth)
-          await dispatch(getCarbonCompanies(data))
-          const result = companyData['data']
+          const result = await dispatch(getCarbonCompanies(data))
           if (result && Object.keys(result).length > 0) {
             const sectors = Object.keys(result)
             const companies = result[sectors[0]]

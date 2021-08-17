@@ -53,18 +53,15 @@ const CarbonAdjustedReturns = () => {
   const [currentSector, setCurrentSector] = useState('')
   const [companyName, setCompanyName] = useState('')
 
+  console.log("companyData1",companyData)
+
   useEffect(() => {
     fetchCompanies()
   }, [])
 
   const fetchCompanies = async () => {
     const data = getRequestData('CARBON_ADJUSTED_COMPANIES', auth)
-    await dispatch(getCarbonCompanies(data))
-    await getCompanyList()
-  }
-  const getCompanyList = async () => {
-    console.log("companyData>>",companyData)
-    const response = companyData['data']
+    const response =await dispatch(getCarbonCompanies(data))
     if (response && Object.keys(response).length > 0) {
       const sectors = Object.keys(response)
       const companies = response[sectors[0]]
@@ -76,11 +73,10 @@ const CarbonAdjustedReturns = () => {
       setCurrentCompany(currentCompany)
       setCompanyName(companies[0]['name'])
 
-      console.log("fetch>>")
       await fetchDetails(companies[0])
     }
   }
-
+  
   useEffect(() => {
     if (
       carbonReturnsTableData &&
@@ -104,7 +100,7 @@ const CarbonAdjustedReturns = () => {
   }
 
   const fetchDetails = async (company) => {
-    console.log("company>>",company)
+    console.log('company>>', company)
     let lineChartData = getRequestData('CARBON_ADJUSTED_LINE_RETURNS', auth)
     let tableData = getRequestData('CARBON_ADJUSTED_TABLE_RETURNS', auth)
 
@@ -352,7 +348,10 @@ const CarbonAdjustedReturns = () => {
                 >
                   {companyList.length > 0 &&
                     companyList.map((company) => (
-                      <MenuItem value={company.company_id} disabled={!company.Price_Data}>
+                      <MenuItem
+                        value={company.company_id}
+												disabled={company.Price_Data ? false : true}
+                      >
                         {company.name}
                       </MenuItem>
                     ))}
