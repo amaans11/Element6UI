@@ -251,6 +251,8 @@ export default function authReducer(state = { ...intialState }, action) {
     case types.SET_EMISSIONS_SUCCESS:
       return produce(state, (draft) => {
         draft.filterItem.emission = 'Sc123'
+        draft.tabValue = 0
+
         })
     default:
       return state

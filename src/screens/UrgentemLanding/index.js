@@ -307,7 +307,7 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
           
         </Grid>
         <Grid item xs={3}>
-            <Box mt={3} ml={1} >
+            <Box mt={3} >
               <Button
                 variant="outlined"
                 color="primary"

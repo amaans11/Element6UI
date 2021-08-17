@@ -296,9 +296,9 @@ const PortfolioOptimization = () => {
 				</Box>
 			) : (
 				<Box>
-					<Grid container style={{marginLeft:40,marginTop:10}}>
+					<Grid container style={{marginLeft:20,marginTop:10}}>
 						<Grid item xs={5}>
-							<Typography>Select Urgentem reweight factor</Typography>
+							<Box style={{fontSize:14}}>Select Urgentem reweight factor</Box>
 							<Slider
 								value={reWeightFactor}
 								max={1}
@@ -306,6 +306,7 @@ const PortfolioOptimization = () => {
 								step={0.01}
 								style={{width:'80%'}}
 								onChange={handleReweightFactor}
+								valueLabelDisplay="auto"
 							/>
 						</Grid>
 						<Grid item xs={4} >

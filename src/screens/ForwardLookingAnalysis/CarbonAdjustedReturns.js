@@ -15,6 +15,7 @@ import {
   getCarbonCompanies,
   getCarbonReturnsLineData,
   getCarbonReturnsTableData,
+  getCompanies,
 } from '../../redux/actions/flmActions'
 import getRequestData from '../../util/RequestData'
 import DataTable from '../../components/Table/DataTable'
@@ -37,7 +38,7 @@ const CarbonAdjustedReturns = () => {
   const carbonReturnsLineData = useSelector(
     (state) => state.flm.carbonReturnsLineData,
   )
-  const companyData = useSelector((state) => state.flm.companyData)
+  const companyData = useSelector((state) => state.flm.carbonCompanyData)
 
   const auth = useSelector((state) => state.auth)
   const { loading, filterItem } = auth
@@ -55,14 +56,14 @@ const CarbonAdjustedReturns = () => {
   useEffect(() => {
     fetchCompanies()
   }, [])
-  useEffect(() => {
-    getCompanyList()
-  }, [companyData])
+
   const fetchCompanies = async () => {
     const data = getRequestData('CARBON_ADJUSTED_COMPANIES', auth)
     await dispatch(getCarbonCompanies(data))
+    await getCompanyList()
   }
   const getCompanyList = async () => {
+    console.log("companyData>>",companyData)
     const response = companyData['data']
     if (response && Object.keys(response).length > 0) {
       const sectors = Object.keys(response)
@@ -75,6 +76,7 @@ const CarbonAdjustedReturns = () => {
       setCurrentCompany(currentCompany)
       setCompanyName(companies[0]['name'])
 
+      console.log("fetch>>")
       await fetchDetails(companies[0])
     }
   }
@@ -102,6 +104,7 @@ const CarbonAdjustedReturns = () => {
   }
 
   const fetchDetails = async (company) => {
+    console.log("company>>",company)
     let lineChartData = getRequestData('CARBON_ADJUSTED_LINE_RETURNS', auth)
     let tableData = getRequestData('CARBON_ADJUSTED_TABLE_RETURNS', auth)
 
@@ -324,9 +327,9 @@ const CarbonAdjustedReturns = () => {
           <Grid container>
             <Grid item xs={4}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>Select Sector</InputLabel>
+                <InputLabel>Sector</InputLabel>
                 <Select
-                  label="Select Sector"
+                  label="Sector"
                   value={currentSector}
                   onChange={handleSectorChange}
                   style={{ fontSize: 14 }}
@@ -340,9 +343,9 @@ const CarbonAdjustedReturns = () => {
             </Grid>
             <Grid item xs={4}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>Select Company</InputLabel>
+                <InputLabel>Company</InputLabel>
                 <Select
-                  label="Select Sector"
+                  label="Company"
                   value={currentCompany}
                   onChange={handleCompanyChange}
                   style={{ fontSize: 14 }}

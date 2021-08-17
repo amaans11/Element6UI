@@ -7,7 +7,8 @@ const intialState = {
 	companyData: {},
 	companyProfile: {},
 	carbonReturnsLineData: {},
-	carbonReturnsTableData: {}
+	carbonReturnsTableData: {},
+	carbonCompanyData:{}
 };
 
 export default function flmReducer(state = { ...intialState }, action) {
@@ -56,13 +57,13 @@ export default function flmReducer(state = { ...intialState }, action) {
 
 		case types.GET_CARBON_COMPANIES_SUCCESS:
 			return produce(state, (draft) => {
-				draft.companyData.data = action.res;
-				draft.companyData.error = '';
+				draft.carbonCompanyData.data = action.res;
+				draft.carbonCompanyData.error = '';
 			});
 		case types.GET_CARBON_COMPANIES_FAILED:
 			return produce(state, (draft) => {
-				draft.companyData.data = '';
-				draft.companyData.error = action.error;
+				draft.carbonCompanyData.data = '';
+				draft.carbonCompanyData.error = action.error;
 			});
 		case types.GET_CARBON_RETURNS_LINE_DATA_SUCCESS:
 			return produce(state, (draft) => {

@@ -48,9 +48,6 @@ const CompanyProfile = () => {
   useEffect(() => {
     fetchCompanies()
   }, [])
-  useEffect(() => {
-    getCompanyList()
-  }, [companyData])
   const getCompanyList = async () => {
     const response = companyData['data']
     if (response && Object.keys(response).length > 0) {
@@ -80,6 +77,7 @@ const CompanyProfile = () => {
   const fetchCompanies = async () => {
     const data = getRequestData('COMPANY_PROFILE_COMPANIES', auth)
     await dispatch(getCompanies(data))
+    await getCompanyList()
   }
   const fetchDetails = async (companyId) => {
     let data = getRequestData('COMPANY_PROFILE', auth)
@@ -231,10 +229,11 @@ const CompanyProfile = () => {
         <Box>
           <Grid container>
             <Grid item xs={4}>
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>Select Sector</InputLabel>
+              <FormControl variant="outlined" className={classes.formControl} id="demo-simple-select-filled-label">
+              <InputLabel>Sector</InputLabel>
                 <Select
-                  label="Select Sector"
+                labelId="demo-simple-select-filled-label"
+                  label="Sector"
                   value={currentSector}
                   onChange={handleSectorChange}
                   style={{ fontSize: 14 }}
@@ -248,9 +247,9 @@ const CompanyProfile = () => {
             </Grid>
             <Grid item xs={4}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel>Select Company</InputLabel>
+                <InputLabel>Company</InputLabel>
                 <Select
-                  label="Select Sector"
+                  label="Company"
                   value={currentCompany}
                   onChange={handleCompanyChange}
                   style={{ fontSize: 14 }}

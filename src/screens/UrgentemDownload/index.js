@@ -93,7 +93,7 @@ function UrgentemDownload() {
   }
   const getDownloadData = async () => {
     setLoading(true)
-	const data = getRequestData('URGENTEM_DOWNLOAD', auth);
+    const data = getRequestData('URGENTEM_DOWNLOAD', auth)
     await dispatch(getDownloadDetails(data))
     setLoading(false)
   }
@@ -112,7 +112,6 @@ function UrgentemDownload() {
             wrap: true,
             style: {
               height: 80,
-              fontSize: 14,
             },
           }
         } else {
@@ -120,7 +119,7 @@ function UrgentemDownload() {
             name: column,
             selector: column,
             sortable: true,
-            right: true,
+            right: false,
             wrap: true,
             style: {
               height: 80,
@@ -148,7 +147,47 @@ function UrgentemDownload() {
     }
     setColumns(res)
   }
-  
+  const convertArrayOfObjectsToCSV = (array) => {
+    let result
+
+    const columnDelimiter = ','
+    const lineDelimiter = '\n'
+    const keys = Object.keys(array[0])
+
+    result = ''
+    result += keys.join(columnDelimiter)
+    result += lineDelimiter
+
+    array.forEach((item) => {
+      let ctr = 0
+      keys.forEach((key) => {
+        if (ctr > 0) result += columnDelimiter
+
+        result += item[key]
+
+        ctr++
+      })
+      result += lineDelimiter
+    })
+
+    return result
+  }
+  const downloadDataHandler = () => {
+    const link = document.createElement('a')
+    let csv =  convertArrayOfObjectsToCSV(downloadData)
+    if (csv === null) return
+
+    const filename = 'export.csv'
+
+    if (!csv.match(/^data:text\/csv/i)) {
+      csv = `data:text/csv;charset=utf-8,${csv}`
+    }
+
+    link.setAttribute('href', encodeURI(csv))
+    link.setAttribute('download', filename)
+    link.click()
+  }
+
   useEffect(() => {
     getTableColumns()
   }, [downloadData])
@@ -162,17 +201,32 @@ function UrgentemDownload() {
         {isVisible && <Grid item xs={3} />}
         <Grid item xs={isVisible ? 9 : 12}>
           <Box>
-            <div
-              style={{
-                fontWeight: 'bold',
-				fontSize:18,
-                paddingBottom: 10,
-				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
-                paddingLeft: 10,
-              }}
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
             >
-              Urgentem Emissions Data Download
-            </div>
+              <div
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  paddingBottom: 10,
+                  fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+                  paddingLeft: 10,
+                }}
+              >
+                Urgentem Emissions Data Download
+              </div>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={downloadDataHandler}
+                style={{ marginBottom: 10 }}
+              >
+                Download Data
+              </Button>
+            </Box>
+
             <DataTable
               data={downloadData}
               columns={columns}
