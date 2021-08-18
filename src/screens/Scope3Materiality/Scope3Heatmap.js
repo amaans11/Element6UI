@@ -86,7 +86,11 @@ const Scope3Heatmap = () => {
 	};
 
 	const getChartData = (matType) => {
-		const { emission, sector } = filterItem;
+		const {sector } = filterItem;
+		console.log("filterItem>>",filterItem)
+		const emission = filterItem['emission'] == 'Sc12' ? 'Sc123' : filterItem['emission']
+
+		console.log("emission",emission)
 
 		let chartData = [];
 		let xCategories = [];
@@ -94,14 +98,17 @@ const Scope3Heatmap = () => {
 
 		if (heatmapData && heatmapData['data'] && Object.keys(heatmapData['data']).length > 0) {
 			const key = `${sector}${emission}Port`;
+			console.log("key>>",key)
 			sectorList = heatmapData['data']['SectorList'];
 
-			let res = [];
+			console.log("heatmapData['data']",heatmapData['data'])
+			console.log("heatmapData['data']",Object.values(heatmapData['data']))
 
+			let res = [];
 			if (matType === 'matPort') {
-				res = heatmapData['data'][key][0]['PortfolioScaled'];
+				res = Object.values(heatmapData['data'])[1][0]['PortfolioScaled'];
 			} else {
-				res = heatmapData['data'][key][1]['SectorScaled'];
+				res = Object.values(heatmapData['data'])[1][1]['SectorScaled'];
 			}
 			if (res.length > 0) {
 				res.map((data) => {

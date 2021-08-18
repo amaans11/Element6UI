@@ -52,7 +52,6 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 			}
 		},
 		yAxis: {
-			min: 0,
 			title: {
 				text: yAxis,
 				align: 'high',

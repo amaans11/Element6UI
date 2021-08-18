@@ -141,7 +141,7 @@ const PortTemperatureScore = () => {
 									<div className="default-font" style={{fontSize:12}}>
 										Companies With Disclosed Target
 									</div>
-									<Typography className="default-font">{`${targetData}%`}</Typography>
+									<div className="default-font" style={{fontSize:12}}>{`${targetData}%`}</div>
 								</CircularProgressbarWithChildren>
 							</Box>
 						</Grid>

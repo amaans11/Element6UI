@@ -20,6 +20,11 @@ import {
 } from '../../redux/actions/authActions'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 
+const returnYearRes={
+  '5': '5 Year Return',
+  '3': '3 Year Return',
+  '1': '1 Year Return',
+}
 const filterRes = {
   SASB: 'SASB',
   GICS: 'GICS',
@@ -45,9 +50,7 @@ const filterRes = {
   matSector: 'Sector',
   momentum: 'Carbon Momentum',
   emissions_reduction: 'Emissions Reduction',
-  '5': '5 Year Return',
-  '3': '3 Year Return',
-  '1': '1 Year Return',
+ 
   '5Y': '5 Years',
   '3Y': '3 Years',
   '1Y': '1 Year',
@@ -216,6 +219,10 @@ export default function FilterGroup() {
             config = filterConfig['CONTRIB_ANALYSIS']
             break
           case 4:
+            config = filterConfig['CONTRIB_ANALYSIS']
+            break
+          case 5:
+            console.log('test')
             config = filterConfig['HEATMAP']
             break
           default:
@@ -276,6 +283,8 @@ export default function FilterGroup() {
             break
         }
     }
+    console.log('test', config)
+
     setConfigs(config)
   }
   const getEmission = (tagName) => {
@@ -452,10 +461,10 @@ export default function FilterGroup() {
 
       const grpName = newData[grpindex].grpKey
 
-        setExpand({
-      	  ...isExpand,
-      	  [grpKey]:false
-        })
+      setExpand({
+        ...isExpand,
+        [grpKey]: false,
+      })
 
       dispatch(
         setFilterItem({
@@ -529,8 +538,12 @@ export default function FilterGroup() {
                     background: 'none',
                     width: 250,
                   }}
-                  expanded={isExpand[e.grpKey] == undefined ? false :isExpand[e.grpKey] }
-                  onChange={()=>{handleExpandAccordion(e.grpKey)}}
+                  expanded={
+                    isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
+                  }
+                  onChange={() => {
+                    handleExpandAccordion(e.grpKey)
+                  }}
                 >
                   <AccordionSummary
                     aria-label="Expand"
@@ -548,7 +561,11 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      {filterRes[filterItem[e.grpKey]]}
+                      
+                      {e.grpKey === 'returnYear'?
+                        returnYearRes[filterItem[e.grpKey]]
+                      : 
+                      filterRes[filterItem[e.grpKey]]}
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -650,8 +667,12 @@ export default function FilterGroup() {
                     width: 250,
                   }}
                   disabled={configs[index]['disabled']}
-                  expanded={isExpand[e.grpKey] == undefined ? false :isExpand[e.grpKey] }
-                  onChange={()=>{handleExpandAccordion(e.grpKey)}}
+                  expanded={
+                    isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
+                  }
+                  onChange={() => {
+                    handleExpandAccordion(e.grpKey)
+                  }}
                 >
                   <AccordionSummary
                     aria-label="Expand"
