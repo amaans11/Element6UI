@@ -10,6 +10,8 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 	}
 	const currentTheme = localStorage.getItem('appTheme');
 
+	console.log("yAxisCategories",yAxisCategories)
+
 	let options = {
 		chart: {
 			type: 'heatmap',
@@ -117,6 +119,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			}
 		};
 	}
+	console.log(JSON.stringify(options))
 	return (
 		<div>
 			<HighchartsReact highcharts={Highcharts} options={options} />

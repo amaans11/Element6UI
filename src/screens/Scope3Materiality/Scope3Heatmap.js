@@ -32,41 +32,82 @@ const Scope3Heatmap = () => {
 	const { materiality } = filterItem;
 	const { loading } = auth;
 
-	const getCategoryKey = (category) => {
-		switch (category) {
-			case 'Category_1':
-				return 0;
-			case 'Category_2':
-				return 1;
-			case 'Category_3':
-				return 2;
-			case 'Category_4':
-				return 3;
-			case 'Category_5':
-				return 4;
-			case 'Category_6':
-				return 5;
-			case 'Category_7':
-				return 6;
-			case 'Category_8':
-				return 7;
-			case 'Category_9':
-				return 8;
-			case 'Category_10':
-				return 9;
-			case 'Category_11':
-				return 10;
-			case 'Category_12':
-				return 11;
-			case 'Category_13':
-				return 12;
-			case 'Category_14':
-				return 13;
-			case 'Category_15':
-				return 14;
-			default:
-				return 0;
+	const getCategoryKey = (category,emission) => {
+		if(emission === 'Sc123'){
+			switch (category) {
+				case 'Scope_12_Total':
+					return 0;
+				case 'Category_1':
+					return 1;
+				case 'Category_2':
+					return 2;
+				case 'Category_3':
+					return 3;
+				case 'Category_4':
+					return 4;
+				case 'Category_5':
+					return 5;
+				case 'Category_6':
+					return 6;
+				case 'Category_7':
+					return 7;
+				case 'Category_8':
+					return 8;
+				case 'Category_9':
+					return 9;
+				case 'Category_10':
+					return 10;
+				case 'Category_11':
+					return 11;
+				case 'Category_12':
+					return 12;
+				case 'Category_13':
+					return 13;
+				case 'Category_14':
+					return 14;
+				case 'Category_15':
+					return 15;
+				default:
+					return 0;
+			}
 		}
+		else{
+			switch (category) {
+				case 'Category_1':
+					return 0;
+				case 'Category_2':
+					return 1;
+				case 'Category_3':
+					return 2;
+				case 'Category_4':
+					return 3;
+				case 'Category_5':
+					return 4;
+				case 'Category_6':
+					return 5;
+				case 'Category_7':
+					return 6;
+				case 'Category_8':
+					return 7;
+				case 'Category_9':
+					return 8;
+				case 'Category_10':
+					return 9;
+				case 'Category_11':
+					return 10;
+				case 'Category_12':
+					return 11;
+				case 'Category_13':
+					return 12;
+				case 'Category_14':
+					return 13;
+				case 'Category_15':
+					return 14;
+				default:
+					return 0;
+			}
+		}
+		
 	};
 	const fetchDetails = async () => {
 		const data = getRequestData('SCOPE3_MATERILITY', auth);
@@ -87,10 +128,7 @@ const Scope3Heatmap = () => {
 
 	const getChartData = (matType) => {
 		const {sector } = filterItem;
-		console.log("filterItem>>",filterItem)
 		const emission = filterItem['emission'] == 'Sc12' ? 'Sc123' : filterItem['emission']
-
-		console.log("emission",emission)
 
 		let chartData = [];
 		let xCategories = [];
@@ -98,11 +136,7 @@ const Scope3Heatmap = () => {
 
 		if (heatmapData && heatmapData['data'] && Object.keys(heatmapData['data']).length > 0) {
 			const key = `${sector}${emission}Port`;
-			console.log("key>>",key)
 			sectorList = heatmapData['data']['SectorList'];
-
-			console.log("heatmapData['data']",heatmapData['data'])
-			console.log("heatmapData['data']",Object.values(heatmapData['data']))
 
 			let res = [];
 			if (matType === 'matPort') {
@@ -114,12 +148,14 @@ const Scope3Heatmap = () => {
 				res.map((data) => {
 					const sectorName = sector === 'SASB' ? data['SASB_SICS_Sector'] : data['GICS_SECTOR_NAME'];
 
-					const xValue = getCategoryKey(data.y);
+					const xValue = getCategoryKey(data.y,emission);
 					const yValue = sectorList.indexOf(sectorName);
 					chartData.push([ xValue, yValue, data.z ]);
 
-					const yLabel = data.y.split('_');
-					const label = 'Cat' + ' ' + yLabel[1]
+					const yLabel = data.y !== 'Scope_12_Total' ? data.y.split('_') : data.y
+
+					const label = data.y !== 'Scope_12_Total' ? 'Cat' + ' ' + yLabel[1] : 'Total 1+2'
+
 					if (!xCategories.includes(label)) {
 						xCategories.push(label);
 					}
