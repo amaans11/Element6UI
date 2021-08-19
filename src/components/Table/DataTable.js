@@ -9,8 +9,8 @@ const customStyles = {
     style: {
       fontSize: 12,
       textAlign: 'right',
-      background: '#1E2732',
-      color: '#F7DC81',
+      background: '#1bdecb',
+      color: 'black',
       fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
     },
 	activeSortStyle: {

@@ -52,15 +52,15 @@ const theme = createMuiTheme({
     },
     MuiButton: {
       contained: {
-        backgroundColor: "#FFFFFF !important",
+        backgroundColor: "#1bdecb !important",
         color: "#000000 !important" ,
         "&:hover": {
-          backgroundColor: "black",
+          backgroundColor: "#1bdecb",
         },
       },
       root: {
         "&:hover": {
-          backgroundColor: "#FFFFFF !important",
+          backgroundColor: "#1bdecb !important",
           color:"#000000 !important",
           border:"none !important"
         },
