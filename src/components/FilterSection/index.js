@@ -20,7 +20,7 @@ import {
 } from '../../redux/actions/authActions'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 
-const returnYearRes={
+const returnYearRes = {
   '5': '5 Year Return',
   '3': '3 Year Return',
   '1': '1 Year Return',
@@ -50,7 +50,7 @@ const filterRes = {
   matSector: 'Sector',
   momentum: 'Carbon Momentum',
   emissions_reduction: 'Emissions Reduction',
- 
+
   '5Y': '5 Years',
   '3Y': '3 Years',
   '1Y': '1 Year',
@@ -561,11 +561,9 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      
-                      {e.grpKey === 'returnYear'?
-                        returnYearRes[filterItem[e.grpKey]]
-                      : 
-                      filterRes[filterItem[e.grpKey]]}
+                      {e.grpKey === 'returnYear'
+                        ? returnYearRes[filterItem[e.grpKey]]
+                        : filterRes[filterItem[e.grpKey]]}
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -666,7 +664,12 @@ export default function FilterGroup() {
                     background: 'none',
                     width: 250,
                   }}
-                  disabled={configs[index]['disabled']}
+                  disabled={
+                    configs[index]['disabled'] ||
+                    (e.grpKey === 'footprintMetric' &&
+                      filterItem.approach === 'MarketShare' &&
+                      (tabValue === 1 || tabValue === 2))
+                  }
                   expanded={
                     isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
                   }
@@ -690,7 +693,11 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      {configs[index]['disabled']
+                      {e.grpKey === 'footprintMetric' &&
+                      filterItem.approach === 'MarketShare' &&
+                      (tabValue === 1 || tabValue === 2)
+                        ? 'Total Carbon Emissions'
+                        : configs[index]['disabled']
                         ? filterRes[configs[index]['value']]
                         : filterRes[filterItem[e.grpKey]]}
                     </div>
