@@ -36,7 +36,7 @@ const currentTheme = localStorage.getItem('appTheme') || 'basic';
 
 Highcharts.theme = {
 	colors: currentTheme === 'dark' ? 
-	['#2f7ed8', '#8bbc21', '#910000', '#1aadce',
+	['#1bdecb', '#b8e5a5', '#910000', '#1aadce',
         '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a']
 	:[ '#1E2732', '#F7DC81', '#7d7551', '#31d6c9','#bbbfbf','#a0d911','#36cfc9','#40a9ff','#f759ab','#22075e' ],
 	chart: {

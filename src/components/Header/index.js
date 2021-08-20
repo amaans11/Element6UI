@@ -111,9 +111,9 @@ const Header = ({ history }) => {
 						}}
 						open={open}
 					>
-						{/* <MenuItem onClick={handleThemeChange}>
+						<MenuItem onClick={handleThemeChange}>
 							<BorderColorIcon className={classes.icon} />Change Theme
-						</MenuItem> */}
+						</MenuItem>
 						<MenuItem onClick={handleSettings}>
 							<SettingsIcon className={classes.icon} />Settings
 						</MenuItem>

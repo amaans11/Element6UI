@@ -6,13 +6,13 @@ const theme = createMuiTheme({
   overrides: {
     MuiCard: {
       root: {
-        backgroundColor: "#303030",
+        backgroundColor: "#102A43",
         color: "#cecece",
         border:"1px solid #b4b4b4"
       },
     },
     MuiAppBar: {
-      colorPrimary: { backgroundColor: "#26292c" },
+      colorPrimary: { backgroundColor: "#102A43" },
     },
     MiniDrawer: {
       root: {
