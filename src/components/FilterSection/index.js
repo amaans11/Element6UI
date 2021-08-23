@@ -697,6 +697,11 @@ export default function FilterGroup() {
                       filterItem.approach === 'MarketShare' &&
                       (tabValue === 1 || tabValue === 2)
                         ? 'Total Carbon Emissions'
+                        : e.grpKey === 'footprintMetric' &&
+                          (tabValue === 1 || tabValue === 2) &&
+                          (filterItem[e.grpKey] == 'CarbIntensityMarketVal' ||
+                            filterItem[e.grpKey] == 'CarbIntensityRev')
+                        ? filterRes['WeightAvgRev']
                         : configs[index]['disabled']
                         ? filterRes[configs[index]['value']]
                         : filterRes[filterItem[e.grpKey]]}
@@ -732,7 +737,15 @@ export default function FilterGroup() {
                             return (
                               <FilterTags
                                 name={t.name}
-                                selected={t.value === filterItem[e.grpKey]}
+                                selected={
+                                  (tabValue === 1 || tabValue === 2) &&
+                                  (filterItem[e.grpKey] ==
+                                    'CarbIntensityMarketVal' ||
+                                    filterItem[e.grpKey] == 'CarbIntensityRev')
+                                    && t.value === 'WeightAvgRev'
+                                    ? true
+                                    : t.value === filterItem[e.grpKey]
+                                }
                                 grpindex={grpIndex}
                                 tagindex={i}
                                 action={(grpindex, tagindex, selected) =>
