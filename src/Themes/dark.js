@@ -12,7 +12,7 @@ const theme = createMuiTheme({
       },
     },
     MuiAppBar: {
-      colorPrimary: { backgroundColor: "#102A43" },
+      colorPrimary: { backgroundColor: "#424242" },
     },
     MiniDrawer: {
       root: {
@@ -59,6 +59,8 @@ const theme = createMuiTheme({
         },
       },
       root: {
+        backgroundColor: "#1bdecb !important",
+        color:"#000000 !important",
         "&:hover": {
           backgroundColor: "#1bdecb !important",
           color:"#000000 !important",
@@ -67,6 +69,11 @@ const theme = createMuiTheme({
       },
       
     },
+    MuiList:{
+      root:{
+        paddingTop:'0px !important'
+      }
+    },
     MuiListItem: {
       button: {
         "&:hover": {
@@ -74,17 +81,27 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiAccordionSummary:{
+      content:{
+        display:'block !important'
+      }
+    },
+    MUiAutocomplete:{
+      root:{
+        paddingTop:-3
+      }
+    }
   },
   palette: {
-    type: "dark",
+    type:'dark',
     primary: {
-      main: "#ffffff",
+      main: "#FF0000",
       light: "rgb(81, 91, 95)",
       dark: "rgb(26, 35, 39)",
       contrastText: "#ffffff",
     },
     secondary: {
-      main: "#FFB74D",
+      main: "#1bdecb",
       light: "rgb(255, 197, 112)",
       dark: "rgb(200, 147, 89)",
       contrastText: "rgba(0, 0, 0, 0.87)",

@@ -17,13 +17,6 @@ const theme = createMuiTheme({
       },
     },
     MuiButton: {
-      // outlinedSecondary: {
-      //   color: "#ff4d4f",
-      //   "&:hover": {
-      //     backgroundColor: "#ff4d4f !important",
-      //     color:"#FFFFFF !important"
-      //   },
-      // },
       root: {
           backgroundColor: "#1E2732 !important",
           color:"#F7DC81 !important",
@@ -38,7 +31,6 @@ const theme = createMuiTheme({
     },
   MuiTypography:{
     root:{
-      // fontFamily: 'Helvetica',
       color:'black',
       fontSize:12
     }

@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import classNames from 'classnames'
 import FilterTags from './tags'
 import data from '../../util/filter-config'
 import filterConfig from '../../util/tabs-filter-config'
@@ -20,7 +21,7 @@ import {
 } from '../../redux/actions/authActions'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 
-const returnYearRes={
+const returnYearRes = {
   '5': '5 Year Return',
   '3': '3 Year Return',
   '1': '1 Year Return',
@@ -50,7 +51,7 @@ const filterRes = {
   matSector: 'Sector',
   momentum: 'Carbon Momentum',
   emissions_reduction: 'Emissions Reduction',
- 
+
   '5Y': '5 Years',
   '3Y': '3 Years',
   '1Y': '1 Year',
@@ -526,6 +527,8 @@ export default function FilterGroup() {
       [key]: !value,
     })
   }
+  const currentTheme = localStorage.getItem('appTheme') || 'basic';
+
   return (
     <React.Fragment>
       {pathname !== '/forward-looking-analysis'
@@ -552,7 +555,14 @@ export default function FilterGroup() {
                     expandIcon={<ArrowDropDownIcon />}
                     // onClick={()=>handleExpandAccordion(e.grpKey)}
                   >
-                    <div className="tags-label">{e.grpname}</div>
+                    <div
+                      className={classNames({
+                        'tags-label-dark': currentTheme === 'dark',
+                        'tags-label': currentTheme !== 'dark',
+                      })}
+                    >
+                      {e.grpname}
+                    </div>
                     <div
                       style={{
                         fontSize: 12,
@@ -561,11 +571,9 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      
-                      {e.grpKey === 'returnYear'?
-                        returnYearRes[filterItem[e.grpKey]]
-                      : 
-                      filterRes[filterItem[e.grpKey]]}
+                      {e.grpKey === 'returnYear'
+                        ? returnYearRes[filterItem[e.grpKey]]
+                        : filterRes[filterItem[e.grpKey]]}
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -681,7 +689,12 @@ export default function FilterGroup() {
                     expandIcon={<ArrowDropDownIcon />}
                     // onClick={()=>handleExpandAccordion(e.grpKey)}
                   >
-                    <div className="tags-label">{e.grpname}</div>
+                    <div
+                      className={classNames({
+                        'tags-label-dark': currentTheme === 'dark',
+                        'tags-label': currentTheme !== 'dark',
+                      })}
+                    >{e.grpname}</div>
                     <div
                       style={{
                         fontSize: 12,
