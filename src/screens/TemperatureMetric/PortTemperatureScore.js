@@ -34,6 +34,9 @@ const PortTemperatureScore = () => {
 	const [ portScore, setPortScore ] = useState(defaultValue);
 	const [ benchScore, setBenchScore ] = useState(defaultValue);
 
+	const currentTheme = localStorage.getItem('appTheme');
+
+	
 	const fetchDetails = async () => {
 		const data = getRequestData('PORT_TEMPERATURE_SCORE', auth);
 		await dispatch(getTempScoreData(data));
@@ -135,7 +138,7 @@ const PortTemperatureScore = () => {
 								<CircularProgressbarWithChildren
 									value={targetData}
 									styles={buildStyles({
-										pathColor: '#1E2732'
+									pathColor: currentTheme === 'dark' ? '#1bdecb' :'#1E2732'
 									})}
 								>
 									<div className="default-font" style={{fontSize:12}}>

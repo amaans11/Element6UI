@@ -213,6 +213,7 @@ const MiniDrawer = ({ classes, history }) => {
 
   const dispatch = useDispatch()
   const inputRef = useRef(null)
+  const currentTheme = localStorage.getItem('appTheme');
 
   const auth = useSelector((state) => state.auth)
   const portfolios = useSelector((state) => state.auth.portfolioList)
@@ -388,7 +389,7 @@ const MiniDrawer = ({ classes, history }) => {
         }}
         open={open}
       >
-        <div className={classes.toolbar} />
+        <div className={classes.toolbar}  />
         <List>
           {RouteData.map((e, index) => (
             <ListItemLink
@@ -466,7 +467,10 @@ const MiniDrawer = ({ classes, history }) => {
                       expandIcon={<ArrowDropDownIcon />}
                       // onClick={()=>handleExpandAccordion(e.grpKey)}
                     >
-                      <div className="tags-label">Download Options</div>
+                      <div className={classNames({
+                        'tags-label-dark': currentTheme === 'dark',
+                        'tags-label': currentTheme !== 'dark',
+                      })}>Download Options</div>
                       <div
                         style={{
                           fontSize: 12,

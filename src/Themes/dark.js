@@ -6,7 +6,7 @@ const theme = createMuiTheme({
   overrides: {
     MuiCard: {
       root: {
-        backgroundColor: "#102A43",
+        backgroundColor: "#303030",
         color: "#cecece",
         border:"1px solid #b4b4b4"
       },
@@ -19,11 +19,13 @@ const theme = createMuiTheme({
         width: "100%",
       },
     },
-    MuiChip: {
-      colorPrimary: {
-        backgroundColor: "#0a5cae !important",
-        border: "1px solid rgba(255, 255, 255, 0.23)",
+    MuiChip:{
+      root:{
+        borderRadius:'none !important'
       },
+      colorPrimary:{
+        backgroundColor:'#1bdecb !important'
+      }
     },
     MuiInputLabel: {
       root: {
@@ -86,6 +88,11 @@ const theme = createMuiTheme({
         display:'block !important'
       }
     },
+    MuiSlider:{
+      root:{
+        color:"#1bdecb"
+      }
+    },
     MUiAutocomplete:{
       root:{
         paddingTop:-3
@@ -95,7 +102,7 @@ const theme = createMuiTheme({
   palette: {
     type:'dark',
     primary: {
-      main: "#FF0000",
+      main: "#1bdecb",
       light: "rgb(81, 91, 95)",
       dark: "rgb(26, 35, 39)",
       contrastText: "#ffffff",

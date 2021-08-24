@@ -86,7 +86,6 @@ const GenerateReport = () => {
             style={{
               fontSize: 14,
               fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-			  color:'black'
             }}
           >
             Generate an Urgentem Portfolio Climate Report. This report contains

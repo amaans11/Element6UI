@@ -17,12 +17,12 @@ const customStyles = {
     },
     activeSortStyle: {
       '&:focus': {
-        color: '#F7DC81',
+        color: currentTheme === 'dark' ? '#000000':'#F7DC81',
       },
     },
     inactiveSortStyle: {
       '&:hover': {
-        color: '#F7DC81',
+        color: currentTheme === 'dark' ? '#000000':'#F7DC81',
       },
     },
   },
@@ -45,27 +45,28 @@ const scollStyle = {
     },
   },
   headCells: {
-    style: {
-      fontSize: 12,
-      textAlign: 'right',
-      background: '#1E2732',
-      color: '#F7DC81',
-      fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+      style: {
+        fontSize: 12,
+        textAlign: 'right',
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        background: currentTheme === 'dark' ? '#1bdecb' : '#1E2732',
+        color: currentTheme === 'dark' ? '#000000' : '#F7DC81',
     },
     activeSortStyle: {
       '&:focus': {
-        color: '#F7DC81',
+        color: currentTheme === 'dark' ? '#000000':'#F7DC81',
       },
     },
     inactiveSortStyle: {
       '&:hover': {
-        color: '#F7DC81',
+        color: currentTheme === 'dark' ? '#000000':'#F7DC81',
       },
     },
   },
   cells: {
     style: {
       fontSize: 12,
+      background:currentTheme === 'dark' ? '#303030':'#f5f5f5',
     },
   },
   rows: {
@@ -86,7 +87,7 @@ createTheme('dark', {
     default: '#303030',
   },
   context: {
-    background: '#E91E63',
+    background: '#303030',
     text: '#FFFFFF',
     fontFamily: 'Lucida Grande',
   },
