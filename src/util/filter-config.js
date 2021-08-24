@@ -4,7 +4,7 @@
       grpKey:'sector',
       tagsList: [
         { name: "SASB", value: "SASB", selected: true },
-        { name: "GICS", value: "GICS", selected: false },
+        { name: "Standard", value: "GICS", selected: false },
       ],
     },
     {

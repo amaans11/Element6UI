@@ -28,7 +28,7 @@ const returnYearRes = {
 }
 const filterRes = {
   SASB: 'SASB',
-  GICS: 'GICS',
+  GICS: 'Standard',
   WeightAvgRev: 'Weighted Average Intensity (Revenue)',
   WeightAvgMarketVal: 'Weighted Average Intensity (Market Value)',
   TotalCarbEmis: 'Total Carbon Emissions',

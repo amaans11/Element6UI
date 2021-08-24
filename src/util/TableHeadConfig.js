@@ -128,7 +128,7 @@ const sectoralScope3Cells = [
 	},
 	{
 		name: 'Waste Generated',
-		selector: 'waste"',
+		selector: 'waste',
 		sortable: true,
 		right: true,
 		wrap: true,

@@ -52,6 +52,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 			}
 		},
 		yAxis: {
+			gridLineWidth:1,
 			gridLineColor: currentTheme === 'dark' ? '#403e38' : 'rgb(221,221,221)',
 			title: {
 				text: yAxis,
@@ -85,7 +86,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 					connectorAllowed: false
 				},
 				marker: {
-					enabled: true
+					enabled: chartKey == 'PORT_ALIGNMENT' ? true : false
 				},
 				lineWidth:chartKey == 'PORT_ALIGNMENT' ? 2 : 1
 			}
