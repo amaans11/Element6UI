@@ -27,8 +27,7 @@ import {
   FormControlLabel,
   Accordion,
   AccordionDetails,
-  AccordionSummary,
-} from '@material-ui/core'
+  AccordionSummary,} from '@material-ui/core'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import FilterTags from '../components/FilterSection/tags'
 import CustomSwitch from '@material-ui/core/Switch'
@@ -72,7 +71,7 @@ import {
   setDownloadPortfolio,
   setDownloadTags,
   getDownloadDetails,
-  setEmissions
+  setEmissions,
 } from '../redux/actions/authActions'
 import csvFile from '../assets/Dummy-file.xlsx'
 
@@ -165,6 +164,7 @@ const styles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
+    
   },
   grow: {
     flexGrow: 1,
@@ -213,6 +213,7 @@ const MiniDrawer = ({ classes, history }) => {
 
   const dispatch = useDispatch()
   const inputRef = useRef(null)
+  const currentTheme = localStorage.getItem('appTheme');
 
   const auth = useSelector((state) => state.auth)
   const portfolios = useSelector((state) => state.auth.portfolioList)
@@ -302,8 +303,8 @@ const MiniDrawer = ({ classes, history }) => {
     await dispatch(setBenchmark(benchmark))
   }
   const setDefaultTab = async (e) => {
-    console.log("test")
-    if(e.name === 'Scope3'){
+    console.log('test')
+    if (e.name === 'Scope3') {
       await dispatch(setEmissions())
     }
     await dispatch(setTabValue(0))
@@ -360,16 +361,16 @@ const MiniDrawer = ({ classes, history }) => {
 
   let result = ''
 
-  if(selectedDownloadMenu && selectedDownloadMenu.length > 0){
-	selectedDownloadMenu.map((menu, index) => {
-		if (index !== 0) {
-		  result = `${result},${menus[menu]}`
-		} else {
-		  result = menus[menu]
-		}
-	  })
+  if (selectedDownloadMenu && selectedDownloadMenu.length > 0) {
+    selectedDownloadMenu.map((menu, index) => {
+      if (index !== 0) {
+        result = `${result},${menus[menu]}`
+      } else {
+        result = menus[menu]
+      }
+    })
   }
-  
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -388,8 +389,8 @@ const MiniDrawer = ({ classes, history }) => {
         }}
         open={open}
       >
-        <div className={classes.toolbar} />
-        <List style={{ paddingTop: 20 }}>
+        <div className={classes.toolbar}  />
+        <List>
           {RouteData.map((e, index) => (
             <ListItemLink
               primary={e.name}
@@ -400,99 +401,109 @@ const MiniDrawer = ({ classes, history }) => {
           ))}
         </List>
       </Drawer>
-      <main className={classes.content}>
-        {window.location.pathname !== '/' ? (
-          window.location.pathname !== '/urgentem-download' ? (
-            <div className="filter-main">
-              <Box>
+    
+        <main className={classes.content}>
+          {window.location.pathname !== '/' ? (
+            window.location.pathname !== '/urgentem-download' ? (
+              <div className="filter-main">
+                <Box>
+                  <Box>
+                    <SelectwithSearch
+                      heading={'Select Portfolio'}
+                      data={
+                        portfolios && portfolios.length > 0 ? portfolios : []
+                      }
+                      // defaultValue={currentPortfolio}
+                      handleChange={onPortfolioChange}
+                      type="portfolio"
+                      currentValue={currentPortfolio}
+                    />
+                  </Box>
+                  <Box mt={2}>
+                    <SelectwithSearch
+                      heading={'Select Benchmark'}
+                      data={
+                        portfolios && portfolios.length > 0 ? portfolios : []
+                      }
+                      // defaultValue={currentBenchmark}
+                      handleChange={onBenchmarkChange}
+                      type="benchmark"
+                      currentValue={currentBenchmark}
+                    />
+                  </Box>
+                </Box>
+                <div className="filter-part">
+                  <FilterGroup />
+                </div>
+              </div>
+            ) : (
+              <div className="filter-main">
                 <Box>
                   <SelectwithSearch
                     heading={'Select Portfolio'}
-                    data={portfolios && portfolios.length > 0 ? portfolios : []}
-                    // defaultValue={currentPortfolio}
-                    handleChange={onPortfolioChange}
+                    data={
+                      downloadPortfolioList && downloadPortfolioList.length > 0
+                        ? downloadPortfolioList
+                        : []
+                    }
+                    handleChange={ondownloadPortfolioChange}
                     type="portfolio"
-                    currentValue={currentPortfolio}
+                    currentValue={selectedDownloadPort}
                   />
                 </Box>
-                <Box mt={2}>
-                  <SelectwithSearch
-                    heading={'Select Benchmark'}
-                    data={portfolios && portfolios.length > 0 ? portfolios : []}
-                    // defaultValue={currentBenchmark}
-                    handleChange={onBenchmarkChange}
-                    type="benchmark"
-                    currentValue={currentBenchmark}
-                  />
-                </Box>
-              </Box>
-              <div className="filter-part">
-                <FilterGroup />
-              </div>
-            </div>
-          ) : (
-            <div className="filter-main">
-              <Box>
-                <SelectwithSearch
-                  heading={'Select Portfolio'}
-                  data={
-                    downloadPortfolioList && downloadPortfolioList.length > 0
-                      ? downloadPortfolioList
-                      : []
-                  }
-                  handleChange={ondownloadPortfolioChange}
-                  type="portfolio"
-                  currentValue={selectedDownloadPort}
-                />
-              </Box>
-              <Box>
-                <Accordion
-                  style={{
-                    position: 'relative',
-                    background: 'none',
-                    width: 250,
-                  }}
-                  //   expanded={isExpand[e.grpKey]}
-                >
-                  <AccordionSummary
-                    aria-label="Expand"
-                    aria-controls="additional-actions1-content"
-                    id="additional-actions1-header"
-                    expandIcon={<ArrowDropDownIcon />}
-                    // onClick={()=>handleExpandAccordion(e.grpKey)}
+                <Box>
+                  <Accordion
+                    style={{
+                      position: 'relative',
+                      background: 'none',
+                      width: 250,
+                    }}
+                    //   expanded={isExpand[e.grpKey]}
                   >
-                    <div className="tags-label">Download Options</div>
-                    <div
-                      style={{
-                        fontSize: 12,
-                        font: 'inherit',
-                        fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
-                        fontWeight: '500',
-                      }}
+                    <AccordionSummary
+                      aria-label="Expand"
+                      aria-controls="additional-actions1-content"
+                      id="additional-actions1-header"
+                      expandIcon={<ArrowDropDownIcon />}
+                      // onClick={()=>handleExpandAccordion(e.grpKey)}
                     >
-                      {result}
-                    </div>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <div>
-                      {options.map((option, index) => (
-                        <FilterTags
-                          name={option.label}
-                          selected={selectedDownloadMenu.includes(option.value)}
-                          grpindex={index}
-                          tagindex={index}
-                          action={() => updateTag(option.value)}
-                        />
-                      ))}
-                    </div>
-                  </AccordionDetails>
-                </Accordion>
-              </Box>
-            </div>
-          )
-        ) : null}
-        <div className={contentClass}>
-          {/* <div>
+                      <div className={classNames({
+                        'tags-label-dark': currentTheme === 'dark',
+                        'tags-label': currentTheme !== 'dark',
+                      })}>Download Options</div>
+                      <div
+                        style={{
+                          fontSize: 12,
+                          font: 'inherit',
+                          fontFamily: 'Roboto,Helvetica,Arial,sans-serif',
+                          fontWeight: '500',
+                        }}
+                      >
+                        {result}
+                      </div>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <div>
+                        {options.map((option, index) => (
+                          <FilterTags
+                            name={option.label}
+                            selected={selectedDownloadMenu.includes(
+                              option.value,
+                            )}
+                            grpindex={index}
+                            tagindex={index}
+                            action={() => updateTag(option.value)}
+                          />
+                        ))}
+                      </div>
+                    </AccordionDetails>
+                  </Accordion>
+                </Box>
+              </div>
+            )
+          ) : null}
+          <div className={contentClass}>
+            {/* <div>
 						<div style={{ display: 'flex', width: '100%' }}>
 							<div style={{ display: 'flex', width: '75%' }}>
 								<SelectwithSearch
@@ -515,49 +526,50 @@ const MiniDrawer = ({ classes, history }) => {
 							
 						</div>
 					</div> */}
-        </div>
-        <Switch>
-          <Route path="/portfolio-footprint" exact>
-            <PortfolioFootprint />
-          </Route>
-          <Route path="/scope3-materiality" exact>
-            <Scope3Materiality />
-          </Route>
-          <Route path="/nlp" exact>
-            <NLP />
-          </Route>
-          <Route path="/temperature-metric" exact>
-            <TemperatureMetric />
-          </Route>
-          <Route path="/portfolio-optimization" exact>
-            <PortfolioOptimization />
-          </Route>
-          <Route path="/portfolio-carbon-risk" exact>
-            <PortfolioCarbonRisk />
-          </Route>
-          <Route path="/forward-looking-analysis" exact>
-            <ForwardLookingAnalysis />
-          </Route>
-          <Route path="/stranded-assets-analysis" exact>
-            <StrandedAssetsAnalysis />
-          </Route>
-          <Route path="/urgentem-download" exact>
-            <UrgentemDownload />
-          </Route>
-          <Route path="/urgentem-api" exact>
-            <UrgentemApi />
-          </Route>
-          <Route path="/generate-report" exact>
-            <GenerateReport />
-          </Route>
-          <Route path="/">
-            <UrgentemLanding
-              history={history}
-              handleUploadPortfolio={handleUploadPortfolio}
-            />
-          </Route>
-        </Switch>
-      </main>
+          </div>
+          <Switch>
+            <Route path="/portfolio-footprint" exact>
+              <PortfolioFootprint />
+            </Route>
+            <Route path="/scope3-materiality" exact>
+              <Scope3Materiality />
+            </Route>
+            <Route path="/nlp" exact>
+              <NLP />
+            </Route>
+            <Route path="/temperature-metric" exact>
+              <TemperatureMetric />
+            </Route>
+            <Route path="/portfolio-optimization" exact>
+              <PortfolioOptimization />
+            </Route>
+            <Route path="/portfolio-carbon-risk" exact>
+              <PortfolioCarbonRisk />
+            </Route>
+            <Route path="/forward-looking-analysis" exact>
+              <ForwardLookingAnalysis />
+            </Route>
+            <Route path="/stranded-assets-analysis" exact>
+              <StrandedAssetsAnalysis />
+            </Route>
+            <Route path="/urgentem-download" exact>
+              <UrgentemDownload />
+            </Route>
+            <Route path="/urgentem-api" exact>
+              <UrgentemApi />
+            </Route>
+            <Route path="/generate-report" exact>
+              <GenerateReport />
+            </Route>
+            <Route path="/">
+              <UrgentemLanding
+                history={history}
+                handleUploadPortfolio={handleUploadPortfolio}
+              />
+            </Route>
+          </Switch>
+        </main>
+      
       <Dialog open={dialog} onClose={handleCloseDialog}>
         <Box className="d-flex flex-space-between">
           <Typography variant="h5" style={{ marginLeft: 20, marginTop: 10 }}>

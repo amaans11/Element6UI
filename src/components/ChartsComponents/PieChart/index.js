@@ -63,6 +63,14 @@ function PieChart({
         },
       },
     },
+    legend: {
+			enabled: true,
+			itemStyle:{
+				color:currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+				fontSize:14,
+				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+			}
+		},
     series: data,
   }
 

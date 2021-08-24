@@ -12,18 +12,20 @@ const theme = createMuiTheme({
       },
     },
     MuiAppBar: {
-      colorPrimary: { backgroundColor: "#26292c" },
+      colorPrimary: { backgroundColor: "#424242" },
     },
     MiniDrawer: {
       root: {
         width: "100%",
       },
     },
-    MuiChip: {
-      colorPrimary: {
-        backgroundColor: "#0a5cae !important",
-        border: "1px solid rgba(255, 255, 255, 0.23)",
+    MuiChip:{
+      root:{
+        borderRadius:'none !important'
       },
+      colorPrimary:{
+        backgroundColor:'#1bdecb !important'
+      }
     },
     MuiInputLabel: {
       root: {
@@ -52,20 +54,27 @@ const theme = createMuiTheme({
     },
     MuiButton: {
       contained: {
-        backgroundColor: "#FFFFFF !important",
+        backgroundColor: "#1bdecb !important",
         color: "#000000 !important" ,
         "&:hover": {
-          backgroundColor: "black",
+          backgroundColor: "#1bdecb",
         },
       },
       root: {
+        backgroundColor: "#1bdecb !important",
+        color:"#000000 !important",
         "&:hover": {
-          backgroundColor: "#FFFFFF !important",
+          backgroundColor: "#1bdecb !important",
           color:"#000000 !important",
           border:"none !important"
         },
       },
       
+    },
+    MuiList:{
+      root:{
+        paddingTop:'0px !important'
+      }
     },
     MuiListItem: {
       button: {
@@ -74,17 +83,32 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiAccordionSummary:{
+      content:{
+        display:'block !important'
+      }
+    },
+    MuiSlider:{
+      root:{
+        color:"#1bdecb"
+      }
+    },
+    MUiAutocomplete:{
+      root:{
+        paddingTop:-3
+      }
+    }
   },
   palette: {
-    type: "dark",
+    type:'dark',
     primary: {
-      main: "#ffffff",
+      main: "#1bdecb",
       light: "rgb(81, 91, 95)",
       dark: "rgb(26, 35, 39)",
       contrastText: "#ffffff",
     },
     secondary: {
-      main: "#FFB74D",
+      main: "#1bdecb",
       light: "rgb(255, 197, 112)",
       dark: "rgb(200, 147, 89)",
       contrastText: "rgba(0, 0, 0, 0.87)",

@@ -70,7 +70,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 		colorAxis: {
 			min: 0,
 			max:100,
-			minColor: currentTheme === 'dark' ? '#8bbc21':'#a7f7c1',
+			minColor: currentTheme === 'dark' ? '#1bdecb':'#a7f7c1',
 			maxColor: '#ff4d4f',
 			reversed:false
 		},

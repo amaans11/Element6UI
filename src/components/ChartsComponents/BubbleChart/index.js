@@ -27,6 +27,7 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 		},
 		xAxis: {
 			gridLineWidth: 1,
+			gridLineColor: currentTheme === 'dark' ? '#403e38' : 'rgb(221,221,221)',
 			title: {
 				text: xAxisTitle,
 				style:{
@@ -47,6 +48,7 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 		yAxis: {
 			startOnTick: false,
 			endOnTick: false,
+			gridLineColor: currentTheme === 'dark' ? '#403e38' : 'rgb(221,221,221)',
 			title: {
 				text: yAxisTitle,
 				style:{
@@ -94,13 +96,13 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 				},
 				borderWidth: 1,
 				borderColor: currentTheme === 'dark' ? '#000000' : '#FFFFFF',
-				legend: {
-					itemStyle:{
-						color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
-						fontFamily:"Roboto, Helvetica, Arial, sans-serif",
-					    fontSize:12
-					}
-				},
+			}
+		},
+		legend: {
+			itemStyle:{
+				color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+				fontFamily:"Roboto, Helvetica, Arial, sans-serif",
+				fontSize:12
 			}
 		},
 		series: data

@@ -4,25 +4,27 @@ import { Card, Box } from '@material-ui/core'
 import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined'
 import CONFIG from '../../util/config'
 
+const currentTheme = localStorage.getItem('appTheme')
+
 const customStyles = {
   headCells: {
     style: {
       fontSize: 12,
       textAlign: 'right',
-      background: '#1E2732',
-      color: '#F7DC81',
       fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+      background: currentTheme === 'dark' ? '#1bdecb' : '#1E2732',
+      color: currentTheme === 'dark' ? '#000000' : '#F7DC81',
     },
-	activeSortStyle: {
-		'&:focus': {
-			color:  '#F7DC81'
-		}
-	},
-	inactiveSortStyle: {
-		'&:hover': {
-			color:'#F7DC81'
-		}
-	}
+    activeSortStyle: {
+      '&:focus': {
+        color: currentTheme === 'dark' ? '#000000':'#F7DC81',
+      },
+    },
+    inactiveSortStyle: {
+      '&:hover': {
+        color: currentTheme === 'dark' ? '#000000':'#F7DC81',
+      },
+    },
   },
   rows: {
     style: {
@@ -32,7 +34,7 @@ const customStyles = {
   cells: {
     style: {
       lineHeight: 2,
-	  fontSize:12
+      fontSize: 12,
     },
   },
 }
@@ -43,36 +45,36 @@ const scollStyle = {
     },
   },
   headCells: {
-    style: {
-      fontSize: 12,
-      textAlign: 'right',
-      background: '#1E2732',
-      color: '#F7DC81',
-      fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+      style: {
+        fontSize: 12,
+        textAlign: 'right',
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        background: currentTheme === 'dark' ? '#1bdecb' : '#1E2732',
+        color: currentTheme === 'dark' ? '#000000' : '#F7DC81',
     },
-	activeSortStyle: {
-		'&:focus': {
-			color:  '#F7DC81'
-		}
-	},
-	inactiveSortStyle: {
-		'&:hover': {
-			color:'#F7DC81'
-		}
-	}
+    activeSortStyle: {
+      '&:focus': {
+        color: currentTheme === 'dark' ? '#000000':'#F7DC81',
+      },
+    },
+    inactiveSortStyle: {
+      '&:hover': {
+        color: currentTheme === 'dark' ? '#000000':'#F7DC81',
+      },
+    },
   },
   cells: {
     style: {
-	  fontSize:12
+      fontSize: 12,
+      background:currentTheme === 'dark' ? '#303030':'#f5f5f5',
     },
   },
   rows: {
     style: {
       minHeight: 60,
-	  borderBottom:'1px solid red'
+      borderBottom: '1px solid red',
     },
   },
-  
 }
 
 createTheme('dark', {
@@ -85,7 +87,7 @@ createTheme('dark', {
     default: '#303030',
   },
   context: {
-    background: '#E91E63',
+    background: '#303030',
     text: '#FFFFFF',
     fontFamily: 'Lucida Grande',
   },
@@ -230,7 +232,7 @@ class ReactDataTable extends React.Component {
             position: 'absolute',
             left: 10,
             bottom: 10,
-            color: 'black',
+            color: currentTheme == 'dark' ? 'white' : 'black',
           }}
         />
       </Card>

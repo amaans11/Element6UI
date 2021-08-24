@@ -56,7 +56,8 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend })
         },
       },
     yAxis: {
-        title: {
+      gridLineColor: currentTheme === 'dark' ? '#403e38' : 'rgb(221,221,221)',
+      title: {
           text:yAxis ,
           align: "high",
           style:{

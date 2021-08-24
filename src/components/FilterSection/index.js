@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import classNames from 'classnames'
 import FilterTags from './tags'
 import data from '../../util/filter-config'
 import filterConfig from '../../util/tabs-filter-config'
@@ -526,6 +527,8 @@ export default function FilterGroup() {
       [key]: !value,
     })
   }
+  const currentTheme = localStorage.getItem('appTheme') || 'basic';
+
   return (
     <React.Fragment>
       {pathname !== '/forward-looking-analysis'
@@ -552,7 +555,14 @@ export default function FilterGroup() {
                     expandIcon={<ArrowDropDownIcon />}
                     // onClick={()=>handleExpandAccordion(e.grpKey)}
                   >
-                    <div className="tags-label">{e.grpname}</div>
+                    <div
+                      className={classNames({
+                        'tags-label-dark': currentTheme === 'dark',
+                        'tags-label': currentTheme !== 'dark',
+                      })}
+                    >
+                      {e.grpname}
+                    </div>
                     <div
                       style={{
                         fontSize: 12,
@@ -684,7 +694,12 @@ export default function FilterGroup() {
                     expandIcon={<ArrowDropDownIcon />}
                     // onClick={()=>handleExpandAccordion(e.grpKey)}
                   >
-                    <div className="tags-label">{e.grpname}</div>
+                    <div
+                      className={classNames({
+                        'tags-label-dark': currentTheme === 'dark',
+                        'tags-label': currentTheme !== 'dark',
+                      })}
+                    >{e.grpname}</div>
                     <div
                       style={{
                         fontSize: 12,

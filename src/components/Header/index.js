@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = ({ history }) => {
 	const classes = useStyles();
 	const  dispatch = useDispatch();
+
 	
 	const [ anchorEl, setAnchor ] = useState(null);
 	const auth = useSelector((state) => state.auth);
@@ -84,9 +85,9 @@ const Header = ({ history }) => {
 					</LinkContainer>
 					
 					<Box variant="body1" color="inherit" noWrap>
-						<div style={{color:'#F7DC81'}}> {`${currentUser.displayName} / ${currentUser.client}`} </div>
-						<div style={{ fontSize: 12,color:'#F7DC81' }}> Urgentem Emissions Year - {emissionYear} </div>
-						<div style={{ fontSize: 12,color:'#F7DC81' }}> Currency - {auth.currentCurrency ? auth.currentCurrency : 'USD'} </div>
+						<div style={{color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81'}}> {`${currentUser.displayName} / ${currentUser.client}`} </div>
+						<div style={{ fontSize: 12,color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81' }}> Urgentem Emissions Year - {emissionYear} </div>
+						<div style={{ fontSize: 12,color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81' }}> Currency - {auth.currentCurrency ? auth.currentCurrency : 'USD'} </div>
 					</Box>
 				</div>
 				<div>
@@ -111,9 +112,9 @@ const Header = ({ history }) => {
 						}}
 						open={open}
 					>
-						{/* <MenuItem onClick={handleThemeChange}>
+						<MenuItem onClick={handleThemeChange}>
 							<BorderColorIcon className={classes.icon} />Change Theme
-						</MenuItem> */}
+						</MenuItem>
 						<MenuItem onClick={handleSettings}>
 							<SettingsIcon className={classes.icon} />Settings
 						</MenuItem>
