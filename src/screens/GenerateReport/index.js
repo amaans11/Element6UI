@@ -23,6 +23,9 @@ const useStyles = makeStyles(() => ({
     color: 'rgb(120,120,120)',
     fontSize: 16,
   },
+  text: {
+    fontSize: 14,
+  },
 }))
 const GenerateReport = () => {
   const classes = useStyles()
@@ -122,7 +125,7 @@ const GenerateReport = () => {
                   checked={pages.includes(1) ? true : false}
                 />
               }
-              label="Portfolio Footprint"
+              label={<div className={classes.text}>Portfolio Footprint</div>}
             />
             <FormControlLabel
               control={
@@ -135,7 +138,7 @@ const GenerateReport = () => {
                   checked={pages.includes(2) ? true : false}
                 />
               }
-              label="Sectoral Analysis"
+              label={<div className={classes.text}>Sectoral Analysis</div>}
             />
             <FormControlLabel
               control={
@@ -148,7 +151,7 @@ const GenerateReport = () => {
                   checked={pages.includes(3) ? true : false}
                 />
               }
-              label="Disclosure"
+              label={<div className={classes.text}>Disclosure</div>}
             />
             <FormControlLabel
               control={
@@ -161,7 +164,12 @@ const GenerateReport = () => {
                   checked={pages.includes(4) ? true : false}
                 />
               }
-              label="Forward Looking Metrics: Portfolio Alignment and Target Setting"
+              label={
+                <div className={classes.text}>
+                  Forward Looking Metrics: Portfolio Alignment and Target
+                  Setting
+                </div>
+              }
             />
             <FormControlLabel
               control={
@@ -174,7 +182,7 @@ const GenerateReport = () => {
                   checked={pages.includes(5) ? true : false}
                 />
               }
-              label="Sovereign Footprint"
+              label={<div className={classes.text}>Sovereign Footprint</div>}
             />
             <FormControlLabel
               control={
@@ -187,7 +195,7 @@ const GenerateReport = () => {
                   checked={pages.includes(6) ? true : false}
                 />
               }
-              label="Avoided Emissions"
+              label={<div className={classes.text}>Avoided Emissions</div>}
             />
             <FormControlLabel
               control={
@@ -200,7 +208,9 @@ const GenerateReport = () => {
                   checked={pages.includes(7) ? true : false}
                 />
               }
-              label="Fossil Fuel Reserves Footprint"
+              label={
+                <div className={classes.text}>Fossil Fuel Reserves Footprint</div>
+              }
             />
             <FormControlLabel
               control={
@@ -213,7 +223,11 @@ const GenerateReport = () => {
                   checked={pages.includes(8) ? true : false}
                 />
               }
-              label="Temperature Metric: Portfolio Temperature Score"
+              label={
+                <div className={classes.text}>
+                  Temperature Metric: Portfolio Temperature Score
+                </div>
+              }
             />
             <FormControlLabel
               control={
@@ -223,7 +237,7 @@ const GenerateReport = () => {
                   color="default"
                 />
               }
-              label="SelectAll"
+              label={<div className={classes.text}>SelectAll</div>}
             />
             <Box mt={2}>
               <Button
