@@ -6,6 +6,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SettingsIcon from '@material-ui/icons/Settings';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { LinkContainer } from 'react-router-bootstrap';
 import Logo from '../../assets/Urgentem_Wordmark.png';
 import {logoutUser} from '../../redux/actions/authActions'
@@ -51,6 +52,9 @@ const Header = ({ history }) => {
 	const handleSettings = () => {
 		history.push('/settings');
 	};
+	const handleAdmin = ()=>{
+		history.push('/admin');
+	}
 	const handleMenu = (event) => {
 		setAnchor(event.currentTarget);
 	};
@@ -116,6 +120,9 @@ const Header = ({ history }) => {
 						</MenuItem> */}
 						<MenuItem onClick={handleSettings}>
 							<SettingsIcon className={classes.icon} />Settings
+						</MenuItem>
+						<MenuItem onClick={handleAdmin}>
+							<SupervisorAccountIcon className={classes.icon} />Admin
 						</MenuItem>
 						<MenuItem onClick={handleLogout}>
 							<ExitToAppIcon className={classes.icon} />Logout

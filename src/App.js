@@ -12,6 +12,7 @@ import { configureStore } from './redux/store';
 import Login from './screens/auth/Login';
 import Base from './layouts/Base';
 import Settings from './screens/Settings';
+import Admin from './screens/Admin'
 import { setLoading } from './redux/actions/authActions';
 import * as actionTypes from './redux/actionTypes';
 
@@ -123,6 +124,7 @@ function App() {
 						<Switch>
 							<Route exact path="/login" component={Login} />
 							<AuthenticatedRoute path="/settings" exact component={Settings}   />
+							<AuthenticatedRoute path="/admin" exact component={Admin}   />
 							<AuthenticatedRoute path="/" component={Base}  />
 						</Switch>
 					</div>
