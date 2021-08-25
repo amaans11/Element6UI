@@ -88,7 +88,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 				marker: {
 					enabled: chartKey == 'PORT_ALIGNMENT' ? true : false
 				},
-				lineWidth:chartKey == 'PORT_ALIGNMENT' ? 2 : 1
+				lineWidth:chartKey == 'PORT_ALIGNMENT' || chartKey === 'COMPANY_PROFILE' ? 2 : 1
 			}
 		},
 		
