@@ -640,12 +640,12 @@ export const changePassword = (data) => {
       })
   }
 }
-export const deletePortfolioRequest = (portfolio) => {
+export const deletePortfolioRequest = (portfolios) => {
   return async (dispatch, getState) => {
     const clientKey = getState().auth.userInfo.client_key
 
     return axios
-      .delete(`${actionTypes.API_URL}/portfolio/${portfolio}/`, {
+      .delete(`${actionTypes.API_URL}/portfolio/?portfolio_ids=${portfolios.join()}`, {
         headers: {
           'client-key': clientKey,
         },
