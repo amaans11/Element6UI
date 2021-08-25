@@ -26,6 +26,14 @@ const returnYearRes = {
   '3': '3 Year Return',
   '1': '1 Year Return',
 }
+const tempMetric = {
+  '0': 'None',
+  '1': 'All companies without targets set a 2 degree target',
+  '2': 'All companies without targets set a 1.75 degree target',
+  '3': 'Enterprise Owned Emissions Weighted Temperature Score',
+  '4': 'Top 10 contributors set 2 degrees targets',
+  '5': 'Top 10 contributors set 1.75 degree targets',
+}
 const filterRes = {
   SASB: 'SASB',
   GICS: 'Standard',
@@ -61,12 +69,6 @@ const filterRes = {
   EOTS: 'Enterprise Owned Emissions',
   ECOTS: 'Enterprise Value Including Cash Emissions',
   ROTS: 'Revenue Owned Emissions',
-  '0': 'None',
-  '1': 'All companies without targets set a 2 degree target',
-  '2': 'All companies without targets set a 1.75 degree target',
-  '3': 'Enterprise Owned Emissions Weighted Temperature Score',
-  '4': 'Top 10 contributors set 2 degrees targets',
-  '5': 'Top 10 contributors set 1.75 degree targets',
   shortTerm: 'Short Term Score',
   midTerm: 'Mid Term Score',
   longTerm: 'Long Term Score',
@@ -527,7 +529,7 @@ export default function FilterGroup() {
       [key]: !value,
     })
   }
-  const currentTheme = localStorage.getItem('appTheme') || 'basic';
+  const currentTheme = localStorage.getItem('appTheme') || 'basic'
 
   return (
     <React.Fragment>
@@ -573,6 +575,8 @@ export default function FilterGroup() {
                     >
                       {e.grpKey === 'returnYear'
                         ? returnYearRes[filterItem[e.grpKey]]
+                        : e.grpKey === 'scenario'
+                        ? tempMetric[filterItem[e.grpKey]]
                         : filterRes[filterItem[e.grpKey]]}
                     </div>
                   </AccordionSummary>
@@ -699,7 +703,9 @@ export default function FilterGroup() {
                         'tags-label-dark': currentTheme === 'dark',
                         'tags-label': currentTheme !== 'dark',
                       })}
-                    >{e.grpname}</div>
+                    >
+                      {e.grpname}
+                    </div>
                     <div
                       style={{
                         fontSize: 12,
@@ -756,8 +762,9 @@ export default function FilterGroup() {
                                   (tabValue === 1 || tabValue === 2) &&
                                   (filterItem[e.grpKey] ==
                                     'CarbIntensityMarketVal' ||
-                                    filterItem[e.grpKey] == 'CarbIntensityRev')
-                                    && t.value === 'WeightAvgRev'
+                                    filterItem[e.grpKey] ==
+                                      'CarbIntensityRev') &&
+                                  t.value === 'WeightAvgRev'
                                     ? true
                                     : t.value === filterItem[e.grpKey]
                                 }
