@@ -80,7 +80,7 @@ const Header = ({ history }) => {
 						marginLeft: 20
 					}}
 				>
-					<LinkContainer to="/" style={{ cursor: 'pointer' }}>
+					<LinkContainer to="/" style={{ cursor: 'pointer',marginTop:8 }}>
 						<img src={Logo} alt="website logo" height="40px" style={{ width: '22%' }} />
 					</LinkContainer>
 					

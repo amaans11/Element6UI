@@ -243,4 +243,7 @@
 .MuiTab-root{
   min-width: 120px !important;
 }
+.MiniDrawer-toolbar-11{
+  min-height: 55px !important;
+}
 

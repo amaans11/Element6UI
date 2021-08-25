@@ -306,7 +306,7 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
           </Box> */}
           
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={3} style={{display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
             <Box mt={3} >
               <Button
                 variant="outlined"

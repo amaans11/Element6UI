@@ -12,17 +12,17 @@ const customStyles = {
       fontSize: 12,
       textAlign: 'right',
       fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-      background: currentTheme === 'dark' ? '#1bdecb' : '#1E2732',
-      color: currentTheme === 'dark' ? '#000000' : '#F7DC81',
+      background: currentTheme === 'dark' ? '#424242' : '#1E2732',
+      color: currentTheme === 'dark' ? '#FFFFFF' : '#F7DC81',
     },
     activeSortStyle: {
       '&:focus': {
-        color: currentTheme === 'dark' ? '#000000':'#F7DC81',
+        color: currentTheme === 'dark' ? '#1bdecb':'#F7DC81',
       },
     },
     inactiveSortStyle: {
       '&:hover': {
-        color: currentTheme === 'dark' ? '#000000':'#F7DC81',
+        color: currentTheme === 'dark' ? '#1bdecb':'#F7DC81',
       },
     },
   },
