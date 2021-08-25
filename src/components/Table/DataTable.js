@@ -25,16 +25,6 @@ const customStyles = {
         color: currentTheme === 'dark' ? '#1bdecb':'#F7DC81',
       },
     },
-    activeSortStyle: {
-      '&:focus': {
-        color: '#F7DC81',
-      },
-    },
-    inactiveSortStyle: {
-      '&:hover': {
-        color: '#F7DC81',
-      },
-    },
   },
   rows: {
     style: {
@@ -218,35 +208,11 @@ class ReactDataTable extends React.Component {
     link.click()
   }
   render() {
-    const {
-      columns,
-      data,
-      loading,
-      tableHeading,
-      isScroll,
-      isSelectableRows,
-      handleSelection
-    } = this.props
+    const { columns, data, loading, tableHeading, isScroll } = this.props
     const currentTheme = localStorage.getItem('appTheme')
     const title = CONFIG['TABLE'][tableHeading]['HEADING']
 
-    return isSelectableRows ? (
-      <Card style={{ position: 'relative' }}>
-        <DataTable
-          noHeader={true}
-          columns={columns}
-          data={data}
-          pagination={true}
-          paginationRowsPerPageOptions={[10, 25, 100]}
-          highlightOnHover={false}
-          progressPending={loading}
-          theme={currentTheme}
-          customStyles={isScroll ? scollStyle : customStyles}
-          onSelectedRowsChange={(e) => {handleSelection(e.selectedRows)}}
-          selectableRows
-        />
-      </Card>
-    ) : (
+    return (
       <Card style={{ position: 'relative' }}>
         <DataTable
           noHeader={true}
@@ -275,6 +241,5 @@ class ReactDataTable extends React.Component {
 }
 ReactDataTable.defaultProps = {
   isScroll: false,
-  isSelectableRows: false,
 }
 export default ReactDataTable

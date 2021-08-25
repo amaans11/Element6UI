@@ -433,6 +433,7 @@ const Settings = () => {
                     onChange={(e) => {
                       setCurrency(e.target.value)
                     }}
+					disabled
                   >
                     <MenuItem value="USD">USD ($)</MenuItem>
                     <MenuItem value="EUR">EUR (€)</MenuItem>
