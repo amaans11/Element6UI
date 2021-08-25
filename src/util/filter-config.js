@@ -14,8 +14,8 @@
         { name: "Weighted Average Intensity (Revenue)", value: "WeightAvgRev", selected: true },
         { name: "Weighted Average Intensity (Market Value)", value: "WeightAvgMarketVal", selected: false },
         { name: "Total Carbon Emissions", value: "TotalCarbEmis", selected: false },
-        { name: "Portfolio Carbon Intensity (Revenue)", value: "CarbIntensityMarketVal", selected: false },
-        { name: "Portfolio Carbon Intensity (Market Value)", value: "CarbIntensityRev", selected: false },
+        { name: "Portfolio Carbon Intensity (Revenue)", value: "CarbIntensityRev", selected: false },
+        { name: "Portfolio Carbon Intensity (Market Value)", value: "CarbIntensityMarketVal", selected: false },
       ],
     },
     {
