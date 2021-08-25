@@ -431,7 +431,7 @@ const coalPowerCells = [
 ];
 const tempScoreCells = [
 	{
-		name: 'Portfolio',
+		name: <div><div>Portfolio</div><div style={{visibility:'hidden'}}>portfolio</div></div>,
 		selector: 'name',
 		sortable: true,
 		right: false,
@@ -442,20 +442,21 @@ const tempScoreCells = [
 		}
 	},
 	{
-		name: 'Short Term Score °C (2021-2025)',
+		name: <div><div>Short Term Score °C</div><div>(2021-2025)</div></div>,
 		selector: 'shortTerm',
 		sortable: true,
 		right: true,
 		cell: (row) => <div>{row.shortTerm.score}</div>
 	},
 	{
-		name: 'Mid Term Score °C (2026-2036)',
+		name: <div><div>Mid Term Score °C</div><div>(2026-2036)</div></div>,
 		selector: 'midTerm',
 		sortable: true,
 		right: true,
 		cell: (row) => <div>{row.midTerm.score}</div>
 	},
 	{
+		name: <div><div>Long Term Score °C</div><div>`({'>'}2036)`</div></div>,
 		name: 'Long Term Score °C (>2036)',
 		selector: 'longTerm',
 		sortable: true,
@@ -463,7 +464,7 @@ const tempScoreCells = [
 		cell: (row) => <div>{row.longTerm.score}</div>
 	},
 	{
-		name: 'Coverage (%)',
+		name: <div><div>Coverage (%)</div><div style={{visibility:'hidden'}}>coverage</div></div>,
 		selector: 'coverage',
 		sortable: true,
 		right: true
@@ -471,7 +472,7 @@ const tempScoreCells = [
 ];
 const companyAnalysisCells = [
 	{
-		name: 'Company Name',
+		name: <div><div>Company Name</div><div style={{visibility:'hidden'}}>portfolio</div></div>,
 		selector: 'company_name',
 		sortable: true,
 		right: false,
@@ -482,32 +483,32 @@ const companyAnalysisCells = [
 		}
 	},
 	{
-		name: 'Sector',
+		name: <div><div>Sector</div><div style={{visibility:'hidden'}}>portfolio</div></div>,
 		selector: 'sector',
 		sortable: true,
 		right: false,
 		wrap: true
 	},
 	{
-		name: 'Contribution (°C)',
+		name: <div><div>Contribution</div><div>(°C)</div></div>,
 		selector: 'contribution',
 		sortable: true,
 		right: true
 	},
 	{
-		name: 'Temperature Score (°C)',
+		name: <div><div>Temperature Score</div><div>(°C)</div></div>,
 		selector: 'temperature_score',
 		sortable: true,
 		right: true
 	},
 	{
-		name: 'Ownership Percentage (%)',
+		name: <div><div>Ownership</div><div>Percentage (°C)</div></div>,
 		selector: 'ownership_percentage',
 		sortable: true,
 		right: true
 	},
 	{
-		name: 'Portfolio Percentage (%)',
+		name: <div><div>Portfolio Percentage</div><div>(°C)</div></div>,
 		selector: 'portfolio_percentage',
 		sortable: true,
 		right: true

@@ -68,9 +68,9 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			}
 		},
 		colorAxis: {
-			min: 0,
-			max:100,
-			minColor: currentTheme === 'dark' ? '#1bdecb':'#a7f7c1',
+			min: chartKey == 'PORT_HEATMAP' ? 1 : 0,
+			max: chartKey == 'PORT_HEATMAP' ? 4 : 100,
+			minColor: currentTheme === 'dark' ? '#b9eea4':'#a7f7c1',
 			maxColor: '#ff4d4f',
 			reversed:false
 		},
@@ -101,7 +101,7 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 			series: {
 				dataLabels: {
 					enabled: true,
-					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
+					color: currentTheme === 'dark' ? '#000000' : '#000000',
 					style: {
 						fontWeight: 'normal',
 						textOutline: 'none'
