@@ -83,13 +83,14 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 		plotOptions: {
 			series: {
 				label: {
-					connectorAllowed: false
+					connectorAllowed: false,
 				},
 				marker: {
 					enabled: chartKey == 'PORT_ALIGNMENT' ? true : false
 				},
-				lineWidth:chartKey == 'PORT_ALIGNMENT' || chartKey === 'COMPANY_PROFILE' ? 2 : 1
-			}
+				lineWidth:chartKey == 'PORT_ALIGNMENT' || chartKey === 'COMPANY_PROFILE' ? 2 : 1,
+			},
+
 		},
 		
 		series: data
