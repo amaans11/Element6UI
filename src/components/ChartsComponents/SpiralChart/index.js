@@ -68,7 +68,10 @@ function SpiralChart({ data, chartKey, subtitle, chartTitle }) {
 				dataLabels: {
 					enabled: true,
 					inside: true,
-					allowOverlap: true
+					allowOverlap: true,
+					style:{
+						textOutline:false
+					}
 				}
 			}
 		},

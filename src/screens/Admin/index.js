@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Typography,
@@ -10,14 +10,18 @@ import {
   DialogContent,
   DialogContentText,
   CssBaseline,
+  Paper,
+  Tabs,
+  Tab,
 } from '@material-ui/core'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 import { NotificationManager } from 'react-notifications'
 import DataTable from '../../components/Table/DataTable'
-import { deletePortfolioRequest } from '../../redux/actions/authActions'
+import { deletePortfolioRequest,getUploadPortfolioList } from '../../redux/actions/authActions'
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
+import TabPanel from '../../components/TabPanel'
 
 const Admin = ({}) => {
   const dispatch = useDispatch()
@@ -28,6 +32,13 @@ const Admin = ({}) => {
   const [dialog, setDialog] = useState(false)
   const [portIds, setPortIds] = useState([])
 
+  useEffect(()=>{
+    fetchDetails()
+  },[])
+
+  const fetchDetails = async() => {
+    await dispatch(getUploadPortfolioList())
+  }
   const handleClose = () => {
     setDialog(false)
   }
@@ -97,27 +108,36 @@ const Admin = ({}) => {
       <CssBaseline />
       <Header />
       <SideBar />
-      <Box style={{ marginTop: 73, marginLeft: 100 }}>
-        <Typography gutterBottom variant="h5" component="h2">
-          Delete portfolios
-        </Typography>
-        <Typography style={{ color: 'rgb(120,120,120),fontSize:12' }}>
-          To delete any of the portfolios uploaded to your account, please click
-          on the link below and select a portfolio from the list.
-        </Typography>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={deletePortfolioHandler}
-        >
-          Delete Portfolio
-        </Button>
-      </Box>
-
-      <Dialog open={dialog} keepMounted onClose={handleClose} maxWidth="sm">
-        <DialogTitle>Delete Portfolio</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
+      <Box style={{ marginTop: 73, marginLeft: 100 }} mr={1}>
+        <Paper position="static" color="default">
+          <Tabs
+            value={0}
+            indicatorColor="secondary"
+            inkBarStyle={{ background: 'blue' }}
+          >
+            <Tab label="Delete Portfolio" style={{ fontSize: 11 }} />
+          </Tabs>
+        </Paper>
+        <TabPanel value={0} index={0}>
+          <Box>
+            <Box
+              mt={1}
+              mb={1}
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <Button
+                color="primary"
+                onClick={deletePortfolio}
+                disabled={portIds.length === 0}
+                style={{width:150}}
+              >
+                Delete
+              </Button>
+            </Box>
             <DataTable
               data={portfolioTableRes}
               columns={headCells}
@@ -125,19 +145,9 @@ const Admin = ({}) => {
               isSelectableRows={true}
               handleSelection={handleSelectedRowsChange}
             />
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            color="primary"
-            onClick={deletePortfolio}
-            disabled={portIds.length === 0}
-          >
-            Delete
-          </Button>
-          <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
-      </Dialog>
+          </Box>
+        </TabPanel>
+      </Box>
     </Box>
   )
 }

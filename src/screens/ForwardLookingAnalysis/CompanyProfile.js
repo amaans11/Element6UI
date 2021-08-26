@@ -127,7 +127,7 @@ const CompanyProfile = () => {
         },
         {
           name: 'Beyond Two Degrees',
-          data: twoDegrees,
+          data: beyondTwoDegree,
         },
         {
           name: 'Reference Technology',
