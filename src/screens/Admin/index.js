@@ -110,7 +110,7 @@ const Admin = ({}) => {
           color="primary"
           onClick={deletePortfolioHandler}
         >
-          Upload Portfolio
+          Delete Portfolio
         </Button>
       </Box>
 
