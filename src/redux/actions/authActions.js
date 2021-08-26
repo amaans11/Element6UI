@@ -651,7 +651,7 @@ export const deletePortfolioRequest = (portfolios) => {
         },
       })
       .then((result) => {
-        // console.log("result>>",result)
+        return ;
       })
       .catch((err) => {
         const error = err.response.data.message

@@ -26,8 +26,8 @@ function PortfolioFootprint() {
   return (
     <div className="tabs-section">
       <Grid container>
-        {isVisible && <Grid item xs={3} />}
-        <Grid item xs={isVisible ? 9 : 12}>
+        <Grid item xs={3} />
+        <Grid item xs={9}>
           <Paper position="static" color="default">
             <Tabs
               value={value}

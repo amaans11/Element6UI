@@ -32,7 +32,7 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.currentYear = '2020'
         draft.currentQuarter = 'Q1'
         draft.currentCurrency = 'USD'
-		draft.selectedDownloadMenu =['summary']
+		    draft.selectedDownloadMenu =['summary']
         draft.filterItem = {
           sector: 'SASB',
           footprintMetric: 'WeightAvgRev',

@@ -97,7 +97,7 @@ const Admin = ({}) => {
       <CssBaseline />
       <Header />
       <SideBar />
-      <Box style={{ marginTop: 73 , marginLeft:100}}>
+      <Box style={{ marginTop: 73, marginLeft: 100 }}>
         <Typography gutterBottom variant="h5" component="h2">
           Delete portfolios
         </Typography>
@@ -105,9 +105,13 @@ const Admin = ({}) => {
           To delete any of the portfolios uploaded to your account, please click
           on the link below and select a portfolio from the list.
         </Typography>
-        <Link to="" onClick={deletePortfolioHandler}>
-          Delete portfolio
-        </Link>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={deletePortfolioHandler}
+        >
+          Upload Portfolio
+        </Button>
       </Box>
 
       <Dialog open={dialog} keepMounted onClose={handleClose} maxWidth="sm">

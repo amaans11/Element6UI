@@ -122,9 +122,9 @@ const Header = ({ history }) => {
 						<MenuItem onClick={handleSettings}>
 							<SettingsIcon className={classes.icon} />Settings
 						</MenuItem>
-						<MenuItem onClick={handleAdmin}>
+						{userInfo.is_admin && <MenuItem onClick={handleAdmin}>
 							<SupervisorAccountIcon className={classes.icon} />Admin
-						</MenuItem>
+						</MenuItem>}
 						<MenuItem onClick={handleLogout}>
 							<ExitToAppIcon className={classes.icon} />Logout
 						</MenuItem>

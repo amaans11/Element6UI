@@ -36,8 +36,8 @@ function TemperatureMetric() {
   return (
     <div className="tabs-section">
       <Grid container>
-        {isVisible && <Grid item xs={3} />}
-        <Grid item xs={isVisible ? 9 : 12}>
+        <Grid item xs={3} />
+        <Grid item xs={9}>
           <Paper position="static" color="default">
             <Tabs
               value={value}
@@ -62,7 +62,7 @@ function TemperatureMetric() {
           <TabPanel value={value} index={2}>
             <Attribution />
           </TabPanel>
-		  <TabPanel value={value} index={3}>
+          <TabPanel value={value} index={3}>
             <SectoralTempScore />
           </TabPanel>
           <TabPanel value={value} index={4}>

@@ -20,19 +20,19 @@ function Scope3Materiality() {
   return (
     <div className="tabs-section">
       <Grid container>
-        {isVisible && <Grid item xs={3} />}
-        <Grid item xs={isVisible ? 9 : 12}>
+        <Grid item xs={3} />
+        <Grid item xs={9}>
           <Paper position="static" color="default">
             <Tabs
               value={value}
               onChange={handleChange}
               indicatorColor="secondary"
-			  fullWidth="true"
+              fullWidth="true"
               inkBarStyle={{ background: 'blue' }}
             >
               {scope3Tabs &&
                 scope3Tabs.map((e, i) => (
-                  <Tab label={e} {...e} style={{ fontSize:11 }} />
+                  <Tab label={e} {...e} style={{ fontSize: 11 }} />
                 ))}
             </Tabs>
           </Paper>

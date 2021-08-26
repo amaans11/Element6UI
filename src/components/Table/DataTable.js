@@ -208,11 +208,27 @@ class ReactDataTable extends React.Component {
     link.click()
   }
   render() {
-    const { columns, data, loading, tableHeading, isScroll } = this.props
+    const { columns, data, loading, tableHeading, isScroll,isSelectableRows,handleSelection } = this.props
     const currentTheme = localStorage.getItem('appTheme')
     const title = CONFIG['TABLE'][tableHeading]['HEADING']
 
-    return (
+    return isSelectableRows ? (
+      <Card style={{ position: 'relative' }}>
+        <DataTable
+          noHeader={true}
+          columns={columns}
+          data={data}
+          pagination={true}
+          paginationRowsPerPageOptions={[10, 25, 100]}
+          highlightOnHover={false}
+          progressPending={loading}
+          theme={currentTheme}
+          customStyles={isScroll ? scollStyle : customStyles}
+          onSelectedRowsChange={(e) => {handleSelection(e.selectedRows)}}
+          selectableRows
+        />
+      </Card>
+    ) : (
       <Card style={{ position: 'relative' }}>
         <DataTable
           noHeader={true}
@@ -232,7 +248,7 @@ class ReactDataTable extends React.Component {
             position: 'absolute',
             left: 10,
             bottom: 10,
-            color: currentTheme == 'dark' ? 'white' : 'black',
+            color: 'black',
           }}
         />
       </Card>
