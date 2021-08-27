@@ -443,14 +443,14 @@ const tempScoreCells = [
 	},
 	{
 		name: <div><div>Short Term Score °C</div><div>(2021-2025)</div></div>,
-		selector: 'shortTerm',
+		selector: 'shortTerm.score',
 		sortable: true,
 		right: true,
 		cell: (row) => <div>{row.shortTerm.score}</div>
 	},
 	{
 		name: <div><div>Mid Term Score °C</div><div>(2026-2036)</div></div>,
-		selector: 'midTerm',
+		selector: 'midTerm.score',
 		sortable: true,
 		right: true,
 		cell: (row) => <div>{row.midTerm.score}</div>
@@ -458,7 +458,7 @@ const tempScoreCells = [
 	{
 		name: <div><div>Long Term Score °C</div><div>`({'>'}2036)`</div></div>,
 		name: 'Long Term Score °C (>2036)',
-		selector: 'longTerm',
+		selector: 'longTerm.score',
 		sortable: true,
 		right: true,
 		cell: (row) => <div>{row.longTerm.score}</div>
