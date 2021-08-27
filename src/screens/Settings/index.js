@@ -21,6 +21,7 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@material-ui/core'
+import {useHistory} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import { get } from 'lodash'
@@ -237,25 +238,15 @@ const Settings = () => {
 	  setPortIds(portIds)
   }
   const headCells = getHeadCells()
+  const history = useHistory()
   console.log("portIds>>",portIds)
   return (
     <Box>
       <CssBaseline />
-      <Header />
+      <Header history={history} />
       <SideBar />
       <Grid container className={classes.container} spacing={3}>
-        <Box mt={1} ml={1}>
-          <Typography gutterBottom variant="h5" component="h2">
-            Delete portfolios
-          </Typography>
-          <Typography style={{ color: 'rgb(120,120,120),fontSize:12' }}>
-            To delete any of the portfolios uploaded to your account, please
-            click on the link below and select a portfolio from the list.
-          </Typography>
-          <Link to="" onClick={deletePortfolioHandler}>
-            Delete portfolio
-          </Link>
-        </Box>
+        
         <Grid item xs={5}>
           <Card className={classes.card}>
             <Typography

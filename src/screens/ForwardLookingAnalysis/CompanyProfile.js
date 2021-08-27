@@ -97,6 +97,10 @@ const CompanyProfile = () => {
     let lowEnergyDemand = []
     let companyName = ''
 
+    console.log("portScenario",portScenario)
+    let scenario = portScenario === 'LowEnergyDemand' ? 'LowEnergyDemand' : portScenario == 'SSP226' ? 'SSP2-26' : 'SSP1-26'
+
+
     if (chartResponse && chartResponse.length > 0) {
       chartResponse.map((res, index) => {
         let values = []
@@ -111,7 +115,7 @@ const CompanyProfile = () => {
           if (res['Scenario'] === 'Reference Technology') {
             referenceTech.push(values)
           }
-          if (res['Scenario'] === portScenario) {
+          if (res['Scenario'] === scenario) {
             lowEnergyDemand.push(values)
           }
           if (index === chartResponse.length - 1) {

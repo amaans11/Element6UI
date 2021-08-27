@@ -96,7 +96,7 @@ const Header = ({ history }) => {
 				</div>
 				<div>
 					<IconButton
-						aria-owns={open ? 'menu-appbar' : undefined}
+						aria-controls="menu-appbar"
 						aria-haspopup="true"
 						onClick={handleMenu}
 						color="inherit"
@@ -114,8 +114,10 @@ const Header = ({ history }) => {
 							vertical: 'top',
 							horizontal: 'right'
 						}}
-						open={open}
-					>
+						keepMounted
+						open={Boolean(anchorEl)}
+						onClose={()=>{setAnchor(null)}}
+						>
 						<MenuItem onClick={handleThemeChange}>
 							<BorderColorIcon className={classes.icon} />Change Theme
 						</MenuItem>

@@ -22,9 +22,11 @@ import { deletePortfolioRequest,getUploadPortfolioList } from '../../redux/actio
 import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
 import TabPanel from '../../components/TabPanel'
+import { useHistory } from 'react-router'
 
 const Admin = ({}) => {
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const auth = useSelector((state) => state.auth)
   const portfolioTableRes = useSelector((state) => state.auth.portfolioTableRes)
@@ -106,7 +108,7 @@ const Admin = ({}) => {
   return (
     <Box>
       <CssBaseline />
-      <Header />
+      <Header history ={history} />
       <SideBar />
       <Box style={{ marginTop: 73, marginLeft: 100 }} mr={1}>
         <Paper position="static" color="default">
