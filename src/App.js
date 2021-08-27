@@ -46,7 +46,7 @@ Highcharts.theme = {
           '#C595FB',
           '#FF0000',
           '#b7efa3',
-          '#FF8000',
+          '#0E77CA',
           '#77a1e5',
           '#c42525',
           '#a6c96a',
