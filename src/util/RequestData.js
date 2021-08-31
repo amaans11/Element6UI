@@ -5,7 +5,6 @@ const getScenarioValue = (currentSc) => {
     { key: '3', value: { number: 3, engagement_type: 1 } },
     { key: '4', value: { number: 3, engagement_type: 2 } },
   ]
-
   let res = {}
   scenarios.map((scenario) => {
     if (scenario.key === currentSc) {
@@ -94,8 +93,8 @@ const getRequestData = (type, auth) => {
         sector: sector,
         market_value: marketValue,
         asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
-        year_currency: currentYear,
-        currency: currentCurrency,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         quarter_fundamentals: quarterFundamentals,
         quarter_emissions: quarterEmissions,
         version_fundamentals: versionFundamentals,
@@ -114,8 +113,8 @@ const getRequestData = (type, auth) => {
         sector: sector,
         market_value: marketValue,
         asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
-        year_currency: currentYear,
-        currency: currentCurrency,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         quarter_fundamentals: quarterFundamentals,
         quarter_emissions: quarterEmissions,
         version_fundamentals: versionFundamentals,
@@ -144,9 +143,8 @@ const getRequestData = (type, auth) => {
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
         sector: sector,
-        currency: currentCurrency,
-        year_currency: currentYear,
-        quarter: currentQuarter,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
         inference: inferenceType,
         scope: emission,
@@ -190,8 +188,8 @@ const getRequestData = (type, auth) => {
         benchmark_id: benchmarkId,
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
-        year_currency: currentYear,
-        currency: currentCurrency,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         sector: sector,
         footprint: footprintMetric,
         market_value: marketValue,
@@ -223,8 +221,8 @@ const getRequestData = (type, auth) => {
         version_emissions: versionEmissions,
         year_fundamentals: yearFundamentals,
         year_emissions: yearEmissions,
-        currency: currentCurrency,
-        currency_year: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
     case 'SECTORAL_SCOPE3_MATERILITY':
@@ -242,8 +240,8 @@ const getRequestData = (type, auth) => {
         version_emissions: versionEmissions,
         year_fundamentals: yearFundamentals,
         year_emissions: yearEmissions,
-        currency: currentCurrency,
-        currency_year: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
     case 'PORTFOLIO_OPTIMIZATION':
@@ -258,8 +256,8 @@ const getRequestData = (type, auth) => {
         market_value: marketValue,
         scope: emission,
         inference: inferenceType,
-        currency: currentCurrency,
-        currency_year: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         strategy: 'momentum',
         quarter_fundamentals: quarterFundamentals,
         quarter_emissions: quarterEmissions,
@@ -282,11 +280,11 @@ const getRequestData = (type, auth) => {
         year_emissions: yearEmissions,
         asset_type: ['Eq'],
         sector: sector,
-        currency: currentCurrency,
         period: returnYear ? returnYear : '3',
         attribution_type: 'PerformanceAttribution',
         year_currency: 2019,
-        currency_year: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
     case 'RISK_CONTRIBUTOR':
@@ -303,8 +301,8 @@ const getRequestData = (type, auth) => {
         asset_type: ['Eq'],
         inference: inferenceType,
         footprint: footprintMetric,
-        currency: currentCurrency,
-        currency_year: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
     case 'FOSSIL_FUEL':
@@ -313,8 +311,8 @@ const getRequestData = (type, auth) => {
         benchmark_id: benchmarkId,
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
-        year_currency: currentYear,
-        currency: currentCurrency,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         quarter_fundamentals: quarterFundamentals,
         version_fundamentals: versionFundamentals,
         year_fundamentals: yearFundamentals,
@@ -329,11 +327,11 @@ const getRequestData = (type, auth) => {
         benchmark_id: benchmarkId,
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
-        currency: currentCurrency,
         quarter_fundamentals: quarterFundamentals,
         version_fundamentals: versionFundamentals,
         year_fundamentals: yearFundamentals,
-        year_currency: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
 
@@ -343,9 +341,8 @@ const getRequestData = (type, auth) => {
         benchmark_id: benchmarkId,
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
-        currency: currentCurrency,
-        year: currentYear,
-        quarter: currentQuarter,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         aggregation_method: aggregation,
         default_score: defaultValue,
       }
@@ -364,9 +361,8 @@ const getRequestData = (type, auth) => {
         benchmark_id: benchmarkId,
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
-        currency: currentCurrency,
-        year: currentYear,
-        quarter: currentQuarter,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         aggregation_method: aggregation,
         default_score: defaultValue,
         sector_classification: sector,
@@ -386,9 +382,8 @@ const getRequestData = (type, auth) => {
         benchmark_id: benchmarkId,
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
-        currency: currentCurrency,
-        year: currentYear,
-        quarter: currentQuarter,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         aggregation_method: aggregation,
         default_score: defaultValue,
         sector_classification: sector,
@@ -406,9 +401,8 @@ const getRequestData = (type, auth) => {
         benchmark_id: benchmarkId,
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
-        currency: currentCurrency,
-        year: currentYear,
-        quarter: currentQuarter,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         aggregation_method: aggregation,
         default_score: defaultValue,
         sector_classification: sector,
@@ -426,9 +420,8 @@ const getRequestData = (type, auth) => {
         benchmark_id: benchmarkId,
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
-        currency: currentCurrency,
-        year: currentYear,
-        quarter: currentQuarter,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         aggregation_method: aggregation,
         default_score: defaultValue,
         sector_classification: sector,
@@ -498,8 +491,8 @@ const getRequestData = (type, auth) => {
         footprint: footprintMetric == 'CarbIntensityMarketVal' || footprintMetric == 'CarbIntensityRev' ? 'WeightAvgRev' : footprintMetric,
         inference: 'Avg',
         scope: 'Sc123',
-        currency: 'USD',
-        currency_year: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
     case 'TARGET_SETTING':
@@ -519,8 +512,8 @@ const getRequestData = (type, auth) => {
         quarter_emissions: quarterEmissions,
         version_fundamentals: versionFundamentals,
         version_emissions: versionEmissions,
-        currency: currentCurrency,
-        currency_year: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
     case 'COMPANY_PROFILE_COMPANIES':
@@ -552,8 +545,8 @@ const getRequestData = (type, auth) => {
         version_emissions: versionEmissions,
         year_fundamentals: yearFundamentals,
         year_emissions: yearEmissions,
-        currency: currentCurrency,
-        currency_year: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
     case 'CARBON_ADJUSTED_COMPANIES':
@@ -563,8 +556,8 @@ const getRequestData = (type, auth) => {
         quarter_fundamentals: quarterFundamentals,
         version_fundamentals: versionFundamentals,
         asset_type: ['Eq'],
-        currency: 'USD',
-        currency_year: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
     case 'CARBON_ADJUSTED_LINE_RETURNS':
@@ -576,8 +569,8 @@ const getRequestData = (type, auth) => {
         version_fundamentals: versionFundamentals,
         year_fundamentals: yearFundamentals,
         sector: 'SASB',
-        currency: currentCurrency,
-        currency_year: currentYear,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
     case 'CARBON_ADJUSTED_TABLE_RETURNS':

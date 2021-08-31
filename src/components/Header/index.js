@@ -72,6 +72,8 @@ const Header = ({ history }) => {
 	const handleLogout=()=>{
 		dispatch(logoutUser())
 	}
+	console.log("currencyFixRate",auth.currencyFixRate)
+
 	return (
 		<AppBar position="fixed" className={classes.appBar}>
 			<Toolbar disableGutters={true}>
@@ -91,7 +93,7 @@ const Header = ({ history }) => {
 					<Box variant="body1" color="inherit" noWrap>
 						<div style={{color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81'}}> {`${currentUser.displayName} / ${currentUser.client}`} </div>
 						<div style={{ fontSize: 12,color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81' }}> Urgentem Emissions Year - {emissionYear} </div>
-						<div style={{ fontSize: 12,color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81' }}> Currency - {auth.currentCurrency ? auth.currentCurrency : 'USD'} </div>
+						<div style={{ fontSize: 12,color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81' }}> Currency - USD - {auth['currencyFixRate'] && auth['currencyFixRate'][auth.currentCurrency] ? auth['currencyFixRate'][auth.currentCurrency]: 1} {auth.currentCurrency ? auth.currentCurrency : 'USD'} </div>
 					</Box>
 				</div>
 				<div>

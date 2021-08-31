@@ -22,6 +22,7 @@ const intialState = {
   portfolioTableRes: [],
   changeEmailRes: '',
   selectedDownloadPort: ["summary"],
+  currencyFixRate:{}
 }
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -252,8 +253,11 @@ export default function authReducer(state = { ...intialState }, action) {
       return produce(state, (draft) => {
         draft.filterItem.emission = 'Sc123'
         draft.tabValue = 0
-
         })
+      case types.GET_FIX_RATE_SUCCESS:
+        return produce(state, (draft) => {
+          draft.currencyFixRate = action.res 
+          })
     default:
       return state
   }

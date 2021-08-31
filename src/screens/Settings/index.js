@@ -36,7 +36,8 @@ import {
   changeEmail,
   changePassword,
   getPortfolioList,
-  deletePortfolioRequest
+  deletePortfolioRequest,
+  getFixRate
 } from '../../redux/actions/authActions'
 
 const yearOptions = [2020, 2019, 2018]
@@ -127,6 +128,7 @@ const Settings = () => {
       currency,
     }
     dispatch(updateCurrency(data))
+	dispatch(getFixRate(year,quarter))
   }
   const deletePortfolioHandler = () => {
     setDialog(true)
@@ -424,7 +426,6 @@ const Settings = () => {
                     onChange={(e) => {
                       setCurrency(e.target.value)
                     }}
-					disabled
                   >
                     <MenuItem value="USD">USD ($)</MenuItem>
                     <MenuItem value="EUR">EUR (€)</MenuItem>

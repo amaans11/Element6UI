@@ -380,24 +380,8 @@ export const getUploadPortfolioListFailed = (res) => {
 }
 
 export const updateCurrency = (data) => {
-  const { year, quarter, currency } = data
   return async (dispatch) => {
-    return axios
-      .get(`${actionTypes.API_URL}/currencies/currency/${year}/${quarter}`)
-      .then((result) => {
-        if (result.data.status === 'done') {
-          const res = {
-            ...result.data,
-            currency,
-          }
-          dispatch(updateCurrencySuccess(data))
-        } else {
-          dispatch(updateCurrencyFailed({ currency }))
-        }
-      })
-      .catch((error) => {
-        dispatch(updateCurrencyFailed({ currency }))
-      })
+    dispatch(updateCurrencySuccess(data))
   }
 }
 
@@ -698,6 +682,29 @@ export const setEmissionsSuccess = (res) => {
   return { type: actionTypes.SET_EMISSIONS_SUCCESS, res }
 }
 
+export const getFixRate = (year,quarter) => {
+  return async (dispatch, getState) => {
+    const clientKey = getState().auth.userInfo.client_key
 
+    return axios
+      .get(`${actionTypes.API_URL}/currencies/?year=${year}&quarter=${quarter.slice(1,quarter.length)}`, {
+        headers: {
+          'client-key': clientKey,
+        },
+      })
+      .then((result) => {
+        dispatch(getFixRateSuccess(result.data))
+
+      })
+      .catch((err) => {
+        const error = err.response.data.message
+        throw new Error(error)
+      })
+  }
+}
+
+export const getFixRateSuccess = (res) => {
+  return { type: actionTypes.GET_FIX_RATE_SUCCESS, res }
+}
 
 /* eslint-disable */
