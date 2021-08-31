@@ -174,7 +174,7 @@ function UrgentemDownload() {
   }
   const downloadDataHandler = () => {
     const link = document.createElement('a')
-    let csv =  convertArrayOfObjectsToCSV(downloadData)
+    let csv = convertArrayOfObjectsToCSV(downloadData)
     if (csv === null) return
 
     const filename = 'export.csv'
@@ -222,18 +222,28 @@ function UrgentemDownload() {
                 color="primary"
                 onClick={downloadDataHandler}
                 style={{ marginBottom: 10 }}
+                disabled={downloadData.length === 0}
               >
                 Download Data
               </Button>
             </Box>
 
-            <DataTable
-              data={downloadData}
-              columns={columns}
-              tableHeading="DOWNLOAD"
-              isScroll={true}
-              loading={loading}
-            />
+            {downloadData && downloadData.length > 0 ? (
+              <DataTable
+                data={downloadData}
+                columns={columns}
+                tableHeading="DOWNLOAD"
+                isScroll={true}
+                loading={loading}
+              />
+            ) : (
+              <DataTable
+                data={downloadData}
+                columns={columns}
+                tableHeading="DOWNLOAD"
+                loading={loading}
+              />
+            )}
           </Box>
         </Grid>
       </Grid>
