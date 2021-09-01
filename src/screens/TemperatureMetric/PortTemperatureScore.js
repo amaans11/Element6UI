@@ -84,7 +84,7 @@ const PortTemperatureScore = () => {
       switch (emission) {
         case 'Sc12':
           portScore = res[0][scoreType]['score']
-          benchScore = res[2][scoreType]['score']
+          benchScore = res[3][scoreType]['score']
           coverage = res[0]['coverage']
           companyData = getCompanyData(res[0])
           break
