@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box,CircularProgress } from '@material-ui/core';
-import { some, findIndex } from 'lodash';
+import { some, findIndex ,get} from 'lodash';
 import { getRiskContributorData } from '../../redux/actions/riskContributionActions';
 import getRequestData from '../../util/RequestData';
 import BubbleChart from '../../components/ChartsComponents/BubbleChart';
@@ -16,6 +16,9 @@ const RiskContributor = () => {
 	const riskContribData = useSelector((state) => state.risk.riskContribData);
 
 	const { year, intensityScope } = auth.filterItem;
+	const {userInfo} = auth
+
+	const trial = get(userInfo,'Trial',false)
 
 	const [ chartData, setChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
@@ -112,6 +115,7 @@ const RiskContributor = () => {
 						zAxisLabel="Contribution to Intensity"
 						xAxisTitle={`Contribution to Annualized Risk (${year})`}
 						yAxisTitle={`Contribution to Annualized Return (${year})`}
+						isExportEnabled={!trial}
 					/>
 					<DataTable data={tableData} columns={riskContribCells} tableHeading="RISK_CONTRIBUTOR" />
 				</Box>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, CircularProgress } from '@material-ui/core'
+import {get} from 'lodash'
 import { getPortfolioAlignment } from '../../redux/actions/flmActions'
 import getRequestData from '../../util/RequestData'
 import LineChart from '../../components/ChartsComponents/Line'
@@ -11,8 +12,9 @@ const PortAlignment = () => {
 
   const portAlignment = useSelector((state) => state.flm.portAlignment)
   const auth = useSelector((state) => state.auth)
-  const { loading, filterItem } = auth
+  const { loading, filterItem,userInfo } = auth
   const { portScenario } = filterItem
+  const trial = get(userInfo,'Trial',false)
 
   const [lineChartData, setLineChartData] = useState([])
 
@@ -37,7 +39,12 @@ const PortAlignment = () => {
 
   const getChartData = () => {
     let alignmentData = portAlignment['data']
-    let scenario = portScenario === 'LowEnergyDemand' ? 'LowEnergyDemand' : portScenario == 'SSP226' ? 'SSP2-26' : 'SSP1-26'
+    let scenario =
+      portScenario === 'LowEnergyDemand'
+        ? 'LowEnergyDemand'
+        : portScenario == 'SSP226'
+        ? 'SSP2-26'
+        : 'SSP1-26'
 
     let chartData = [
       {
@@ -115,7 +122,11 @@ const PortAlignment = () => {
         </Box>
       ) : (
         <Box>
-          <LineChart data={lineChartData} chartKey="PORT_ALIGNMENT" />
+          <LineChart
+            data={lineChartData}
+            chartKey="PORT_ALIGNMENT"
+            isExportEnabled={!trial}
+          />
         </Box>
       )}
     </React.Fragment>

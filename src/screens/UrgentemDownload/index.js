@@ -10,6 +10,7 @@ import {
   FormControlLabel,
   Button,
 } from '@material-ui/core'
+import {get} from 'lodash'
 import SelectwithSearch from '../../components/Autocomplete'
 import {
   getDownloadPortfolios,
@@ -33,6 +34,8 @@ function UrgentemDownload() {
   const auth = useSelector((state) => state.auth)
 
   const { downloadPortfolioList, downloadData, userInfo } = auth
+
+  const trial = get(userInfo,'Trial',false)
 
   const yearEmissions =
     userInfo.year && userInfo.year.emissions ? userInfo.year.emissions : '2019'
@@ -217,7 +220,7 @@ function UrgentemDownload() {
               >
                 Urgentem Emissions Data Download
               </div>
-              <Button
+              {!trial && <Button
                 variant="outlined"
                 color="primary"
                 onClick={downloadDataHandler}
@@ -225,7 +228,7 @@ function UrgentemDownload() {
                 disabled={downloadData.length === 0}
               >
                 Download Data
-              </Button>
+              </Button>}
             </Box>
 
             {downloadData && downloadData.length > 0 ? (

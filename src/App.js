@@ -37,6 +37,8 @@ axios.defaults.headers.get['x-api-key'] =
 
 const currentTheme = localStorage.getItem('appTheme') || 'basic'
 
+console.log("store",store.getState())
+
 Highcharts.theme = {
   colors:
     currentTheme === 'dark'
@@ -91,24 +93,6 @@ Highcharts.theme = {
   lang: {
     numericSymbols: null,
     thousandsSep: ',',
-  },
-  exporting: {
-    buttons: {
-      contextButton: {
-        menuItems: [
-          'printChart',
-          'separator',
-          'downloadPNG',
-          'downloadJPEG',
-          'downloadPDF',
-          'downloadSVG',
-          'separator',
-          'downloadCSV',
-          'downloadXLS',
-          'openInCloud',
-        ],
-      },
-    },
   },
 }
 // Add a request interceptor

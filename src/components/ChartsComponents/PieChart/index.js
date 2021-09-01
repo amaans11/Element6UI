@@ -10,6 +10,7 @@ function PieChart({
   subtitle,
   loading,
   chartTitle,
+  isExportEnabled
 }) {
   const title = CONFIG['CHART'][chartKey]['TITLE']
   const currentTheme = localStorage.getItem('appTheme')
@@ -72,6 +73,25 @@ function PieChart({
 			}
 		},
     series: data,
+    exporting: {
+			enabled:isExportEnabled,
+			buttons: {
+			  contextButton: {
+				menuItems: [
+				  'printChart',
+				  'separator',
+				  'downloadPNG',
+				  'downloadJPEG',
+				  'downloadPDF',
+				  'downloadSVG',
+				  'separator',
+				  'downloadCSV',
+				  'downloadXLS',
+				  'openInCloud',
+				],
+			  },
+			},
+		  },
   }
 
   return (

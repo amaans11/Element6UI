@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, CircularProgress } from '@material-ui/core';
-import { some, findIndex } from 'lodash';
+import { some, findIndex,get } from 'lodash';
 import DataTable from '../../components/Table/DataTable';
 import getRequestData from '../../util/RequestData';
 import BubbleChart from '../../components/ChartsComponents/BubbleChart';
@@ -27,8 +27,9 @@ const CompanyAnalysis = () => {
 
 	const companyData = useSelector((state) => state.tempMetric.companyData);
 	const auth = useSelector((state) => state.auth);
-	const { loading,filterItem } = auth;
+	const { loading,filterItem,userInfo } = auth;
 	const {emission}=filterItem;
+	const trial = get(userInfo,'Trial',false)
 
 	const emissionLabel=getEmissionValue(emission)
 
@@ -100,6 +101,7 @@ const CompanyAnalysis = () => {
 						yAxisLabel="S1+2 GHG Emissions(tCO2e)"
 						zAxisLabel="Weight"
 						yAxisTitle={`${emissionLabel} GHG Emissions (tCo2e)`}
+						isExportEnabled={!trial}
 					/>
 					<DataTable data={tableData} columns={companyAnalysisCells} tableHeading="COMPANY_ANALYSIS" />
 				</React.Fragment>

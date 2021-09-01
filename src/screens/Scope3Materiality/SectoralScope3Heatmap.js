@@ -17,6 +17,7 @@ import {
   Button,
   Typography,
 } from '@material-ui/core'
+import {get} from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
 import { getScope3Data } from '../../redux/actions/scope3Actions'
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart'
@@ -47,7 +48,8 @@ const SectoralScope3Heatmap = () => {
   const heatmapData = useSelector((state) => state.scope3.heatmapData)
 
   const { materiality } = filterItem
-  const { loading } = auth
+  const { loading,userInfo } = auth
+  const trial = get(userInfo,'Trial',false)
 
   const getCategoryKey = (category,emission) => {
 		if(emission === 'Sc123'){
@@ -258,6 +260,7 @@ const SectoralScope3Heatmap = () => {
             data={chartData}
             xAxisCategories={xCategories}
             isSectoral={true}
+            isExportEnabled={!trial}
           />
           <DataTable
             data={tableData}

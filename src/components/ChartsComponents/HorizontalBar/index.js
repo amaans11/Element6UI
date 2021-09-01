@@ -3,7 +3,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
 
-function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loading, chartTitle }) {
+function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loading, chartTitle,isExportEnabled }) {
 	let title = chartTitle;
 	if (!chartTitle) {
 		title = CONFIG['CHART'][chartKey]['TITLE'];
@@ -119,6 +119,25 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 		credits: {
 			enabled: false
 		},
+		exporting: {
+			enabled:isExportEnabled,
+			buttons: {
+			  contextButton: {
+				menuItems: [
+				  'printChart',
+				  'separator',
+				  'downloadPNG',
+				  'downloadJPEG',
+				  'downloadPDF',
+				  'downloadSVG',
+				  'separator',
+				  'downloadCSV',
+				  'downloadXLS',
+				  'openInCloud',
+				],
+			  },
+			},
+		  },
 		series: data
 	};
 

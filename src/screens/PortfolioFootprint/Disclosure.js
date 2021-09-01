@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, CircularProgress, Typography } from '@material-ui/core'
-import { some } from 'lodash'
+import { some,get } from 'lodash'
 import { getDisclosureData } from '../../redux/actions/footprintActions'
 import ColumnChart from '../../components/ChartsComponents/ColumnChart'
 import StackedBar from '../../components/ChartsComponents/StackedBar'
@@ -22,7 +22,8 @@ const Disclosure = () => {
   const [columnCategories, setColumnCategories] = useState([])
 
   const dispatch = useDispatch()
-  const { loading } = auth
+  const { loading,userInfo } = auth
+  const trial = get(userInfo,'Trial',false)
 
   const fetchDetails = async () => {
     const portData = getRequestData('PORT_DISCLOSURE', auth)
@@ -148,11 +149,13 @@ const Disclosure = () => {
             categories={categories}
             data={stackedChartData}
             chartKey="DISCLOSURE_SCOPE12"
+            isExportEnabled={!trial}
           />
           <ColumnChart
             categories={columnCategories}
             data={columnChartData}
             chartKey="DISCLOSURE_SCOPE3"
+            isExportEnabled={!trial}
           />
           <div
             style={{

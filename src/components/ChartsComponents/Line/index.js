@@ -3,7 +3,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
 
-function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHeight }) {
+function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHeight , isExportEnabled}) {
 	let title = chartTitle
 	if(!chartTitle){
 		 title = CONFIG['CHART'][chartKey]['TITLE'];
@@ -93,7 +93,26 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 
 		},
 		
-		series: data
+		series: data,
+		exporting: {
+			enabled:isExportEnabled,
+			buttons: {
+			  contextButton: {
+				menuItems: [
+				  'printChart',
+				  'separator',
+				  'downloadPNG',
+				  'downloadJPEG',
+				  'downloadPDF',
+				  'downloadSVG',
+				  'separator',
+				  'downloadCSV',
+				  'downloadXLS',
+				  'openInCloud',
+				],
+			  },
+			},
+		  },
 	};
 
 	return (

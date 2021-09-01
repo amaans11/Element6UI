@@ -3,7 +3,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
 
-function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLabel, yAxisLabel, zAxisLabel }) {
+function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLabel, yAxisLabel, zAxisLabel,isExportEnabled }) {
 	const title = CONFIG['CHART'][chartKey]['TITLE'];
 
 	const currentTheme = localStorage.getItem('appTheme');
@@ -105,7 +105,26 @@ function ColumnChart({ data, chartKey, yAxisTitle, subtitle, xAxisTitle, xAxisLa
 				fontSize:12
 			}
 		},
-		series: data
+		series: data,
+		exporting: {
+			enabled:isExportEnabled,
+			buttons: {
+			  contextButton: {
+				menuItems: [
+				  'printChart',
+				  'separator',
+				  'downloadPNG',
+				  'downloadJPEG',
+				  'downloadPDF',
+				  'downloadSVG',
+				  'separator',
+				  'downloadCSV',
+				  'downloadXLS',
+				  'openInCloud',
+				],
+			  },
+			},
+		  },
 	};
 
 	return (

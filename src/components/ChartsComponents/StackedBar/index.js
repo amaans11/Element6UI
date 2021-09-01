@@ -3,7 +3,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import CONFIG from '../../../util/config'
 
-function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
+function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExportEnabled}) {
   const title = CONFIG['CHART'][chartKey]['TITLE']
   let yAxis = yAxisTitle
   if (!yAxisTitle) {
@@ -96,6 +96,25 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle }) {
       },
     },
     series: data,
+    exporting: {
+			enabled:isExportEnabled,
+			buttons: {
+			  contextButton: {
+				menuItems: [
+				  'printChart',
+				  'separator',
+				  'downloadPNG',
+				  'downloadJPEG',
+				  'downloadPDF',
+				  'downloadSVG',
+				  'separator',
+				  'downloadCSV',
+				  'downloadXLS',
+				  'openInCloud',
+				],
+			  },
+			},
+		  },
   }
   if(chartKey === 'PORT_COMPANIES_SCORE'){
     options={

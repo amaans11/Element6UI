@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, CircularProgress } from '@material-ui/core';
+import {get} from 'lodash'
 import getRequestData from '../../util/RequestData';
 import { getSectoralTempScore } from '../../redux/actions/tempMetricActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
@@ -14,8 +15,9 @@ const SectoralTempScore = () => {
 
 	const [ chartData, setChartData ] = useState([]);
 	const [ chartCategories, setChartCategories ] = useState([]);
-	const { filterItem, loading } = auth;
+	const { filterItem, loading,userInfo } = auth;
 	const { scoreType, emission } = filterItem;
+	const trial = get(userInfo,'Trial',false)
 
 	const fetchDetails = async () => {
 		const data = getRequestData('SECTORAL_TEMP_SCORE', auth);
@@ -92,6 +94,7 @@ const SectoralTempScore = () => {
 						data={chartData}
 						chartKey="CONTRIBUTION_ANALYSIS"
 						isLegend={false}
+						isExportEnabled={!trial}
 					/>
 				</React.Fragment>
 			)}

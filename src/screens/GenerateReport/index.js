@@ -12,6 +12,7 @@ import {
   InputLabel,
   Select,
 } from '@material-ui/core'
+import {get} from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
 import { NotificationManager } from 'react-notifications'
 import { generateReport } from '../../redux/actions/authActions'
@@ -35,7 +36,8 @@ const GenerateReport = () => {
   const [template, setTemplate] = useState('dark')
 
   const auth = useSelector((state) => state.auth)
-  const { isVisible } = auth
+  const { isVisible,userInfo } = auth
+  const trial = get(userInfo,'Trial',false)
 
   const handleCheckboxChange = (key, value) => {
     let list = [...pages]
@@ -240,11 +242,12 @@ const GenerateReport = () => {
               label={<div className={classes.text}>SelectAll</div>}
             />
             <Box mt={2}>
-              <Button
+               <Button
                 size="large"
                 variant="contained"
                 color="primary"
                 onClick={handleSubmit}
+                disabled ={trial}
               >
                 Generate Report
               </Button>

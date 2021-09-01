@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box,CircularProgress } from '@material-ui/core';
+import {get} from 'lodash'
 import { getAvoidedEmissions } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
@@ -14,11 +15,13 @@ const categories = [ 'Scope 1+2', 'Scope 3', 'Scope 1+2+3', 'Avoided Emissions',
 const AvoidedEmission = () => {
     const auth = useSelector((state) => state.auth);
 	const avoidedEmissions = useSelector((state) => state.footprint.avoidedEmission);
-    const {filterItem,loading}=auth
+    const {filterItem,loading,userInfo}=auth
 
 	const [ chartData, setChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
+
+	const trial = get(userInfo,'Trial',false)
 
 	const dispatch = useDispatch();
 
@@ -132,6 +135,7 @@ const AvoidedEmission = () => {
 						chartKey="AVOIDED_EMISSIONS"
 						yAxisTitle={yAxisTitle}
 						chartTitle={chartTitle}
+						isExportEnabled={!trial}
 					/>
 					<DataTable
 						data={tableData}

@@ -11,6 +11,7 @@ import {
   Select,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import {get} from 'lodash'
 import {
   getCompanies,
   getCompanyProfileData,
@@ -33,9 +34,10 @@ const CompanyProfile = () => {
   const companyProfile = useSelector((state) => state.flm.companyProfile)
   const companyData = useSelector((state) => state.flm.companyData)
   const auth = useSelector((state) => state.auth)
-  const { loading, filterItem } = auth
+  const { loading, filterItem,userInfo } = auth
   const { portScenario } = filterItem
   const classes = useStyles()
+  const trial = get(userInfo,'Trial',false)
 
   const [chartData, setChartData] = useState([])
   const [tableData, setTableData] = useState([])
@@ -271,6 +273,7 @@ const CompanyProfile = () => {
                 chartKey="COMPANY_PROFILE"
                 chartTitle={`${companyName} Profile`}
                 // isCustomHeight={true}
+                isExportEnabled={!trial}
               />
             </Grid>
             <Grid item xs={12}>

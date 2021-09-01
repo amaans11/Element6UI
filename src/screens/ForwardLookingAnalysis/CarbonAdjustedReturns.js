@@ -10,6 +10,7 @@ import {
   MenuItem,
   Select,
 } from '@material-ui/core'
+import {get} from 'lodash'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   getCarbonCompanies,
@@ -41,8 +42,10 @@ const CarbonAdjustedReturns = () => {
   const companyData = useSelector((state) => state.flm.carbonCompanyData)
 
   const auth = useSelector((state) => state.auth)
-  const { loading, filterItem } = auth
+  const { loading, filterItem,userInfo } = auth
   const { emission } = filterItem
+
+  const trial = get(userInfo,'Trial',false)
 
   const [chartData, setChartData] = useState([])
   const [returnData, setReturnData] = useState([])
@@ -53,15 +56,13 @@ const CarbonAdjustedReturns = () => {
   const [currentSector, setCurrentSector] = useState('')
   const [companyName, setCompanyName] = useState('')
 
-  console.log("companyData1",companyData)
-
   useEffect(() => {
     fetchCompanies()
   }, [])
 
   const fetchCompanies = async () => {
     const data = getRequestData('CARBON_ADJUSTED_COMPANIES', auth)
-    const response =await dispatch(getCarbonCompanies(data))
+    const response = await dispatch(getCarbonCompanies(data))
     if (response && Object.keys(response).length > 0) {
       const sectors = Object.keys(response)
       const companies = response[sectors[0]]
@@ -76,7 +77,7 @@ const CarbonAdjustedReturns = () => {
       await fetchDetails(companies[0])
     }
   }
-  
+
   useEffect(() => {
     if (
       carbonReturnsTableData &&
@@ -350,7 +351,7 @@ const CarbonAdjustedReturns = () => {
                     companyList.map((company) => (
                       <MenuItem
                         value={company.company_id}
-												disabled={company.Price_Data ? false : true}
+                        disabled={company.Price_Data ? false : true}
                       >
                         {company.name}
                       </MenuItem>
@@ -361,7 +362,11 @@ const CarbonAdjustedReturns = () => {
           </Grid>
           <Grid container>
             <Grid item xs={12}>
-              <LineChart data={chartData} chartKey="CARBON_ADJUSTED_RETURNS" />
+              <LineChart
+                data={chartData}
+                chartKey="CARBON_ADJUSTED_RETURNS"
+                isExportEnabled={!trial}
+              />
               <span style={{ fontSize: 11, paddingTop: -20 }}>
                 * Companies highlighted in grey doesn't have price data.
               </span>

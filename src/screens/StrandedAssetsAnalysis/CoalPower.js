@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, CircularProgress, Grid } from '@material-ui/core'
+import {get} from 'lodash'
 import DataTable from '../../components/Table/DataTable'
 import getRequestData from '../../util/RequestData'
 import { coalPowerCells } from '../../util/TableHeadConfig'
@@ -16,7 +17,8 @@ const CoalPower = () => {
 
   const coalPower = useSelector((state) => state.stranded.coalPower)
   const auth = useSelector((state) => state.auth)
-  const { loading } = auth
+  const { loading,userInfo } = auth
+  const trial = get(userInfo,'Trial',false)
 
   const fetchDetails = async () => {
     const data = getRequestData('COAL_POWER', auth)
@@ -71,6 +73,7 @@ const CoalPower = () => {
                 categories={['']}
                 data={chartData}
                 chartKey="COAL_POWER"
+                isExportEnabled={!trial}
               />
             </Grid>
             <Grid item xs={12}>

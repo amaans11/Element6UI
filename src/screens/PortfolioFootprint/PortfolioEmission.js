@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {Box,CircularProgress} from  '@material-ui/core'
+import {get} from 'lodash'
 import { getPortfolioEmission } from '../../redux/actions/footprintActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import DataTable from '../../components/Table/DataTable';
@@ -19,9 +20,10 @@ const PortfolioEmission = () => {
 
 	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
 	const auth =useSelector(state=>state.auth);
-	const {filterItem,loading}=auth;
+	const {filterItem,loading,userInfo}=auth;
 
 	const {footprintMetric} = filterItem
+	const trial = get(userInfo,'Trial',false)
 	const tableLabel =  footprintMetric === 'TotalCarbEmis' ? 'tCO2e' : 'tCO2e / 1M USD'
 
 	const portEmissionCells = [
@@ -160,6 +162,7 @@ const PortfolioEmission = () => {
 						data={chartData}
 						chartKey="PORTFOLIO_INTENSITY"
 						yAxisTitle={yAxisTitle}
+						isExportEnabled={!trial}
 					/>
 					<DataTable
 						data={tableData}

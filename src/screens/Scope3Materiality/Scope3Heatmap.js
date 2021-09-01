@@ -12,6 +12,7 @@ import {
 	DialogTitle,
 	Button
 } from '@material-ui/core';
+import {get} from 'lodash'
 import { getScope3Data } from '../../redux/actions/scope3Actions';
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
 import getRequestData from '../../util/RequestData';
@@ -30,7 +31,8 @@ const Scope3Heatmap = () => {
 	const [ dialog, setDialog ] = useState(false);
 
 	const { materiality } = filterItem;
-	const { loading } = auth;
+	const { loading,userInfo } = auth;
+	const trial = get(userInfo,'Trial',false)
 
 	const getCategoryKey = (category,emission) => {
 		if(emission === 'Sc123'){
@@ -182,6 +184,8 @@ const Scope3Heatmap = () => {
 						yAxisCategories={yCategories}
 						data={chartData}
 						xAxisCategories={xCategories}
+						isExportEnabled={!trial}
+
 						// isSectoral={true}
 					/>
 					<Link onClick={onDialogHandler}>

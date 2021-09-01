@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, CircularProgress, Typography } from '@material-ui/core'
-import { map } from 'lodash'
+import { map,get } from 'lodash'
 import { getCarbonAttribution } from '../../redux/actions/footprintActions'
 import ColumnChart from '../../components/ChartsComponents/ColumnChart'
 import getRequestData from '../../util/RequestData'
@@ -12,7 +12,8 @@ const CarbonAttribution = () => {
     (state) => state.footprint.carbonAttribution,
   )
   const auth = useSelector((state) => state.auth)
-  const { loading } = auth
+  const { loading,userInfo } = auth
+	const trial = get(userInfo,'Trial',false)
 
   const [chartData, setChartData] = useState([])
   const [categories, setCategories] = useState([])
@@ -74,6 +75,7 @@ const CarbonAttribution = () => {
             categories={categories}
             data={chartData}
             chartKey="CARBON_ATTRIBUTION"
+            isExportEnabled={!trial}
           />
           <div
             style={{

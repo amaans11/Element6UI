@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, CircularProgress } from '@material-ui/core';
-import { map } from 'lodash';
+import { map,get } from 'lodash';
 import { getPerformanceAttrData } from '../../redux/actions/optimizationActions';
 import ColumnChart from '../../components/ChartsComponents/ColumnChart';
 import getRequestData from '../../util/RequestData';
@@ -15,7 +15,9 @@ const PerformanceAttribution = () => {
 	const auth = useSelector((state) => state.auth);
 	const perfAttributionData = useSelector((state) => state.optimization.perfAttributionData);
 
-	const {loading}=auth;
+	const {loading,userInfo}=auth;
+	const trial = get(userInfo,'Trial',false)
+
 
 	const getData = () => {
 		let chartData = [];
@@ -58,7 +60,8 @@ const PerformanceAttribution = () => {
 				</Box>
 			) : (
 				<Box>
-					<ColumnChart categories={categories} data={chartData} chartKey="PERFORMANCE_ATTRIBUTION" />
+					<ColumnChart categories={categories} data={chartData} chartKey="PERFORMANCE_ATTRIBUTION"                  isExportEnabled={!trial}
+/>
 				</Box>
 			)}
 		</React.Fragment>

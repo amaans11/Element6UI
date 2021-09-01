@@ -3,7 +3,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
 
-function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle, isSectoral,tabValue}) {
+function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle, isSectoral,tabValue,isExportEnabled}) {
 	let title = chartTitle;
 	if (!chartTitle) {
 		title = CONFIG['CHART'][chartKey]['TITLE'];
@@ -97,6 +97,25 @@ function Heatmap({ data, xAxisCategories, chartKey, yAxisCategories, chartTitle,
 				data: data
 			}
 		],
+		exporting: {
+			enabled:isExportEnabled,
+			buttons: {
+			  contextButton: {
+				menuItems: [
+				  'printChart',
+				  'separator',
+				  'downloadPNG',
+				  'downloadJPEG',
+				  'downloadPDF',
+				  'downloadSVG',
+				  'separator',
+				  'downloadCSV',
+				  'downloadXLS',
+				  'openInCloud',
+				],
+			  },
+			},
+		  },
 		plotOptions: {
 			series: {
 				dataLabels: {

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {Box,CircularProgress} from '@material-ui/core';
+import {get} from 'lodash'
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import { getPortfolioEmission } from '../../redux/actions/footprintActions';
 import getRequestData from '../../util/RequestData';
@@ -36,7 +37,7 @@ const CarbonEmission = () => {
 	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
 	const filterItem = useSelector((state) => state.auth.filterItem);
     const auth=useSelector((state) => state.auth);
-	const {loading}=auth
+	const {loading,userInfo}=auth
 
 	const [ sectorIntensityData, setIntensityData ] = useState([]);
 	const [ contribData, setContribData ] = useState([]);
@@ -44,6 +45,7 @@ const CarbonEmission = () => {
 	const [ categories, setCategories ] = useState([]);
 	const [ yAxisTitle, setYTitle ] = useState('');
 	const { inferenceType, emission } = filterItem;
+	const trial = get(userInfo,'Trial',false)
 
 	useEffect(() => {
 		fetchDetails();
@@ -178,17 +180,20 @@ const CarbonEmission = () => {
 						data={sectorIntensityData}
 						chartKey="SECTOR_INTENSITY"
 						yAxisTitle={yAxisTitle}
+						isExportEnabled={!trial}
 					/>
 					<HorizontalBar
 						categories={categories}
 						data={contribData}
 						chartKey="SECTOR_CONTRIBUTION"
 						yAxisTitle={yAxisTitle}
+						isExportEnabled={!trial}
 					/>
 					<HorizontalBar
 						categories={categories}
 						data={sectorWeightData}
 						chartKey="SECTOR_WEIGHT"
+						isExportEnabled={!trial}
 					/>
 				</Box>
 			)}

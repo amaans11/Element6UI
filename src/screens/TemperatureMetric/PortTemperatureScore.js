@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, Grid, Typography, CircularProgress } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import {get} from 'lodash'
 import {
   buildStyles,
   CircularProgressbarWithChildren,
@@ -29,7 +30,8 @@ const PortTemperatureScore = () => {
   const tempScoreData = useSelector((state) => state.tempMetric.tempScoreData)
   const auth = useSelector((state) => state.auth)
   const { emission, scoreType, defaultValue } = auth.filterItem
-  const { loading } = auth
+  const { loading , userInfo} = auth
+  const trial = get(userInfo,'Trial',false)
 
   const [companyChartData, setCompanyChartData] = useState([])
   const [tableData, setTableData] = useState([])
@@ -131,13 +133,18 @@ const PortTemperatureScore = () => {
         <React.Fragment>
           <Grid container>
             <Grid item xs={3} style={{ marginRight: 5 }}>
-              <SpiralChart data={tempScoreChartData} chartKey="TEMP_SCORE" />
+              <SpiralChart
+                data={tempScoreChartData}
+                chartKey="TEMP_SCORE"
+                isExportEnabled={!trial}
+              />
             </Grid>
             <Grid item xs={5} style={{ marginTop: 70 }}>
               <StackedBar
                 categories={['Number Of Companies']}
                 data={companyChartData}
                 chartKey="PORT_COMPANIES_SCORE"
+                isExportEnabled={!trial}
               />
             </Grid>
             <Grid item xs={3}>
@@ -159,9 +166,9 @@ const PortTemperatureScore = () => {
                   </div>
                   <div
                     style={{
-						fontSize: 12,
-						fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-					  }}
+                      fontSize: 12,
+                      fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+                    }}
                   >{`${targetData}%`}</div>
                 </CircularProgressbarWithChildren>
               </Box>

@@ -18,6 +18,7 @@ import {
   FormControlLabel,
 } from '@material-ui/core'
 import moment from 'moment'
+import {get} from 'lodash'
 import { NotificationManager } from 'react-notifications'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -96,8 +97,10 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
   const [selectedPortfolio, setSelectedPortfolio] = useState('')
   const portfolioTableRes = useSelector((state) => state.auth.portfolioTableRes)
   const userInfo = useSelector((state) => state.auth.userInfo)
+  
 
   const { year, quarter, version } = userInfo
+  const trial = get(userInfo,'Trial',false)
 
   const yearFundamentals =
     year && year.fundamentals ? year.fundamentals : '2019'
@@ -308,14 +311,14 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
         </Grid>
         <Grid item xs={3} style={{display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
             <Box mt={3} >
-              <Button
+              {!trial && <Button
                 variant="outlined"
                 color="primary"
                 className={classes.uploadBtn}
                 onClick={handleUploadPortfolio}
               >
                 Upload Portfolio
-              </Button>
+              </Button>}
             </Box>
         </Grid>
         <Grid container>

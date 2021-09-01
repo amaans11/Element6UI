@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, Slider, Typography,Button, CircularProgress } from '@material-ui/core';
+import {get} from 'lodash'
 import {setReweightData,setLoading} from '../../redux/actions/authActions';
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar';
 import {getPortOptimizationData} from '../../redux/actions/optimizationActions'
@@ -15,8 +16,10 @@ const PortfolioOptimization = () => {
 	const optimizationData = useSelector((state) => state.optimization.optimizationData);
 	const auth = useSelector((state) => state.auth);
 
-	const { reweightFactor,loading } = auth
+	const { reweightFactor,loading,userInfo } = auth
 
+	const trial = get(userInfo,'Trial',false)
+	
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
 	const [ lineChartData, setLineChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
@@ -299,6 +302,7 @@ const PortfolioOptimization = () => {
 							data={intensityData}
 							chartKey="PORT_OPTIMIZATION_INTENSITY"
 							yAxisTitle={yAxisTitle}
+							isExportEnabled={!trial}
 						/>
 					</Box>
 					<Grid container>
@@ -307,6 +311,7 @@ const PortfolioOptimization = () => {
 								categories={weightCategories}
 								data={weightData}
 								chartKey="PORT_OPTIMIZATION_WEIGHT"
+								isExportEnabled={!trial}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -315,6 +320,7 @@ const PortfolioOptimization = () => {
 								data={contribData}
 								chartKey="PORT_OPTIMIZATION_CONTRIB"
 								yAxisTitle={yAxisTitle}
+								isExportEnabled={!trial}
 							/>
 						</Grid>
 					</Grid>

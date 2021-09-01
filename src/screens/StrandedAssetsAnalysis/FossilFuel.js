@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, Grid, CircularProgress } from '@material-ui/core'
+import {get} from 'lodash'
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
 import DataTable from '../../components/Table/DataTable'
 import getRequestData from '../../util/RequestData'
@@ -20,7 +21,8 @@ const FossilFuel = () => {
 
   const fossilFuel = useSelector((state) => state.stranded.fossilFuel)
   const auth = useSelector((state) => state.auth)
-  const { loading } = auth
+  const { loading,userInfo } = auth
+  const trial = get(userInfo,'Trial',false)
 
   const fetchDetails = async () => {
     const data = getRequestData('FOSSIL_FUEL', auth)
@@ -117,6 +119,7 @@ const FossilFuel = () => {
                 data={chartData}
                 chartKey="FOSSIL_FUEL"
                 yAxisTitle={yAxisTitle}
+                isExportEnabled={!trial}
               />
             </Grid>
             <Grid item xs={6}>

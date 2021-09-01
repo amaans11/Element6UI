@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, CircularProgress } from '@material-ui/core';
+import {get} from 'lodash'
 import { getHeatmapData } from '../../redux/actions/tempMetricActions';
 import HeatmapChart from '../../components/ChartsComponents/HeatmapChart';
 import getRequestData from '../../util/RequestData';
@@ -16,8 +17,9 @@ const Scope3Heatmap = () => {
 	const [ yCategories, setYCategories ] = useState([]);
 	const [ xCategories, setXCategories ] = useState([]);
 
-	const { loading, filterItem } = auth;
+	const { loading, filterItem, userInfo } = auth;
 	const { scoreType, emission } = filterItem;
+	const trial = get(userInfo,'Trial',false)
 
 	const fetchDetails = async () => {
 		const data = getRequestData('TEMP_HEATMAP', auth);
@@ -89,6 +91,7 @@ const Scope3Heatmap = () => {
 						data={chartData}
 						xAxisCategories={xCategories}
 						isSectoral={true}
+						isExportEnabled={!trial}
 					/>
 					</Box>
 				</React.Fragment>
