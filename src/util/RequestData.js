@@ -92,7 +92,7 @@ const getRequestData = (type, auth) => {
         version_benchmark: versionBenchmark,
         sector: sector,
         market_value: marketValue,
-        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
+        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : assetClass,
         display_ccy: currentCurrency,
         currency_date:{year:currentYear,quarter:currentQuarter},
         quarter_fundamentals: quarterFundamentals,

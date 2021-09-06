@@ -454,6 +454,36 @@ export default function FilterGroup() {
 
   const updateTags = (grpindex, tagindex, selected, grpKey) => {
     const newData = [...data]
+    const grpName = newData[grpindex].grpKey
+
+    if(grpName == 'assetClass'){
+      let assetValues = filterItem[grpName]
+      console.log("filterItem",filterItem)
+      console.log("assetValues",assetValues)
+      const currentValue = newData[grpindex].tagsList[tagindex].value
+      console.log("currentValue",currentValue)
+
+      if(selected){
+          assetValues= [...assetValues , currentValue]
+          dispatch(
+            setFilterItem({
+              key: grpName,
+              value:assetValues,
+            }),
+          )
+      }
+      else{
+        let values = assetValues.filter(value=> value !== currentValue)
+        dispatch(
+          setFilterItem({
+            key: grpName,
+            value:values,
+          }),
+        )
+      }
+      
+      return;
+    }
     if (selected) {
       // eslint-disable-next-line
       newData[grpindex].tagsList.map((tags) => {
@@ -461,8 +491,6 @@ export default function FilterGroup() {
       })
       newData[grpindex].tagsList[tagindex].selected = selected
       setFilterData(newData)
-
-      const grpName = newData[grpindex].grpKey
 
       setExpand({
         ...isExpand,
@@ -573,7 +601,9 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      {e.grpKey === 'returnYear'
+                      {e.grpKey === 'assetClass' ? 
+                        filterItem[e.grpKey].join()
+                      : e.grpKey === 'returnYear'
                         ? returnYearRes[filterItem[e.grpKey]]
                         : e.grpKey === 'scenario'
                         ? tempMetric[filterItem[e.grpKey]]
@@ -586,7 +616,29 @@ export default function FilterGroup() {
                         const val = getEmission(t.value)
                         const fpValue = getFootprintMetric(t.value)
                         const warmingScValue = getWarmingScenario(t.value)
-                        if (e.grpKey === 'emission') {
+
+                        if(e.grpKey === 'assetClass'){
+                          console.log('filterItem',filterItem[e.grpKey])
+                          console.log('filterItem',t.value)
+
+                          return (
+                            <FilterTags
+                              name={t.name}
+                              selected={filterItem[e.grpKey].includes(t.value)}
+                              grpindex={index}
+                              tagindex={i}
+                              action={(grpindex, tagindex, selected) =>
+                                updateTags(
+                                  grpindex,
+                                  tagindex,
+                                  selected,
+                                  e.grpKey,
+                                )
+                              }
+                            />
+                          )
+                        }
+                        else if (e.grpKey === 'emission') {
                           if (val) {
                             return (
                               <FilterTags

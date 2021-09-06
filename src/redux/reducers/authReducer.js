@@ -38,7 +38,7 @@ export default function authReducer(state = { ...intialState }, action) {
           sector: 'SASB',
           footprintMetric: 'WeightAvgRev',
           marketValue: 'MarketCap',
-          assetClass: 'EqCB',
+          assetClass: ["Eq", "CB"],
           inferenceType: 'Avg',
           emission: 'Sc12',
           aggregation: 'WATS',
