@@ -50,6 +50,7 @@ const filterRes = {
   Eq: 'Equity',
   CB: 'Corporate Bonds',
   EqCB: 'Equity + Corporate Bonds',
+  Loan:'Loan',
   Avg: 'Average',
   Max: 'Maximum',
   Sc12: 'Scope 1+2',
@@ -59,7 +60,6 @@ const filterRes = {
   matSector: 'Sector',
   momentum: 'Carbon Momentum',
   emissions_reduction: 'Emissions Reduction',
-
   '5Y': '5 Years',
   '3Y': '3 Years',
   '1Y': '1 Year',
@@ -555,23 +555,23 @@ export default function FilterGroup() {
       [key]: !value,
     })
   }
-  // const getAssetDetails = (assets)=>{
-  //   let result=''
-  //   if(assets && assets.length > 0){
-  //     assets.map(asset=>{
-  //       result = result ? `${result},${filterItem[asset]}` : filterItem[asset]
-  //     })
-  //   }
-  //   return result;
+  const getAssetDetails = (assets)=>{
+    let result=''
+    if(assets && assets.length > 0){
+      assets.map(asset=>{
+        result = result ? `${result},${filterRes[asset]}` : filterRes[asset]
+      })
+    }
+    console.log("result>>",result)
+    return result;
 
-  // }
+  }
   const currentTheme = localStorage.getItem('appTheme') || 'basic'
 
   return (
     <React.Fragment>
       {pathname !== '/forward-looking-analysis'
         ? filterData.map((e, index) => {
-          // const assetLabels = getAssetDetails(filterItem[e.grpKey])
             if (configs.includes(e.grpKey)) {
               return (
                 <Accordion
@@ -611,7 +611,7 @@ export default function FilterGroup() {
                       }}
                     >
                       {e.grpKey === 'assetClass' ? 
-                        ''
+                        getAssetDetails(filterItem[e.grpKey])
                       : e.grpKey === 'returnYear'
                         ? returnYearRes[filterItem[e.grpKey]]
                         : e.grpKey === 'scenario'
@@ -627,9 +627,6 @@ export default function FilterGroup() {
                         const warmingScValue = getWarmingScenario(t.value)
 
                         if(e.grpKey === 'assetClass'){
-                          console.log('filterItem',filterItem[e.grpKey])
-                          console.log('filterItem',t.value)
-
                           return (
                             <FilterTags
                               name={t.name}
