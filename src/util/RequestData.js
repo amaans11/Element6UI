@@ -112,7 +112,7 @@ const getRequestData = (type, auth) => {
         version_benchmark: versionBenchmark,
         sector: sector,
         market_value: marketValue,
-        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
+        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : assetClass,
         display_ccy: currentCurrency,
         currency_date:{year:currentYear,quarter:currentQuarter},
         quarter_fundamentals: quarterFundamentals,
@@ -133,6 +133,7 @@ const getRequestData = (type, auth) => {
         quarter_fundamentals: quarterFundamentals,
         version_fundamentals: versionFundamentals,
         year_fundamentals: yearFundamentals,
+        asset_type:'Sov'
       }
       break
 
@@ -145,7 +146,7 @@ const getRequestData = (type, auth) => {
         sector: sector,
         display_ccy: currentCurrency,
         currency_date:{year:currentYear,quarter:currentQuarter},
-        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
+        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : assetClass,
         inference: inferenceType,
         scope: emission,
         footprint: footprintMetric,
@@ -193,7 +194,7 @@ const getRequestData = (type, auth) => {
         sector: sector,
         footprint: footprintMetric,
         market_value: marketValue,
-        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
+        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : assetClass,
         inference: inferenceType,
         scope: 'Sc12',
         quarter_fundamentals: quarterFundamentals,
@@ -213,7 +214,7 @@ const getRequestData = (type, auth) => {
         inference: inferenceType,
         scope: emission == 'Sc12' ? 'Sc123' : emission,
         sector: sector,
-        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
+        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : assetClass,
         country_type: 'incorporation',
         quarter_fundamentals: quarterFundamentals,
         quarter_emissions: quarterEmissions,
@@ -232,7 +233,7 @@ const getRequestData = (type, auth) => {
         inference: inferenceType,
         scope: emission,
         sector: sector,
-        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
+        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : assetClass,
         country_type: 'incorporation',
         quarter_fundamentals: quarterFundamentals,
         quarter_emissions: quarterEmissions,
@@ -250,7 +251,7 @@ const getRequestData = (type, auth) => {
         benchmark_id: benchmarkId,
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
-        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
+        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : assetClass,
         footprint: footprintMetric,
         sector: sector,
         market_value: marketValue,
@@ -317,7 +318,7 @@ const getRequestData = (type, auth) => {
         version_fundamentals: versionFundamentals,
         year_fundamentals: yearFundamentals,
         market_value: marketValue,
-        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : [assetClass],
+        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : assetClass,
         footprint: footprintMetric,
       }
       break

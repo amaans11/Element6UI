@@ -458,10 +458,8 @@ export default function FilterGroup() {
 
     if(grpName == 'assetClass'){
       let assetValues = filterItem[grpName]
-      console.log("filterItem",filterItem)
-      console.log("assetValues",assetValues)
+
       const currentValue = newData[grpindex].tagsList[tagindex].value
-      console.log("currentValue",currentValue)
 
       if(selected){
           assetValues= [...assetValues , currentValue]
@@ -557,12 +555,23 @@ export default function FilterGroup() {
       [key]: !value,
     })
   }
+  // const getAssetDetails = (assets)=>{
+  //   let result=''
+  //   if(assets && assets.length > 0){
+  //     assets.map(asset=>{
+  //       result = result ? `${result},${filterItem[asset]}` : filterItem[asset]
+  //     })
+  //   }
+  //   return result;
+
+  // }
   const currentTheme = localStorage.getItem('appTheme') || 'basic'
 
   return (
     <React.Fragment>
       {pathname !== '/forward-looking-analysis'
         ? filterData.map((e, index) => {
+          // const assetLabels = getAssetDetails(filterItem[e.grpKey])
             if (configs.includes(e.grpKey)) {
               return (
                 <Accordion
@@ -602,7 +611,7 @@ export default function FilterGroup() {
                       }}
                     >
                       {e.grpKey === 'assetClass' ? 
-                        filterItem[e.grpKey].join()
+                        ''
                       : e.grpKey === 'returnYear'
                         ? returnYearRes[filterItem[e.grpKey]]
                         : e.grpKey === 'scenario'
