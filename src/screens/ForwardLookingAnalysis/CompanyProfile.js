@@ -99,7 +99,6 @@ const CompanyProfile = () => {
     let lowEnergyDemand = []
     let companyName = ''
 
-    console.log("portScenario",portScenario)
     let scenario = portScenario === 'LowEnergyDemand' ? 'LowEnergyDemand' : portScenario == 'SSP226' ? 'SSP2-26' : 'SSP1-26'
 
 

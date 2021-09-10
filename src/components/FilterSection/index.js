@@ -225,7 +225,6 @@ export default function FilterGroup() {
             config = filterConfig['CONTRIB_ANALYSIS']
             break
           case 5:
-            console.log('test')
             config = filterConfig['HEATMAP']
             break
           default:
@@ -562,7 +561,6 @@ export default function FilterGroup() {
         result = result ? `${result},${filterRes[asset]}` : filterRes[asset]
       })
     }
-    console.log("result>>",result)
     return result;
 
   }
