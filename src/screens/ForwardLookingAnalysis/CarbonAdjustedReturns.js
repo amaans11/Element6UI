@@ -368,7 +368,7 @@ const CarbonAdjustedReturns = () => {
                 isExportEnabled={!trial}
               />
               <span style={{ fontSize: 11, paddingTop: -20 }}>
-                * Companies highlighted in grey doesn't have price data.
+                * Companies highlighted in grey don't have price data.
               </span>
             </Grid>
             <Grid item xs={12}>
