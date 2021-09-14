@@ -133,6 +133,8 @@ const getRequestData = (type, auth) => {
         quarter_fundamentals: quarterFundamentals,
         version_fundamentals: versionFundamentals,
         year_fundamentals: yearFundamentals,
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
       }
       break
 
@@ -455,9 +457,8 @@ const getRequestData = (type, auth) => {
         portfolio: portfolioName,
         benchmark: benchmarkName,
         footprint_metric: 'WeightAvgRev',
-        currency: 'USD',
-        quarter_currency: 'Q1',
-        year_currency: '2020',
+        display_ccy: currentCurrency,
+        currency_date:{year:currentYear,quarter:currentQuarter},
         period: 1,
         reweight_factor: 0,
         strategy: 'momentum',

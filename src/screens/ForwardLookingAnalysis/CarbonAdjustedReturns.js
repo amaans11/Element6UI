@@ -379,11 +379,11 @@ const CarbonAdjustedReturns = () => {
                   tableHeading="CARBON_ADJUSTED_RETURNS_TABLE1"
                 />
               </Box>
-              {/* <DataTable
+              <DataTable
 								data={carbonData}
 								columns={cells}
 								tableHeading="CARBON_ADJUSTED_RETURNS_TABLE2"
-							/> */}
+							/>
             </Grid>
           </Grid>
         </Box>
