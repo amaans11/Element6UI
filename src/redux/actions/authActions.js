@@ -281,8 +281,8 @@ export const signinUser = (data) => {
       .then(async (result) => {
         if (result.data.success) {
           await dispatch(signinUserSuccess(result.data))
+          localStorage.setItem('auth',result.data.currentUser)
           history.push('/')
-          window.location.reload()
         } else {
           const error = result.data.message
           throw new Error(error)
@@ -483,6 +483,7 @@ export const setLoadingSuccess = (res) => {
 export const logoutUser = () => {
   return async (dispatch) => {
     localStorage.setItem('appTheme', 'basic')
+    localStorage.clear()
     await dispatch(logoutUserSuccess())
     window.location.reload()
   }
