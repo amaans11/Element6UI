@@ -770,7 +770,7 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      {e.grpKey === 'footprintMetric' &&
+                      {e.grpKey === 'assetClass' ? 'Equity,Corporate Bonds' : e.grpKey === 'footprintMetric' &&
                       filterItem.approach === 'MarketShare' &&
                       (tabValue === 1 || tabValue === 2)
                         ? 'Total Carbon Emissions'
