@@ -17,6 +17,8 @@ const SovereignFootprint = () => {
   const [popChartData, setPopChartData] = useState([])
   const [categories, setCategories] = useState([])
   const [tableData, setTableData] = useState([])
+  const [gdpChartLabel, setGdpChartLabel] = useState('')
+  const [popChartLabel, setPopChartLabel] = useState('')
 
   const dispatch = useDispatch()
   const { loading, userInfo } = auth
@@ -64,10 +66,14 @@ const SovereignFootprint = () => {
     let categories = []
     let gdpChartData = []
     let popChartData = []
+    let gdpLabel = '';
+    let popLabel = '';
 
     if (data && Object.keys(data).length > 0) {
       const portData = data['Portfolio']['Countries']
       const benchData = data['Portfolio']['Countries']
+      gdpLabel = data['Portfolio']['Type'][0]
+      popLabel = data['Portfolio']['Type'][1]
 
       if (portData && portData.length > 0) {
         portData.map((res) => {
@@ -108,6 +114,9 @@ const SovereignFootprint = () => {
     setGdpChartData(gdpChartData)
     setPopChartData(popChartData)
     setCategories(categories)
+    setGdpChartLabel(gdpLabel)
+    setPopChartLabel(popLabel)
+
   }
   useEffect(() => {
     fetchDetails()
@@ -138,6 +147,7 @@ const SovereignFootprint = () => {
                 data={gdpChartData}
                 chartKey="SOV_GDP_CHART"
                 isExportEnabled={!trial}
+                yAxisTitle={gdpChartLabel}
               />
             </Grid>
             <Grid item xs={6}>
@@ -146,6 +156,7 @@ const SovereignFootprint = () => {
                 data={popChartData}
                 chartKey="SOV_POP_CHART"
                 isExportEnabled={!trial}
+                yAxisTitle={popChartLabel}
               />
             </Grid>
           </Grid>
