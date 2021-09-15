@@ -46,28 +46,7 @@ const avoidedEmissionCells = [
 	}
 ];
 
-const sovFootprintCells = [
-	{
-		name: 'Type',
-		selector: 'name',
-		sortable: true,
-		right: false
-	},
-	{
-		name: 'Emissions Intensity of GDP (tCO2/1M USD)',
-		selector: 'gdpData',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.gdpData)}</div>
-	},
-	{
-		name: 'Emissions Intensity of Population (tCO2/person)',
-		selector: 'popData',
-		sortable: true,
-		right: true,
-		cell: (row) => <div>{new Intl.NumberFormat().format(row.popData)}</div>
-	}
-];
+
 const sectoralScope3Cells = [
 	{
 		name: 'Company Name',
@@ -624,7 +603,6 @@ const backgroundCells=[
 ]
 export {
 	avoidedEmissionCells,
-	sovFootprintCells,
 	sectoralScope3Cells,
 	portOptimizationCells,
 	riskContribCells,

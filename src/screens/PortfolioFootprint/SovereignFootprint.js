@@ -7,7 +7,6 @@ import { getSovereignFootprint } from '../../redux/actions/footprintActions'
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
 import DataTable from '../../components/Table/DataTable'
 import getRequestData from '../../util/RequestData'
-import { sovFootprintCells } from '../../util/TableHeadConfig'
 
 const SovereignFootprint = () => {
   const auth = useSelector((state) => state.auth)
@@ -19,6 +18,7 @@ const SovereignFootprint = () => {
   const [tableData, setTableData] = useState([])
   const [gdpChartLabel, setGdpChartLabel] = useState('')
   const [popChartLabel, setPopChartLabel] = useState('')
+  const [tableCells,setTableCells] = useState([])
 
   const dispatch = useDispatch()
   const { loading, userInfo } = auth
@@ -30,12 +30,14 @@ const SovereignFootprint = () => {
   }
 
   const getTableData = () => {
+    let cells =[];
     const data =
       sovFootprint && Object.keys(sovFootprint).length > 0
         ? sovFootprint['data']['Sovereign_plot']
         : []
 
     let tableData = []
+    
     if (data && Object.keys(data).length > 0) {
       tableData = [
         {
@@ -49,8 +51,32 @@ const SovereignFootprint = () => {
           popData: data['Benchmark']['Footprint'][1],
         },
       ]
+      cells = [
+        {
+          name: 'Type',
+          selector: 'name',
+          sortable: true,
+          right: false
+        },
+        {
+          name: data['Benchmark']['Type'][0],
+          selector: 'gdpData',
+          sortable: true,
+          right: true,
+          cell: (row) => <div>{new Intl.NumberFormat().format(row.gdpData)}</div>
+        },
+        {
+          name: data['Benchmark']['Type'][1],
+          selector: 'popData',
+          sortable: true,
+          right: true,
+          cell: (row) => <div>{new Intl.NumberFormat().format(row.popData)}</div>
+        }
+      ];
+    
     }
     setTableData(tableData)
+    setTableCells(cells)
   }
 
   const getSovChartData = () => {
@@ -162,7 +188,7 @@ const SovereignFootprint = () => {
           </Grid>
           <DataTable
             data={tableData}
-            columns={sovFootprintCells}
+            columns={tableCells}
             tableHeading="SOVEREIGN_FOOTPRINT"
           />
         </Box>
