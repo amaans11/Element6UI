@@ -125,8 +125,6 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
       }
   }
   }
-  console.log("options>>",options)
-
   return (
     <div>
       <HighchartsReact highcharts={Highcharts} options={options} />

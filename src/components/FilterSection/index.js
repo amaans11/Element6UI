@@ -741,7 +741,7 @@ export default function FilterGroup() {
                       (tabValue === 1 || tabValue === 2))
                   }
                   expanded={
-                    isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
+                    e.grpKey === 'assetClass' ? false : isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
                   }
                   onChange={() => {
                     handleExpandAccordion(e.grpKey)

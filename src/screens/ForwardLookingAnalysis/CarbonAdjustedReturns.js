@@ -101,7 +101,6 @@ const CarbonAdjustedReturns = () => {
   }
 
   const fetchDetails = async (company) => {
-    console.log('company>>', company)
     let lineChartData = getRequestData('CARBON_ADJUSTED_LINE_RETURNS', auth)
     let tableData = getRequestData('CARBON_ADJUSTED_TABLE_RETURNS', auth)
 
