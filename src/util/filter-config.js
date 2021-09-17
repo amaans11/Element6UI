@@ -33,9 +33,9 @@
       grpname: "Asset Class",
       grpKey:'assetClass',
       tagsList: [
-        { name: "Equity", value: "Eq", selected: false },
-        { name: "Corporate Bonds", value: "CB", selected: false },
-        { name: "Equity + Corporate Bonds", value: "EqCB", selected: true },
+        { name: "Equity", value: "Eq", selected: true },
+        { name: "Corporate Bonds", value: "CB", selected: true },
+        { name: "Loan", value: "Loan", selected: false },
       ],
     },
     {

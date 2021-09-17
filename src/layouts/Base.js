@@ -303,7 +303,6 @@ const MiniDrawer = ({ classes, history }) => {
     await dispatch(setBenchmark(benchmark))
   }
   const setDefaultTab = async (e) => {
-    console.log('test')
     if (e.name === 'Scope3') {
       await dispatch(setEmissions())
     }
