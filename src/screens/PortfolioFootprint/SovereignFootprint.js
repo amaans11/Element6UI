@@ -7,7 +7,6 @@ import { getSovereignFootprint } from '../../redux/actions/footprintActions'
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
 import DataTable from '../../components/Table/DataTable'
 import getRequestData from '../../util/RequestData'
-import { sovFootprintCells } from '../../util/TableHeadConfig'
 
 const SovereignFootprint = () => {
   const auth = useSelector((state) => state.auth)
@@ -17,6 +16,9 @@ const SovereignFootprint = () => {
   const [popChartData, setPopChartData] = useState([])
   const [categories, setCategories] = useState([])
   const [tableData, setTableData] = useState([])
+  const [gdpChartLabel, setGdpChartLabel] = useState('')
+  const [popChartLabel, setPopChartLabel] = useState('')
+  const [tableCells,setTableCells] = useState([])
 
   const dispatch = useDispatch()
   const { loading, userInfo } = auth
@@ -28,12 +30,14 @@ const SovereignFootprint = () => {
   }
 
   const getTableData = () => {
+    let cells =[];
     const data =
       sovFootprint && Object.keys(sovFootprint).length > 0
         ? sovFootprint['data']['Sovereign_plot']
         : []
 
     let tableData = []
+    
     if (data && Object.keys(data).length > 0) {
       tableData = [
         {
@@ -47,8 +51,32 @@ const SovereignFootprint = () => {
           popData: data['Benchmark']['Footprint'][1],
         },
       ]
+      cells = [
+        {
+          name: 'Type',
+          selector: 'name',
+          sortable: true,
+          right: false
+        },
+        {
+          name: data['Benchmark']['Type'][0],
+          selector: 'gdpData',
+          sortable: true,
+          right: true,
+          cell: (row) => <div>{new Intl.NumberFormat().format(row.gdpData)}</div>
+        },
+        {
+          name: data['Benchmark']['Type'][1],
+          selector: 'popData',
+          sortable: true,
+          right: true,
+          cell: (row) => <div>{new Intl.NumberFormat().format(row.popData)}</div>
+        }
+      ];
+    
     }
     setTableData(tableData)
+    setTableCells(cells)
   }
 
   const getSovChartData = () => {
@@ -64,10 +92,14 @@ const SovereignFootprint = () => {
     let categories = []
     let gdpChartData = []
     let popChartData = []
+    let gdpLabel = '';
+    let popLabel = '';
 
     if (data && Object.keys(data).length > 0) {
       const portData = data['Portfolio']['Countries']
       const benchData = data['Portfolio']['Countries']
+      gdpLabel = data['Portfolio']['Type'][0]
+      popLabel = data['Portfolio']['Type'][1]
 
       if (portData && portData.length > 0) {
         portData.map((res) => {
@@ -108,6 +140,9 @@ const SovereignFootprint = () => {
     setGdpChartData(gdpChartData)
     setPopChartData(popChartData)
     setCategories(categories)
+    setGdpChartLabel(gdpLabel)
+    setPopChartLabel(popLabel)
+
   }
   useEffect(() => {
     fetchDetails()
@@ -138,6 +173,7 @@ const SovereignFootprint = () => {
                 data={gdpChartData}
                 chartKey="SOV_GDP_CHART"
                 isExportEnabled={!trial}
+                yAxisTitle={gdpChartLabel}
               />
             </Grid>
             <Grid item xs={6}>
@@ -146,12 +182,13 @@ const SovereignFootprint = () => {
                 data={popChartData}
                 chartKey="SOV_POP_CHART"
                 isExportEnabled={!trial}
+                yAxisTitle={popChartLabel}
               />
             </Grid>
           </Grid>
           <DataTable
             data={tableData}
-            columns={sovFootprintCells}
+            columns={tableCells}
             tableHeading="SOVEREIGN_FOOTPRINT"
           />
         </Box>

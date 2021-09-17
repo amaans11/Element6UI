@@ -40,7 +40,7 @@ import {
   getFixRate
 } from '../../redux/actions/authActions'
 
-const yearOptions = [2020, 2019, 2018]
+const yearOptions = [2021,2020, 2019, 2018]
 const quarterOptions = ['Q1', 'Q2', 'Q3', 'Q4']
 
 const useStyles = makeStyles(() => ({
@@ -404,9 +404,13 @@ const Settings = () => {
                       setQuarter(e.target.value)
                     }}
                   >
-                    {quarterOptions.map((quarter) => (
+                    {year != 2021 ? quarterOptions.map((quarter) => (
                       <MenuItem value={quarter}>{quarter}</MenuItem>
-                    ))}
+                    )):
+                    ['Q1','Q2'].map((quarter) => (
+                      <MenuItem value={quarter}>{quarter}</MenuItem>
+                    ))
+                    }
                   </Select>
                 </FormControl>
               </Grid>

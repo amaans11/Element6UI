@@ -17,6 +17,8 @@ const PortfolioEmission = () => {
 	const [ chartData, setChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
+	const [ tableLabel, setTableLabel ] = useState('');
+
 
 	const portfolioEmission = useSelector((state) => state.footprint.portfolioEmission);
 	const auth =useSelector(state=>state.auth);
@@ -24,7 +26,6 @@ const PortfolioEmission = () => {
 
 	const {footprintMetric} = filterItem
 	const trial = get(userInfo,'Trial',false)
-	const tableLabel =  footprintMetric === 'TotalCarbEmis' ? 'tCO2e' : 'tCO2e / 1M USD'
 
 	const portEmissionCells = [
 		{
@@ -77,6 +78,7 @@ const PortfolioEmission = () => {
 		let intensityChartData = [];
 		let intensityTableData = [];
 		let yTitle = '';
+		let tableLabel = ''
 
 		if (portfolioEmission['data'] && Object.keys(portfolioEmission['data']).length > 0) {
 			let response = portfolioEmission['data']['data'];
@@ -118,27 +120,28 @@ const PortfolioEmission = () => {
 					data: [ intensityBenchSc12, intensityBenchSc3, intensityBenchSc123 ]
 				}
 			];
+			tableLabel = response[0][0]['Portfolio_Avg_Intensity']['unit']
 			intensityTableData = [
 				{
-					name: 'Portfolio Avg GHG Intensity',
+					name: response[0][0]['Portfolio_Avg_Intensity']['name'],
 					Sc12: response[0][0]['Portfolio_Avg_Intensity']['Sc12'],
 					Sc3: response[0][0]['Portfolio_Avg_Intensity']['Sc3'],
 					Sc123: response[0][0]['Portfolio_Avg_Intensity']['Sc123']
 				},
 				{
-					name: 'Benchmark Avg GHG Intensity',
+					name: response[1][0]['Benchmark_Avg_Intensity']['name'],
 					Sc12: response[1][0]['Benchmark_Avg_Intensity']['Sc12'],
 					Sc3: response[1][0]['Benchmark_Avg_Intensity']['Sc3'],
 					Sc123: response[1][0]['Benchmark_Avg_Intensity']['Sc123']
 				},
 				{
-					name: 'Portfolio Max GHG Intensity',
+					name: response[0][1]['Portfolio_Max_Intensity']['name'],
 					Sc12: response[0][1]['Portfolio_Max_Intensity']['Sc12'],
 					Sc3: response[0][1]['Portfolio_Max_Intensity']['Sc3'],
 					Sc123: response[0][1]['Portfolio_Max_Intensity']['Sc123']
 				},
 				{
-					name: 'Benchmark Max GHG Intensity',
+					name: response[1][1]['Benchmark_Max_Intensity']['name'],
 					Sc12: response[1][1]['Benchmark_Max_Intensity']['Sc12'],
 					Sc3: response[1][1]['Benchmark_Max_Intensity']['Sc3'],
 					Sc123: response[1][1]['Benchmark_Max_Intensity']['Sc123']
@@ -148,6 +151,7 @@ const PortfolioEmission = () => {
 		setChartData(intensityChartData);
 		setTableData(intensityTableData);
 		setYAxisTitle(yTitle);
+		setTableLabel(tableLabel)
 	};
 	return (
 		<React.Fragment>

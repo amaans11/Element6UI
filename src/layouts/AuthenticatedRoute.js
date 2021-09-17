@@ -5,7 +5,7 @@ import {configureStore} from '../redux/store';
 const {store} = configureStore();
 
 function AuthenticatedRoute({ component: SubComp, authenticated, ...rest }) {
-    const currentUser = store.getState().auth.currentUser;
+    const currentUser = localStorage.getItem('auth');
     
     return (
       <Route

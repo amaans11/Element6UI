@@ -7,7 +7,7 @@ const footprintTabs = [
 	'Avoided Emissions'
 ];
 const scope3Tabs = [ 'Portfolio Scope 3 Heatmap', 'Sectoral Scope 3 Heatmap' ];
-const portOptimizationTabs = [ 'Portfolio Optimization','Optimised Emissions', 'Performance Attribution' ];
+const portOptimizationTabs = [ 'Portfolio Optimization','Optimized Emissions', 'Performance Attribution' ];
 const carbonRiskTabs = [ 'Portfolio Carbon Risk' ];
 const strandedAssetTabs = [ 'Fossil-Fuel Reserves Footprint', 'Coal Power Analysis' ];
 const tempMetricTabs = [

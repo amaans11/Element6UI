@@ -17,6 +17,8 @@ const CarbonAttribution = () => {
 
   const [chartData, setChartData] = useState([])
   const [categories, setCategories] = useState([])
+  const [chartLabel, setChartLabel] = useState('')
+
 
   const dispatch = useDispatch()
 
@@ -32,8 +34,10 @@ const CarbonAttribution = () => {
         : []
     let chartData = []
     let categories = []
+    let chartLabel = ''
 
     if (data && data.length > 0) {
+      chartLabel= data[data.length - 1]['chart_name']
       data.map((res) => {
         let values = []
 
@@ -47,6 +51,7 @@ const CarbonAttribution = () => {
         })
       })
     }
+    setChartLabel(chartLabel)
     setChartData(chartData)
     setCategories(categories)
   }
@@ -76,6 +81,7 @@ const CarbonAttribution = () => {
             data={chartData}
             chartKey="CARBON_ATTRIBUTION"
             isExportEnabled={!trial}
+            yAxisTitle={chartLabel}
           />
           <div
             style={{

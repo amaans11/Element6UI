@@ -367,7 +367,7 @@ const CarbonAdjustedReturns = () => {
                 isExportEnabled={!trial}
               />
               <span style={{ fontSize: 11, paddingTop: -20 }}>
-                * Companies highlighted in grey doesn't have price data.
+                * Companies highlighted in grey don't have price data.
               </span>
             </Grid>
             <Grid item xs={12}>
@@ -378,11 +378,11 @@ const CarbonAdjustedReturns = () => {
                   tableHeading="CARBON_ADJUSTED_RETURNS_TABLE1"
                 />
               </Box>
-              {/* <DataTable
+              <DataTable
 								data={carbonData}
 								columns={cells}
 								tableHeading="CARBON_ADJUSTED_RETURNS_TABLE2"
-							/> */}
+							/>
             </Grid>
           </Grid>
         </Box>

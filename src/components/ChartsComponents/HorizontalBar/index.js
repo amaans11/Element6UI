@@ -59,6 +59,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 			title: {
 				text: yAxis,
 				align: 'high',
+				x:-10,
 				style:{
 					color: currentTheme === 'dark' ? '#FFFFFF' : '#000000',
 					fontSize:12,
