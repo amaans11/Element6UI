@@ -501,7 +501,7 @@ const getRequestData = (type, auth) => {
         portfolio_id: portfolioId,
         version_portfolio: versionPortfolio,
         scenario_type: targetScenario === 'NGFS' ? 'IPCC' : targetScenario,
-        scope_type: emission.substring(2),
+        scope_type: "123",
         sector: sector,
         footprint: filterItem.approach == 'MarketShare' ? 'TotalCarbEmis' : footprintMetric == 'CarbIntensityMarketVal' || footprintMetric == 'CarbIntensityRev' ? 'WeightAvgRev' : footprintMetric,
         market_value: marketValue,

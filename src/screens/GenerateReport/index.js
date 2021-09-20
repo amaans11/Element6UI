@@ -63,7 +63,7 @@ const GenerateReport = () => {
 
     data = {
       ...data,
-      pages: pages,
+      page_list: pages,
       template: template,
     }
     await dispatch(generateReport(data))
