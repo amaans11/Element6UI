@@ -3,11 +3,11 @@ import axios from 'axios';
 
 export const getRiskContributorData = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${actionTypes.API_URL}/portfolio_carbon_risk/portfolio_risk_contributors`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {

@@ -74,6 +74,7 @@ import {
   setEmissions,
 } from '../redux/actions/authActions'
 import csvFile from '../assets/Dummy-file.xlsx'
+import { ContactSupportOutlined } from '@material-ui/icons'
 
 const drawerWidth = 295
 
@@ -245,6 +246,9 @@ const MiniDrawer = ({ classes, history }) => {
   }
 
   const fetchDetails = async () => {
+    if(currentUser.warning){
+      console.log("test")
+    }
     await getUserDetails()
     await getPortfolio()
     await dispatch(getUploadPortfolioList())
@@ -353,6 +357,7 @@ const MiniDrawer = ({ classes, history }) => {
   }
   useEffect(() => {
     fetchDetails()
+
   }, [])
   let contentClass = classNames({
     'content-part-visible': isVisible,

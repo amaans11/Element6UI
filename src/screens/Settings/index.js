@@ -118,6 +118,7 @@ const Settings = () => {
   const [email, setEmail] = useState('')
   const [passwordDialog, setPasswordDialog] = useState(false)
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [dialog, setDialog] = useState(false)
   const [portIds, setPortIds] = useState([])
 
@@ -205,27 +206,30 @@ const Settings = () => {
         user: userInfo.userName,
         client: userInfo.client,
       }
-      await dispatch(changePassword(data))
-      NotificationManager.success('Password Updated successfully!')
-      setPasswordDialog(false)
-      setPassword('')
-    } catch (error) {
-      NotificationManager.error(error)
-    }
-  }
-  const changePasswordHandler = async () => {
-    try {
-      const data = {
-        email: email,
-        user: userInfo.userName,
-        client: userInfo.client,
-      }
       await dispatch(changeEmail(data))
       NotificationManager.success('Email Updated successfully!')
       setEmailDialog(false)
       setEmail('')
     } catch (error) {
       NotificationManager.error(error)
+    }
+  }
+  const changePasswordHandler = async () => {
+    try {
+      if(password !== confirmPassword){
+        NotificationManager.error("Password doesn't match!")
+        return ;
+      }
+
+      const data = {
+        new_pwd: password,
+        repeat_pwd: confirmPassword,
+      }
+      await dispatch(changePassword(data))
+      NotificationManager.success('Password Updated successfully!')
+      setPasswordDialog(false)
+      setPassword('')
+    } catch (error) {
     }
   }
   const handleSelectedRowsChange = selectedPortfolios =>{
@@ -691,6 +695,25 @@ const Settings = () => {
                   setPassword(e.target.value)
                 }}
                 value={password}
+              />
+            </Grid>
+          </Grid>
+        </Box>
+        <Box m={2}>
+          <Grid container>
+            <Grid item xs={4}>
+              <InputLabel style={{ paddingTop: 10 }}>Confirm Password: </InputLabel>
+            </Grid>
+            <Grid item xs={8}>
+              <TextField
+                label="Confirm Password"
+                type="password"
+                variant="outlined"
+                size="small"
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value)
+                }}
+                value={confirmPassword}
               />
             </Grid>
           </Grid>

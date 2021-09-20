@@ -13,11 +13,12 @@ import Login from './screens/auth/Login'
 import Base from './layouts/Base'
 import Settings from './screens/Settings'
 import Admin from './screens/Admin'
-import { setLoading } from './redux/actions/authActions'
+import { setLoading,getAccessToken, logoutUser } from './redux/actions/authActions'
 import * as actionTypes from './redux/actionTypes'
 
 // React notifications css import
 import 'react-notifications/lib/notifications.css'
+import { NotificationManager } from 'react-notifications'
 
 // Highcharts import
 require('highcharts/modules/exporting')(Highcharts)
@@ -98,6 +99,8 @@ Highcharts.theme = {
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
+    console.log("test")
+
     // Do something before request is sent
 
     store.dispatch(setLoading(true))
@@ -111,13 +114,20 @@ axios.interceptors.request.use(
 
 // Add a response interceptor
 axios.interceptors.response.use(
-  async function (response) {
+  function (response) {  
     if (response.config.url !== `${actionTypes.API_URL}/portfolio/`) {
       store.dispatch(setLoading(false))
-    }
+    }    
     return response
   },
   function (error) {
+    if(error.response.status === 401 && error.response.data.type === 'refresh'){
+      store.dispatch(getAccessToken())
+    }
+    if(error.response.status === 403 && error.response.data.type === 're_login' ){
+      store.dispatch(logoutUser())
+      NotificationManager.error("This login was blocked. Pls re-login again")
+    }
     store.dispatch(setLoading(false))
     return Promise.reject(error)
   },
