@@ -30,8 +30,8 @@ export default function authReducer(state = { ...intialState }, action) {
     case types.SIGNIN_USER_SUCCESS:
       return produce(state, (draft) => {
         draft.currentUser = action.currentUser
-        draft.currentYear = '2020'
-        draft.currentQuarter = 'Q1'
+        draft.currentYear = '2021'
+        draft.currentQuarter = 'Q2'
         draft.currentCurrency = 'USD'
 		    draft.selectedDownloadMenu =['summary']
         draft.filterItem = {
