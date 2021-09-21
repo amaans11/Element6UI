@@ -331,8 +331,7 @@ const Settings = () => {
                   variant="outlined"
                   className={classes.btn}
                   onClick={() => {
-                    setPasswordDialog(true)
-                    setPassword('')
+                    history.push("/update-password")
                   }}
                 >
                   Change Password

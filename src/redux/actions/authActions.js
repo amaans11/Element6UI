@@ -34,6 +34,7 @@ import {
   getCarbonReturnsTableData,
 } from './flmActions'
 import { NotificationManager } from 'react-notifications'
+import { HistoryTwoTone } from '@material-ui/icons'
 
 const history = createBrowserHistory()
 
@@ -356,6 +357,7 @@ export const getUserInfo = () => {
       .then((result) => {
           dispatch(getUserInfoSuccess(result.data))
       })
+     
   }
 }
 
@@ -752,5 +754,14 @@ export const getAccessToken = () => {
 export const getAccessTokenSuccess = (res) => {
   return { type: actionTypes.GET_ACCESS_TOKEN, res }
 }
+
+export const changePasswordRequest = () => {
+  return async (dispatch, getState) => {
+    history.push("/update-password")
+    window.location.reload()
+  }
+}
+
+
 
 /* eslint-disable */

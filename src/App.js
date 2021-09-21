@@ -12,8 +12,9 @@ import { configureStore } from './redux/store'
 import Login from './screens/auth/Login'
 import Base from './layouts/Base'
 import Settings from './screens/Settings'
+import UpdatePassword from './screens/UpdatePassword'
 import Admin from './screens/Admin'
-import { setLoading,getAccessToken, logoutUser } from './redux/actions/authActions'
+import { setLoading,getAccessToken, logoutUser,changePasswordRequest } from './redux/actions/authActions'
 import * as actionTypes from './redux/actionTypes'
 
 // React notifications css import
@@ -128,6 +129,10 @@ axios.interceptors.response.use(
       store.dispatch(logoutUser())
       NotificationManager.error("This login was blocked. Pls re-login again")
     }
+    if(error.response.status === 403 && error.response.data.type === 'change_pwd' ){
+      store.dispatch(changePasswordRequest())
+      NotificationManager.error("Please change the password ! ")
+    }
     store.dispatch(setLoading(false))
     return Promise.reject(error)
   },
@@ -144,6 +149,7 @@ function App() {
             <Switch>
               <Route exact path="/login" component={Login} />
               <AuthenticatedRoute path="/settings" exact component={Settings} />
+              <AuthenticatedRoute path="/update-password" exact component={UpdatePassword} />
               <AuthenticatedRoute path="/admin" exact component={Admin} />
               <AuthenticatedRoute path="/" component={Base} />
             </Switch>
