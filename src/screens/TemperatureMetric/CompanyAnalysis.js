@@ -98,7 +98,7 @@ const CompanyAnalysis = () => {
 						chartKey="COMPANY_ANALYSIS"
 						data={chartData}
 						xAxisLabel="Temperature Score"
-						yAxisLabel="S1+2 GHG Emissions(tCO2e)"
+						yAxisLabel="S1+2 GHG Emissionsm (tCO2e)"
 						zAxisLabel="Weight"
 						yAxisTitle={`${emissionLabel} GHG Emissions (tCo2e)`}
 						isExportEnabled={!trial}
