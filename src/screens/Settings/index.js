@@ -98,9 +98,9 @@ const Settings = () => {
 
   const { userInfo } = auth
 
-  const currentYear = get(auth, 'currentYear', 2020)
+  const currentYear = get(auth, 'currentYear', 2021)
   const currentCurrency = get(auth, 'currentCurrency', 'USD')
-  const currentQuarter = get(auth, 'currentQuarter', 'Q1')
+  const currentQuarter = get(auth, 'currentQuarter', 'Q2')
 
   const emissionYear = get(userInfo.year, 'emissions', '2019')
   const emissionQuarter = get(userInfo.quarter, 'emissions', 'Q1')
