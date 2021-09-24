@@ -779,7 +779,7 @@ export const getAccessToken = () => {
       })
       .catch((err) => {
         const errorType = err.response.data.type
-        if(errorType == 're_login'){
+        if(errorType == 're-login'){
           dispatch(logoutUser())
         }
       })
