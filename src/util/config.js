@@ -173,7 +173,7 @@ const configs = {
 			Y_AXIS_TITLE: 'Carbon Emissions (tCo2e)'
 		},
 		CARBON_ADJUSTED_RETURNS:{
-			TITLE: 'Carbon Adjusted Returns'
+			TITLE: 'Comparison of Returns'
 		},
 		PORTFOLIO_SENTIMENT:{
 			TITLE: 'Portfolio Sentiment Score',
