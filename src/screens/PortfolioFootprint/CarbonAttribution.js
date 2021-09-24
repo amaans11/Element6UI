@@ -38,19 +38,23 @@ const CarbonAttribution = () => {
 
     if (data && data.length > 0) {
       chartLabel= data[data.length - 1]['chart_name']
-      data.map((res) => {
+      data.map((res,index) => {
         let values = []
 
         if (res['points'] && res['points'].length > 0) {
           values = map(res['points'], 'y')
           categories = map(res['points'], 'x')
         }
-        chartData.push({
-          name: res['name'],
-          data: values,
-        })
+        if(index != 4){
+          chartData.push({
+            name: res['name'],
+            data: values,
+          })
+        }
+       
       })
     }
+    console.log("chartData<<",chartData)
     setChartLabel(chartLabel)
     setChartData(chartData)
     setCategories(categories)

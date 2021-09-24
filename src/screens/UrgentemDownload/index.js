@@ -95,10 +95,8 @@ function UrgentemDownload() {
     return value
   }
   const getDownloadData = async () => {
-    setLoading(true)
     const data = getRequestData('URGENTEM_DOWNLOAD', auth)
     await dispatch(getDownloadDetails(data))
-    setLoading(false)
   }
   const getTableColumns = () => {
     let res = []
@@ -225,7 +223,7 @@ function UrgentemDownload() {
                 color="primary"
                 onClick={downloadDataHandler}
                 style={{ marginBottom: 10 }}
-                disabled={downloadData.length === 0}
+                disabled={downloadData && downloadData.length === 0}
               >
                 Download Data
               </Button>}

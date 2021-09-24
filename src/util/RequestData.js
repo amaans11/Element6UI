@@ -472,6 +472,8 @@ const getRequestData = (type, auth) => {
         quarter_avoided: quarterAvoided,
         version_avoided: versionAvoided ? versionAvoided : 0,
         quarter_reserves: quarterReserves,
+        asset_type: ["Eq", "CB", "Loan"],
+
       }
       break
     case 'PORTFOLIO_ALIGNMENT':
