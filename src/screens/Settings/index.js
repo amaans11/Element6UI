@@ -37,7 +37,10 @@ import {
   changePassword,
   getPortfolioList,
   deletePortfolioRequest,
-  getFixRate
+  getFixRate,
+  verifyCode,
+  getUserInfo,
+  updateUserInfo
 } from '../../redux/actions/authActions'
 
 const yearOptions = [2021,2020, 2019, 2018]
@@ -97,18 +100,11 @@ const Settings = () => {
   const portfolioTableRes = useSelector((state) => state.auth.portfolioTableRes)
 
   const { userInfo } = auth
+  let currentUser = auth && auth.currentUser ? auth.currentUser : {}
 
   const currentYear = get(auth, 'currentYear', 2020)
   const currentCurrency = get(auth, 'currentCurrency', 'USD')
   const currentQuarter = get(auth, 'currentQuarter', 'Q1')
-
-  const emissionYear = get(userInfo.year, 'emissions', '2019')
-  const emissionQuarter = get(userInfo.quarter, 'emissions', 'Q1')
-  const emissionVersion = get(userInfo.version, 'emissions', 11)
-
-  const fundamentalYear = get(userInfo.year, 'fundamentals', '2019')
-  const fundamentalQuarter = get(userInfo.quarter, 'fundamentals', 'Q1')
-  const fundamentalVersion = get(userInfo.version, 'fundamentals', '11')
 
   const [year, setYear] = useState(currentYear)
   const [quarter, setQuarter] = useState(currentQuarter)
@@ -121,6 +117,16 @@ const Settings = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [dialog, setDialog] = useState(false)
   const [portIds, setPortIds] = useState([])
+  const [verification , setVerification ] = useState(false)
+  const [verificationCode,setVerificationCode] = useState("")
+  const [error,setError] = useState("")
+
+  const [emissionYear, setEmissionYear] = useState(get(userInfo.year, 'emissions', '2019'))
+  const [emissionQuarter, setEmissionQuarter] = useState(get(userInfo.quarter, 'emissions', 'Q1'))
+  const [emissionVersion, setEmissionVersion] = useState(get(userInfo.version, 'emissions', 11))
+  const [fundamentalYear, setFundamentalYear] = useState(get(userInfo.year, 'fundamentals', '2019'))
+  const [fundamentalQuarter, setFundamentalQuarter] = useState(get(userInfo.quarter, 'fundamentals', 'Q1'))
+  const [fundamentalVersion, setFundamentalVersion] = useState(get(userInfo.version, 'fundamentals', '11'))
 
   const updateCurrencyHandler = () => {
     const data = {
@@ -154,6 +160,27 @@ const Settings = () => {
     } catch (error) {
       NotificationManager.error('Unable to delete the portfolio !')
     }
+  }
+  const handleUserInfoChanges =async()=>{
+    const data={
+      role: userInfo.role,
+      display_name: userInfo.display_name,
+      user_name: userInfo.user_name,  // should be unique
+      year: {
+        emissions: emissionYear,
+        fundamentals: fundamentalYear
+      },
+      quarter: {
+        emissions: emissionQuarter,
+        fundamentals: fundamentalQuarter
+      },
+      version: {
+        emissions: emissionVersion,
+        fundamentals: fundamentalVersion
+      },
+    }
+    await dispatch(updateUserInfo(data))
+
   }
   const getHeadCells = () => {
     return [
@@ -194,24 +221,41 @@ const Settings = () => {
     ]
   }
   const changeEmailHandler = async () => {
-    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-
-    if (!regex.test(email)) {
-      NotificationManager.error('Please enter a valid email')
-      return
-    }
-    try {
-      const data = {
-        password: password,
-        user: userInfo.userName,
-        client: userInfo.client,
+    if(!verification){
+      const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+      if (!regex.test(email)) {
+        NotificationManager.error('Please enter a valid email')
+        return
       }
-      await dispatch(changeEmail(data))
-      NotificationManager.success('Email Updated successfully!')
-      setEmailDialog(false)
-      setEmail('')
-    } catch (error) {
-      NotificationManager.error(error)
+      try {
+        const data = {
+         email:email
+        }
+        await dispatch(changeEmail(data))
+        setVerification(true)
+      } catch (error) {
+        NotificationManager.error(error)
+
+      }
+    }
+    else{
+      try {
+        const data = {
+         email:email,
+         code:parseInt(verificationCode)
+        }
+        const reData = {
+          userName: currentUser.userName,
+        }
+        await dispatch(verifyCode(data))
+        setEmailDialog(false)
+        setEmail('')
+        setVerification(false)
+        NotificationManager.success("Email changed successfully !")
+        await dispatch(getUserInfo(reData))
+      } catch (error) {
+        setError("Please enter a valid verification code! ")
+      }
     }
   }
   const changePasswordHandler = async () => {
@@ -272,7 +316,7 @@ const Settings = () => {
               <Grid item xs={6}>
                 <Typography className={classes.contentText}>
                   {userInfo && Object.keys(userInfo).length > 0
-                    ? userInfo.userName
+                    ? userInfo.user_name
                     : ''}
                 </Typography>
               </Grid>
@@ -466,9 +510,11 @@ const Settings = () => {
               >
                 Emission Settings
               </Typography>
-              {/* <Button variant="outlined" color="primary" style={{ marginBottom: 10 }}>
+              <Button variant="outlined" color="primary" style={{ marginBottom: 10 }}
+              onClick={handleUserInfoChanges}
+              >
 								Update
-							</Button> */}
+							</Button>
             </Box>
             <Grid container spacing={3}>
               <Grid item xs={4}>
@@ -482,7 +528,11 @@ const Settings = () => {
                     placeholder="Select year"
                     value={emissionYear}
                     className={classes.dropdown}
-                    disabled
+                    onChange={
+                      (e)=>{
+                        setEmissionYear(e.target.value)
+                      }
+                    }
                   >
                     {yearOptions.map((year) => (
                       <MenuItem value={year}>{year}</MenuItem>
@@ -503,7 +553,11 @@ const Settings = () => {
                     placeholder="Select quarter"
                     value={emissionQuarter}
                     className={classes.dropdown}
-                    disabled
+                    onChange={
+                      (e)=>{
+                        setEmissionQuarter(e.target.value)
+                      }
+                    }
                   >
                     {quarterOptions.map((quarter) => (
                       <MenuItem value={quarter}>{quarter}</MenuItem>
@@ -524,7 +578,12 @@ const Settings = () => {
                     placeholder="Select quarter"
                     value={emissionVersion}
                     className={classes.dropdown}
-                    disabled
+                    onChange={
+                      (e)=>{
+                        setEmissionVersion(e.target.value)
+                      }
+                    }
+                    
                   >
                     <MenuItem value="11">11</MenuItem>
                     <MenuItem value="12">12</MenuItem>
@@ -553,9 +612,11 @@ const Settings = () => {
               >
                 Fundamental Settings
               </Typography>
-              {/* <Button variant="outlined" color="primary" style={{ marginBottom: 10 }}>
+              <Button variant="outlined" color="primary" style={{ marginBottom: 10 }}
+              onClick={handleUserInfoChanges}
+              >
 								Update
-							</Button> */}
+							</Button>
             </Box>
             <Grid container spacing={3}>
               <Grid item xs={4}>
@@ -569,7 +630,11 @@ const Settings = () => {
                     placeholder="Select year"
                     value={fundamentalYear}
                     className={classes.dropdown}
-                    disabled
+                    onChange={
+                      (e)=>{
+                        setFundamentalYear(e.target.value)
+                      }
+                    }
                   >
                     {yearOptions.map((year) => (
                       <MenuItem value={year}>{year}</MenuItem>
@@ -590,7 +655,11 @@ const Settings = () => {
                     placeholder="Select quarter"
                     value={fundamentalQuarter}
                     className={classes.dropdown}
-                    disabled
+                    onChange={
+                      (e)=>{
+                        setFundamentalQuarter(e.target.value)
+                      }
+                    }
                   >
                     {quarterOptions.map((quarter) => (
                       <MenuItem value={quarter}>{quarter}</MenuItem>
@@ -611,7 +680,11 @@ const Settings = () => {
                     placeholder="Select quarter"
                     value={emissionVersion}
                     className={classes.dropdown}
-                    disabled
+                    onChange={
+                      (e)=>{
+                        setFundamentalVersion(e.target.value)
+                      }
+                    }
                   >
                     <MenuItem value="11">11</MenuItem>
                     <MenuItem value="12">12</MenuItem>
@@ -631,7 +704,40 @@ const Settings = () => {
             <CloseIcon />
           </IconButton>
         </Box>
-        <Box ml={2} mr={2}>
+        {
+          verification ? 
+          <React.Fragment>
+            <Box ml={2} mr={2}>
+              <Typography>Please enter verification code.</Typography>
+          </Box>
+          <Box m={2}>
+            <Grid container>
+              <Grid item xs={4}>
+                <InputLabel style={{ paddingTop: 10 }}>
+                  Verification Code:{' '}
+                </InputLabel>
+              </Grid>
+              <Grid item xs={8}>
+                <TextField
+                  label="Code"
+                  variant="outlined"
+                  size="small"
+                  onChange={(e) => {
+                    setVerificationCode(e.target.value)
+                  }}
+                  value={verificationCode}
+                />
+              </Grid>
+            </Grid>
+            {
+              error &&
+              <span className="error-msg">{error}</span>
+            }
+        </Box>
+        </React.Fragment>
+        : 
+        <React.Fragment>
+          <Box ml={2} mr={2}>
           <Typography>Please enter your new email.</Typography>
           <Typography style={{ color: '#1890ff', fontSize: 13 }}>
             Note : The entered email must be different from the current email.
@@ -657,6 +763,8 @@ const Settings = () => {
             </Grid>
           </Grid>
         </Box>
+        </React.Fragment>
+        }
         <DialogActions>
           <Button
             color="primary"

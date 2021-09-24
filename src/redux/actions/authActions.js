@@ -364,6 +364,18 @@ export const getUserInfo = () => {
 export const getUserInfoSuccess = (res) => {
   return { type: actionTypes.GET_USER_INFO, res }
 }
+export const updateUserInfo = (data) => {
+  return async (dispatch,getState) => {
+    const accessToken = getState().auth.currentUser.access_token
+
+    return axios
+      .put(`${actionTypes.API_URL}/user/info`,data,{
+        headers:{
+          'Authorization': `Bearer ${accessToken}`,
+        }
+      })
+  }
+}
 
 export const getUploadPortfolioList = () => {
   return async (dispatch, getState) => {
@@ -615,7 +627,7 @@ export const changeEmail = (data) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .post(`${actionTypes.API_URL}/accounts/change_primary_email`, data, {
+      .post(`${actionTypes.API_URL}/user/change_email`, data, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -632,6 +644,29 @@ export const changeEmail = (data) => {
 
 export const changeEmailSuccess = (res) => {
   return { type: actionTypes.CHANGE_EMAIL_SUCCESS, res }
+}
+export const verifyCode = (data) => {
+  return async (dispatch, getState) => {
+    const accessToken = getState().auth.currentUser.access_token
+
+    return axios
+      .post(`${actionTypes.API_URL}/user/change_email_verify`, data, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      })
+      .then((result) => {
+        dispatch(verifyCodeSuccess(result.data.data))
+      })
+      .catch((err) => {
+        const error = err.response.data.message
+        throw new Error(error)
+      })
+  }
+}
+
+export const verifyCodeSuccess = (res) => {
+  return { type: actionTypes.VERIFY_CODE_SUCCESS, res }
 }
 export const changePassword = (data) => {
   return async (dispatch, getState) => {
@@ -733,7 +768,7 @@ export const getAccessToken = () => {
     const refreshToken = getState().auth.currentUser.refresh_token
 
     return axios
-      .post(`${actionTypes.API_URL}/user/refresh`, {
+      .post(`${actionTypes.API_URL}/user/refresh`,{}, {
         headers: {
           'Authorization': `Bearer ${refreshToken}`,
         },
