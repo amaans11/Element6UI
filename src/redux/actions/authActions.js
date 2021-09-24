@@ -558,12 +558,13 @@ export const generateReport = (data) => {
   }
 }
 
-export const uploadPortfolioRequest = (data) => {
+export const uploadPortfolioRequest = (data,isFund) => {
   return async (dispatch, getState) => {
     const clientKey = getState().auth.userInfo.client_key
 
+    const api_url = isFund ? `${actionTypes.API_URL}/portfolio/fund_of_funds/` : `${actionTypes.API_URL}/portfolio/`
     return axios
-      .post(`${actionTypes.API_URL}/portfolio/`, data, {
+      .post(api_url, data, {
         headers: {
           'client-key': clientKey,
         },

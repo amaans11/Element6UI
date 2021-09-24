@@ -74,6 +74,7 @@ import {
   setEmissions,
 } from '../redux/actions/authActions'
 import csvFile from '../assets/Dummy-file.xlsx'
+import { Checkbox } from '@material-ui/core'
 
 const drawerWidth = 295
 
@@ -210,6 +211,7 @@ const MiniDrawer = ({ classes, history }) => {
   const [missingCoverage, setMissingCoverage] = useState({})
   const [description, setDescription] = useState('')
   const [isBenchmark, setBenchmarkValue] = useState(false)
+  const [fundOfFunds,setFundOfFunds] = useState(false)
 
   const dispatch = useDispatch()
   const inputRef = useRef(null)
@@ -341,7 +343,7 @@ const MiniDrawer = ({ classes, history }) => {
     data.append('is_benchmark', isBenchmark)
 
     try {
-      await dispatch(uploadPortfolioRequest(data))
+      await dispatch(uploadPortfolioRequest(data,fundOfFunds))
       NotificationManager.success(
         'Your portfolio has been uploaded and is being processed. You will see your uploaded portfolio table updated once the processing has been completed.',
       )
@@ -698,6 +700,17 @@ const MiniDrawer = ({ classes, history }) => {
                   />
                 </Box>
               </RadioGroup>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={3}>
+              <InputLabel style={{ paddingTop: 10 }}>Fund Of Funds</InputLabel>
+            </Grid>
+            <Grid item xs={3}>
+              <Checkbox 
+                checked={fundOfFunds}
+                onChange= {(e)=>{setFundOfFunds(e.target.checked)}}
+              />
             </Grid>
           </Grid>
         </DialogContent>
