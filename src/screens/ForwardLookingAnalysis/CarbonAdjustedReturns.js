@@ -101,7 +101,6 @@ const CarbonAdjustedReturns = () => {
   }
 
   const fetchDetails = async (company) => {
-    console.log('company>>', company)
     let lineChartData = getRequestData('CARBON_ADJUSTED_LINE_RETURNS', auth)
     let tableData = getRequestData('CARBON_ADJUSTED_TABLE_RETURNS', auth)
 
@@ -159,28 +158,20 @@ const CarbonAdjustedReturns = () => {
     let tableData1 = tableResponse['Table1']
     let tableData2 = tableResponse['Table2']
 
-    Object.keys(tableData1['company']).map((data1) => {
-      if (data1 != 'Annualised1Y') {
-        const { index, name } = getTableHeader(data1)
-        returnsData[index] = {
-          name: name,
-          sector: tableData1['sector'][data1],
-          portfolio: tableData1['portfolio'][data1],
-          company: tableData1['company'][data1],
-        }
+    returnsData=[
+      {
+        name:"Returns 5Y",
+        sector:tableData1['sector']['Return5Y'],
+        portfolio:tableData1['portfolio']['Return5Y'],
+        company:tableData1['company']['Return5Y']
+      },
+      {
+        name:"Carbon Adjusted Returns 5Y",
+        sector:tableData2['sector'][emissionVal]['Return5Y'],
+        portfolio:tableData2['portfolio'][emissionVal]['Return5Y'],
+        company:tableData2['company'][emissionVal]['Return5Y']
       }
-    })
-    Object.keys(tableData2['company'][emissionVal]).map((data1) => {
-      if (data1 != 'Annualised1Y') {
-        const { index, name } = getTableHeader(data1)
-        carbonData[index] = {
-          name: name,
-          sector: tableData2['sector'][emissionVal][data1],
-          portfolio: tableData2['portfolio'][emissionVal][data1],
-          company: tableData2['company'][emissionVal][data1],
-        }
-      }
-    })
+    ]
     setReturnData(returnsData)
     setCarbonData(carbonData)
   }
@@ -265,8 +256,11 @@ const CarbonAdjustedReturns = () => {
       (company) => company.company_id == companyId,
     )
 
+    setCompanyName(company[0]['name'])
+
     await fetchDetails(company[0])
   }
+  console.log("companyName",companyName)
   const cells = [
     {
       name: '',
@@ -370,6 +364,7 @@ const CarbonAdjustedReturns = () => {
               <span style={{ fontSize: 11, paddingTop: -20 }}>
                 * Companies highlighted in grey don't have price data.
               </span>
+
             </Grid>
             <Grid item xs={12}>
               <Box mb={2} mt={2}>
@@ -379,11 +374,14 @@ const CarbonAdjustedReturns = () => {
                   tableHeading="CARBON_ADJUSTED_RETURNS_TABLE1"
                 />
               </Box>
-              <DataTable
+                <span style={{ fontSize: 11, paddingTop: -20 }}>
+                * For a carbon price of 100 USD
+                </span>
+              {/* <DataTable
 								data={carbonData}
 								columns={cells}
 								tableHeading="CARBON_ADJUSTED_RETURNS_TABLE2"
-							/>
+							/> */}
             </Grid>
           </Grid>
         </Box>

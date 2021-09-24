@@ -117,7 +117,7 @@ const PortTemperatureScore = () => {
   }
   const defaultChartValue = parseFloat(defaultValue)
   const tempScoreChartData = [portScore, benchScore,defaultChartValue ]
-  
+
   return (
     <React.Fragment>
       {loading ? (
