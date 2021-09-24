@@ -261,7 +261,8 @@ export default function authReducer(state = { ...intialState }, action) {
         })
       case types.GET_ACCESS_TOKEN:
         return produce(state, (draft) => {
-          draft.currentUser.accessToken = action.res.access_token 
+          console.log("action>>",action.res)
+          draft.currentUser.access_token = action.res.access_token 
         })
     default:
       return state
