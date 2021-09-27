@@ -205,6 +205,21 @@ export default function FilterGroup() {
             break
         }
         break
+        case 'Fund Of Funds':
+          console.log("test")
+          switch (tabValue) {
+            case 0:
+              config = filterConfig['SUMMARY']
+              break
+            case 2:
+              console.log("test1")
+              config = filterConfig['PORTFOLIO_ALIGNMENT']
+              break
+            default:
+              config = filterConfig['ALIGNMENT']
+              break
+          }
+          break;
 
       case 'Temp score':
         switch (tabValue) {

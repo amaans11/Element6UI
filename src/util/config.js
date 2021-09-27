@@ -198,6 +198,9 @@ const configs = {
 		SECTOR_SENTIMENT_SERIES:{
 			TITLE: 'Sector Sentiment Time Series',
 			Y_AXIS_TITLE:'Aggregated Sector Sentiment'
+		},
+		SUMMARY:{
+			TITLE: 'Fund of Funds Composition : Weights',
 		}
 	}
 };

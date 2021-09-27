@@ -1,4 +1,4 @@
-export const API_URL = 'https://qa.urgentem.net:8080';
+export const API_URL = 'http://qa.urgentem.net:8080';
 export const TEMP_API_URL = 'https://tm-qa.urgentem.net';
 
 // --------- Auth --------------//
@@ -98,3 +98,11 @@ export const GET_CARBON_RETURNS_LINE_DATA_SUCCESS='GET_CARBON_RETURNS_LINE_DATA_
 export const GET_CARBON_RETURNS_LINE_DATA_FAILED='GET_CARBON_RETURNS_LINE_DATA_FAILED';
 export const GET_CARBON_RETURNS_TABLE_DATA_SUCCESS='GET_CARBON_RETURNS_TABLE_DATA_SUCCESS';
 export const GET_CARBON_RETURNS_TABLE_DATA_FAILED='GET_CARBON_RETURNS_TABLE_DATA_FAILED';
+
+
+
+// ------------------------------------Fund Of Funds --------------------------//
+export const GET_SUMMARY_SUCCESS = 'GET_SUMMARY_SUCCESS';
+export const GET_SUMMARY_FAILED = 'GET_SUMMARY_FAILED'
+export const GET_ALIGNMENT_SUCCESS = 'GET_ALIGNMENT_SUCCESS'
+export const GET_ALIGNMENT_FAILED = 'GET_ALIGNMENT_FAILED'

@@ -53,6 +53,7 @@ import UrgentemDownload from '../screens/UrgentemDownload'
 import GenerateReport from '../screens/GenerateReport'
 import UrgentemApi from '../screens/UrgentemApi'
 import NLP from '../screens/NLP'
+import FundOfFunds from '../screens/FundOfFunds'
 import UrgentemLanding from '../screens/UrgentemLanding'
 import { missingCoverageCells } from '../util/TableHeadConfig'
 import DataTable from '../components/Table/DataTable'
@@ -537,6 +538,9 @@ const MiniDrawer = ({ classes, history }) => {
             </Route>
             <Route path="/nlp" exact>
               <NLP />
+            </Route>
+            <Route path="/fund-of-funds" exact>
+              <FundOfFunds />
             </Route>
             <Route path="/temperature-metric" exact>
               <TemperatureMetric />

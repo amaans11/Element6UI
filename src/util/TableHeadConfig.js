@@ -601,6 +601,32 @@ const backgroundCells=[
 		right: true
 	},
 ]
+const summaryCells = [
+	{
+		name: 'Child Name',
+		selector: 'name',
+		sortable: true,
+		right: false
+	},
+	{
+		name: 'Child Weight',
+		selector: 'weight',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Coverage Emissions',
+		selector: 'emission',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Coverage Fundamentals',
+		selector: 'fundamentals',
+		sortable: true,
+		right: true
+	},
+]
 export {
 	avoidedEmissionCells,
 	sectoralScope3Cells,
@@ -614,5 +640,6 @@ export {
 	targetSettingCells,
 	companyProfileCells,
 	missingCoverageCells,
-	backgroundCells
+	backgroundCells,
+	summaryCells
 };

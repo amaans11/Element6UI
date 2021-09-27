@@ -22,6 +22,8 @@ const forwardTabs = [ 'Portfolio Alignment', 'Target Setting', 'Company Profile'
 
 const nlpTabs=['Sector Overview','Portfolio Overview','Article Analysis','Background'];
 
+const fundOfFundsTabs = ['Summary','Footprint','Alignment','Target Setting']
+
 export {
 	footprintTabs,
 	scope3Tabs,
@@ -30,5 +32,6 @@ export {
 	strandedAssetTabs,
 	tempMetricTabs,
 	forwardTabs,
-	nlpTabs
+	nlpTabs,
+	fundOfFundsTabs
 };

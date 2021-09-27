@@ -33,6 +33,7 @@ import {
   getCarbonReturnsLineData,
   getCarbonReturnsTableData,
 } from './flmActions'
+import { getAlignment, getSummary } from './fundOfFundActions'
 
 const history = createBrowserHistory()
 
@@ -40,8 +41,28 @@ const requestApi = async (dispatch, auth, flm) => {
   const moduleName = auth.moduleName
   const tabValue = auth.tabValue
   const companyData = flm.companyData
+  const {allPortfolios,currentPortfolio} = auth
 
   let data = {}
+
+  let childrenIds=[]
+  let result = []
+  if(allPortfolios && allPortfolios.length > 0){
+      allPortfolios.map(portfolio=>{
+          if(portfolio.portfolio_id === currentPortfolio.value ){
+               childrenIds = portfolio.children_id
+          }
+      })
+  }
+  if(childrenIds && childrenIds .length > 0){
+      childrenIds.map(id=>{
+          allPortfolios.map(portfolio=>{
+              if(portfolio.id === id ){
+                  result.push(portfolio.portfolio_id)
+              }
+          })
+      })
+  }
 
   switch (moduleName) {
     case 'Emissions':
@@ -93,6 +114,24 @@ const requestApi = async (dispatch, auth, flm) => {
         default:
           data = getRequestData('SCOPE3_MATERILITY', auth)
           await dispatch(getScope3Data(data))
+          break
+      }
+      break
+    case 'Fund Of Funds':
+      console.log("test")
+      switch (tabValue) {
+        case 0:
+          await dispatch(getSummary(result.join(',')))
+          break
+        case 2:
+          const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
+          requestData.portfolio_id = result
+          delete requestData.benchmark_id
+          delete requestData.version_benchmark
+          await dispatch(getAlignment(requestData))
+          break
+        default:
+          await dispatch(getSummary(result.join(',')))
           break
       }
       break
@@ -321,7 +360,7 @@ export const getPortfolioList = (client) => {
       'client-key': clientKey,
     }
     return axios
-      .get(`${actionTypes.API_URL}/portfolio/`, { headers: headers })
+      .get(`${actionTypes.API_URL}/portfolio/?portfolio_type=PC`, { headers: headers })
       .then((result) => {
         dispatch(getPortfolioListSuccess(result.data))
       })

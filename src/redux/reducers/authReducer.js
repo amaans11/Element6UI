@@ -22,7 +22,8 @@ const intialState = {
   portfolioTableRes: [],
   changeEmailRes: '',
   selectedDownloadPort: ["summary"],
-  currencyFixRate:{}
+  currencyFixRate:{},
+  allPortfolios:[],
 }
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -66,11 +67,13 @@ export default function authReducer(state = { ...intialState }, action) {
       const portfolioList = action.res
       let result = []
       if (portfolioList && portfolioList.length > 0) {
-        result = portfolioList.map((portfolio) => {
-          return {
-            label: portfolio.name,
-            value: portfolio.portfolio_id,
-            version: portfolio.version,
+         portfolioList.map((portfolio) => {
+          if(portfolio.is_parent){
+              result.push({
+                  label: portfolio.name,
+                  value: portfolio.portfolio_id,
+                  version: portfolio.version,
+              })
           }
         })
       }
@@ -87,6 +90,7 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.currentBenchmark = {
           ...currentData,
         }
+        draft.allPortfolios = action.res
       })
     case types.GET_PORTFOLIO_LIST_FAILURE:
       return produce(state, (draft) => {
