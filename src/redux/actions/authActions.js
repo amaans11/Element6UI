@@ -775,7 +775,7 @@ export const getAccessToken = () => {
       })
       .then((result) => {
         dispatch(getAccessTokenSuccess(result.data))
-
+        window.location.reload()
       })
       .catch((err) => {
         const errorType = err.response.data.type
