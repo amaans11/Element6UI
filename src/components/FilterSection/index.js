@@ -206,11 +206,13 @@ export default function FilterGroup() {
         }
         break
         case 'Fund Of Funds':
-          console.log("test")
           switch (tabValue) {
             case 0:
               config = filterConfig['SUMMARY']
               break
+              case 1 : 
+              config = filterConfig['PORTFOLIO_EMISSION']
+              break;
             case 2:
               console.log("test1")
               config = filterConfig['PORTFOLIO_ALIGNMENT']

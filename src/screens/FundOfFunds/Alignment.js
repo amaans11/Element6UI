@@ -131,7 +131,6 @@ const Alignment = () => {
     }
   }
   return (
-    <React.Fragment>
       <React.Fragment>
       {loading ? (
         <CircularProgress />
@@ -151,7 +150,6 @@ const Alignment = () => {
           />
         </Box>
       )}
-    </React.Fragment>
     </React.Fragment>
   )
 }

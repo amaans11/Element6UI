@@ -3,7 +3,8 @@ import produce from 'immer';
 
 const intialState = {
 	summary:{},
-    alignment:{}
+    alignment:{},
+    footprint:{}
 };
 
 export default function flmReducer(state = { ...intialState }, action) {
@@ -20,7 +21,6 @@ export default function flmReducer(state = { ...intialState }, action) {
 			});
         case types.GET_ALIGNMENT_SUCCESS:
             return produce(state, (draft) => {
-                console.log("action>>",action.res)
 				draft.alignment.data = action.res;
 				draft.alignment.error = '';
 			});
@@ -28,6 +28,16 @@ export default function flmReducer(state = { ...intialState }, action) {
             return produce(state, (draft) => {
                 draft.alignment.data = '';
                 draft.alignment.error = action.error;
+        });
+        case types.GET_FOOTPRINT_SUCCESS:
+            return produce(state, (draft) => {
+				draft.footprint.data = action.res;
+				draft.footprint.error = '';
+			});
+        case types.GET_FOOTPRINT_FAILED:
+            return produce(state, (draft) => {
+                draft.footprint.data = '';
+                draft.footprint.error = action.error;
         });
 		default:
 			return state;

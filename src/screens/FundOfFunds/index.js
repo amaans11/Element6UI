@@ -6,6 +6,7 @@ import { fundOfFundsTabs } from '../../util/tabs-config'
 import { setTabValue } from '../../redux/actions/authActions'
 import Summary from './Summary'
 import Alignment from './Alignment'
+import Footprint from './Footprint'
 
 function FundOfFunds() {
   const tabValue = useSelector((state) => state.auth.tabValue)
@@ -41,20 +42,12 @@ function FundOfFunds() {
           <TabPanel value={value} index={0}>
             <Summary />
           </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Footprint />
+          </TabPanel>
           <TabPanel value={value} index={2}>
             <Alignment />
           </TabPanel>
-          
-
-          {/* <TabPanel value={value} index={1}>
-            <TargetSetting />
-          </TabPanel>
-        //   <TabPanel value={value} index={2}>
-        //     <CompanyProfile />
-        //   </TabPanel>
-          <TabPanel value={value} index={3}>
-            <CarbonAdjustedReturns />
-          </TabPanel> */}
         </Grid>
       </Grid>
     </div>

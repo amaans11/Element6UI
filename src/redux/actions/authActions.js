@@ -123,6 +123,13 @@ const requestApi = async (dispatch, auth, flm) => {
         case 0:
           await dispatch(getSummary(result.join(',')))
           break
+          case 1:
+          const reData = getRequestData('PORTFOLIO_EMISSION', auth)
+          reData.portfolio_id = result
+          delete reData.benchmark_id
+          delete reData.version_benchmark
+          await dispatch(getAlignment(reData))
+          break
         case 2:
           const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
           requestData.portfolio_id = result
