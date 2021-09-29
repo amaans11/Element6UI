@@ -13,7 +13,7 @@ import Login from './screens/auth/Login'
 import Base from './layouts/Base'
 import Settings from './screens/Settings'
 import Admin from './screens/Admin'
-import { setLoading } from './redux/actions/authActions'
+import { setLoading,setLogin } from './redux/actions/authActions'
 import * as actionTypes from './redux/actionTypes'
 
 // React notifications css import
@@ -123,6 +123,16 @@ axios.interceptors.response.use(
 
 function App() {
   Highcharts.setOptions(Highcharts.theme)
+
+  const version = localStorage.getItem('version')
+
+  console.log("version>>",version)
+  if(!version){
+    localStorage.setItem('version',0)
+  }
+  if(actionTypes.VERSION != version){
+    store.dispatch(setLogin())
+  }
 
   return (
     <Provider store={store}>

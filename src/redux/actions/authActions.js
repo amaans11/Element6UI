@@ -295,6 +295,7 @@ export const signinUserSuccess = (currentUser) => {
   return { type: actionTypes.SIGNIN_USER_SUCCESS, currentUser }
 }
 
+
 export const verifyUser = (data) => {
   return async (dispatch) => {
     return axios
@@ -429,11 +430,19 @@ export const setFilterItem = (data) => {
 export const setFilterItemSuccess = (res) => {
   return { type: actionTypes.SET_FILTER_ITEM, res }
 }
+export const setLogin = () => {
+  return async (dispatch) => {
+    history.push('/login')
+    const version = localStorage.getItem('version')
+    localStorage.setItem('version',parseInt(version) + 1)
+  }
+}
 export const setTabValue = (value) => {
   return async (dispatch) => {
     dispatch(setTabValueSuccess(value))
   }
 }
+
 
 export const setTabValueSuccess = (res) => {
   return { type: actionTypes.SET_TAB_SUCCESS, res }
