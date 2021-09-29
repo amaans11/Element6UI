@@ -260,7 +260,6 @@ const CarbonAdjustedReturns = () => {
 
     await fetchDetails(company[0])
   }
-  console.log("companyName",companyName)
   const cells = [
     {
       name: '',
