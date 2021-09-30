@@ -43,6 +43,7 @@ const requestApi = async (dispatch, auth, flm) => {
 
   let data = {}
 
+
   switch (moduleName) {
     case 'Emissions':
       switch (tabValue) {
@@ -277,11 +278,11 @@ const requestApi = async (dispatch, auth, flm) => {
 export const signinUser = (data) => {
   return async (dispatch) => {
     return axios
-      .post(`${actionTypes.API_URL}/accounts/sign_in`, data)
+      .post(`${process.env.REACT_APP_API_URL}/accounts/sign_in`, data)
       .then(async (result) => {
         if (result.data.success) {
           await dispatch(signinUserSuccess(result.data))
-          localStorage.setItem('auth',result.data.currentUser)
+          localStorage.setItem('auth',process.env.REACT_APP_VERSION)
           history.push('/')
         } else {
           const error = result.data.message
@@ -299,7 +300,7 @@ export const signinUserSuccess = (currentUser) => {
 export const verifyUser = (data) => {
   return async (dispatch) => {
     return axios
-      .post(`${actionTypes.API_URL}/accounts/reset_password`, data)
+      .post(`${process.env.REACT_APP_API_URL}/accounts/reset_password`, data)
       .then((result) => {
         if (result.data.success) {
           dispatch(verifyUserSuccess(result.data))
@@ -322,7 +323,7 @@ export const getPortfolioList = (client) => {
       'client-key': clientKey,
     }
     return axios
-      .get(`${actionTypes.API_URL}/portfolio/`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/`, { headers: headers })
       .then((result) => {
         dispatch(getPortfolioListSuccess(result.data))
       })
@@ -343,7 +344,7 @@ export const getPortfolioListFailure = () => {
 export const getUserInfo = (data) => {
   return async (dispatch) => {
     return axios
-      .post(`${actionTypes.API_URL}/userdata/`, data)
+      .post(`${process.env.REACT_APP_API_URL}/userdata/`, data)
       .then((result) => {
         if (result.data.Status === 'Success') {
           dispatch(getUserInfoSuccess(result.data.data))
@@ -361,7 +362,7 @@ export const getUploadPortfolioList = () => {
     const clientKey = getState().auth.userInfo.client_key
 
     return axios
-      .get(`${actionTypes.API_URL}/portfolio/?is_full=True`, {
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/?is_full=True`, {
         headers: { 'client-key': clientKey },
       })
       .then((result) => {
@@ -507,7 +508,7 @@ export const getDownloadPortfolios = () => {
     const clientKey = getState().auth.userInfo.client_key
 
     return axios
-      .get(`${actionTypes.API_URL}/portfolio/?is_benchmark=False`, {
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/?is_benchmark=False`, {
         headers: {
           'client-key': clientKey,
         },
@@ -534,7 +535,7 @@ export const getDownloadDetails = (data) => {
     const clientKey = getState().auth.userInfo.client_key
 
     return axios
-      .post(`${actionTypes.API_URL}/emissions/platform`, data, {
+      .post(`${process.env.REACT_APP_API_URL}/emissions/platform`, data, {
         headers: {
           'client-key': clientKey,
         },
@@ -559,7 +560,7 @@ export const generateReport = (data) => {
   return async (dispatch, getState) => {
     const clientKey = getState().auth.userInfo.client_key
 
-    return axios.post(`${actionTypes.API_URL}/reports_new/full`, data, {
+    return axios.post(`${process.env.REACT_APP_API_URL}/reports_new/full`, data, {
       headers: {
         'client-key': clientKey,
       },
@@ -572,7 +573,7 @@ export const uploadPortfolioRequest = (data) => {
     const clientKey = getState().auth.userInfo.client_key
 
     return axios
-      .post(`${actionTypes.API_URL}/portfolio/`, data, {
+      .post(`${process.env.REACT_APP_API_URL}/portfolio/`, data, {
         headers: {
           'client-key': clientKey,
         },
@@ -599,7 +600,7 @@ export const changeEmail = (data) => {
     const clientKey = getState().auth.userInfo.client_key
 
     return axios
-      .post(`${actionTypes.API_URL}/accounts/change_primary_email`, data, {
+      .post(`${process.env.REACT_APP_API_URL}/accounts/change_primary_email`, data, {
         headers: {
           'client-key': clientKey,
         },
@@ -622,7 +623,7 @@ export const changePassword = (data) => {
     const clientKey = getState().auth.userInfo.client_key
 
     return axios
-      .post(`${actionTypes.API_URL}/accounts/change_password`, data, {
+      .post(`${process.env.REACT_APP_API_URL}/accounts/change_password`, data, {
         headers: {
           'client-key': clientKey,
         },
@@ -639,7 +640,7 @@ export const deletePortfolioRequest = (portfolios) => {
     const clientKey = getState().auth.userInfo.client_key
 
     return axios
-      .delete(`${actionTypes.API_URL}/portfolio/?portfolio_ids=${portfolios.join()}`, {
+      .delete(`${process.env.REACT_APP_API_URL}/portfolio/?portfolio_ids=${portfolios.join()}`, {
         headers: {
           'client-key': clientKey,
         },
@@ -697,7 +698,7 @@ export const getFixRate = (year,quarter) => {
     const clientKey = getState().auth.userInfo.client_key
 
     return axios
-      .get(`${actionTypes.API_URL}/currencies/?year=${year}&quarter=${quarter.slice(1,quarter.length)}`, {
+      .get(`${process.env.REACT_APP_API_URL}/currencies/?year=${year}&quarter=${quarter.slice(1,quarter.length)}`, {
         headers: {
           'client-key': clientKey,
         },

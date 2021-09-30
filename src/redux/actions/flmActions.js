@@ -5,7 +5,7 @@ export const getPortfolioAlignment = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/forward_looking_metrics/portfolio_alignment`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/portfolio_alignment`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -31,7 +31,7 @@ export const getTargetSetting = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/forward_looking_metrics/target_setting`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/target_setting`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -56,7 +56,7 @@ export const getCompanies = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/forward_looking_metrics/sectors/companies`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/sectors/companies`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -82,7 +82,7 @@ export const getCompanyProfileData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/forward_looking_metrics/company_profile`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/company_profile`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -108,7 +108,7 @@ export const getCarbonCompanies = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/forward_looking_metrics/carbon_adjusted_returns/available_companies_price`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/carbon_adjusted_returns/available_companies_price`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -134,7 +134,7 @@ export const getCarbonReturnsLineData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/forward_looking_metrics/carbon_adjusted_returns/linechart`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/carbon_adjusted_returns/linechart`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -159,7 +159,7 @@ export const getCarbonReturnsTableData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/forward_looking_metrics/carbon_adjusted_returns/table`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/carbon_adjusted_returns/table`, data, {
 				headers: {
 					'client-key': clientKey
 				}
