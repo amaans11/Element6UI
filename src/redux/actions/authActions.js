@@ -8,6 +8,7 @@ import {
   getDisclosureData,
   getPortfolioEmission,
   getSovereignFootprint,
+  getDownloadDetails
 } from './footprintActions'
 import { getScope3Data } from './scope3Actions'
 import {
@@ -530,32 +531,6 @@ export const getDownloadPortfoliosFailed = (error) => {
   return { type: actionTypes.GET_DOWNLOAD_PORTFOLIOS_FAILED, error }
 }
 
-export const getDownloadDetails = (data) => {
-  return async (dispatch, getState) => {
-    const clientKey = getState().auth.userInfo.client_key
-
-    return axios
-      .post(`${process.env.REACT_APP_API_URL}/emissions/platform`, data, {
-        headers: {
-          'client-key': clientKey,
-        },
-      })
-      .then((result) => {
-        dispatch(getDownloadDetailsSuccess(result.data.data))
-      })
-      .catch((err) => {
-        const error = err.response.data.message
-        dispatch(getDownloadDetailsFailed(error))
-      })
-  }
-}
-
-export const getDownloadDetailsSuccess = (res) => {
-  return { type: actionTypes.GET_DOWNLOAD_DETAILS_SUCCESS, res }
-}
-export const getDownloadDetailsFailed = (error) => {
-  return { type: actionTypes.GET_DOWNLOAD_DETAILS_FAILED, error }
-}
 export const generateReport = (data) => {
   return async (dispatch, getState) => {
     const clientKey = getState().auth.userInfo.client_key

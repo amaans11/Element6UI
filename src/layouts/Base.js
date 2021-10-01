@@ -70,10 +70,9 @@ import {
   getUploadPortfolioList,
   getDownloadPortfolios,
   setDownloadPortfolio,
-  setDownloadTags,
-  getDownloadDetails,
-  setEmissions,
+  setDownloadTags,  setEmissions,
 } from '../redux/actions/authActions'
+import {  getDownloadDetails} from '../redux/actions/footprintActions'
 import csvFile from '../assets/Dummy-file.xlsx'
 
 const drawerWidth = 295

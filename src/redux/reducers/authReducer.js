@@ -141,6 +141,14 @@ export default function authReducer(state = { ...intialState }, action) {
       return produce(state, (draft) => {
         draft.currentUser = {}
         draft.userInfo = {}
+        draft.verifyUserRes = {}
+        draft.portfolioList = []
+        draft.currentPortfolio = {}
+        draft.currentBenchmark = {}
+        draft.currentYear = ''
+        draft.currentQuarter = ''
+        draft.currentCurrency = ''
+        draft.loading = false
       })
     case types.GET_DOWNLOAD_PORTFOLIOS_SUCCESS:
       return produce(state, (draft) => {
@@ -169,14 +177,6 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.downloadPortfolioList = []
       })
 
-    case types.GET_DOWNLOAD_DETAILS_SUCCESS:
-      return produce(state, (draft) => {
-        draft.downloadData = action.res
-      })
-    case types.GET_DOWNLOAD_DETAILS_FAILED:
-      return produce(state, (draft) => {
-        draft.downloadData = []
-      })
     case types.UPLOAD_PORTFOLIO_SUCCESS:
       return produce(state, (draft) => {
         draft.uploadPortfolioRes.data = action.res

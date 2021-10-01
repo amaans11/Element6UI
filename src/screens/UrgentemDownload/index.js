@@ -14,8 +14,8 @@ import {get} from 'lodash'
 import SelectwithSearch from '../../components/Autocomplete'
 import {
   getDownloadPortfolios,
-  getDownloadDetails,
 } from '../../redux/actions/authActions'
+import {  getDownloadDetails} from '../../redux/actions/footprintActions'
 import DataTable from '../../components/Table/DataTable'
 
 function UrgentemDownload() {
@@ -32,8 +32,10 @@ function UrgentemDownload() {
 
   const isVisible = useSelector((state) => state.auth.isVisible)
   const auth = useSelector((state) => state.auth)
+  const downloadData  = useSelector((state) => state.footprint.downloadData)
 
-  const { downloadPortfolioList, downloadData, userInfo } = auth
+
+  const { downloadPortfolioList, userInfo } = auth
 
   const trial = get(userInfo,'Trial',false)
 
