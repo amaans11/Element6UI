@@ -25,7 +25,9 @@ class ErrorBoundary extends React.Component {
       if (this.state.hasError) {
         // You can render any custom fallback UI
         return <React.Fragment>
-            <h1>Something went wrong.</h1>
+            <h3>Sorry, something went wrong.
+                Please try to login again. If you still see this message please 
+                let us know by emailing technical-support@urgentem.net</h3>
         </React.Fragment>;
       }
   
