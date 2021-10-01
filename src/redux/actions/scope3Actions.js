@@ -5,7 +5,7 @@ export const getScope3Data = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/scope3_materiality/scope3_heatmap`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/scope3_materiality/scope3_heatmap`, data, {
 				headers: {
 					'client-key': clientKey
 				}

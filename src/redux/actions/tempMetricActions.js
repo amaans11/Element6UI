@@ -5,7 +5,7 @@ export const getTempScoreData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/portfolio_score/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/portfolio_score/`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -31,7 +31,7 @@ export const getSectoralTempScore = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/sectoral_temp_score/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/sectoral_temp_score/`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -57,7 +57,7 @@ export const getCompanyAnalysisData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/companies_score/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/companies_score/`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -84,7 +84,7 @@ export const getTempAttribution = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/attribution/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/attribution/`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -111,7 +111,7 @@ export const getHeatmapData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/heatmap/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/heatmap/`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -138,7 +138,7 @@ export const getContribAnalysis = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/contribution/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/contribution/`, data, {
 				headers: {
 					'client-key': clientKey
 				}

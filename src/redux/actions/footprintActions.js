@@ -5,7 +5,7 @@ export const getPortfolioEmission = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/portfolio_emissions`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/portfolio_emissions`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -30,7 +30,7 @@ export const getSovereignFootprint = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/sovereign_footprint`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/sovereign_footprint`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -55,7 +55,7 @@ export const getAvoidedEmissions = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/avoided_emissions`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/avoided_emissions`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -81,7 +81,7 @@ export const getDisclosureData = (data,type) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/disclosure`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/disclosure`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -108,7 +108,7 @@ export const getCarbonAttribution = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/carbon_attribution`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/carbon_attribution`, data, {
 				headers: {
 					'client-key': clientKey
 				}

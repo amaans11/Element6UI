@@ -21,7 +21,8 @@ function ColumnChart({ data, categories,chartKey,yAxisTitle,subtitle,isLegend,is
   const options = {
     chart: {
       type: "column",
-      height:550
+      height:550,
+      zoomType: 'xy'
     },
     title: {
       text: title,

@@ -5,7 +5,7 @@ export const getPortOptimizationData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_optimisation/optimisation`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_optimisation/optimisation`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -31,7 +31,7 @@ export const getPerformanceAttrData = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_optimisation/performance_attribution`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_optimisation/performance_attribution`, data, {
 				headers: {
 					'client-key': clientKey
 				}
