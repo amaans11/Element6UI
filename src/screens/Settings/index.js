@@ -43,7 +43,6 @@ import {
   updateUserInfo
 } from '../../redux/actions/authActions'
 
-const yearOptions = [2021,2020, 2019, 2018]
 const quarterOptions = ['Q1', 'Q2', 'Q3', 'Q4']
 
 const useStyles = makeStyles(() => ({
@@ -128,14 +127,32 @@ const Settings = () => {
   const [fundamentalQuarter, setFundamentalQuarter] = useState(get(userInfo.quarter, 'fundamentals', 'Q1'))
   const [fundamentalVersion, setFundamentalVersion] = useState(get(userInfo.version, 'fundamentals', '11'))
 
-  const updateCurrencyHandler = () => {
-    const data = {
-      year,
-      quarter,
-      currency,
+  const yearOptions = userInfo.allowed_years
+
+  const updateCurrencyHandler = async() => {
+    const data={
+      role: userInfo.role,
+      display_name: userInfo.display_name,
+      user_name: userInfo.user_name,  // should be unique
+      year: {
+        emissions: emissionYear,
+        fundamentals: fundamentalYear,
+        currency:year
+      },
+      quarter: {
+        emissions: emissionQuarter,
+        fundamentals: fundamentalQuarter,
+        currency:quarter
+      },
+      version: {
+        emissions: emissionVersion,
+        fundamentals: fundamentalVersion,
+        display_currency:currency,
+
+      },
     }
-    dispatch(updateCurrency(data))
-	dispatch(getFixRate(year,quarter))
+    await dispatch(updateUserInfo(data))
+	  await dispatch(getFixRate(year,quarter))
   }
   const deletePortfolioHandler = () => {
     setDialog(true)
@@ -558,6 +575,7 @@ const Settings = () => {
                         setEmissionQuarter(e.target.value)
                       }
                     }
+                    disabled
                   >
                     {quarterOptions.map((quarter) => (
                       <MenuItem value={quarter}>{quarter}</MenuItem>
@@ -583,6 +601,7 @@ const Settings = () => {
                         setEmissionVersion(e.target.value)
                       }
                     }
+                    disabled
                     
                   >
                     <MenuItem value="11">11</MenuItem>
@@ -660,6 +679,7 @@ const Settings = () => {
                         setFundamentalQuarter(e.target.value)
                       }
                     }
+                    disabled
                   >
                     {quarterOptions.map((quarter) => (
                       <MenuItem value={quarter}>{quarter}</MenuItem>
@@ -685,6 +705,8 @@ const Settings = () => {
                         setFundamentalVersion(e.target.value)
                       }
                     }
+                    disabled
+
                   >
                     <MenuItem value="11">11</MenuItem>
                     <MenuItem value="12">12</MenuItem>
@@ -739,9 +761,6 @@ const Settings = () => {
         <React.Fragment>
           <Box ml={2} mr={2}>
           <Typography>Please enter your new email.</Typography>
-          <Typography style={{ color: '#1890ff', fontSize: 13 }}>
-            Note : The entered email must be different from the current email.
-          </Typography>
         </Box>
         <Box m={2}>
           <Grid container>

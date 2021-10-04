@@ -13,8 +13,9 @@ import Login from './screens/auth/Login'
 import Base from './layouts/Base'
 import Settings from './screens/Settings'
 import UpdatePassword from './screens/UpdatePassword'
+import VerificationCode from './screens/VerificationCode'
 import Admin from './screens/Admin'
-import { setLoading,getAccessToken, logoutUser,changePasswordRequest } from './redux/actions/authActions'
+import { setLoading,getAccessToken, logoutUser,changePasswordRequest,updateVerificationCode } from './redux/actions/authActions'
 import * as actionTypes from './redux/actionTypes'
 
 // React notifications css import
@@ -133,6 +134,9 @@ axios.interceptors.response.use(
       store.dispatch(changePasswordRequest())
       NotificationManager.error("Please change the password ! ")
     }
+    if(error.response.status === 403 && error.response.data.type === 'verification_required' ){
+      store.dispatch(updateVerificationCode())
+    }
     store.dispatch(setLoading(false))
     return Promise.reject(error)
   },
@@ -150,7 +154,7 @@ function App() {
               <Route exact path="/login" component={Login} />
               <AuthenticatedRoute path="/settings" exact component={Settings} />
               <AuthenticatedRoute path="/update-password" exact component={UpdatePassword} />
-              <AuthenticatedRoute path="/admin" exact component={Admin} />
+              <AuthenticatedRoute path="/verification-code" exact component={VerificationCode} />              <AuthenticatedRoute path="/admin" exact component={Admin} />
               <AuthenticatedRoute path="/" component={Base} />
             </Switch>
           </div>

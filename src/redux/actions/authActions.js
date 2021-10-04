@@ -287,6 +287,9 @@ export const signinUser = (data) => {
         }
         await dispatch(signinUserSuccess(userDetails))
         localStorage.setItem('auth',result.data.currentUser)
+        if(result.data.warning){
+          NotificationManager.warning(result.data.warning)
+        }
         history.push('/')
       })
       .catch(err=>{
@@ -678,6 +681,13 @@ export const changePassword = (data) => {
           'Authorization': `Bearer ${accessToken}`,
         },
       })
+      .then(async (result) => {
+      })
+      .catch(err=>{
+        const error=err.response && err.response.data.message
+        throw new Error(error)
+      })
+
       
   }
 }
@@ -796,6 +806,14 @@ export const changePasswordRequest = () => {
     window.location.reload()
   }
 }
+export const updateVerificationCode = () => {
+  return async (dispatch, getState) => {
+    history.push("/verification-code")
+    window.location.reload()
+  }
+}
+
+
 
 
 
