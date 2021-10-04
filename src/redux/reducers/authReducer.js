@@ -149,6 +149,8 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.currentQuarter = ''
         draft.currentCurrency = ''
         draft.loading = false
+        draft.filterItem = {}
+        draft.downloadPortfolioList = []
       })
     case types.GET_DOWNLOAD_PORTFOLIOS_SUCCESS:
       return produce(state, (draft) => {
