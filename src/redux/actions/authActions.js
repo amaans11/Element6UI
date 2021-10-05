@@ -435,13 +435,13 @@ export const setFilterItemSuccess = (res) => {
 export const setLogin = () => {
   return async (dispatch) => {
     history.push('/login')
-    const version = localStorage.getItem('version')
-    localStorage.setItem('version',parseInt(version) + 1)
+    localStorage.setItem('version',process.env.REACT_APP_VERSION)
   }
 }
 export const setTabValue = (value) => {
   return async (dispatch) => {
     dispatch(setTabValueSuccess(value))
+    window.location.reload()
   }
 }
 
@@ -452,6 +452,7 @@ export const setTabValueSuccess = (res) => {
 export const setModule = (value) => {
   return async (dispatch) => {
     dispatch(setModuleSuccess(value))
+    window.location.reload()
   }
 }
 

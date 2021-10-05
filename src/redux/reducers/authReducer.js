@@ -151,6 +151,8 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.loading = false
         draft.filterItem = {}
         draft.downloadPortfolioList = []
+        draft.uploadPortfolioRes = {}
+        draft.portfolioTableRes = []
       })
     case types.GET_DOWNLOAD_PORTFOLIOS_SUCCESS:
       return produce(state, (draft) => {
