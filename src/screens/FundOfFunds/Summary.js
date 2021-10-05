@@ -7,6 +7,7 @@ import { getSummary } from '../../redux/actions/fundOfFundActions'
 import { Grid } from '@material-ui/core'
 import DataTable from '../../components/Table/DataTable';
 import {summaryCells} from '../../util/TableHeadConfig'
+import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
 
 const Summary = () => {
   const dispatch = useDispatch()
@@ -54,19 +55,14 @@ const Summary = () => {
   }
   const getData=()=>{
     const data = summary.data
-    let chartData = [
-        {
-          name: 'Funds',
-          data: [],
-        },
-      ]    
+    let chartData = []   
     let tableData=[]
 
     if(data && data.length > 0)
     data.map(port=>{
-        chartData[0]['data'].push({
+        chartData.push({
             name:port.name,
-            y:port.weight
+            data:[port.weight]
         })
         tableData.push({
             name:port.name,
@@ -75,6 +71,7 @@ const Summary = () => {
             fundamentals:port.coverage_fundamentals[0].coverage,
         })
     })
+    console.log("chartData",chartData)
     setChartData(chartData)
     setTableData(tableData)
   }
@@ -96,9 +93,10 @@ const Summary = () => {
         <Box>
             <Grid container>
                 <Grid item xs={6}>
-                <PieChart
+                <HorizontalBar
                 chartKey="SUMMARY"
                 data={chartData}
+                
               />
                 </Grid>
                 <Grid item xs={6} style={{marginTop:10}}>

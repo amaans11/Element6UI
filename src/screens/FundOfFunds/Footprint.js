@@ -88,8 +88,6 @@ const Alignment = () => {
               ]
           })
         }
-        console.log("stackedCol",JSON.stringify(stackedCol))
-        console.log("categories",JSON.stringify(categories))
 
         setPieChartData(pieChartData)
         setStackedChartData(stackedChartData)

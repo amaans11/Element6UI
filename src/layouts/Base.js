@@ -213,6 +213,8 @@ const MiniDrawer = ({ classes, history }) => {
   const [description, setDescription] = useState('')
   const [isBenchmark, setBenchmarkValue] = useState(false)
   const [fundOfFunds,setFundOfFunds] = useState(false)
+  const [rebalance,setRebalance] = useState(false)
+
 
   const dispatch = useDispatch()
   const inputRef = useRef(null)
@@ -342,6 +344,7 @@ const MiniDrawer = ({ classes, history }) => {
     data.append('currency', 'USD')
     data.append('description', description)
     data.append('is_benchmark', isBenchmark)
+    data.append('auto_rebalance', rebalance)
 
     try {
       await dispatch(uploadPortfolioRequest(data,fundOfFunds))
@@ -421,7 +424,7 @@ const MiniDrawer = ({ classes, history }) => {
                       currentValue={currentPortfolio}
                     />
                   </Box>
-                  <Box mt={2}>
+                  {window.location.pathname !== '/fund-of-funds' && <Box mt={2}>
                     <SelectwithSearch
                       heading={'Select Benchmark'}
                       data={
@@ -432,7 +435,7 @@ const MiniDrawer = ({ classes, history }) => {
                       type="benchmark"
                       currentValue={currentBenchmark}
                     />
-                  </Box>
+                  </Box>}
                 </Box>
                 <div className="filter-part">
                   <FilterGroup />
@@ -707,6 +710,12 @@ const MiniDrawer = ({ classes, history }) => {
             </Grid>
           </Grid>
           <Grid container>
+            <Grid item xs={3}>
+              <InputLabel style={{ paddingTop: 10 }}>Rebalance Portfolio Weights</InputLabel>
+            </Grid>
+            <Grid item xs={3}>
+               <Checkbox checked={rebalance} onChange={(e)=>{setRebalance(e.target.checked)}} />
+            </Grid>
             <Grid item xs={3}>
               <InputLabel style={{ paddingTop: 10 }}>Fund Of Funds</InputLabel>
             </Grid>

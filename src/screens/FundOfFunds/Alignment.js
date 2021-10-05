@@ -34,7 +34,7 @@ const Alignment = () => {
  
   const getChildrenIds = ()=>{
     let childrenIds=[]
-    let result = []
+    let result = [currentPortfolio.value]
     if(allPortfolios && allPortfolios.length > 0){
         allPortfolios.map(portfolio=>{
             if(portfolio.portfolio_id === currentPortfolio.value ){
@@ -62,6 +62,17 @@ const Alignment = () => {
     delete requestData.version_benchmark
 
     await dispatch(getAlignment(requestData))
+  }
+    const getPortfolioName = id=>{
+      let portName = ''
+        if(allPortfolios && allPortfolios.length > 0){
+            allPortfolios.map(portfolio=>{
+                if(portfolio.portfolio_id == id){
+                    portName = portfolio.name
+                }
+            })
+        }
+        return portName
   }
   const getChartData = () => {
     let alignmentData = alignment['data']
@@ -121,11 +132,17 @@ const Alignment = () => {
     if(alignmentData['Children_Dots'] &&  Object.keys(alignmentData['Children_Dots'].length > 0)){
         Object.keys(alignmentData['Children_Dots']).map(el=>{
             chartData.push({
-                name:el,
-                data:[alignmentData['Children_Dots'][el]]
-            }
+                name:getPortfolioName(el),
+                data: [
+                  [
+                    Date.UTC(2020, '01', '01'),
+                    alignmentData['Children_Dots'][el],
+                    ],
+                ],
+              }
         )})
     }
+    console.log("chartData>>",chartData)
 
     setLineChartData(chartData)
     }
