@@ -283,7 +283,7 @@ export const signinUser = (data) => {
       .then(async (result) => {
         if (result.data.success) {
           await dispatch(signinUserSuccess(result.data))
-          localStorage.setItem('auth',process.env.REACT_APP_VERSION)
+          localStorage.setItem('auth',true)
           history.push('/')
         } else {
           const error = result.data.message
