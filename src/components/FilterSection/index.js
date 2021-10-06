@@ -49,6 +49,7 @@ const filterRes = {
   Eq: 'Equity',
   CB: 'Corporate Bonds',
   EqCB: 'Equity + Corporate Bonds',
+  Loan:'Loan',
   Avg: 'Average',
   Max: 'Maximum',
   Sc12: 'Scope 1+2',
@@ -58,7 +59,6 @@ const filterRes = {
   matSector: 'Sector',
   momentum: 'Carbon Momentum',
   emissions_reduction: 'Emissions Reduction',
-
   '5Y': '5 Years',
   '3Y': '3 Years',
   '1Y': '1 Year',
@@ -224,7 +224,6 @@ export default function FilterGroup() {
             config = filterConfig['CONTRIB_ANALYSIS']
             break
           case 5:
-            console.log('test')
             config = filterConfig['HEATMAP']
             break
           default:
@@ -285,8 +284,6 @@ export default function FilterGroup() {
             break
         }
     }
-    console.log('test', config)
-
     setConfigs(config)
   }
   const getEmission = (tagName) => {
@@ -453,6 +450,34 @@ export default function FilterGroup() {
 
   const updateTags = (grpindex, tagindex, selected, grpKey) => {
     const newData = [...data]
+    const grpName = newData[grpindex].grpKey
+
+    if(grpName == 'assetClass'){
+      let assetValues = filterItem[grpName]
+
+      const currentValue = newData[grpindex].tagsList[tagindex].value
+
+      if(selected){
+          assetValues= [...assetValues , currentValue]
+          dispatch(
+            setFilterItem({
+              key: grpName,
+              value:assetValues,
+            }),
+          )
+      }
+      else{
+        let values = assetValues.filter(value=> value !== currentValue)
+        dispatch(
+          setFilterItem({
+            key: grpName,
+            value:values,
+          }),
+        )
+      }
+      
+      return;
+    }
     if (selected) {
       // eslint-disable-next-line
       newData[grpindex].tagsList.map((tags) => {
@@ -460,8 +485,6 @@ export default function FilterGroup() {
       })
       newData[grpindex].tagsList[tagindex].selected = selected
       setFilterData(newData)
-
-      const grpName = newData[grpindex].grpKey
 
       setExpand({
         ...isExpand,
@@ -528,6 +551,16 @@ export default function FilterGroup() {
       [key]: !value,
     })
   }
+  const getAssetDetails = (assets)=>{
+    let result=''
+    if(assets && assets.length > 0){
+      assets.map(asset=>{
+        result = result ? `${result},${filterRes[asset]}` : filterRes[asset]
+      })
+    }
+    return result;
+
+  }
   const currentTheme = localStorage.getItem('appTheme') || 'basic'
 
   return (
@@ -572,7 +605,9 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      {e.grpKey === 'returnYear'
+                      {e.grpKey === 'assetClass' ? 
+                        getAssetDetails(filterItem[e.grpKey])
+                      : e.grpKey === 'returnYear'
                         ? returnYearRes[filterItem[e.grpKey]]
                         : e.grpKey === 'scenario'
                         ? tempMetric[filterItem[e.grpKey]]
@@ -585,7 +620,26 @@ export default function FilterGroup() {
                         const val = getEmission(t.value)
                         const fpValue = getFootprintMetric(t.value)
                         const warmingScValue = getWarmingScenario(t.value)
-                        if (e.grpKey === 'emission') {
+
+                        if(e.grpKey === 'assetClass'){
+                          return (
+                            <FilterTags
+                              name={t.name}
+                              selected={filterItem[e.grpKey].includes(t.value)}
+                              grpindex={index}
+                              tagindex={i}
+                              action={(grpindex, tagindex, selected) =>
+                                updateTags(
+                                  grpindex,
+                                  tagindex,
+                                  selected,
+                                  e.grpKey,
+                                )
+                              }
+                            />
+                          )
+                        }
+                        else if (e.grpKey === 'emission') {
                           if (val) {
                             return (
                               <FilterTags
@@ -684,7 +738,7 @@ export default function FilterGroup() {
                       (tabValue === 1 || tabValue === 2))
                   }
                   expanded={
-                    isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
+                    e.grpKey === 'assetClass' ? false : isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
                   }
                   onChange={() => {
                     handleExpandAccordion(e.grpKey)
@@ -713,7 +767,7 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      {e.grpKey === 'footprintMetric' &&
+                      {e.grpKey === 'assetClass' ? 'Equity,Corporate Bonds' : e.grpKey === 'footprintMetric' &&
                       filterItem.approach === 'MarketShare' &&
                       (tabValue === 1 || tabValue === 2)
                         ? 'Total Carbon Emissions'

@@ -8,6 +8,7 @@ import {
   getDisclosureData,
   getPortfolioEmission,
   getSovereignFootprint,
+  getDownloadDetails
 } from './footprintActions'
 import { getScope3Data } from './scope3Actions'
 import {
@@ -44,6 +45,7 @@ const requestApi = async (dispatch, auth, flm) => {
   const companyData = flm.companyData
 
   let data = {}
+
 
   switch (moduleName) {
     case 'Emissions':
@@ -303,10 +305,11 @@ export const signinUserSuccess = (currentUser) => {
   return { type: actionTypes.SIGNIN_USER_SUCCESS, currentUser }
 }
 
+
 export const verifyUser = (data) => {
   return async (dispatch) => {
     return axios
-      .post(`${actionTypes.API_URL}/accounts/reset_password`, data)
+      .post(`${process.env.REACT_APP_API_URL}/accounts/reset_password`, data)
       .then((result) => {
         if (result.data.success) {
           dispatch(verifyUserSuccess(result.data))
@@ -329,7 +332,7 @@ export const getPortfolioList = (client) => {
       'Authorization': `Bearer ${accessToken}`,
     }
     return axios
-      .get(`${actionTypes.API_URL}/portfolio/`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/`, { headers: headers })
       .then((result) => {
         dispatch(getPortfolioListSuccess(result.data))
       })
@@ -385,10 +388,15 @@ export const getUploadPortfolioList = () => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
+<<<<<<< HEAD
       .get(`${actionTypes.API_URL}/portfolio/?is_full=True`, {
         headers: { 
           'Authorization': `Bearer ${accessToken}`,
          },
+=======
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/?is_full=True`, {
+        headers: { 'client-key': clientKey },
+>>>>>>> aee81228e98273a4dd7534383d5c0198fffc4215
       })
       .then((result) => {
         dispatch(getUploadPortfolioListSuccess(result.data))
@@ -456,18 +464,26 @@ export const setFilterItem = (data) => {
 export const setFilterItemSuccess = (res) => {
   return { type: actionTypes.SET_FILTER_ITEM, res }
 }
+export const setLogin = () => {
+  return async (dispatch) => {
+    history.push('/login')
+    localStorage.setItem('version',process.env.REACT_APP_VERSION)
+  }
+}
 export const setTabValue = (value) => {
   return async (dispatch) => {
     dispatch(setTabValueSuccess(value))
   }
 }
 
+
 export const setTabValueSuccess = (res) => {
   return { type: actionTypes.SET_TAB_SUCCESS, res }
 }
 export const setModule = (value) => {
   return async (dispatch) => {
-    dispatch(setModuleSuccess(value))
+    await dispatch(setModuleSuccess(value))
+    window.location.reload()
   }
 }
 
@@ -538,7 +554,7 @@ export const getDownloadPortfolios = () => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .get(`${actionTypes.API_URL}/portfolio/?is_benchmark=False`, {
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/?is_benchmark=False`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -560,37 +576,11 @@ export const getDownloadPortfoliosFailed = (error) => {
   return { type: actionTypes.GET_DOWNLOAD_PORTFOLIOS_FAILED, error }
 }
 
-export const getDownloadDetails = (data) => {
-  return async (dispatch, getState) => {
-    const accessToken = getState().auth.currentUser.access_token
-
-    return axios
-      .post(`${actionTypes.API_URL}/emissions/platform`, data, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      })
-      .then((result) => {
-        dispatch(getDownloadDetailsSuccess(result.data.data))
-      })
-      .catch((err) => {
-        const error = err.response.data.message
-        dispatch(getDownloadDetailsFailed(error))
-      })
-  }
-}
-
-export const getDownloadDetailsSuccess = (res) => {
-  return { type: actionTypes.GET_DOWNLOAD_DETAILS_SUCCESS, res }
-}
-export const getDownloadDetailsFailed = (error) => {
-  return { type: actionTypes.GET_DOWNLOAD_DETAILS_FAILED, error }
-}
 export const generateReport = (data) => {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.currentUser.access_token
 
-    return axios.post(`${actionTypes.API_URL}/reports_new/full`, data, {
+    return axios.post(`${process.env.REACT_APP_API_URL}/reports_new/full`, data, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       },
@@ -603,7 +593,7 @@ export const uploadPortfolioRequest = (data) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .post(`${actionTypes.API_URL}/portfolio/`, data, {
+      .post(`${process.env.REACT_APP_API_URL}/portfolio/`, data, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -696,7 +686,7 @@ export const deletePortfolioRequest = (portfolios) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .delete(`${actionTypes.API_URL}/portfolio/?portfolio_ids=${portfolios.join()}`, {
+      .delete(`${process.env.REACT_APP_API_URL}/portfolio/?portfolio_ids=${portfolios.join()}`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -754,7 +744,7 @@ export const getFixRate = (year,quarter) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .get(`${actionTypes.API_URL}/currencies/?year=${year}&quarter=${quarter.slice(1,quarter.length)}`, {
+      .get(`${process.env.REACT_APP_API_URL}/currencies/?year=${year}&quarter=${quarter.slice(1,quarter.length)}`, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },

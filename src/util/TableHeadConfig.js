@@ -481,13 +481,13 @@ const companyAnalysisCells = [
 		right: true
 	},
 	{
-		name: <div><div>Ownership</div><div>Percentage (°C)</div></div>,
+		name: <div>Ownership Percentage</div>,
 		selector: 'ownership_percentage',
 		sortable: true,
 		right: true
 	},
 	{
-		name: <div><div>Portfolio Percentage</div><div>(°C)</div></div>,
+		name: <div>Portfolio Percentage</div>,
 		selector: 'portfolio_percentage',
 		sortable: true,
 		right: true

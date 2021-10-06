@@ -5,7 +5,7 @@ export const getRiskContributorData = (data) => {
 	return async (dispatch, getState) => {
 		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_carbon_risk/portfolio_risk_contributors`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_carbon_risk/portfolio_risk_contributors`, data, {
 				headers: {
 					'Authorization': `Bearer ${accessToken}`,
 				}

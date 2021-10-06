@@ -33,7 +33,7 @@ const customStyles = {
   },
   cells: {
     style: {
-      lineHeight: 2,
+      lineHeight: 1,
       fontSize: 12,
     },
   },

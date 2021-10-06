@@ -27,7 +27,7 @@ const CompanyAnalysis = () => {
 
 	const companyData = useSelector((state) => state.tempMetric.companyData);
 	const auth = useSelector((state) => state.auth);
-	const { loading,filterItem,userInfo } = auth;
+	const { loading,filterItem,userInfo,currentCurrency } = auth;
 	const {emission}=filterItem;
 	const trial = get(userInfo,'Trial',false)
 
@@ -98,9 +98,9 @@ const CompanyAnalysis = () => {
 						chartKey="COMPANY_ANALYSIS"
 						data={chartData}
 						xAxisLabel="Temperature Score"
-						yAxisLabel="S1+2 GHG Emissions(tCO2e)"
+						yAxisLabel={`${emissionLabel} GHG Emissions (tCO2)`}
 						zAxisLabel="Weight"
-						yAxisTitle={`${emissionLabel} GHG Emissions (tCo2e)`}
+						yAxisTitle={`${emissionLabel} GHG Emissions (tCO2)`}
 						isExportEnabled={!trial}
 					/>
 					<DataTable data={tableData} columns={companyAnalysisCells} tableHeading="COMPANY_ANALYSIS" />

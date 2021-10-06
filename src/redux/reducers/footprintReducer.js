@@ -7,7 +7,8 @@ const intialState = {
 	avoidedEmission: {},
 	portDisclosure: {},
 	benchDisclosure: {},
-	carbonAttribution:{}
+	carbonAttribution:{},
+	downloadData:[]
 };
 export default function footprintReducer(state = intialState, action) {
 	switch (action.type) {
@@ -71,6 +72,15 @@ export default function footprintReducer(state = intialState, action) {
 				draft.carbonAttribution.data = {};
 				draft.carbonAttribution.error = action.error;
 			});
+
+		case types.GET_DOWNLOAD_DETAILS_SUCCESS:
+			return produce(state, (draft) => {
+				  draft.downloadData = action.res
+			})
+		case types.GET_DOWNLOAD_DETAILS_FAILED:
+			return produce(state, (draft) => {
+				  draft.downloadData = []
+			})
 		default:
 			return state;
 	}

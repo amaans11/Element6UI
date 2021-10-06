@@ -5,7 +5,7 @@ export const getScope3Data = (data) => {
 	return async (dispatch, getState) => {
 		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.API_URL}/scope3_materiality/scope3_heatmap`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/scope3_materiality/scope3_heatmap`, data, {
 				headers: {
 					'Authorization': `Bearer ${accessToken}`,
 				}

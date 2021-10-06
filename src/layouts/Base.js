@@ -27,7 +27,8 @@ import {
   FormControlLabel,
   Accordion,
   AccordionDetails,
-  AccordionSummary,} from '@material-ui/core'
+  AccordionSummary,
+  Checkbox} from '@material-ui/core'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import FilterTags from '../components/FilterSection/tags'
 import CustomSwitch from '@material-ui/core/Switch'
@@ -69,10 +70,9 @@ import {
   getUploadPortfolioList,
   getDownloadPortfolios,
   setDownloadPortfolio,
-  setDownloadTags,
-  getDownloadDetails,
-  setEmissions,
+  setDownloadTags,  setEmissions,
 } from '../redux/actions/authActions'
+import {  getDownloadDetails} from '../redux/actions/footprintActions'
 import csvFile from '../assets/Dummy-file.xlsx'
 import { ContactSupportOutlined } from '@material-ui/icons'
 
@@ -211,6 +211,7 @@ const MiniDrawer = ({ classes, history }) => {
   const [missingCoverage, setMissingCoverage] = useState({})
   const [description, setDescription] = useState('')
   const [isBenchmark, setBenchmarkValue] = useState(false)
+  const [rebalance,setRebalance] = useState(false)
 
   const dispatch = useDispatch()
   const inputRef = useRef(null)
@@ -307,7 +308,6 @@ const MiniDrawer = ({ classes, history }) => {
     await dispatch(setBenchmark(benchmark))
   }
   const setDefaultTab = async (e) => {
-    console.log('test')
     if (e.name === 'Scope3') {
       await dispatch(setEmissions())
     }
@@ -344,6 +344,8 @@ const MiniDrawer = ({ classes, history }) => {
     data.append('currency', 'USD')
     data.append('description', description)
     data.append('is_benchmark', isBenchmark)
+    data.append('auto_rebalance', rebalance)
+  
 
     try {
       await dispatch(uploadPortfolioRequest(data))
@@ -704,6 +706,15 @@ const MiniDrawer = ({ classes, history }) => {
                   />
                 </Box>
               </RadioGroup>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={3}>
+              <InputLabel style={{ paddingTop: 10 }}>Rebalance Portfolio Weights</InputLabel>
+            </Grid>
+            <Grid item xs={3}>
+             
+               <Checkbox checked={rebalance} onChange={(e)=>{setRebalance(e.target.checked)}} />
             </Grid>
           </Grid>
         </DialogContent>

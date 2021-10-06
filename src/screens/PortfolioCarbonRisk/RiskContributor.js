@@ -98,7 +98,6 @@ const RiskContributor = () => {
 		setTableData(tableData);
 		setChartData(chartData);
 	};
-	console.log("chartData",chartData)
 	return (
 		<React.Fragment>
 			{loading ? <CircularProgress /> : riskContribData.error ? (

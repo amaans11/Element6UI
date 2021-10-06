@@ -72,8 +72,6 @@ const Header = ({ history }) => {
 	const handleLogout=()=>{
 		dispatch(logoutUser())
 	}
-	console.log("currencyFixRate",auth.currencyFixRate)
-
 	return (
 		<AppBar position="fixed" className={classes.appBar}>
 			<Toolbar disableGutters={true}>

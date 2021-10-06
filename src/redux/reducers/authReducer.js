@@ -30,15 +30,15 @@ export default function authReducer(state = { ...intialState }, action) {
     case types.SIGNIN_USER_SUCCESS:
       return produce(state, (draft) => {
         draft.currentUser = action.currentUser
-        draft.currentYear = '2020'
-        draft.currentQuarter = 'Q1'
+        draft.currentYear = '2021'
+        draft.currentQuarter = 'Q2'
         draft.currentCurrency = 'USD'
 		    draft.selectedDownloadMenu =['summary']
         draft.filterItem = {
           sector: 'SASB',
           footprintMetric: 'WeightAvgRev',
           marketValue: 'MarketCap',
-          assetClass: 'EqCB',
+          assetClass: ["Eq", "CB"],
           inferenceType: 'Avg',
           emission: 'Sc12',
           aggregation: 'WATS',
@@ -142,6 +142,18 @@ export default function authReducer(state = { ...intialState }, action) {
       return produce(state, (draft) => {
         draft.currentUser = {}
         draft.userInfo = {}
+        draft.verifyUserRes = {}
+        draft.portfolioList = []
+        draft.currentPortfolio = {}
+        draft.currentBenchmark = {}
+        draft.currentYear = ''
+        draft.currentQuarter = ''
+        draft.currentCurrency = ''
+        draft.loading = false
+        draft.filterItem = {}
+        draft.downloadPortfolioList = []
+        draft.uploadPortfolioRes = {}
+        draft.portfolioTableRes = []
       })
     case types.GET_DOWNLOAD_PORTFOLIOS_SUCCESS:
       return produce(state, (draft) => {
@@ -170,14 +182,6 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.downloadPortfolioList = []
       })
 
-    case types.GET_DOWNLOAD_DETAILS_SUCCESS:
-      return produce(state, (draft) => {
-        draft.downloadData = action.res
-      })
-    case types.GET_DOWNLOAD_DETAILS_FAILED:
-      return produce(state, (draft) => {
-        draft.downloadData = []
-      })
     case types.UPLOAD_PORTFOLIO_SUCCESS:
       return produce(state, (draft) => {
         draft.uploadPortfolioRes.data = action.res

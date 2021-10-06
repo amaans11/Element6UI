@@ -17,6 +17,7 @@ import VerificationCode from './screens/VerificationCode'
 import Admin from './screens/Admin'
 import { setLoading,getAccessToken, logoutUser,changePasswordRequest,updateVerificationCode } from './redux/actions/authActions'
 import * as actionTypes from './redux/actionTypes'
+import ErrorBoundary from './screens/ErrorBoundary'
 
 // React notifications css import
 import 'react-notifications/lib/notifications.css'
@@ -26,6 +27,8 @@ import { NotificationManager } from 'react-notifications'
 require('highcharts/modules/exporting')(Highcharts)
 require('highcharts/modules/heatmap')(Highcharts)
 require('highcharts/modules/export-data')(Highcharts)
+require('dotenv').config()
+
 
 more(Highcharts)
 
@@ -39,8 +42,6 @@ axios.defaults.headers.get['x-api-key'] =
   '_yF0FT6hgogJxSF1G0sAl3d9d4pQwxhuiRSS8FxAWb8'
 
 const currentTheme = localStorage.getItem('appTheme') || 'basic'
-
-console.log("store",store.getState())
 
 Highcharts.theme = {
   colors:
@@ -116,8 +117,8 @@ axios.interceptors.request.use(
 
 // Add a response interceptor
 axios.interceptors.response.use(
-  function (response) {  
-    if (response.config.url !== `${actionTypes.API_URL}/portfolio/`) {
+  async function (response) {
+    if (response.config.url !== `${process.env.REACT_APP_API_URL}/portfolio/`) {
       store.dispatch(setLoading(false))
     }    
     return response
@@ -145,11 +146,21 @@ axios.interceptors.response.use(
 function App() {
   Highcharts.setOptions(Highcharts.theme)
 
+  const version = localStorage.getItem('version')
+
+  if(!version){
+    localStorage.setItem('version',0)
+  }
+  if(process.env.REACT_APP_VERSION != version){
+    store.dispatch(setLogin())
+  }
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <BrowserRouter>
           <div>
+          <ErrorBoundary>
             <Switch>
               <Route exact path="/login" component={Login} />
               <AuthenticatedRoute path="/settings" exact component={Settings} />
@@ -157,6 +168,7 @@ function App() {
               <AuthenticatedRoute path="/verification-code" exact component={VerificationCode} />              <AuthenticatedRoute path="/admin" exact component={Admin} />
               <AuthenticatedRoute path="/" component={Base} />
             </Switch>
+          </ErrorBoundary>
           </div>
         </BrowserRouter>
         <NotificationContainer />

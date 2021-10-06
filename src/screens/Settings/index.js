@@ -101,9 +101,9 @@ const Settings = () => {
   const { userInfo } = auth
   let currentUser = auth && auth.currentUser ? auth.currentUser : {}
 
-  const currentYear = get(auth, 'currentYear', 2020)
+  const currentYear = get(auth, 'currentYear', 2021)
   const currentCurrency = get(auth, 'currentCurrency', 'USD')
-  const currentQuarter = get(auth, 'currentQuarter', 'Q1')
+  const currentQuarter = get(auth, 'currentQuarter', 'Q2')
 
   const [year, setYear] = useState(currentYear)
   const [quarter, setQuarter] = useState(currentQuarter)
