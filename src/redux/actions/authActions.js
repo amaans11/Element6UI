@@ -441,7 +441,6 @@ export const setLogin = () => {
 export const setTabValue = (value) => {
   return async (dispatch) => {
     dispatch(setTabValueSuccess(value))
-    window.location.reload()
   }
 }
 
@@ -451,7 +450,7 @@ export const setTabValueSuccess = (res) => {
 }
 export const setModule = (value) => {
   return async (dispatch) => {
-    dispatch(setModuleSuccess(value))
+    await dispatch(setModuleSuccess(value))
     window.location.reload()
   }
 }
