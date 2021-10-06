@@ -5,6 +5,7 @@ import { Box, CircularProgress } from '@material-ui/core'
 import PieChart from '../../components/ChartsComponents/PieChart'
 import StackedBar from '../../components/ChartsComponents/StackedBar'
 import StackedColumn from '../../components/ChartsComponents/StackedColumn'
+import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
 import { getAlignment, getFootprint, getSummary } from '../../redux/actions/fundOfFundActions'
 import { Grid } from '@material-ui/core'
 import DataTable from '../../components/Table/DataTable';
@@ -23,6 +24,9 @@ const Alignment = () => {
   const [stackedChartData,setStackedChartData] = useState([])
   const [stackedColChartData,setStackedColChartData] = useState([])
   const [categories,setCategories] = useState([])
+  const [yAxisTitle,setYAxisTitle] = useState("")
+  const [parentData,setParentData] = useState("")
+  const [parentCategories,setParentCategories] = useState("")
 
   useEffect(() => {
     fetchDetails()
@@ -44,6 +48,7 @@ const Alignment = () => {
   }
   const getChartData =()=>{
       if(footprint && Object.keys(footprint).length > 0 ){
+        setYAxisTitle(footprint.data.chart_name)
         const footprintData = footprint.data.data
         let pieChartData = [
           {
@@ -54,9 +59,13 @@ const Alignment = () => {
         let stackedChartData=[]
         let categories = []
         let stackedCol = []
+        let parentCategories=[]
+        let parentData=[]
+
   
         if(footprintData && Object.keys(footprintData).length > 0){
-          Object.keys(footprintData).map(id=>{
+          Object.keys(footprintData).map((id,index)=>{
+              if(id !== currentPortfolio.value){
               const footprint = inferenceType == 'Avg' ? footprintData[id]['Footprint'][0]['Avg'] : 
               footprintData[id]['Footprint'][1]['Max']
               const weight = footprintData[id]['Weight']
@@ -86,6 +95,28 @@ const Alignment = () => {
                       data:values
                   }
               ]
+            }
+            else{
+              const footprint = inferenceType == 'Avg' ? footprintData[id]['Footprint'][0]['Avg'] : 
+              footprintData[id]['Footprint'][1]['Max']
+
+              const intensity = footprint['Sector_Intensity']
+              let values =[]
+
+              Object.keys(intensity).map(el=>{
+                values.push(intensity[el][emission])
+                if(!parentCategories.includes(el)){
+                  parentCategories.push(el)
+                }
+            })
+            parentData=[
+              ...parentData,
+              {
+                  name:getPortfolioName(id),
+                  data:values
+              }
+          ]
+            }
           })
         }
 
@@ -93,6 +124,8 @@ const Alignment = () => {
         setStackedChartData(stackedChartData)
         setStackedColChartData(stackedCol)
         setCategories(categories)
+        setParentData(parentData)
+        setParentCategories(parentCategories)
       }
       
   }
@@ -100,7 +133,7 @@ const Alignment = () => {
  
   const getChildrenIds = ()=>{
     let childrenIds=[]
-    let result = []
+    let result = [currentPortfolio.value]
     if(allPortfolios && allPortfolios.length > 0){
         allPortfolios.map(portfolio=>{
             if(portfolio.portfolio_id === currentPortfolio.value ){
@@ -153,24 +186,39 @@ const Alignment = () => {
              </Grid>
              <Grid item xs ={6}>
              <StackedColumn
-            chartKey="FOOTPRINT_STACK_COL"
+                chartKey="FOOTPRINT_STACK_COL"
                 data={stackedColChartData}
                 categories={categories}
+                yAxisTitle={yAxisTitle}
               />
              </Grid>
          </Grid>
          <Grid container>
              <Grid item xs ={6}>
              <StackedBar
-                    categories={[]}
+                    categories={[""]}
                     data={stackedChartData}
                     chartKey="FOOTPRINT_STACK"
+                    yAxisTitle={""}
                 />
              </Grid>
              <Grid item xs ={6}>
-             
+             <HorizontalBar
+                chartKey="PARENT_INTENSITY"
+                data={parentData}
+                categories={parentCategories}
+              />
              </Grid>
          </Grid>
+         <div
+            style={{
+              fontSize: 14,
+              fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+              marginTop:10
+            }}
+          >
+            The pie chart shows the composition of the total fund of funds footprint, by displaying the contribution of the funds to the total fund of funds footprint for the selected scope. Where necessary, the children footprints are weighted by the child weights. The sector intensity of the children and the sector intensity of the parent are calculated as single portfolios.
+          </div>
         </Box>
       )}
     </React.Fragment>

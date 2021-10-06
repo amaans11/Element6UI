@@ -33,7 +33,7 @@ import {
   getCarbonReturnsLineData,
   getCarbonReturnsTableData,
 } from './flmActions'
-import { getAlignment, getSummary } from './fundOfFundActions'
+import { getAlignment, getSummary,getFootprint } from './fundOfFundActions'
 
 const history = createBrowserHistory()
 
@@ -118,7 +118,6 @@ const requestApi = async (dispatch, auth, flm) => {
       }
       break
     case 'Fund Of Funds':
-      console.log("test")
       switch (tabValue) {
         case 0:
           await dispatch(getSummary(result.join(',')))
@@ -128,7 +127,7 @@ const requestApi = async (dispatch, auth, flm) => {
           reData.portfolio_id = result
           delete reData.benchmark_id
           delete reData.version_benchmark
-          await dispatch(getAlignment(reData))
+          await dispatch(getFootprint(reData))
           break
         case 2:
           const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)

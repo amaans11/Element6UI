@@ -55,15 +55,15 @@ const Summary = () => {
   }
   const getData=()=>{
     const data = summary.data
-    let chartData = []   
+    let chartData = []
     let tableData=[]
 
     if(data && data.length > 0)
     data.map(port=>{
         chartData.push({
-            name:port.name,
-            data:[port.weight]
-        })
+          name:port.name,
+          data:[port.weight]
+                })
         tableData.push({
             name:port.name,
             weight:port.weight,
@@ -71,7 +71,6 @@ const Summary = () => {
             fundamentals:port.coverage_fundamentals[0].coverage,
         })
     })
-    console.log("chartData",chartData)
     setChartData(chartData)
     setTableData(tableData)
   }
@@ -92,18 +91,29 @@ const Summary = () => {
       ) : (
         <Box>
             <Grid container>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                 <HorizontalBar
                 chartKey="SUMMARY"
                 data={chartData}
-                
+                categories={['']}
               />
                 </Grid>
-                <Grid item xs={6} style={{marginTop:10}}>
+                <Grid item xs={12} style={{marginTop:10}}>
                     <DataTable data={tableData} columns={summaryCells} tableHeading="COMPANY_ANALYSIS" />
                 </Grid>
-
             </Grid>
+            <div
+            style={{
+              fontSize: 14,
+              fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+              marginTop:10
+            }}
+          >
+            This is the fund-level breakdown of the uploaded fund of funds portfolio.
+            Some more text about useful information goes here. Maybe about how we handle the file to create the parent portfolio for the analytics?
+            About coverage information?
+          </div>
+
         </Box>
       )}
     </React.Fragment>

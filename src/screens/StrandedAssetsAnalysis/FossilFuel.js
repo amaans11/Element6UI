@@ -98,6 +98,7 @@ const FossilFuel = () => {
     setCountryTableData(countryTableData)
     setYAxisTitle(yAxisTitle)
   }
+  console.log("chartData>>",chartData)
   return (
     <React.Fragment>
       {loading ? (
