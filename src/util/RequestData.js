@@ -39,8 +39,14 @@ const getRequestData = (type, auth) => {
   } = auth
 
   const { client, userName } = currentUser
+  let year={},quarter={},version={};
 
-  const { year, quarter, version } = userInfo
+  if(userInfo && Object.keys(userInfo).length > 0){
+    year = userInfo.year
+    quarter = userInfo.quarter
+    version = userInfo.version
+  }
+
 
   const portfolioId = currentPortfolio.value
   const benchmarkId = currentBenchmark.value

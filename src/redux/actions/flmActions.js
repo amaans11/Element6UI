@@ -3,11 +3,11 @@ import axios from 'axios';
 
 export const getPortfolioAlignment = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/portfolio_alignment`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -29,11 +29,11 @@ export const getPortfolioAlignmentFailed=(error)=>{
 
 export const getTargetSetting = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/target_setting`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -54,11 +54,11 @@ export const getTargetSettingFailed=(error)=>{
 }
 export const getCompanies = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/sectors/companies`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -80,11 +80,11 @@ export const getCompaniesFailed=(error)=>{
 }
 export const getCompanyProfileData = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/company_profile`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -106,11 +106,11 @@ export const getCompanyProfileDataFailed=(error)=>{
 
 export const getCarbonCompanies = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/carbon_adjusted_returns/available_companies_price`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -132,11 +132,11 @@ export const getCarbonCompaniesFailed=(error)=>{
 }
 export const getCarbonReturnsLineData = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/carbon_adjusted_returns/linechart`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -157,11 +157,11 @@ export const getCarbonReturnsLineDataFailed=(error)=>{
 }
 export const getCarbonReturnsTableData = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/carbon_adjusted_returns/table`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {

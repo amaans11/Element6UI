@@ -92,10 +92,8 @@ function Login(props) {
   }
   const handleSubmit = async () => {
     const data = {
-      userName: userName,
+      user_name: userName,
       password: password,
-      ip_address: '',
-      final_object: 'sign_in',
     }
     try {
       await dispatch(signinUser(data))

@@ -12,13 +12,16 @@ import { configureStore } from './redux/store'
 import Login from './screens/auth/Login'
 import Base from './layouts/Base'
 import Settings from './screens/Settings'
+import UpdatePassword from './screens/UpdatePassword'
+import VerificationCode from './screens/VerificationCode'
 import Admin from './screens/Admin'
-import { setLoading,setLogin } from './redux/actions/authActions'
+import { setLoading,getAccessToken, logoutUser,changePasswordRequest,updateVerificationCode,setLogin } from './redux/actions/authActions'
 import * as actionTypes from './redux/actionTypes'
 import ErrorBoundary from './screens/ErrorBoundary'
 
 // React notifications css import
 import 'react-notifications/lib/notifications.css'
+import { NotificationManager } from 'react-notifications'
 
 // Highcharts import
 require('highcharts/modules/exporting')(Highcharts)
@@ -99,6 +102,8 @@ Highcharts.theme = {
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
+    console.log("test")
+
     // Do something before request is sent
 
     store.dispatch(setLoading(true))
@@ -115,10 +120,24 @@ axios.interceptors.response.use(
   async function (response) {
     if (response.config.url !== `${process.env.REACT_APP_API_URL}/portfolio/`) {
       store.dispatch(setLoading(false))
-    }
+    }    
     return response
   },
   function (error) {
+    if(error.response.status === 401 && error.response.data.type === 'refresh'){
+      store.dispatch(getAccessToken())
+    }
+    if(error.response.status === 403 && error.response.data.type === 're_login' ){
+      store.dispatch(logoutUser())
+      NotificationManager.error("This login was blocked. Pls re-login again")
+    }
+    if(error.response.status === 403 && error.response.data.type === 'change_pwd' ){
+      store.dispatch(changePasswordRequest())
+      NotificationManager.error("Please change the password ! ")
+    }
+    if(error.response.status === 403 && error.response.data.type === 'verification_required' ){
+      store.dispatch(updateVerificationCode())
+    }
     store.dispatch(setLoading(false))
     return Promise.reject(error)
   },
@@ -145,7 +164,8 @@ function App() {
             <Switch>
               <Route exact path="/login" component={Login} />
               <AuthenticatedRoute path="/settings" exact component={Settings} />
-              <AuthenticatedRoute path="/admin" exact component={Admin} />
+              <AuthenticatedRoute path="/update-password" exact component={UpdatePassword} />
+              <AuthenticatedRoute path="/verification-code" exact component={VerificationCode} />              <AuthenticatedRoute path="/admin" exact component={Admin} />
               <AuthenticatedRoute path="/" component={Base} />
             </Switch>
           </ErrorBoundary>
