@@ -388,15 +388,10 @@ export const getUploadPortfolioList = () => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-<<<<<<< HEAD
       .get(`${actionTypes.API_URL}/portfolio/?is_full=True`, {
         headers: { 
           'Authorization': `Bearer ${accessToken}`,
          },
-=======
-      .get(`${process.env.REACT_APP_API_URL}/portfolio/?is_full=True`, {
-        headers: { 'client-key': clientKey },
->>>>>>> aee81228e98273a4dd7534383d5c0198fffc4215
       })
       .then((result) => {
         dispatch(getUploadPortfolioListSuccess(result.data))

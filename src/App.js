@@ -15,7 +15,7 @@ import Settings from './screens/Settings'
 import UpdatePassword from './screens/UpdatePassword'
 import VerificationCode from './screens/VerificationCode'
 import Admin from './screens/Admin'
-import { setLoading,getAccessToken, logoutUser,changePasswordRequest,updateVerificationCode } from './redux/actions/authActions'
+import { setLoading,getAccessToken, logoutUser,changePasswordRequest,updateVerificationCode,setLogin } from './redux/actions/authActions'
 import * as actionTypes from './redux/actionTypes'
 import ErrorBoundary from './screens/ErrorBoundary'
 
