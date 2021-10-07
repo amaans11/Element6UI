@@ -4,7 +4,8 @@ import produce from 'immer';
 const intialState = {
 	summary:{},
     alignment:{},
-    footprint:{}
+    footprint:{},
+	targetSetting:{}
 };
 
 export default function flmReducer(state = { ...intialState }, action) {
@@ -38,6 +39,16 @@ export default function flmReducer(state = { ...intialState }, action) {
             return produce(state, (draft) => {
                 draft.footprint.data = '';
                 draft.footprint.error = action.error;
+        });
+		case types.GET_FUND_TARGET_SETTING_SUCCESS:
+			return produce(state, (draft) => {
+                draft.targetSetting.data = action.res;
+                draft.targetSetting.error = '';
+        });
+		case types.GET_FUND_TARGET_SETTING_FAILED:
+			return produce(state, (draft) => {
+                draft.targetSetting.data = '';
+                draft.targetSetting.error = action.error;
         });
 		default:
 			return state;

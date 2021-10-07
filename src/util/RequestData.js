@@ -600,6 +600,7 @@ const getRequestData = (type, auth) => {
 			version_portfolio:selectedDownloadPort.version
 		  }
 		  break;
+      
     default:
       data = {}
       break

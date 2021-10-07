@@ -7,6 +7,7 @@ import { setTabValue } from '../../redux/actions/authActions'
 import Summary from './Summary'
 import Alignment from './Alignment'
 import Footprint from './Footprint'
+import TargetSetting from './TargetSetting'
 
 function FundOfFunds() {
   const tabValue = useSelector((state) => state.auth.tabValue)
@@ -48,6 +49,10 @@ function FundOfFunds() {
           <TabPanel value={value} index={2}>
             <Alignment />
           </TabPanel>
+          <TabPanel value={value} index={3}>
+            <TargetSetting />
+          </TabPanel>
+          
         </Grid>
       </Grid>
     </div>

@@ -144,6 +144,15 @@ const data={
     'URGENTEM_API':[],
     'SUMMARY':[
     ],
+    'TARGET_SETTING':[
+        'sector',
+        'footprintMetric',
+        'marketValue',
+        'targetScenario',
+        'warmingScenario',
+        'approach',
+        'alignmentYear'
+    ]
 }
 
 export default data;

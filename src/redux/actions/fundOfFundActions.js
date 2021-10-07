@@ -74,4 +74,31 @@ export const getFootprintFailed=(error)=>{
     return { type: actionTypes.GET_FOOTPRINT_FAILED, error };
 }
 
+export const getTargetSetting = (data) => {
+	return async (dispatch, getState) => {
+		const clientKey = getState().auth.userInfo.client_key;
+		return axios
+			.post(`${actionTypes.API_URL}/forward_looking_metrics/target_setting/fund_of_funds/`, data, {
+				headers: {
+					'client-key': clientKey
+				}
+			})
+			.then((result) => {
+                dispatch(getTargetSettingSuccess(result.data))
+			})
+            .catch(err=>{
+                const error=err.response.data.message
+                dispatch(getTargetSettingFailed(error))
+            })
+	};
+};
+
+export const getTargetSettingSuccess=(res)=>{
+    return { type: actionTypes.GET_FUND_TARGET_SETTING_SUCCESS, res };
+}
+export const getTargetSettingFailed=(error)=>{
+    return { type: actionTypes.GET_FUND_TARGET_SETTING_FAILED, error };
+}
+
+
 

@@ -627,6 +627,33 @@ const summaryCells = [
 		right: true
 	},
 ]
+const targetFundCells = [
+	{
+		name: 'Child Name',
+		selector: 'name',
+		sortable: true,
+		right: false
+	},
+	{
+		name: 'Contribution',
+		selector: 'contribution',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Allowance',
+		selector: 'allowance',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Annual Reduction',
+		selector: 'annualRed',
+		sortable: true,
+		right: true
+	},
+]
+
 export {
 	avoidedEmissionCells,
 	sectoralScope3Cells,
@@ -641,5 +668,6 @@ export {
 	companyProfileCells,
 	missingCoverageCells,
 	backgroundCells,
-	summaryCells
+	summaryCells,
+	targetFundCells
 };

@@ -214,9 +214,11 @@ export default function FilterGroup() {
               config = filterConfig['PORTFOLIO_EMISSION']
               break;
             case 2:
-              console.log("test1")
               config = filterConfig['PORTFOLIO_ALIGNMENT']
               break
+            case 3:
+              config = filterConfig['TARGET_SETTING']
+                break
             default:
               config = filterConfig['ALIGNMENT']
               break
