@@ -478,7 +478,6 @@ export const setTabValueSuccess = (res) => {
 export const setModule = (value) => {
   return async (dispatch) => {
     await dispatch(setModuleSuccess(value))
-    window.location.reload()
   }
 }
 

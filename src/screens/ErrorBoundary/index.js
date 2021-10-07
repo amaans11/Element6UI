@@ -26,7 +26,7 @@ class ErrorBoundary extends React.Component {
         // You can render any custom fallback UI
         return <React.Fragment>
             <h3>Sorry, something went wrong.
-                Please try to login again. If you still see this message please 
+                Please try to <a href="/login"> login again </a>. If you still see this message please 
                 let us know by emailing technical-support@urgentem.net</h3>
         </React.Fragment>;
       }

@@ -146,15 +146,6 @@ axios.interceptors.response.use(
 function App() {
   Highcharts.setOptions(Highcharts.theme)
 
-  const version = localStorage.getItem('version')
-
-  if(!version){
-    localStorage.setItem('version',0)
-  }
-  if(process.env.REACT_APP_VERSION != version){
-    store.dispatch(setLogin())
-  }
-
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
