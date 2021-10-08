@@ -3,11 +3,11 @@ import axios from 'axios';
 
 export const getPortfolioEmission = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/portfolio_emissions`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/portfolio_emissions`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -28,11 +28,11 @@ export const getPortfolioEmissionFailed=(error)=>{
 }
 export const getSovereignFootprint = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/sovereign_footprint`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/sovereign_footprint`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then((result) => {
@@ -53,11 +53,11 @@ export const getSovereignFootprintFailed=(error)=>{
 }
 export const getAvoidedEmissions = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/avoided_emissions`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/avoided_emissions`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then((result) => {
@@ -79,11 +79,11 @@ export const getAvoidedEmissionsFailed=(error)=>{
 
 export const getDisclosureData = (data,type) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/disclosure`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/disclosure`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then((result) => {
@@ -106,11 +106,11 @@ export const getDisclosureDataFailed=(error,portType)=>{
 
 export const getCarbonAttribution = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/carbon_attribution`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/carbon_attribution`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then((result) => {
@@ -130,3 +130,30 @@ export const getCarbonAttributionFailed=(error)=>{
     return { type: actionTypes.GET_CARBON_ATTRIBUTION_FAILED, error };
 }
 
+
+export const getDownloadDetails = (data) => {
+	return async (dispatch, getState) => {
+	  const clientKey = getState().auth.userInfo.client_key
+  
+	  return axios
+		.post(`${process.env.REACT_APP_API_URL}/emissions/platform`, data, {
+		  headers: {
+			'client-key': clientKey,
+		  },
+		})
+		.then((result) => {
+		  dispatch(getDownloadDetailsSuccess(result.data.data))
+		})
+		.catch((err) => {
+		  const error = err.response.data.message
+		  dispatch(getDownloadDetailsFailed(error))
+		})
+	}
+  }
+  
+  export const getDownloadDetailsSuccess = (res) => {
+	return { type: actionTypes.GET_DOWNLOAD_DETAILS_SUCCESS, res }
+  }
+  export const getDownloadDetailsFailed = (error) => {
+	return { type: actionTypes.GET_DOWNLOAD_DETAILS_FAILED, error }
+  }

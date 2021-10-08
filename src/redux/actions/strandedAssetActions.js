@@ -3,11 +3,11 @@ import axios from 'axios';
 
 export const getFossilFuelData = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.API_URL}/stranded_assets/fossil_fuel_footprint`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/stranded_assets/fossil_fuel_footprint`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -28,11 +28,11 @@ export const getFossilFuelDataFailed=(error)=>{
 }
 export const getCoalPowerData = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.API_URL}/stranded_assets/coal_power_analysis`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/stranded_assets/coal_power_analysis`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {

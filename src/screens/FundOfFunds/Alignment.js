@@ -127,8 +127,6 @@ const Alignment = () => {
         ])
       })
     }
-    console.log("chartData",alignmentData['Children_Dots'])
-
     if(alignmentData['Children_Dots'] &&  Object.keys(alignmentData['Children_Dots'].length > 0)){
         Object.keys(alignmentData['Children_Dots']).map(el=>{
             chartData.push({

@@ -3,11 +3,11 @@ import axios from 'axios';
 
 export const getTempScoreData = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/portfolio_score/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/portfolio_score/`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -29,11 +29,11 @@ export const getTempScoreDataFailed=(error)=>{
 
 export const getSectoralTempScore = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/sectoral_temp_score/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/sectoral_temp_score/`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -55,11 +55,11 @@ export const getSectoralTempScoreFailed=(error)=>{
 
 export const getCompanyAnalysisData = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/companies_score/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/companies_score/`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -82,11 +82,11 @@ export const getCompanyAnalysisDataFailed=(error)=>{
 
 export const getTempAttribution = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/attribution/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/attribution/`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -109,11 +109,11 @@ export const getTempAttributionFailed=(error)=>{
 
 export const getHeatmapData = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/heatmap/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/heatmap/`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -136,11 +136,11 @@ export const getHeatmapDataFailed=(error)=>{
 
 export const getContribAnalysis = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
-			.post(`${actionTypes.TEMP_API_URL}/contribution/`, data, {
+			.post(`${process.env.REACT_APP_TEMP_API_URL}/contribution/`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {

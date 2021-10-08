@@ -27,7 +27,8 @@ import {
   FormControlLabel,
   Accordion,
   AccordionDetails,
-  AccordionSummary,} from '@material-ui/core'
+  AccordionSummary,
+  Checkbox} from '@material-ui/core'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import FilterTags from '../components/FilterSection/tags'
 import CustomSwitch from '@material-ui/core/Switch'
@@ -70,12 +71,11 @@ import {
   getUploadPortfolioList,
   getDownloadPortfolios,
   setDownloadPortfolio,
-  setDownloadTags,
-  getDownloadDetails,
-  setEmissions,
+  setDownloadTags,  setEmissions,
 } from '../redux/actions/authActions'
+import {  getDownloadDetails} from '../redux/actions/footprintActions'
 import csvFile from '../assets/Dummy-file.xlsx'
-import { Checkbox } from '@material-ui/core'
+import { ContactSupportOutlined } from '@material-ui/icons'
 
 const drawerWidth = 295
 
@@ -250,6 +250,9 @@ const MiniDrawer = ({ classes, history }) => {
   }
 
   const fetchDetails = async () => {
+    if(currentUser.warning){
+      console.log("test")
+    }
     await getUserDetails()
     await getPortfolio()
     await dispatch(getUploadPortfolioList())
@@ -358,6 +361,7 @@ const MiniDrawer = ({ classes, history }) => {
   }
   useEffect(() => {
     fetchDetails()
+
   }, [])
   let contentClass = classNames({
     'content-part-visible': isVisible,

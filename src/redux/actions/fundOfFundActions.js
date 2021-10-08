@@ -5,7 +5,7 @@ export const getSummary = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.get(`${actionTypes.API_URL}/portfolio/fund_of_funds/?portfolio_ids=${data}`, {
+			.get(`${process.env.REACT_APP_API_URL}/portfolio/fund_of_funds/?portfolio_ids=${data}`, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -30,7 +30,7 @@ export const getAlignment = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/forward_looking_metrics/portfolio_alignment/fund_of_funds/`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/portfolio_alignment/fund_of_funds/`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -52,7 +52,7 @@ export const getFootprint = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/portfolio_footprint/portfolio_emissions/fund_of_funds/`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/portfolio_emissions/fund_of_funds/`, data, {
 				headers: {
 					'client-key': clientKey
 				}
@@ -78,7 +78,7 @@ export const getTargetSetting = (data) => {
 	return async (dispatch, getState) => {
 		const clientKey = getState().auth.userInfo.client_key;
 		return axios
-			.post(`${actionTypes.API_URL}/forward_looking_metrics/target_setting/fund_of_funds/`, data, {
+			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/target_setting/fund_of_funds/`, data, {
 				headers: {
 					'client-key': clientKey
 				}

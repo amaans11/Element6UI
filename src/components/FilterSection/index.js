@@ -303,8 +303,6 @@ export default function FilterGroup() {
             break
         }
     }
-    console.log('test', config)
-
     setConfigs(config)
   }
   const getEmission = (tagName) => {

@@ -159,14 +159,14 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
         ),
       },
       {
-        name: 'Emission Coverage (%)',
+        name: 'Emissions Coverage (%)',
         selector: 'coverageEmissions',
         sortable: true,
         right: true,
         wrap: true,
       },
       {
-        name: 'Emission Weight Coverage (%)',
+        name: 'Emissions Weight Coverage (%)',
         selector: 'coverageWeightEmissions',
         sortable: true,
         right: true,
@@ -210,7 +210,7 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
   }
   const getCoverageDetails = async (data) => {
     const portfolioId = data.portfolio_id
-    const url = `${actionTypes.API_URL}/portfolio/coverage/${portfolioId}/`
+    const url = `${process.env.REACT_APP_API_URL}/portfolio/coverage/${portfolioId}/`
 
     const requestData = {
       version_portfolio: '0',

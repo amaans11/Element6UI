@@ -101,6 +101,7 @@ export default function authReducer(state = { ...intialState }, action) {
     case types.GET_USER_INFO:
       return produce(state, (draft) => {
         draft.userInfo = action.res
+       
       })
     case types.UPDATE_CURRENCY_SUCCESS:
       return produce(state, (draft) => {
@@ -145,6 +146,18 @@ export default function authReducer(state = { ...intialState }, action) {
       return produce(state, (draft) => {
         draft.currentUser = {}
         draft.userInfo = {}
+        draft.verifyUserRes = {}
+        draft.portfolioList = []
+        draft.currentPortfolio = {}
+        draft.currentBenchmark = {}
+        draft.currentYear = ''
+        draft.currentQuarter = ''
+        draft.currentCurrency = ''
+        draft.loading = false
+        draft.filterItem = {}
+        draft.downloadPortfolioList = []
+        draft.uploadPortfolioRes = {}
+        draft.portfolioTableRes = []
       })
     case types.GET_DOWNLOAD_PORTFOLIOS_SUCCESS:
       return produce(state, (draft) => {
@@ -173,14 +186,6 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.downloadPortfolioList = []
       })
 
-    case types.GET_DOWNLOAD_DETAILS_SUCCESS:
-      return produce(state, (draft) => {
-        draft.downloadData = action.res
-      })
-    case types.GET_DOWNLOAD_DETAILS_FAILED:
-      return produce(state, (draft) => {
-        draft.downloadData = []
-      })
     case types.UPLOAD_PORTFOLIO_SUCCESS:
       return produce(state, (draft) => {
         draft.uploadPortfolioRes.data = action.res
@@ -261,7 +266,12 @@ export default function authReducer(state = { ...intialState }, action) {
       case types.GET_FIX_RATE_SUCCESS:
         return produce(state, (draft) => {
           draft.currencyFixRate = action.res 
-          })
+        })
+      case types.GET_ACCESS_TOKEN:
+        return produce(state, (draft) => {
+          console.log("action>>",action.res)
+          draft.currentUser.access_token = action.res.access_token 
+        })
     default:
       return state
   }

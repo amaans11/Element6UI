@@ -1,6 +1,6 @@
 export const API_URL = 'http://qa.urgentem.net:8080';
 export const TEMP_API_URL = 'https://tm-qa.urgentem.net';
-
+export const VERSION = 2;
 // --------- Auth --------------//
 export const SIGNIN_USER_SUCCESS = 'SIGNIN_USER_SUCCESS';
 export const VERIFY_USER_SUCCESS = 'VERIFY_USER_SUCCESS';
@@ -31,7 +31,9 @@ export const CHANGE_EMAIL_SUCCESS='CHANGE_EMAIL_SUCCESS';
 export const SET_DOWNLOAD_PORTFOLIO='SET_DOWNLOAD_PORTFOLIO'
 export const SET_DOWNLOAD_TAGS='SET_DOWNLOAD_TAGS';
 export const SET_EMISSIONS_SUCCESS = 'SET_EMISSIONS_SUCCESS';
-export const GET_FIX_RATE_SUCCESS = 'GET_FIX_RATE_SUCCESS'
+export const GET_FIX_RATE_SUCCESS = 'GET_FIX_RATE_SUCCESS';
+export const GET_ACCESS_TOKEN = 'GET_ACCESS_TOKEN';
+export const VERIFY_CODE_SUCCESS = 'VERIFY_CODE_SUCCESS'
 // ---------- Footprint -----------//
 
 export const GET_PORTFOLIO_EMISSION_SUCCESS = 'GET_PORTFOLIO_EMISSION_SUCCESS';

@@ -186,6 +186,11 @@ const PortfolioOptimization = () => {
 		const intensityTiltedSc123 = parseFloat(response['tilted']['Intensities']['tilted']['Scope_123'].toFixed(2));
 		const intensityTiltedSc3 = parseFloat(response['tilted']['Intensities']['tilted']['Scope_3'].toFixed(2));
 
+		const benchmarkTiltedSc12 = parseFloat(response['benchmark']['Intensities']['benchmark']['Scope_12'].toFixed(2));
+		const benchmarkTiltedSc123 = parseFloat(response['benchmark']['Intensities']['benchmark']['Scope_123'].toFixed(2));
+		const benchmarkTiltedSc3 = parseFloat(response['benchmark']['Intensities']['benchmark']['Scope_3'].toFixed(2));
+
+
 		intensityData = [
 			{
 				name: 'Portfolio',
@@ -194,6 +199,10 @@ const PortfolioOptimization = () => {
 			{
 				name: 'Tilted',
 				data: [ intensityTiltedSc12, intensityTiltedSc3, intensityTiltedSc123 ]
+			},
+			{
+				name: 'Benchmark',
+				data: [ benchmarkTiltedSc12, benchmarkTiltedSc3, benchmarkTiltedSc123 ]
 			}
 		];
 		return intensityData;
@@ -214,6 +223,10 @@ const PortfolioOptimization = () => {
 			{
 				name: 'Tilted',
 				data: []
+			},
+			{
+				name: 'Benchmark',
+				data: []
 			}
 		];
 		let contribData = [
@@ -223,6 +236,10 @@ const PortfolioOptimization = () => {
 			},
 			{
 				name: 'Tilted',
+				data: []
+			},
+			{
+				name: 'Benchmark',
 				data: []
 			}
 		];
@@ -236,9 +253,12 @@ const PortfolioOptimization = () => {
 
 			const portSectorWeights = response['tilted']['Intensities']['portfolio']['sector_weight'];
 			const tiltedSectorWeights = response['tilted']['Intensities']['tilted']['sector_weight'];
+			const benchmarkSectorWeights = response['benchmark']['Intensities']['benchmark']['sector_weight'];
 			const portSectorContribs = response['tilted']['Intensities']['portfolio']['sectoral_contribution'];
 			const tiltedSectorContribs = response['tilted']['Intensities']['tilted']['sectoral_contribution'];
+			const benchmarkSectorContribs = response['benchmark']['Intensities']['benchmark']['sectoral_contribution'];
 
+			console.log("benchmarkSectorWeights",benchmarkSectorWeights)
 			if (portSectorWeights && Object.keys(portSectorWeights).length > 0) {
 				Object.keys(portSectorWeights).map((key) => {
 					weightData[0]['data'].push(portSectorWeights[key]);
@@ -250,6 +270,11 @@ const PortfolioOptimization = () => {
 					weightData[1]['data'].push(tiltedSectorWeights[key]);
 				});
 			}
+			if (benchmarkSectorWeights && Object.keys(benchmarkSectorWeights).length > 0) {
+				Object.keys(benchmarkSectorWeights).map((key) => {
+					weightData[2]['data'].push(benchmarkSectorWeights[key]);
+				});
+			}
 			if (portSectorContribs && Object.keys(portSectorContribs).length > 0) {
 				Object.keys(portSectorContribs).map((key) => {
 					contribData[0]['data'].push(portSectorContribs[key]);
@@ -259,6 +284,11 @@ const PortfolioOptimization = () => {
 			if (tiltedSectorContribs && Object.keys(tiltedSectorContribs).length > 0) {
 				Object.keys(tiltedSectorContribs).map((key) => {
 					contribData[1]['data'].push(tiltedSectorContribs[key]);
+				});
+			}
+			if (benchmarkSectorContribs && Object.keys(benchmarkSectorContribs).length > 0) {
+				Object.keys(benchmarkSectorContribs).map((key) => {
+					contribData[2]['data'].push(benchmarkSectorContribs[key]);
 				});
 			}
 		}
