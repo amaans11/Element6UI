@@ -492,7 +492,7 @@ const getRequestData = (type, auth) => {
         year_emissions: yearEmissions,
         asset_type: ['Eq','CB'],
         market_value: marketValue,
-        footprint: footprintMetric == 'CarbIntensityMarketVal' || footprintMetric == 'CarbIntensityRev' ? 'WeightAvgRev' : footprintMetric,
+        footprint: footprintMetric == 'CarbIntensityMarketVal' || footprintMetric == 'CarbIntensityRev'  || footprintMetric == 'TotalCarbEmis' ? 'WeightAvgRev' : footprintMetric,
         inference: 'Avg',
         scope: 'Sc123',
         display_ccy: currentCurrency,
