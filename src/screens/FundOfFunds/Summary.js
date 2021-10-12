@@ -109,8 +109,6 @@ const Summary = () => {
             }}
           >
             This is the fund-level breakdown of the uploaded fund of funds portfolio.
-            Some more text about useful information goes here. Maybe about how we handle the file to create the parent portfolio for the analytics?
-            About coverage information?
           </div>
                 <Grid item xs={12} style={{marginTop:10}}>
                     <DataTable data={tableData} columns={summaryCells} tableHeading="COMPANY_ANALYSIS" />

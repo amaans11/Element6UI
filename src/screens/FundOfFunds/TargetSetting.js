@@ -98,8 +98,6 @@ const Alignment = () => {
     let categories = []
     let tableData=[]
 
-    console.log("chartData>>",data)
-
     if (data && Object.keys(data).length > 0) {
       Object.keys(data).map((id,index) => {
         let contrib = data[id]['Target_Setting_table']['Portfolio']['intensity']
@@ -160,7 +158,7 @@ const Alignment = () => {
                   label="Select Sector"
                   value={currentSector}
                   onChange={handleSectorChange}
-                  style={{fontSize:14}}
+                  style={{fontSize:14,width:300,marginBottom:20}}
                 >
                   {categories.length > 0 &&
                     categories.map((sector) => (

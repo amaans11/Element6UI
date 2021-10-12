@@ -145,6 +145,28 @@ const data = {
       disabled: false,
     },
   ],
+  FUND_FOOTPRINT: [
+    {
+      name: 'footprintMetric',
+      disabled: false,
+    },
+    {
+      name: 'marketValue',
+      disabled: false,
+    },
+    {
+      name: 'assetClass',
+      disabled: false,
+    },
+    {
+      name: 'inferenceType',
+      disabled: false,
+    },
+    {
+      name: 'emission',
+      disabled: false,
+    }
+  ]
 }
 
 export default data

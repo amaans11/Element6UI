@@ -211,13 +211,13 @@ export default function FilterGroup() {
               config = filterConfig['SUMMARY']
               break
               case 1 : 
-              config = filterConfig['PORTFOLIO_EMISSION']
+              config = flmFilterConfig['FUND_FOOTPRINT']
               break;
             case 2:
-              config = filterConfig['PORTFOLIO_ALIGNMENT']
+              config = flmFilterConfig['PORTFOLIO_ALIGNMENT']
               break
             case 3:
-              config = filterConfig['TARGET_SETTING']
+              config = flmFilterConfig['TARGET_SETTING']
                 break
             default:
               config = filterConfig['ALIGNMENT']
@@ -365,53 +365,82 @@ export default function FilterGroup() {
     }
   }
   const getFootprintMetric = (tagName) => {
-    switch (moduleName) {
-      case 'FLM':
-        switch (tagName) {
-          case 'WeightAvgRev':
-            return true
-          case 'WeightAvgMarketVal':
-            return true
-          case 'TotalCarbEmis':
-            return true
-          case 'CarbIntensityMarketVal':
-            return false
-          case 'CarbIntensityRev':
-            return false
-          default:
-            return true
-        }
-        case 'Fund Of Funds':
-        switch (tagName) {
-          case 'WeightAvgRev':
-            return true
-          case 'WeightAvgMarketVal':
-            return true
-          case 'TotalCarbEmis':
-            return true
-          case 'CarbIntensityMarketVal':
-            return false
-          case 'CarbIntensityRev':
-            return false
-          default:
-            return true
-        }
-      default:
-        switch (tagName) {
-          case 'WeightAvgRev':
-            return true
-          case 'WeightAvgMarketVal':
-            return true
-          case 'TotalCarbEmis':
-            return true
-          case 'CarbIntensityMarketVal':
-            return true
-          case 'CarbIntensityRev':
-            return true
-          default:
-            return true
-        }
+    console.log("moduleName",moduleName)
+    if(moduleName === 'FLM'){
+      console.log("test2")
+      if(tagName == 'WeightAvgRev'){
+        return true
+      }
+      if(tagName == 'WeightAvgMarketVal'){
+        return true
+      }
+      if(tagName == 'TotalCarbEmis'){
+        return true
+      }
+      if(tagName == 'CarbIntensityMarketVal'){
+        return false
+      }
+      if(tagName == 'CarbIntensityRev'){
+        return false
+      }
     }
+    else if(moduleName === 'Fund Of Funds'){
+      console.log("test")
+      if(tabValue == 1){
+        if(tagName == 'WeightAvgRev'){
+          return true
+        }
+        if(tagName == 'WeightAvgMarketVal'){
+          return true
+        }
+        if(tagName == 'TotalCarbEmis'){
+          return true
+        }
+        if(tagName == 'CarbIntensityMarketVal'){
+          return true
+        }
+        if(tagName == 'CarbIntensityRev'){
+          return true
+        }
+      }
+      else{
+        if(tagName == 'WeightAvgRev'){
+          return true
+        }
+        if(tagName == 'WeightAvgMarketVal'){
+          return true
+        }
+        if(tagName == 'TotalCarbEmis'){
+          return true
+        }
+        if(tagName == 'CarbIntensityMarketVal'){
+          return false
+        }
+        if(tagName == 'CarbIntensityRev'){
+          return false
+        }
+      }
+    }
+    else{
+      console.log("test1")
+
+      if(tagName == 'WeightAvgRev'){
+        return true
+      }
+      if(tagName == 'WeightAvgMarketVal'){
+        return true
+      }
+      if(tagName == 'TotalCarbEmis'){
+        return true
+      }
+      if(tagName == 'CarbIntensityMarketVal'){
+        return true
+      }
+      if(tagName == 'CarbIntensityRev'){
+        return true
+      }
+    }
+    
   }
   const getWarmingScenario = (tagName) => {
     switch (targetScenario) {
@@ -599,7 +628,8 @@ export default function FilterGroup() {
 
   return (
     <React.Fragment>
-      {pathname !== '/forward-looking-analysis'
+      {pathname !== '/forward-looking-analysis' &&
+      pathname !== '/fund-of-funds'
         ? filterData.map((e, index) => {
             if (configs.includes(e.grpKey)) {
               return (
