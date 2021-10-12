@@ -37,6 +37,7 @@ const Summary = () => {
             }
         })
     }
+    console.log("childrenIds>>",childrenIds)
     if(childrenIds && childrenIds .length > 0){
         childrenIds.map(id=>{
             allPortfolios.map(portfolio=>{
@@ -46,6 +47,8 @@ const Summary = () => {
             })
         })
     }
+    console.log("result>>",result)
+
     return result ; 
   }
 
@@ -68,7 +71,7 @@ const Summary = () => {
             name:port.name,
             weight:port.weight,
             emission:port.coverage_emissions[0].coverage,
-            fundamentals:port.coverage_fundamentals[0].coverage,
+            fundamentals:port.coverage_emissions[0].weight_coverage,
         })
     })
     setChartData(chartData)
@@ -98,11 +101,7 @@ const Summary = () => {
                 categories={['']}
               />
                 </Grid>
-                <Grid item xs={12} style={{marginTop:10}}>
-                    <DataTable data={tableData} columns={summaryCells} tableHeading="COMPANY_ANALYSIS" />
-                </Grid>
-            </Grid>
-            <div
+                <div
             style={{
               fontSize: 14,
               fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
@@ -113,6 +112,11 @@ const Summary = () => {
             Some more text about useful information goes here. Maybe about how we handle the file to create the parent portfolio for the analytics?
             About coverage information?
           </div>
+                <Grid item xs={12} style={{marginTop:10}}>
+                    <DataTable data={tableData} columns={summaryCells} tableHeading="COMPANY_ANALYSIS" />
+                </Grid>
+            </Grid>
+        
 
         </Box>
       )}

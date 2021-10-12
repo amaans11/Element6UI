@@ -34,7 +34,7 @@ import {
   getCarbonReturnsLineData,
   getCarbonReturnsTableData,
 } from './flmActions'
-import { getAlignment, getSummary,getFootprint } from './fundOfFundActions'
+import { getAlignment, getSummary,getFootprint,getFundTargetSetting } from './fundOfFundActions'
 import { NotificationManager } from 'react-notifications'
 
 const history = createBrowserHistory()
@@ -126,17 +126,24 @@ const requestApi = async (dispatch, auth, flm) => {
           break
           case 1:
           const reData = getRequestData('PORTFOLIO_EMISSION', auth)
-          reData.portfolio_id = result
+          reData.portfolio_id = [...result,currentPortfolio.value]
           delete reData.benchmark_id
           delete reData.version_benchmark
           await dispatch(getFootprint(reData))
           break
         case 2:
           const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
-          requestData.portfolio_id = result
+          requestData.portfolio_id = [...result,currentPortfolio.value]
           delete requestData.benchmark_id
           delete requestData.version_benchmark
           await dispatch(getAlignment(requestData))
+          break
+          case 3:
+          const resData = getRequestData('TARGET_SETTING', auth)
+          resData.portfolio_id = [...result]
+          delete resData.benchmark_id
+          delete resData.version_benchmark
+          await dispatch(getFundTargetSetting(resData))
           break
         default:
           await dispatch(getSummary(result.join(',')))
@@ -375,7 +382,7 @@ export const getPortfolioList = (client) => {
       'Authorization': `Bearer ${accessToken}`,
     }
     return axios
-      .get(`${process.env.REACT_APP_API_URL}/portfolio/`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/?portfolio_type=PC`, { headers: headers })
       .then((result) => {
         dispatch(getPortfolioListSuccess(result.data))
       })

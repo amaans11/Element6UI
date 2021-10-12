@@ -3,11 +3,12 @@ import axios from 'axios';
 
 export const getSummary = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
+
 		return axios
 			.get(`${process.env.REACT_APP_API_URL}/portfolio/fund_of_funds/?portfolio_ids=${data}`, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then(result => {
@@ -28,11 +29,11 @@ export const getSummaryFailed=(error)=>{
 }
 export const getAlignment = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/portfolio_alignment/fund_of_funds/`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then((result) => {
@@ -50,11 +51,11 @@ export const getAlignmentFailed=(error)=>{
 }
 export const getFootprint = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${process.env.REACT_APP_API_URL}/portfolio_footprint/portfolio_emissions/fund_of_funds/`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then((result) => {
@@ -74,13 +75,13 @@ export const getFootprintFailed=(error)=>{
     return { type: actionTypes.GET_FOOTPRINT_FAILED, error };
 }
 
-export const getTargetSetting = (data) => {
+export const getFundTargetSetting = (data) => {
 	return async (dispatch, getState) => {
-		const clientKey = getState().auth.userInfo.client_key;
+		const accessToken = getState().auth.currentUser.access_token
 		return axios
 			.post(`${process.env.REACT_APP_API_URL}/forward_looking_metrics/target_setting/fund_of_funds/`, data, {
 				headers: {
-					'client-key': clientKey
+					'Authorization': `Bearer ${accessToken}`,
 				}
 			})
 			.then((result) => {

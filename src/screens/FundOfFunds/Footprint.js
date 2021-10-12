@@ -193,16 +193,18 @@ const Alignment = () => {
               />
              </Grid>
          </Grid>
+         <div
+            style={{
+              fontSize: 14,
+              fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+              marginTop:10,
+              marginBottom:10
+            }}
+          >
+            The pie chart shows the composition of the total fund of funds footprint, by displaying the contribution of the funds to the total fund of funds footprint for the selected scope. Where necessary, the children footprints are weighted by the child weights. The sector intensity of the children and the sector intensity of the parent are calculated as single portfolios.
+          </div>
          <Grid container>
-             <Grid item xs ={6}>
-             <StackedBar
-                    categories={[""]}
-                    data={stackedChartData}
-                    chartKey="FOOTPRINT_STACK"
-                    yAxisTitle={""}
-                />
-             </Grid>
-             <Grid item xs ={6}>
+             <Grid item xs ={12}>
              <HorizontalBar
                 chartKey="PARENT_INTENSITY"
                 data={parentData}
@@ -210,15 +212,7 @@ const Alignment = () => {
               />
              </Grid>
          </Grid>
-         <div
-            style={{
-              fontSize: 14,
-              fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-              marginTop:10
-            }}
-          >
-            The pie chart shows the composition of the total fund of funds footprint, by displaying the contribution of the funds to the total fund of funds footprint for the selected scope. Where necessary, the children footprints are weighted by the child weights. The sector intensity of the children and the sector intensity of the parent are calculated as single portfolios.
-          </div>
+        
         </Box>
       )}
     </React.Fragment>

@@ -140,7 +140,6 @@ const Alignment = () => {
               }
         )})
     }
-    console.log("chartData>>",chartData)
 
     setLineChartData(chartData)
     }

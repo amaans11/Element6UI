@@ -615,13 +615,13 @@ const summaryCells = [
 		right: true
 	},
 	{
-		name: 'Coverage Emissions',
+		name: 'Emissions Coverage (%)',
 		selector: 'emission',
 		sortable: true,
 		right: true
 	},
 	{
-		name: 'Coverage Fundamentals',
+		name: 'Emissions Weight Coverage (%)',
 		selector: 'fundamentals',
 		sortable: true,
 		right: true

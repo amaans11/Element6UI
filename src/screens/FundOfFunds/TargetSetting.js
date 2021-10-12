@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, CircularProgress,Grid,MenuItem,FormControl,InputLabel,Select } from '@material-ui/core'
 import PieChart from '../../components/ChartsComponents/PieChart'
-import {  getTargetSetting } from '../../redux/actions/fundOfFundActions'
+import {  getFundTargetSetting } from '../../redux/actions/fundOfFundActions'
 import DataTable from '../../components/Table/DataTable';
 import {targetFundCells} from '../../util/TableHeadConfig'
 import getRequestData from '../../util/RequestData'
@@ -58,7 +58,7 @@ const Alignment = () => {
     delete requestData.benchmark_id
     delete requestData.version_benchmark
 
-    await dispatch(getTargetSetting(requestData))
+    await dispatch(getFundTargetSetting(requestData))
   }
     const getPortfolioName = id=>{
       let portName = ''
@@ -118,11 +118,6 @@ const Alignment = () => {
         if(index == 0){
             categories = [...Object.keys(contrib)]
         }
-        console.log("categories",categories)
-        console.log("contrib",contrib)
-        console.log("allowance",allowance)
-        console.log("annualRed",annualRed)
-
         tableData.push({
             name:getPortfolioName(id),
             contribution:contrib[categories[0]],
@@ -132,7 +127,6 @@ const Alignment = () => {
       })
     }
     console.log("chartData>>",chartData)
-    console.log("categories>>",categories)
 
    setChartData(chartData)
    setCategories(categories)

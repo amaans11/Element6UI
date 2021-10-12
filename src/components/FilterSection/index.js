@@ -381,6 +381,21 @@ export default function FilterGroup() {
           default:
             return true
         }
+        case 'Fund Of Funds':
+        switch (tagName) {
+          case 'WeightAvgRev':
+            return true
+          case 'WeightAvgMarketVal':
+            return true
+          case 'TotalCarbEmis':
+            return true
+          case 'CarbIntensityMarketVal':
+            return false
+          case 'CarbIntensityRev':
+            return false
+          default:
+            return true
+        }
       default:
         switch (tagName) {
           case 'WeightAvgRev':
