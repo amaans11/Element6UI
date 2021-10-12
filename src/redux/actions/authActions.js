@@ -638,7 +638,7 @@ export const uploadPortfolioRequest = (data,isFund) => {
 
     const api_url = isFund ? `${process.env.REACT_APP_API_URL}/portfolio/fund_of_funds/` : `${process.env.REACT_APP_API_URL}/portfolio/`
     return axios
-      .post(`${process.env.REACT_APP_API_URL}/portfolio/`, data, {
+      .post(api_url, data, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
