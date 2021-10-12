@@ -22,6 +22,7 @@ const TargetSetting = () => {
   const [chartData, setChartData] = useState([])
   const [tableData, setTableData] = useState([])
   const [categories, setCategories] = useState([])
+  const [yAxisTitle,setYAxisTitle] = useState("")
 
   useEffect(() => {
     fetchDetails()
@@ -49,11 +50,13 @@ const TargetSetting = () => {
     let tableData = []
     let portValues = []
     let allowanceValues = []
+    let yAxisTitle = ''
 
     if (
       data['Target_Setting_table'] &&
       Object.keys(data['Target_Setting_table']).length > 0
     ) {
+      yAxisTitle= data['y_axis_title']
       let allowanceData =
         data['Target_Setting_table']['Allowance'][alignmentYear]
       let portData = data['Target_Setting_table']['Portfolio']['intensity']
@@ -92,6 +95,7 @@ const TargetSetting = () => {
     setChartData(chartData)
     setCategories(categories)
     setTableData(tableData)
+    setYAxisTitle(yAxisTitle)
   }
 
   return (
@@ -113,6 +117,7 @@ const TargetSetting = () => {
             data={chartData}
             chartKey="TARGET_SETTING"
             isExportEnabled={!trial}
+            yAxisTitle={yAxisTitle}
           />
           <DataTable
             data={tableData}
