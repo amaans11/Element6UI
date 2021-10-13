@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Box, CircularProgress } from '@material-ui/core'
+import { Box, CircularProgress,FormControl,InputLabel,Select,MenuItem } from '@material-ui/core'
 import PieChart from '../../components/ChartsComponents/PieChart'
 import { getAlignment, getSummary } from '../../redux/actions/fundOfFundActions'
 import { Grid } from '@material-ui/core'
@@ -9,6 +9,7 @@ import DataTable from '../../components/Table/DataTable';
 import {summaryCells} from '../../util/TableHeadConfig'
 import getRequestData from '../../util/RequestData'
 import LineChart from '../../components/ChartsComponents/Line'
+import { result } from 'lodash'
 
 
 const Alignment = () => {
@@ -22,6 +23,7 @@ const Alignment = () => {
   const { portScenario } = filterItem
 
   const [lineChartData, setLineChartData] = useState([])
+  const [portIds,setPortIds] = useState([])
 
 
   useEffect(() => {
@@ -53,6 +55,22 @@ const Alignment = () => {
     }
     return result ; 
   }
+  const getSelectLabels= ()=>{
+    const res = getChildrenIds()
+    let result=[]
+    res.shift()
+    
+    if(res && res.length > 0){
+      res.map(el=>{
+        const name = getPortfolioName(el)
+        result.push({
+          label:name,
+          value:el
+        })
+      })
+    }
+    return result;
+  }
 
   const fetchDetails = async () => {
     const data = getChildrenIds()
@@ -62,6 +80,19 @@ const Alignment = () => {
     delete requestData.version_benchmark
 
     await dispatch(getAlignment(requestData))
+    setPortIds(data)
+  }
+  const handlePortIds = async(e)=>{
+    let value = e.target.value
+    console.log("value",value)
+
+    const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
+    requestData.portfolio_id = value
+    delete requestData.benchmark_id
+    delete requestData.version_benchmark
+
+    await dispatch(getAlignment(requestData))
+    setPortIds(value)
   }
     const getPortfolioName = id=>{
       let portName = ''
@@ -74,9 +105,9 @@ const Alignment = () => {
         }
         return portName
   }
+
   const getChartData = () => {
     let alignmentData = alignment['data']
-    console.log("amaan",alignment)
     if(alignmentData && Object.keys(alignmentData).length > 0){
         let scenario =
       portScenario === 'LowEnergyDemand'
@@ -104,7 +135,6 @@ const Alignment = () => {
       },
       
     ]
-    console.log("alignmentData",alignmentData)
     const data = alignmentData['Scenarios']
 
     if (data && Object.keys(data).length > 0) {
@@ -144,6 +174,8 @@ const Alignment = () => {
     setLineChartData(chartData)
     }
   }
+  const options = getSelectLabels()
+  console.log("portIds",portIds)
   return (
       <React.Fragment>
       {loading ? (
@@ -158,6 +190,23 @@ const Alignment = () => {
         </Box>
       ) : (
         <Box>
+           <Grid item xs={4} style={{marginTop:20}}>
+              <FormControl variant="outlined" >
+                <InputLabel>Select Children</InputLabel>
+                <Select
+                  label="Select Children"
+                  value={portIds}
+                  onChange={handlePortIds}
+                  multiple
+                  style={{fontSize:14,width:300,marginBottom:20}}
+                >
+                  {options.map(option => (
+                      <MenuItem value={option.value}>{option.label}</MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
           <LineChart
             data={lineChartData}
             chartKey="PORT_ALIGNMENT"

@@ -16,7 +16,8 @@ const Alignment = () => {
   const [chartData,setChartData] = useState([])
   const [tableData,setTableData] = useState([])
   const [categories,setCategories] = useState([])
-  let [currentSector,setSector] = useState("")
+  const [currentSector,setSector] = useState("")
+  const [metric,setMetric] = useState("Contribution")
 
   const auth = useSelector((state) => state.auth)
   const {allPortfolios,currentPortfolio,loading,filterItem} = auth
@@ -30,6 +31,60 @@ const Alignment = () => {
   }, [targetSetting])
 
  
+  const handleMetricChange =(e)=>{
+    const value = e.target.value
+
+    if(value == 'Contribution'){
+      const data = targetSetting.data
+      let chartData=[]
+      let categories = []
+    
+      if (data && Object.keys(data).length > 0) {
+        Object.keys(data).map((id,index) => {
+          let contrib = data[id]['Target_Setting_table']['Portfolio']['intensity']
+  
+          chartData.push({
+              name:getPortfolioName(id),
+              data:Object.values(contrib),
+          })
+  
+          if(index == 0){
+              categories = [...Object.keys(contrib)]
+          }   
+        })
+      }
+  
+     setChartData(chartData)
+     setCategories(categories)
+     setSector(categories[0])
+     setMetric(e.target.value)
+    }
+    else{
+      console.log("testamaan")
+      const data = targetSetting.data
+      let chartData=[]
+      let categories = []
+    
+      if (data && Object.keys(data).length > 0) {
+        Object.keys(data).map((id,index) => {
+          let allowance = data[id]['Target_Setting_table']['Allowance']['2020']
+  
+          chartData.push({
+              name:getPortfolioName(id),
+              data:Object.values(allowance),
+          })
+  
+          if(index == 0){
+              categories = [...Object.keys(allowance)]
+          }     
+        })
+      }  
+     setChartData(chartData)
+     setCategories(categories)
+     setSector(categories[0])
+     setMetric(e.target.value)
+    }
+  }
   const getChildrenIds = ()=>{
     let childrenIds=[]
     let result = []
@@ -98,21 +153,18 @@ const Alignment = () => {
     let categories = []
     let tableData=[]
 
+
     if (data && Object.keys(data).length > 0) {
       Object.keys(data).map((id,index) => {
         let contrib = data[id]['Target_Setting_table']['Portfolio']['intensity']
         let allowance = data[id]['Target_Setting_table']['Allowance']['2020']
         let annualRed = data[id]['Target_Setting_table']['AnnualReduction'][0]['2020'] 
+
         chartData.push({
             name:getPortfolioName(id),
             data:Object.values(contrib),
-            stack:'contribution'
         })
-        chartData.push({
-            name:getPortfolioName(id),
-            data:Object.values(allowance),
-            stack:'allowance'
-        })
+
         if(index == 0){
             categories = [...Object.keys(contrib)]
         }
@@ -124,7 +176,6 @@ const Alignment = () => {
         })       
       })
     }
-    console.log("chartData>>",chartData)
 
    setChartData(chartData)
    setCategories(categories)
@@ -145,6 +196,21 @@ const Alignment = () => {
         </Box>
       ) : (
         <Box>
+          <Grid item xs={4} style={{marginTop:20}}>
+              <FormControl variant="outlined" >
+                <InputLabel>Select Metric</InputLabel>
+                <Select
+                  label="Select Metric"
+                  value={metric}
+                  onChange={handleMetricChange}
+                  style={{fontSize:14,width:300,marginBottom:20}}
+                >
+                  {['Contribution','Allowance'].map(metric => (
+                      <MenuItem value={metric}>{metric}</MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Grid>
           <StackedColumn
                 chartKey="FUND_TARGET_SETTINGS"
                 data={chartData}
@@ -169,10 +235,10 @@ const Alignment = () => {
             </Grid>
           </Grid>
             <DataTable
-				data={tableData}
-				columns={targetFundCells}
-				tableHeading="PORTFOLIO_INTENSITY"
-			/>
+              data={tableData}
+              columns={targetFundCells}
+              tableHeading="PORTFOLIO_INTENSITY"
+            />
         </Box>
       )}
     </React.Fragment>
