@@ -24,6 +24,8 @@ const intialState = {
   selectedDownloadPort: ["summary"],
   currencyFixRate:{},
   allPortfolios:[],
+  fundsPortList:[],
+  currentFundsPortfolio:''
 }
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -68,13 +70,11 @@ export default function authReducer(state = { ...intialState }, action) {
       let result = []
       if (portfolioList && portfolioList.length > 0) {
          portfolioList.map((portfolio) => {
-          if(portfolio.is_parent){
               result.push({
                   label: portfolio.name,
                   value: portfolio.portfolio_id,
                   version: portfolio.version,
               })
-          }
         })
       }
       const currentData = {
@@ -90,7 +90,6 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.currentBenchmark = {
           ...currentData,
         }
-        draft.allPortfolios = action.res
       })
     case types.GET_PORTFOLIO_LIST_FAILURE:
       return produce(state, (draft) => {
@@ -98,6 +97,38 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.currentPortfolio = {}
         draft.currentBenchmark = {}
       })
+    case types.GET_FUNDS_PORTFOLIO_LIST_SUCCESS:
+      const list = action.res
+      let res = []
+      if (list && list.length > 0) {
+         list.map((portfolio) => {
+          if(portfolio.is_parent){
+              res.push({
+                  label: portfolio.name,
+                  value: portfolio.portfolio_id,
+                  version: portfolio.version,
+              })
+          }
+        })
+      }
+      const fundsData = {
+        label: res[0].label,
+        value: res[0].value,
+        version: res[0].version,
+      }
+      return produce(state, (draft) => {
+        draft.fundsPortList = [...res]
+        draft.currentFundsPortfolio = {
+          ...fundsData}
+        draft.allPortfolios = action.res
+        
+      })
+    case types.GET_FUNDS_PORTFOLIO_LIST_FAILURE:
+      return produce(state, (draft) => {
+        draft.fundsPortList = []
+        draft.currentFundsPortfolio = {}
+      })
+
     case types.GET_USER_INFO:
       return produce(state, (draft) => {
         draft.userInfo = action.res
@@ -112,6 +143,10 @@ export default function authReducer(state = { ...intialState }, action) {
     case types.SET_PORTFOLIO:
       return produce(state, (draft) => {
         draft.currentPortfolio = action.res
+      })
+      case types.SET_FUNDS_PORTFOLIO:
+      return produce(state, (draft) => {
+        draft.currentFundsPortfolio = action.res
       })
     case types.SET_BENCHMARK:
       return produce(state, (draft) => {

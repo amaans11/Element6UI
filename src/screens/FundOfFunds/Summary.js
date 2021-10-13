@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Box, CircularProgress } from '@material-ui/core'
 import PieChart from '../../components/ChartsComponents/PieChart'
 import { getSummary } from '../../redux/actions/fundOfFundActions'
+import {getFundsPortfolioList} from '../../redux/actions/authActions'
 import { Grid } from '@material-ui/core'
 import DataTable from '../../components/Table/DataTable';
 import {summaryCells} from '../../util/TableHeadConfig'
@@ -16,7 +17,7 @@ const Summary = () => {
   const [chartData,setChartData] = useState([])
 
   const auth = useSelector((state) => state.auth)
-  const {allPortfolios,currentPortfolio,loading} = auth
+  const {allPortfolios,currentFundsPortfolio,loading} = auth
   const summary = useSelector(state=>state.fund.summary)
 
   useEffect(() => {
@@ -32,12 +33,13 @@ const Summary = () => {
     let result = []
     if(allPortfolios && allPortfolios.length > 0){
         allPortfolios.map(portfolio=>{
-            if(portfolio.portfolio_id === currentPortfolio.value ){
+            if(portfolio.portfolio_id === currentFundsPortfolio.value ){
                  childrenIds = portfolio.children_id
             }
         })
     }
-    console.log("childrenIds>>",childrenIds)
+    console.log("childrenIds,",childrenIds)
+    console.log("childrenIds,",allPortfolios)
     if(childrenIds && childrenIds .length > 0){
         childrenIds.map(id=>{
             allPortfolios.map(portfolio=>{
@@ -47,13 +49,13 @@ const Summary = () => {
             })
         })
     }
-    console.log("result>>",result)
-
+    console.log("childrenIds1>>",result)
     return result ; 
   }
 
   const fetchDetails = async () => {
     const data = getChildrenIds()
+    await dispatch(getFundsPortfolioList())
     await dispatch(getSummary(data.join(',')))
   }
   const getData=()=>{

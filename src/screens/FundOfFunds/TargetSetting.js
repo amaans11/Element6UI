@@ -20,7 +20,7 @@ const Alignment = () => {
   const [metric,setMetric] = useState("Contribution")
 
   const auth = useSelector((state) => state.auth)
-  const {allPortfolios,currentPortfolio,loading,filterItem} = auth
+  const {allPortfolios,currentFundsPortfolio,loading,filterItem} = auth
   const targetSetting = useSelector(state=>state.fund.targetSetting)
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const Alignment = () => {
     let result = []
     if(allPortfolios && allPortfolios.length > 0){
         allPortfolios.map(portfolio=>{
-            if(portfolio.portfolio_id === currentPortfolio.value ){
+            if(portfolio.portfolio_id === currentFundsPortfolio.value ){
                  childrenIds = portfolio.children_id
             }
         })

@@ -43,7 +43,7 @@ const requestApi = async (dispatch, auth, flm) => {
   const moduleName = auth.moduleName
   const tabValue = auth.tabValue
   const companyData = flm.companyData
-  const {allPortfolios,currentPortfolio} = auth
+  const {allPortfolios,currentPortfolio,currentFundsPortfolio} = auth
 
   let data = {}
 
@@ -51,7 +51,7 @@ const requestApi = async (dispatch, auth, flm) => {
   let result = []
   if(allPortfolios && allPortfolios.length > 0){
       allPortfolios.map(portfolio=>{
-          if(portfolio.portfolio_id === currentPortfolio.value ){
+          if(portfolio.portfolio_id === currentFundsPortfolio.value ){
                childrenIds = portfolio.children_id
           }
       })
@@ -382,7 +382,7 @@ export const getPortfolioList = (client) => {
       'Authorization': `Bearer ${accessToken}`,
     }
     return axios
-      .get(`${process.env.REACT_APP_API_URL}/portfolio/?portfolio_type=PC`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/`, { headers: headers })
       .then((result) => {
         dispatch(getPortfolioListSuccess(result.data))
       })
@@ -398,6 +398,32 @@ export const getPortfolioListSuccess = (res) => {
 
 export const getPortfolioListFailure = () => {
   return { type: actionTypes.GET_PORTFOLIO_LIST_FAILURE }
+}
+
+
+export const getFundsPortfolioList = () => {
+  return async (dispatch, getState) => {
+    const accessToken = getState().auth.currentUser.access_token
+    const headers = {
+      'Authorization': `Bearer ${accessToken}`,
+    }
+    return axios
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/?portfolio_type=PC`, { headers: headers })
+      .then((result) => {
+        dispatch(getFundsPortfolioListSuccess(result.data))
+      })
+      .catch(() => {
+        dispatch(getFundsPortfolioListFailure())
+      })
+  }
+}
+
+export const getFundsPortfolioListSuccess = (res) => {
+  return { type: actionTypes.GET_FUNDS_PORTFOLIO_LIST_SUCCESS, res }
+}
+
+export const getFundsPortfolioListFailure = () => {
+  return { type: actionTypes.GET_FUNDS_PORTFOLIO_LIST_FAILURE }
 }
 
 export const getUserInfo = () => {
@@ -480,9 +506,20 @@ export const setPortfolio = (portfolio) => {
     requestApi(dispatch, auth, flm)
   }
 }
+export const setFundsPortfolio = (portfolio) => {
+  return async (dispatch, getState) => {
+    await dispatch(setFundsPortfolioSuccess(portfolio))
+    const auth = getState().auth
+    const flm = getState().flm
+    requestApi(dispatch, auth, flm)
+  }
+}
 
 export const setPortfolioSuccess = (res) => {
   return { type: actionTypes.SET_PORTFOLIO, res }
+}
+export const setFundsPortfolioSuccess = (res) => {
+  return { type: actionTypes.SET_FUNDS_PORTFOLIO, res }
 }
 export const setBenchmark = (benchmark) => {
   return async (dispatch, getState) => {
@@ -584,7 +621,7 @@ export const logoutUser = () => {
           window.location.reload()
         })
         .catch(err=>{
-          NotificationManager.error("Logout Failed s! try again")
+          NotificationManager.error("Logout Failed ! try again")
         })
     }
 }

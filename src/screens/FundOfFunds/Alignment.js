@@ -18,7 +18,7 @@ const Alignment = () => {
   const [chartData,setChartData] = useState([])
 
   const auth = useSelector((state) => state.auth)
-  const {allPortfolios,currentPortfolio,loading,filterItem} = auth
+  const {allPortfolios,currentFundsPortfolio,loading,filterItem} = auth
   const alignment = useSelector(state=>state.fund.alignment)
   const { portScenario } = filterItem
 
@@ -36,10 +36,10 @@ const Alignment = () => {
  
   const getChildrenIds = ()=>{
     let childrenIds=[]
-    let result = [currentPortfolio.value]
+    let result = [currentFundsPortfolio.value]
     if(allPortfolios && allPortfolios.length > 0){
         allPortfolios.map(portfolio=>{
-            if(portfolio.portfolio_id === currentPortfolio.value ){
+            if(portfolio.portfolio_id === currentFundsPortfolio.value ){
                  childrenIds = portfolio.children_id
             }
         })

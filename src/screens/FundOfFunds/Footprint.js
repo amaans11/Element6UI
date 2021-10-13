@@ -16,7 +16,7 @@ import getRequestData from '../../util/RequestData'
 const Alignment = () => {
   const dispatch = useDispatch()
   const auth = useSelector((state) => state.auth)
-  const {allPortfolios,currentPortfolio,loading,filterItem} = auth
+  const {allPortfolios,currentFundsPortfolio,loading,filterItem} = auth
   const footprint = useSelector(state=>state.fund.footprint)
   const { inferenceType,emission } = filterItem
 
@@ -65,7 +65,7 @@ const Alignment = () => {
   
         if(footprintData && Object.keys(footprintData).length > 0){
           Object.keys(footprintData).map((id,index)=>{
-              if(id !== currentPortfolio.value){
+              if(id !== currentFundsPortfolio.value){
               const footprint = inferenceType == 'Avg' ? footprintData[id]['Footprint'][0]['Avg'] : 
               footprintData[id]['Footprint'][1]['Max']
               const weight = footprintData[id]['Weight']
@@ -133,10 +133,10 @@ const Alignment = () => {
  
   const getChildrenIds = ()=>{
     let childrenIds=[]
-    let result = [currentPortfolio.value]
+    let result = [currentFundsPortfolio.value]
     if(allPortfolios && allPortfolios.length > 0){
         allPortfolios.map(portfolio=>{
-            if(portfolio.portfolio_id === currentPortfolio.value ){
+            if(portfolio.portfolio_id === currentFundsPortfolio.value ){
                  childrenIds = portfolio.children_id
             }
         })

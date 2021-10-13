@@ -72,6 +72,7 @@ import {
   getDownloadPortfolios,
   setDownloadPortfolio,
   setDownloadTags,  setEmissions,
+  setFundsPortfolio
 } from '../redux/actions/authActions'
 import {  getDownloadDetails} from '../redux/actions/footprintActions'
 import csvFile from '../assets/Dummy-file.xlsx'
@@ -224,6 +225,9 @@ const MiniDrawer = ({ classes, history }) => {
   const portfolios = useSelector((state) => state.auth.portfolioList)
   const currentPortfolio = useSelector((state) => state.auth.currentPortfolio)
   const currentBenchmark = useSelector((state) => state.auth.currentBenchmark)
+  const fundsPortList = useSelector((state) => state.auth.fundsPortList)
+  const currentFundsPortfolio = useSelector((state) => state.auth.currentFundsPortfolio)
+
   const isVisible = useSelector((state) => state.auth.isVisible)
   const isAdmin = useSelector(
     (state) => state.auth.userInfo && state.auth.userInfo.is_admin,
@@ -257,6 +261,17 @@ const MiniDrawer = ({ classes, history }) => {
     await getPortfolio()
     await dispatch(getUploadPortfolioList())
     await dispatch(getDownloadPortfolios())
+  }
+  const onFundsPortfolioChange = async (currentValue) =>{
+    let portfolio = {}
+    if (portfolios && portfolios.length > 0) {
+      portfolios.map((port) => {
+        if (port.label === currentValue) {
+          portfolio = { ...port }
+        }
+      })
+    }
+    await dispatch(setFundsPortfolio(portfolio))
   }
   const onPortfolioChange = async (currentValue) => {
     let portfolio = {}
@@ -379,6 +394,7 @@ const MiniDrawer = ({ classes, history }) => {
       }
     })
   }
+  console.log("currentFundsPortfolio",currentFundsPortfolio)
 
   return (
     <div className={classes.root}>
@@ -416,19 +432,22 @@ const MiniDrawer = ({ classes, history }) => {
             window.location.pathname !== '/urgentem-download' ? (
               <div className="filter-main">
                 <Box>
-                  <Box>
-                    <SelectwithSearch
-                      heading={'Select Portfolio'}
-                      data={
-                        portfolios && portfolios.length > 0 ? portfolios : []
-                      }
-                      // defaultValue={currentPortfolio}
-                      handleChange={onPortfolioChange}
-                      type="portfolio"
-                      currentValue={currentPortfolio}
-                    />
+                {window.location.pathname !== '/fund-of-funds' ? 
+
+                <React.Fragment>
+                   <Box>
+                  <SelectwithSearch
+                    heading={'Select Portfolio'}
+                    data={
+                      portfolios && portfolios.length > 0 ? portfolios : []
+                    }
+                    // defaultValue={currentPortfolio}
+                    handleChange={onPortfolioChange}
+                    type="portfolio"
+                    currentValue={currentPortfolio}
+                  />
                   </Box>
-                  {window.location.pathname !== '/fund-of-funds' && <Box mt={2}>
+                  <Box mt={2}>
                     <SelectwithSearch
                       heading={'Select Benchmark'}
                       data={
@@ -439,7 +458,21 @@ const MiniDrawer = ({ classes, history }) => {
                       type="benchmark"
                       currentValue={currentBenchmark}
                     />
-                  </Box>}
+                  </Box>
+                </React.Fragment>:
+                <Box>
+                <SelectwithSearch
+                  heading={'Select Funds Portfolio'}
+                  data={
+                    fundsPortList && fundsPortList.length > 0 ? fundsPortList : []
+                  }
+                  // defaultValue={currentPortfolio}
+                  handleChange={onFundsPortfolioChange}
+                  type="portfolio"
+                  currentValue={currentFundsPortfolio}
+                />
+                </Box>
+                 }
                 </Box>
                 <div className="filter-part">
                   <FilterGroup />
