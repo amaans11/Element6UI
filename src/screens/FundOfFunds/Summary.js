@@ -17,7 +17,7 @@ const Summary = () => {
   const [chartData,setChartData] = useState([])
 
   const auth = useSelector((state) => state.auth)
-  const {allPortfolios,currentFundsPortfolio,loading} = auth
+  const {loading} = auth
   const summary = useSelector(state=>state.fund.summary)
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Summary = () => {
   }, [summary])
 
  
-  const getChildrenIds = ()=>{
+  const getChildrenIds = (allPortfolios,currentFundsPortfolio)=>{
     let childrenIds=[]
     let result = []
     if(allPortfolios && allPortfolios.length > 0){
@@ -38,8 +38,6 @@ const Summary = () => {
             }
         })
     }
-    console.log("childrenIds,",childrenIds)
-    console.log("childrenIds,",allPortfolios)
     if(childrenIds && childrenIds .length > 0){
         childrenIds.map(id=>{
             allPortfolios.map(portfolio=>{
@@ -49,13 +47,12 @@ const Summary = () => {
             })
         })
     }
-    console.log("childrenIds1>>",result)
     return result ; 
   }
 
   const fetchDetails = async () => {
-    const data = getChildrenIds()
-    await dispatch(getFundsPortfolioList())
+    const {list,fundsData} = await dispatch(getFundsPortfolioList())
+    const data = getChildrenIds(list,fundsData)
     await dispatch(getSummary(data.join(',')))
   }
   const getData=()=>{

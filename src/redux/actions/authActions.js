@@ -411,6 +411,26 @@ export const getFundsPortfolioList = () => {
       .get(`${process.env.REACT_APP_API_URL}/portfolio/?portfolio_type=PC`, { headers: headers })
       .then((result) => {
         dispatch(getFundsPortfolioListSuccess(result.data))
+        const list = result.data
+        let res = []
+        if (list && list.length > 0) {
+           list.map((portfolio) => {
+            if(portfolio.is_parent){
+                res.push({
+                    label: portfolio.name,
+                    value: portfolio.portfolio_id,
+                    version: portfolio.version,
+                })
+            }
+          })
+        }
+        const fundsData = {
+          label: res[0].label,
+          value: res[0].value,
+          version: res[0].version,
+        }
+
+        return {list,fundsData}
       })
       .catch(() => {
         dispatch(getFundsPortfolioListFailure())
