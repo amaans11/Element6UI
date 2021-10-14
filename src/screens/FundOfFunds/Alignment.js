@@ -80,19 +80,16 @@ const Alignment = () => {
     delete requestData.version_benchmark
 
     await dispatch(getAlignment(requestData))
-    setPortIds(data)
   }
   const handlePortIds = async(e)=>{
     let value = e.target.value
-    console.log("value",value)
 
     const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
-    requestData.portfolio_id = value
+    requestData.portfolio_id = [...value,currentFundsPortfolio.value]
     delete requestData.benchmark_id
     delete requestData.version_benchmark
 
     await dispatch(getAlignment(requestData))
-    setPortIds(value)
   }
     const getPortfolioName = id=>{
       let portName = ''
@@ -108,6 +105,8 @@ const Alignment = () => {
 
   const getChartData = () => {
     let alignmentData = alignment['data']
+    let childIds = []
+
     if(alignmentData && Object.keys(alignmentData).length > 0){
         let scenario =
       portScenario === 'LowEnergyDemand'
@@ -170,12 +169,20 @@ const Alignment = () => {
               }
         )})
     }
+    if(Object.keys(alignmentData['Children_Dots']).length > 0){
+      Object.keys(alignmentData['Children_Dots']).map(key=>{
+           if(key !== currentFundsPortfolio.value){
+             childIds.push(key)
+           }
+      })
+    }
+
 
     setLineChartData(chartData)
+    setPortIds(childIds)
     }
   }
   const options = getSelectLabels()
-  console.log("portIds",portIds)
   return (
       <React.Fragment>
       {loading ? (

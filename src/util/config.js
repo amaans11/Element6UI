@@ -200,7 +200,7 @@ const configs = {
 			Y_AXIS_TITLE:'Aggregated Sector Sentiment'
 		},
 		SUMMARY:{
-			TITLE: 'Fund of Funds Composition:Weights',
+			TITLE: 'Fund of Funds Composition: Weights',
 			Y_AXIS_TITLE: 'Weight (%)'
 		},
 		FOOTPRINT_PIE:{

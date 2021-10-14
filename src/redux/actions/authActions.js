@@ -45,6 +45,7 @@ const requestApi = async (dispatch, auth, flm) => {
   const companyData = flm.companyData
   const {allPortfolios,currentPortfolio,currentFundsPortfolio} = auth
 
+  console.log("result..",currentFundsPortfolio)
   let data = {}
 
   let childrenIds=[]
@@ -126,14 +127,14 @@ const requestApi = async (dispatch, auth, flm) => {
           break
           case 1:
           const reData = getRequestData('PORTFOLIO_EMISSION', auth)
-          reData.portfolio_id = [...result,currentPortfolio.value]
+          reData.portfolio_id = [...result,currentFundsPortfolio.value]
           delete reData.benchmark_id
           delete reData.version_benchmark
           await dispatch(getFootprint(reData))
           break
         case 2:
           const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
-          requestData.portfolio_id = [...result,currentPortfolio.value]
+          requestData.portfolio_id = [...result,currentFundsPortfolio.value]
           delete requestData.benchmark_id
           delete requestData.version_benchmark
           await dispatch(getAlignment(requestData))
@@ -527,6 +528,7 @@ export const setPortfolio = (portfolio) => {
   }
 }
 export const setFundsPortfolio = (portfolio) => {
+  console.log("portfolio//",portfolio)
   return async (dispatch, getState) => {
     await dispatch(setFundsPortfolioSuccess(portfolio))
     const auth = getState().auth

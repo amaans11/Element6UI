@@ -609,7 +609,7 @@ const summaryCells = [
 		right: false
 	},
 	{
-		name: 'Child Weight',
+		name: 'Child Weight (%)',
 		selector: 'weight',
 		sortable: true,
 		right: true

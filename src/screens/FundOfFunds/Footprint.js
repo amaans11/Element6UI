@@ -61,6 +61,7 @@ const Alignment = () => {
         let stackedCol = []
         let parentCategories=[]
         let parentData=[]
+        console.log("currentFundsPortfolio,",currentFundsPortfolio)
 
   
         if(footprintData && Object.keys(footprintData).length > 0){
@@ -134,6 +135,7 @@ const Alignment = () => {
   const getChildrenIds = ()=>{
     let childrenIds=[]
     let result = [currentFundsPortfolio.value]
+
     if(allPortfolios && allPortfolios.length > 0){
         allPortfolios.map(portfolio=>{
             if(portfolio.portfolio_id === currentFundsPortfolio.value ){
@@ -150,6 +152,7 @@ const Alignment = () => {
             })
         })
     }
+
     return result ; 
   }
 
@@ -209,6 +212,7 @@ const Alignment = () => {
                 chartKey="PARENT_INTENSITY"
                 data={parentData}
                 categories={parentCategories}
+                yAxisTitle={yAxisTitle}
               />
              </Grid>
          </Grid>
