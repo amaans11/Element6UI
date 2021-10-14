@@ -157,7 +157,7 @@ const data = {
     {
       name: 'assetClass',
       disabled: false,
-    },
+   },
     {
       name: 'inferenceType',
       disabled: false,

@@ -365,9 +365,7 @@ export default function FilterGroup() {
     }
   }
   const getFootprintMetric = (tagName) => {
-    console.log("moduleName",moduleName)
     if(moduleName === 'FLM'){
-      console.log("test2")
       if(tagName == 'WeightAvgRev'){
         return true
       }
@@ -514,13 +512,22 @@ export default function FilterGroup() {
   const updateTags = (grpindex, tagindex, selected, grpKey) => {
     const newData = [...data]
     const grpName = newData[grpindex].grpKey
+    console.log("amaan",newData)
+    console.log("amaan",grpindex)
+
+    console.log("amaan",newData[grpindex])
 
     if(grpName == 'assetClass'){
+      console.log("amaan")
       let assetValues = filterItem[grpName]
+      console.log("amaan",assetValues)
 
       const currentValue = newData[grpindex].tagsList[tagindex].value
+      console.log("amaan",currentValue)
 
       if(selected){
+        console.log("amaan",currentValue)
+
           assetValues= [...assetValues , currentValue]
           dispatch(
             setFilterItem({
@@ -626,6 +633,7 @@ export default function FilterGroup() {
   }
   const currentTheme = localStorage.getItem('appTheme') || 'basic'
 
+  console.log("filterItem>>",filterItem)
   return (
     <React.Fragment>
       {pathname !== '/forward-looking-analysis' &&
@@ -788,6 +796,7 @@ export default function FilterGroup() {
         : filterData.map((e, grpIndex) => {
             if (some(configs, { name: e.grpKey })) {
               const index = findIndex(configs, { name: e.grpKey })
+              console.log("filterItem[e.grpKey]/",filterItem)
               return (
                 <Accordion
                   style={{
@@ -802,7 +811,7 @@ export default function FilterGroup() {
                       (tabValue === 1 || tabValue === 2))
                   }
                   expanded={
-                    e.grpKey === 'assetClass' ? false : isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
+                    e.grpKey === 'assetClass' &&  pathname !== '/fund-of-funds' ?  false : isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
                   }
                   onChange={() => {
                     handleExpandAccordion(e.grpKey)
@@ -831,7 +840,7 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      {e.grpKey === 'assetClass' ? 'Equity,Corporate Bonds' : e.grpKey === 'footprintMetric' &&
+                      {e.grpKey === 'assetClass' ?  pathname !== '/fund-of-funds'   ? 'Equity,Corporate Bonds' : getAssetDetails(filterItem[e.grpKey]) : e.grpKey === 'footprintMetric' &&
                       filterItem.approach === 'MarketShare' &&
                       (tabValue === 1 || tabValue === 2)
                         ? 'Total Carbon Emissions'
@@ -851,7 +860,26 @@ export default function FilterGroup() {
                         const val = getEmission(t.value)
                         const fpValue = getFootprintMetric(t.value)
                         const warmingScValue = getWarmingScenario(t.value)
-                        if (e.grpKey === 'emission') {
+                        if(e.grpKey === 'assetClass'){
+                          return (
+                            <FilterTags
+                              name={t.name}
+                              selected={filterItem[e.grpKey].includes(t.value)}
+                              grpindex={index}
+                              tagindex={i}
+                              action={(grpindex, tagindex, selected) =>
+                                updateTags(
+                                  3,
+                                  tagindex,
+                                  selected,
+                                  e.grpKey,
+                                )
+                              }
+                            />
+                          )
+                        }
+                        
+                        else if (e.grpKey === 'emission') {
                           if (val) {
                             return (
                               <FilterTags
