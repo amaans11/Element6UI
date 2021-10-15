@@ -11,6 +11,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Logo from '../../assets/Urgentem_Wordmark.png';
 import {logoutUser} from '../../redux/actions/authActions'
 import SelectwithSearch from '../../components/Autocomplete'
+import {get} from 'lodash'
 
 const drawerWidth = 295;
 
@@ -42,6 +43,8 @@ const Header = ({ history }) => {
 	const portfolios = useSelector((state) => state.auth.portfolioList);
 
 	const currentTheme = localStorage.getItem('appTheme');
+	console.log("history",history)
+	const pathname = get(history.location, 'pathname', '')
 
 	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
 	let emissionYear=2019;
@@ -118,13 +121,13 @@ const Header = ({ history }) => {
 						open={Boolean(anchorEl)}
 						onClose={()=>{setAnchor(null)}}
 						>
-						<MenuItem onClick={handleThemeChange}>
+						<MenuItem onClick={handleThemeChange} disabled = {pathname == '/verification-code'}>
 							<BorderColorIcon className={classes.icon} />Change Theme
 						</MenuItem>
-						<MenuItem onClick={handleSettings}>
-							<SettingsIcon className={classes.icon} />Settings
+						<MenuItem onClick={handleSettings} disabled = {pathname == '/verification-code'}>
+							<SettingsIcon className={classes.icon}  />Settings
 						</MenuItem>
-						{userInfo.is_admin && <MenuItem onClick={handleAdmin}>
+						{userInfo.is_admin && <MenuItem onClick={handleAdmin} disabled = {pathname == '/verification-code'}>
 							<SupervisorAccountIcon className={classes.icon} />Admin
 						</MenuItem>}
 						<MenuItem onClick={handleLogout}>

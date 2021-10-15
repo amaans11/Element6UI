@@ -638,7 +638,7 @@ export const verifyCode = (data) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .post(`${actionTypes.API_URL}/user/change_email_verify`, data, {
+      .post(`${actionTypes.API_URL}/user/verify`, data, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -775,6 +775,7 @@ export const getAccessToken = () => {
       .catch((err) => {
         const errorType = err.response.data.type
         if(errorType == 're-login'){
+          NotificationManager.error("Session Expired!")
           dispatch(logoutUser())
         }
       })
