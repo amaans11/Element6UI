@@ -105,7 +105,7 @@ const Settings = () => {
   const currencyYears = Object.keys(currenyConfigs)
 
   const currentYear = userInfo.year.currency
-  const currentCurrency = get(auth, 'currentCurrency', 'USD')
+  const currentCurrency = get(userInfo, 'display_currency', 'USD')
   const currentQuarter = userInfo.quarter && userInfo.quarter.currency ? userInfo.quarter.currency : 'Q2'
 
   const [year, setYear] = useState(currentYear)
@@ -154,9 +154,9 @@ const Settings = () => {
       version: {
         emissions: emissionVersion,
         fundamentals: fundamentalVersion,
-        display_currency:currency,
 
       },
+      display_currency:currency,
     }
     const reData = {
       userName: currentUser.userName,
