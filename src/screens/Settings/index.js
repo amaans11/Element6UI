@@ -104,9 +104,9 @@ const Settings = () => {
   const currenyConfigs = userInfo.currency_config
   const currencyYears = Object.keys(currenyConfigs)
 
-  const currentYear = currencyYears[currencyYears.length -1]
+  const currentYear = userInfo.year.currency
   const currentCurrency = get(auth, 'currentCurrency', 'USD')
-  const currentQuarter = get(auth, 'currentQuarter', 'Q2')
+  const currentQuarter = userInfo.quarter && userInfo.quarter.currency ? userInfo.quarter.currency : 'Q2'
 
   const [year, setYear] = useState(currentYear)
   const [quarter, setQuarter] = useState(currentQuarter)
@@ -158,8 +158,14 @@ const Settings = () => {
 
       },
     }
+    const reData = {
+      userName: currentUser.userName,
+    }
     await dispatch(updateUserInfo(data))
 	  await dispatch(getFixRate(year,quarter))
+
+    await dispatch(getUserInfo(reData))
+
   }
   const deletePortfolioHandler = () => {
     setDialog(true)
