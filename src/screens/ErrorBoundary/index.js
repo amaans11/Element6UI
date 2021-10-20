@@ -1,38 +1,39 @@
-import { Button } from '@material-ui/core';
-import React from 'react'
+import React,{Component} from 'react';
+import * as Sentry from '@sentry/browser';
+// Sentry.init({
+//  dsn: "<https://63bbb258ca4346139ee533576e17ac46@sentry.io/1432138>"
+// });
+// should have been called before using it here
+// ideally before even rendering your react app 
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends Component {
     constructor(props) {
-      super(props);
-      this.state = { hasError: false };
+        super(props);
+        this.state = { error: null };
     }
-  
-    static getDerivedStateFromError(error) {
-      // Update state so the next render will show the fallback UI.
-      return { hasError: true };
-    }
-  
+
     componentDidCatch(error, errorInfo) {
-        // Catch errors in any components below and re-render with error message
-        this.setState({
-          error: error,
-          errorInfo: errorInfo
-        })
-        // You can also log error messages to an error reporting service here
-      }
-  
+      this.setState({ error });
+      Sentry.withScope(scope => {
+        Object.keys(errorInfo).forEach(key => {
+          scope.setExtra(key, errorInfo[key]);
+        });
+        Sentry.captureException(error);
+      });
+    }
+
     render() {
-      if (this.state.hasError) {
-        // You can render any custom fallback UI
-        return <React.Fragment>
-            <h3>Sorry, something went wrong.
+        if (this.state.error) {
+            //render fallback UI
+            return (
+              <h3>Sorry, something went wrong.
                 Please try to <a href="/login"> login again </a>. If you still see this message please 
                 let us know by emailing technical-support@urgentem.net</h3>
-        </React.Fragment>;
-      }
-  
-      return this.props.children; 
+            );
+        } else {
+            //when there's not an error, render children untouched
+            return this.props.children;
+        }
     }
-  }
-
-  export default ErrorBoundary
+}
+export default ErrorBoundary
