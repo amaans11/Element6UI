@@ -409,7 +409,7 @@ export const getFundsPortfolioList = () => {
       'Authorization': `Bearer ${accessToken}`,
     }
     return axios
-      .get(`${process.env.REACT_APP_API_URL}/portfolio/?portfolio_type=PC`, { headers: headers })
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/?portfolio_type=PC&is_full=true`, { headers: headers })
       .then((result) => {
         dispatch(getFundsPortfolioListSuccess(result.data))
         const list = result.data
