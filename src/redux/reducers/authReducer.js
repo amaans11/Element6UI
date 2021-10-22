@@ -37,7 +37,7 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.filterItem = {
           sector: 'SASB',
           footprintMetric: 'WeightAvgRev',
-          marketValue: 'MarketCapDebt',
+          marketValue: 'MarketCap',
           assetClass: ["Eq", "CB"],
           inferenceType: 'Avg',
           emission: 'Sc12',

@@ -491,7 +491,7 @@ const getRequestData = (type, auth) => {
         year_fundamentals: yearFundamentals,
         year_emissions: yearEmissions,
         asset_type: ['Eq','CB'],
-        market_value: marketValue,
+        market_value: 'MarketCapDebt',
         footprint: footprintMetric == 'CarbIntensityMarketVal' || footprintMetric == 'CarbIntensityRev'  || footprintMetric == 'TotalCarbEmis' ? 'WeightAvgRev' : footprintMetric,
         inference: 'Avg',
         scope: 'Sc123',
