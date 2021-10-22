@@ -22,7 +22,10 @@ const intialState = {
   portfolioTableRes: [],
   changeEmailRes: '',
   selectedDownloadPort: ["summary"],
-  currencyFixRate:{}
+  currencyFixRate:{},
+  allPortfolios:[],
+  fundsPortList:[],
+  currentFundsPortfolio:''
 }
 
 export default function authReducer(state = { ...intialState }, action) {
@@ -37,7 +40,7 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.filterItem = {
           sector: 'SASB',
           footprintMetric: 'WeightAvgRev',
-          marketValue: 'MarketCap',
+          marketValue: 'MarketCapDebt',
           assetClass: ["Eq", "CB"],
           inferenceType: 'Avg',
           emission: 'Sc12',
@@ -66,12 +69,12 @@ export default function authReducer(state = { ...intialState }, action) {
       const portfolioList = action.res
       let result = []
       if (portfolioList && portfolioList.length > 0) {
-        result = portfolioList.map((portfolio) => {
-          return {
-            label: portfolio.name,
-            value: portfolio.portfolio_id,
-            version: portfolio.version,
-          }
+         portfolioList.map((portfolio) => {
+              result.push({
+                  label: portfolio.name,
+                  value: portfolio.portfolio_id,
+                  version: portfolio.version,
+              })
         })
       }
       const currentData = {
@@ -94,9 +97,42 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.currentPortfolio = {}
         draft.currentBenchmark = {}
       })
+    case types.GET_FUNDS_PORTFOLIO_LIST_SUCCESS:
+      const list = action.res
+      let res = []
+      if (list && list.length > 0) {
+         list.map((portfolio) => {
+          if(portfolio.is_parent){
+              res.push({
+                  label: portfolio.name,
+                  value: portfolio.portfolio_id,
+                  version: portfolio.version,
+              })
+          }
+        })
+      }
+      const fundsData = {
+        label: res[0].label,
+        value: res[0].value,
+        version: res[0].version,
+      }
+      return produce(state, (draft) => {
+        draft.fundsPortList = [...res]
+        draft.currentFundsPortfolio = {
+          ...fundsData}
+        draft.allPortfolios = action.res
+        
+      })
+    case types.GET_FUNDS_PORTFOLIO_LIST_FAILURE:
+      return produce(state, (draft) => {
+        draft.fundsPortList = []
+        draft.currentFundsPortfolio = {}
+      })
+
     case types.GET_USER_INFO:
       return produce(state, (draft) => {
         draft.userInfo = action.res
+       
       })
     case types.UPDATE_CURRENCY_SUCCESS:
       return produce(state, (draft) => {
@@ -107,6 +143,10 @@ export default function authReducer(state = { ...intialState }, action) {
     case types.SET_PORTFOLIO:
       return produce(state, (draft) => {
         draft.currentPortfolio = action.res
+      })
+      case types.SET_FUNDS_PORTFOLIO:
+      return produce(state, (draft) => {
+        draft.currentFundsPortfolio = action.res
       })
     case types.SET_BENCHMARK:
       return produce(state, (draft) => {
@@ -141,6 +181,20 @@ export default function authReducer(state = { ...intialState }, action) {
       return produce(state, (draft) => {
         draft.currentUser = {}
         draft.userInfo = {}
+        draft.verifyUserRes = {}
+        draft.portfolioList = []
+        draft.currentPortfolio = {}
+        draft.currentBenchmark = {}
+        draft.currentYear = ''
+        draft.currentQuarter = ''
+        draft.currentCurrency = ''
+        draft.loading = false
+        draft.filterItem = {}
+        draft.downloadPortfolioList = []
+        draft.uploadPortfolioRes = {}
+        draft.portfolioTableRes = []
+        draft.fundsPortList = []
+        draft.currentFundsPortfolio = []
       })
     case types.GET_DOWNLOAD_PORTFOLIOS_SUCCESS:
       return produce(state, (draft) => {
@@ -169,14 +223,6 @@ export default function authReducer(state = { ...intialState }, action) {
         draft.downloadPortfolioList = []
       })
 
-    case types.GET_DOWNLOAD_DETAILS_SUCCESS:
-      return produce(state, (draft) => {
-        draft.downloadData = action.res
-      })
-    case types.GET_DOWNLOAD_DETAILS_FAILED:
-      return produce(state, (draft) => {
-        draft.downloadData = []
-      })
     case types.UPLOAD_PORTFOLIO_SUCCESS:
       return produce(state, (draft) => {
         draft.uploadPortfolioRes.data = action.res
@@ -257,7 +303,12 @@ export default function authReducer(state = { ...intialState }, action) {
       case types.GET_FIX_RATE_SUCCESS:
         return produce(state, (draft) => {
           draft.currencyFixRate = action.res 
-          })
+        })
+      case types.GET_ACCESS_TOKEN:
+        return produce(state, (draft) => {
+          console.log("action>>",action.res)
+          draft.currentUser.access_token = action.res.access_token 
+        })
     default:
       return state
   }
