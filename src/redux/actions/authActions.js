@@ -430,10 +430,13 @@ export const getFundsPortfolioList = () => {
           value: res[0].value,
           version: res[0].version,
         }
+        console.log("list>>",list)
+        console.log("fundsData>>",fundsData)
 
         return {list,fundsData}
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log("error>>",error)
         dispatch(getFundsPortfolioListFailure())
       })
   }

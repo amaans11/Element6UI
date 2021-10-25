@@ -111,11 +111,16 @@ export default function authReducer(state = { ...intialState }, action) {
           }
         })
       }
-      const fundsData = {
-        label: res[0].label,
-        value: res[0].value,
-        version: res[0].version,
+      let fundsData={}
+
+      if(res && res.length > 0){
+         fundsData = {
+          label: res[0].label,
+          value: res[0].value,
+          version: res[0].version,
+        }
       }
+      
       return produce(state, (draft) => {
         draft.fundsPortList = [...res]
         draft.currentFundsPortfolio = {

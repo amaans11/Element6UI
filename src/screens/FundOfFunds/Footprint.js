@@ -185,6 +185,7 @@ const Alignment = () => {
              <PieChart
                 chartKey="FOOTPRINT_PIE"
                 data={pieChartdata}
+                isFundOfFunds={true}
               />
              </Grid>
              <Grid item xs ={6}>
