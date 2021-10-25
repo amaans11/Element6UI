@@ -12,7 +12,7 @@ const data = {
     {
       name: 'marketValue',
       disabled: true,
-      value:'MarketCap'
+      value:'MarketCapDebt'
     },
     {
       name: 'assetClass',

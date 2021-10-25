@@ -11,6 +11,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Logo from '../../assets/Urgentem_Wordmark.png';
 import {logoutUser} from '../../redux/actions/authActions'
 import SelectwithSearch from '../../components/Autocomplete'
+import {get} from 'lodash'
 
 const drawerWidth = 295;
 
@@ -42,6 +43,9 @@ const Header = ({ history }) => {
 	const portfolios = useSelector((state) => state.auth.portfolioList);
 
 	const currentTheme = localStorage.getItem('appTheme');
+	const pathname = get(history.location, 'pathname', '')
+	const currentCurrency = get(userInfo, 'display_currency', 'USD')
+
 
 	let currentUser = auth && auth.currentUser ? auth.currentUser : {};
 	let emissionYear=2019;
@@ -89,9 +93,9 @@ const Header = ({ history }) => {
 					</LinkContainer>
 					
 					<Box variant="body1" color="inherit" noWrap>
-						<div style={{color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81'}}> {`${currentUser.displayName} / ${currentUser.client}`} </div>
+						<div style={{color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81'}}> {`${currentUser.display_name} / ${currentUser.client}`} </div>
 						<div style={{ fontSize: 12,color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81' }}> Urgentem Emissions Year - {emissionYear} </div>
-						<div style={{ fontSize: 12,color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81' }}> Currency - USD - {auth['currencyFixRate'] && auth['currencyFixRate'][auth.currentCurrency] ? auth['currencyFixRate'][auth.currentCurrency]: 1} {auth.currentCurrency ? auth.currentCurrency : 'USD'} </div>
+						<div style={{ fontSize: 12,color:currentTheme === 'dark' ? '#FFFFFF':'#F7DC81' }}> Currency - USD - {auth['currencyFixRate'] && auth['currencyFixRate'][currentCurrency] ? auth['currencyFixRate'][currentCurrency]: 1} {currentCurrency} </div>
 					</Box>
 				</div>
 				<div>
@@ -118,13 +122,13 @@ const Header = ({ history }) => {
 						open={Boolean(anchorEl)}
 						onClose={()=>{setAnchor(null)}}
 						>
-						<MenuItem onClick={handleThemeChange}>
+						<MenuItem onClick={handleThemeChange} disabled = {pathname == '/verification-code' || pathname == '/update-password'}>
 							<BorderColorIcon className={classes.icon} />Change Theme
 						</MenuItem>
-						<MenuItem onClick={handleSettings}>
-							<SettingsIcon className={classes.icon} />Settings
+						<MenuItem onClick={handleSettings} disabled = {pathname == '/verification-code' || pathname == '/update-password'}>
+							<SettingsIcon className={classes.icon}  />Settings
 						</MenuItem>
-						{userInfo.is_admin && <MenuItem onClick={handleAdmin}>
+						{userInfo.is_admin && <MenuItem onClick={handleAdmin} disabled = {pathname == '/verification-code' || pathname == '/update-password'}>
 							<SupervisorAccountIcon className={classes.icon} />Admin
 						</MenuItem>}
 						<MenuItem onClick={handleLogout}>

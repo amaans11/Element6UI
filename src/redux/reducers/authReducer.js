@@ -97,6 +97,7 @@ export default function authReducer(state = { ...intialState }, action) {
     case types.GET_USER_INFO:
       return produce(state, (draft) => {
         draft.userInfo = action.res
+       
       })
     case types.UPDATE_CURRENCY_SUCCESS:
       return produce(state, (draft) => {
@@ -261,7 +262,12 @@ export default function authReducer(state = { ...intialState }, action) {
       case types.GET_FIX_RATE_SUCCESS:
         return produce(state, (draft) => {
           draft.currencyFixRate = action.res 
-          })
+        })
+      case types.GET_ACCESS_TOKEN:
+        return produce(state, (draft) => {
+          console.log("action>>",action.res)
+          draft.currentUser.access_token = action.res.access_token 
+        })
     default:
       return state
   }

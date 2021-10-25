@@ -39,8 +39,14 @@ const getRequestData = (type, auth) => {
   } = auth
 
   const { client, userName } = currentUser
+  let year={},quarter={},version={};
 
-  const { year, quarter, version } = userInfo
+  if(userInfo && Object.keys(userInfo).length > 0){
+    year = userInfo.year
+    quarter = userInfo.quarter
+    version = userInfo.version
+  }
+
 
   const portfolioId = currentPortfolio.value
   const benchmarkId = currentBenchmark.value
@@ -491,8 +497,8 @@ const getRequestData = (type, auth) => {
         year_fundamentals: yearFundamentals,
         year_emissions: yearEmissions,
         asset_type: ['Eq','CB'],
-        market_value: marketValue,
-        footprint: footprintMetric == 'CarbIntensityMarketVal' || footprintMetric == 'CarbIntensityRev' ? 'WeightAvgRev' : footprintMetric,
+        market_value: 'MarketCapDebt',
+        footprint: footprintMetric == 'CarbIntensityMarketVal' || footprintMetric == 'CarbIntensityRev'  || footprintMetric == 'TotalCarbEmis' ? 'WeightAvgRev' : footprintMetric,
         inference: 'Avg',
         scope: 'Sc123',
         display_ccy: currentCurrency,
