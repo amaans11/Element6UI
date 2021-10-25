@@ -17,6 +17,7 @@ const Alignment = () => {
   const [tableData,setTableData] = useState([])
   const [categories,setCategories] = useState([])
   const [currentSector,setSector] = useState("")
+  const [yAxisTitle,setYAxisTitle] = useState("")
   const [metric,setMetric] = useState("Contribution")
 
   const auth = useSelector((state) => state.auth)
@@ -152,6 +153,7 @@ const Alignment = () => {
     let chartData=[]
     let categories = []
     let tableData=[]
+    let title= ''
 
 
     if (data && Object.keys(data).length > 0) {
@@ -159,7 +161,7 @@ const Alignment = () => {
         let contrib = data[id]['Target_Setting_table']['Portfolio']['intensity']
         let allowance = data[id]['Target_Setting_table']['Allowance']['2020']
         let annualRed = data[id]['Target_Setting_table']['AnnualReduction'][0]['2020'] 
-
+        title = data[id]['axis_title'];
         chartData.push({
             name:getPortfolioName(id),
             data:Object.values(contrib),
@@ -181,6 +183,7 @@ const Alignment = () => {
    setCategories(categories)
    setTableData(tableData)
    setSector(categories[0])
+   setYAxisTitle(title)
   }
   return (
       <React.Fragment>
@@ -215,6 +218,7 @@ const Alignment = () => {
                 chartKey="FUND_TARGET_SETTINGS"
                 data={chartData}
                 categories={categories}
+                yAxisTitle={yAxisTitle}
               />
               <Grid container>
             <Grid item xs={4}>
