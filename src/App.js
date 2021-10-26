@@ -104,8 +104,6 @@ Highcharts.theme = {
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
-    console.log("test")
-
     // Do something before request is sent
 
     store.dispatch(setLoading(true))
@@ -149,18 +147,22 @@ class App extends Component {
   constructor(props){
     super(props)
     Sentry.init({
+      environment: process.env.REACT_APP_ENV,
       dsn: "https://a092ae200946420f8adcecea70c1ee1a@o1015769.ingest.sentry.io/5981440",
     });
+
+
     Highcharts.setOptions(Highcharts.theme)
   }
    
   componentDidCatch(error, errorInfo) {
-    Sentry.withScope(scope => {
-      Object.keys(errorInfo).forEach(key => {
-        scope.setExtra(key, errorInfo[key]);
-      });
-      Sentry.captureException(error);
-    });
+    // Sentry.withScope(scope => {
+    //   Object.keys(errorInfo).forEach(key => {
+    //     scope.setExtra(key, errorInfo[key]);
+    //   });
+    
+    //   Sentry.captureException(error);
+    // });
   }
 
   render(){

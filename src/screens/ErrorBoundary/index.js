@@ -1,10 +1,7 @@
 import React,{Component} from 'react';
 import * as Sentry from '@sentry/browser';
-// Sentry.init({
-//  dsn: "<https://63bbb258ca4346139ee533576e17ac46@sentry.io/1432138>"
-// });
-// should have been called before using it here
-// ideally before even rendering your react app 
+import { connect } from 'react-redux';
+import { configureStore } from '../../redux/store'
 
 class ErrorBoundary extends Component {
     constructor(props) {
@@ -13,7 +10,11 @@ class ErrorBoundary extends Component {
     }
 
     componentDidCatch(error, errorInfo) {
+      const {store,persistor} = configureStore();
+      const user = this.props.user
       this.setState({ error });
+
+
       Sentry.withScope(scope => {
         Object.keys(errorInfo).forEach(key => {
           scope.setExtra(key, errorInfo[key]);
@@ -23,6 +24,20 @@ class ErrorBoundary extends Component {
     }
 
     render() {
+      const client = this.props.user.client
+      const userName = this.props.user.userName
+      const {filterItem} = this.props
+      const {sector,footprintMetric,marketValue,assetClass,inferenceType,emission} = filterItem
+
+      Sentry.setTag("client", client);
+      Sentry.setTag("user-name", userName);
+      Sentry.setTag("sector", sector);
+      Sentry.setTag("footprint-metric", footprintMetric);
+      Sentry.setTag("market-value", marketValue);
+      Sentry.setTag("asset-class", assetClass.toString());
+      Sentry.setTag("inference-type", inferenceType);
+      Sentry.setTag("emission", emission);
+
         if (this.state.error) {
             //render fallback UI
             return (
@@ -36,4 +51,10 @@ class ErrorBoundary extends Component {
         }
     }
 }
-export default ErrorBoundary
+const mapStateToProps = state=>{
+  return {
+    user:state.auth.currentUser,
+    filterItem:state.auth.filterItem
+  }
+}
+export default connect(mapStateToProps,null)(ErrorBoundary)
