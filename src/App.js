@@ -131,6 +131,10 @@ axios.interceptors.response.use(
       store.dispatch(logoutUser())
       NotificationManager.error("This login was blocked. Pls re-login again")
     }
+    if(error.response.status === 401 && error.response.data.type === 're_login' ){
+      store.dispatch(logoutUser())
+      NotificationManager.error("Missing Authentication Header. Pls re-login again")
+    }
     if(error.response.status === 403 && error.response.data.type === 'change_pwd' ){
       store.dispatch(changePasswordRequest())
       NotificationManager.error("Please change the password ! ")
