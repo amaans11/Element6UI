@@ -133,9 +133,6 @@ const Settings = () => {
   const [fundamentalVersion, setFundamentalVersion] = useState(get(userInfo.version, 'fundamentals', '11'))
 
 
-
-
-
   const updateCurrencyHandler = async() => {
     const data={
       role: userInfo.role,
@@ -559,6 +556,7 @@ const Settings = () => {
                         setEmissionYear(e.target.value)
                       }
                     }
+                    disabled
                   >
                     {yearOptions.map((year) => (
                       <MenuItem value={year}>{year}</MenuItem>
@@ -663,6 +661,7 @@ const Settings = () => {
                         setFundamentalYear(e.target.value)
                       }
                     }
+                    disabled
                   >
                     {yearOptions.map((year) => (
                       <MenuItem value={year}>{year}</MenuItem>
