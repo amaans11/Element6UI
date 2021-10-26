@@ -140,16 +140,14 @@ const Scope3Heatmap = () => {
 			const key = `${sector}${emission}Port`;
 			sectorList = heatmapData['data']['SectorList'];
 
-			console.log("res>>",Object.values(heatmapData['data']))
-
 
 			let res = [];
 			if (matType === 'matPort') {
-				res = Object.values(heatmapData['data'])[0][0]['PortfolioScaled'];
+				res = Object.values(heatmapData['data']).length > 0 && Object.values(heatmapData['data'])[1][0]['PortfolioScaled'];
 			} else {
-				res = Object.values(heatmapData['data'])[0][1]['SectorScaled'];
+				res = Object.values(heatmapData['data']).length > 0 && Object.values(heatmapData['data'])[1][1]['SectorScaled'];
 			}
-			if (res.length > 0) {
+			if (res && res.length > 0) {
 				res.map((data) => {
 					const sectorName = sector === 'SASB' ? data['SASB_SICS_Sector'] : data['GICS_SECTOR_NAME'];
 

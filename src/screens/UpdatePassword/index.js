@@ -1,25 +1,12 @@
 import React,{useState} from 'react'
 import {
     Grid,
-    Card,
     Box,
     Typography,
     Button,
-    Select,
-    MenuItem,
     FormControl,
-    CssBaseline,
-    TextField,
-    Dialog,
     InputLabel,
-    DialogActions,
     IconButton,
-    Link,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    FormControlLabel,
-    Checkbox,
     InputAdornment
   } from '@material-ui/core'
 import { NotificationManager } from 'react-notifications'
@@ -36,8 +23,6 @@ const UpdatePasswrod = ()=>{
     const dispatch = useDispatch();
 
     const history = useHistory()
-
-
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [showPassword , setVisibility] = useState(false)
@@ -71,8 +56,8 @@ const UpdatePasswrod = ()=>{
 
     return (
         <React.Fragment>
-            <Header />
-            <SideBar />
+        <Header history={history} />
+        <SideBar />
         <Box style={{ marginTop: 100, marginLeft: 100}} mr={1} >
             <Box >
                 <Box >

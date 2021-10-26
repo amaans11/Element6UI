@@ -845,7 +845,13 @@ export default function FilterGroup() {
                       (tabValue === 1 || tabValue === 2)
                         ? 'Total Carbon Emissions'
                         : e.grpKey === 'footprintMetric' &&
-                          (tabValue === 0 || tabValue === 1 || tabValue === 2) &&
+                        (tabValue === 0 ) &&
+                          (filterItem[e.grpKey] == 'CarbIntensityMarketVal' ||
+                            filterItem[e.grpKey] == 'CarbIntensityRev' ||
+                            filterItem[e.grpKey] == 'TotalCarbEmis') 
+                        ? filterRes['WeightAvgRev']
+                        :
+                          ( tabValue === 1 || tabValue === 2) &&
                           (filterItem[e.grpKey] == 'CarbIntensityMarketVal' ||
                             filterItem[e.grpKey] == 'CarbIntensityRev')
                         ? filterRes['WeightAvgRev']
@@ -904,7 +910,18 @@ export default function FilterGroup() {
                               <FilterTags
                                 name={t.name}
                                 selected={
-                                  (tabValue === 0 || tabValue === 1 || tabValue === 2) &&
+                                  (tabValue === 0) &&
+                                  (filterItem[e.grpKey] ==
+                                    'CarbIntensityMarketVal' ||
+                                    filterItem[e.grpKey] ==
+                                      'CarbIntensityRev'
+                                      ||
+                                   filterItem[e.grpKey] ==
+                                    'TotalCarbEmis')
+                                      &&
+                                  t.value === 'WeightAvgRev'
+                                  ? true: 
+                                  (tabValue === 1 || tabValue === 2) &&
                                   (filterItem[e.grpKey] ==
                                     'CarbIntensityMarketVal' ||
                                     filterItem[e.grpKey] ==

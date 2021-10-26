@@ -100,14 +100,19 @@ const Settings = () => {
 
   const { userInfo } = auth
   let currentUser = auth && auth.currentUser ? auth.currentUser : {}
+  const yearOptions = userInfo.allowed_years
+  const currenyConfigs = userInfo.currency_config
+  const currencyYears = Object.keys(currenyConfigs)
 
-  const currentYear = get(auth, 'currentYear', 2021)
-  const currentCurrency = get(auth, 'currentCurrency', 'USD')
-  const currentQuarter = get(auth, 'currentQuarter', 'Q2')
+  const currentYear = userInfo.year.currency
+  const currentCurrency = get(userInfo, 'display_currency', 'USD')
+  const currentQuarter = userInfo.quarter && userInfo.quarter.currency ? userInfo.quarter.currency : 'Q2'
 
   const [year, setYear] = useState(currentYear)
   const [quarter, setQuarter] = useState(currentQuarter)
   const [currency, setCurrency] = useState(currentCurrency)
+
+  const currencyQuarters = currenyConfigs[year]
 
   const [emailDialog, setEmailDialog] = useState(false)
   const [email, setEmail] = useState('')
@@ -127,7 +132,6 @@ const Settings = () => {
   const [fundamentalQuarter, setFundamentalQuarter] = useState(get(userInfo.quarter, 'fundamentals', 'Q1'))
   const [fundamentalVersion, setFundamentalVersion] = useState(get(userInfo.version, 'fundamentals', '11'))
 
-  const yearOptions = userInfo.allowed_years
 
   const updateCurrencyHandler = async() => {
     const data={
@@ -147,12 +151,18 @@ const Settings = () => {
       version: {
         emissions: emissionVersion,
         fundamentals: fundamentalVersion,
-        display_currency:currency,
 
       },
+      display_currency:currency,
+    }
+    const reData = {
+      userName: currentUser.userName,
     }
     await dispatch(updateUserInfo(data))
 	  await dispatch(getFixRate(year,quarter))
+
+    await dispatch(getUserInfo(reData))
+
   }
   const deletePortfolioHandler = () => {
     setDialog(true)
@@ -306,7 +316,6 @@ const Settings = () => {
   }
   const headCells = getHeadCells()
   const history = useHistory()
-  console.log("portIds>>",portIds)
   return (
     <Box>
       <CssBaseline />
@@ -445,7 +454,7 @@ const Settings = () => {
                       setYear(e.target.value)
                     }}
                   >
-                    {yearOptions.map((year) => (
+                    {currencyYears.map((year) => (
                       <MenuItem value={year}>{year}</MenuItem>
                     ))}
                   </Select>
@@ -462,16 +471,13 @@ const Settings = () => {
                 <FormControl variant="outlined">
                   <Select
                     placeholder="Select quarter"
-                    value={quarter}
+                    value={year == '2021' && (quarter == 'Q3' || quarter == 'Q4') ? 'Q2' : quarter}
                     className={classes.dropdown}
                     onChange={(e) => {
                       setQuarter(e.target.value)
                     }}
                   >
-                    {year != 2021 ? quarterOptions.map((quarter) => (
-                      <MenuItem value={quarter}>{quarter}</MenuItem>
-                    )):
-                    ['Q1','Q2'].map((quarter) => (
+                    {currencyQuarters.map((quarter) => (
                       <MenuItem value={quarter}>{quarter}</MenuItem>
                     ))
                     }
@@ -550,6 +556,7 @@ const Settings = () => {
                         setEmissionYear(e.target.value)
                       }
                     }
+                    disabled
                   >
                     {yearOptions.map((year) => (
                       <MenuItem value={year}>{year}</MenuItem>
@@ -654,6 +661,7 @@ const Settings = () => {
                         setFundamentalYear(e.target.value)
                       }
                     }
+                    disabled
                   >
                     {yearOptions.map((year) => (
                       <MenuItem value={year}>{year}</MenuItem>
