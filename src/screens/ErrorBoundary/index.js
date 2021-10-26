@@ -27,7 +27,9 @@ class ErrorBoundary extends Component {
       const client = this.props.user.client
       const userName = this.props.user.userName
       const {filterItem} = this.props
-      const {sector,footprintMetric,marketValue,assetClass,inferenceType,emission} = filterItem
+      const {sector,footprintMetric,marketValue,assetClass,inferenceType,emission,portScenario
+      ,targetScenario,warmingScenario,approach,alignmentYear
+      } = filterItem
 
       Sentry.setTag("client", client);
       Sentry.setTag("user-name", userName);
@@ -37,6 +39,14 @@ class ErrorBoundary extends Component {
       Sentry.setTag("asset-class", assetClass.toString());
       Sentry.setTag("inference-type", inferenceType);
       Sentry.setTag("emission", emission);
+
+      if(window.location.pathname === '/forward-looking-analysis'){
+        Sentry.setTag("scenario", portScenario);
+        Sentry.setTag("Target Scenario", targetScenario);
+        Sentry.setTag("Warming Scenario", warmingScenario);
+        Sentry.setTag("Approach", approach);
+        Sentry.setTag("Alignment Year", alignmentYear);
+      }
 
         if (this.state.error) {
             //render fallback UI
