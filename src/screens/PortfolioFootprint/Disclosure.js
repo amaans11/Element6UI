@@ -123,6 +123,8 @@ const Disclosure = () => {
     getStackedChartData()
     getColumnChartData()
   }, [portDisclosure, benchDisclosure])
+
+  console.log("stackedChartData",stackedChartData)
   return (
     <React.Fragment>
       {loading ? (

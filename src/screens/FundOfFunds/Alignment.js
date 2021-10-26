@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Box, CircularProgress } from '@material-ui/core'
+import { Box, CircularProgress,FormControl,InputLabel,Select,MenuItem } from '@material-ui/core'
 import PieChart from '../../components/ChartsComponents/PieChart'
 import { getAlignment, getSummary } from '../../redux/actions/fundOfFundActions'
 import { Grid } from '@material-ui/core'
@@ -9,6 +9,7 @@ import DataTable from '../../components/Table/DataTable';
 import {summaryCells} from '../../util/TableHeadConfig'
 import getRequestData from '../../util/RequestData'
 import LineChart from '../../components/ChartsComponents/Line'
+import { result } from 'lodash'
 
 
 const Alignment = () => {
@@ -17,11 +18,12 @@ const Alignment = () => {
   const [chartData,setChartData] = useState([])
 
   const auth = useSelector((state) => state.auth)
-  const {allPortfolios,currentPortfolio,loading,filterItem} = auth
+  const {allPortfolios,currentFundsPortfolio,loading,filterItem} = auth
   const alignment = useSelector(state=>state.fund.alignment)
   const { portScenario } = filterItem
 
   const [lineChartData, setLineChartData] = useState([])
+  const [portIds,setPortIds] = useState([])
 
 
   useEffect(() => {
@@ -34,10 +36,10 @@ const Alignment = () => {
  
   const getChildrenIds = ()=>{
     let childrenIds=[]
-    let result = []
+    let result = [currentFundsPortfolio.value]
     if(allPortfolios && allPortfolios.length > 0){
         allPortfolios.map(portfolio=>{
-            if(portfolio.portfolio_id === currentPortfolio.value ){
+            if(portfolio.portfolio_id === currentFundsPortfolio.value ){
                  childrenIds = portfolio.children_id
             }
         })
@@ -53,6 +55,22 @@ const Alignment = () => {
     }
     return result ; 
   }
+  const getSelectLabels= ()=>{
+    const res = getChildrenIds()
+    let result=[]
+    res.shift()
+    
+    if(res && res.length > 0){
+      res.map(el=>{
+        const name = getPortfolioName(el)
+        result.push({
+          label:name,
+          value:el
+        })
+      })
+    }
+    return result;
+  }
 
   const fetchDetails = async () => {
     const data = getChildrenIds()
@@ -63,8 +81,32 @@ const Alignment = () => {
 
     await dispatch(getAlignment(requestData))
   }
+  const handlePortIds = async(e)=>{
+    let value = e.target.value
+
+    const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
+    requestData.portfolio_id = [...value,currentFundsPortfolio.value]
+    delete requestData.benchmark_id
+    delete requestData.version_benchmark
+
+    await dispatch(getAlignment(requestData))
+  }
+    const getPortfolioName = id=>{
+      let portName = ''
+        if(allPortfolios && allPortfolios.length > 0){
+            allPortfolios.map(portfolio=>{
+                if(portfolio.portfolio_id == id){
+                    portName = portfolio.name
+                }
+            })
+        }
+        return portName
+  }
+
   const getChartData = () => {
     let alignmentData = alignment['data']
+    let childIds = []
+
     if(alignmentData && Object.keys(alignmentData).length > 0){
         let scenario =
       portScenario === 'LowEnergyDemand'
@@ -117,15 +159,30 @@ const Alignment = () => {
     if(alignmentData['Children_Dots'] &&  Object.keys(alignmentData['Children_Dots'].length > 0)){
         Object.keys(alignmentData['Children_Dots']).map(el=>{
             chartData.push({
-                name:el,
-                data:[alignmentData['Children_Dots'][el]]
-            }
+                name:getPortfolioName(el),
+                data: [
+                  [
+                    Date.UTC(2020, '01', '01'),
+                    alignmentData['Children_Dots'][el],
+                    ],
+                ],
+              }
         )})
     }
+    if(Object.keys(alignmentData['Children_Dots']).length > 0){
+      Object.keys(alignmentData['Children_Dots']).map(key=>{
+           if(key !== currentFundsPortfolio.value){
+             childIds.push(key)
+           }
+      })
+    }
+
 
     setLineChartData(chartData)
+    setPortIds(childIds)
     }
   }
+  const options = getSelectLabels()
   return (
       <React.Fragment>
       {loading ? (
@@ -140,6 +197,23 @@ const Alignment = () => {
         </Box>
       ) : (
         <Box>
+           <Grid item xs={4} style={{marginTop:20}}>
+              <FormControl variant="outlined" >
+                <InputLabel>Select Children</InputLabel>
+                <Select
+                  label="Select Children"
+                  value={portIds}
+                  onChange={handlePortIds}
+                  multiple
+                  style={{fontSize:14,width:300,marginBottom:20}}
+                >
+                  {options.map(option => (
+                      <MenuItem value={option.value}>{option.label}</MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
           <LineChart
             data={lineChartData}
             chartKey="PORT_ALIGNMENT"

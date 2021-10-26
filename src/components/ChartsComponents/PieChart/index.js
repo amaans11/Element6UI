@@ -10,12 +10,13 @@ function PieChart({
   subtitle,
   loading,
   chartTitle,
-  isExportEnabled
+  isExportEnabled,
+  isFundOfFunds
 }) {
   const title = CONFIG['CHART'][chartKey]['TITLE']
   const currentTheme = localStorage.getItem('appTheme')
 
-  const options = {
+  let options = {
     chart: {
       type: 'pie',
       plotBackgroundColor: null,
@@ -92,6 +93,23 @@ function PieChart({
 			  },
 			},
 		  },
+  }
+  if(isFundOfFunds){
+    options={
+      ...options,
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>',
+      },
+      plotOptions:{
+        pie:{
+          ...options.plotOptions.pie,
+          dataLabels:{
+            ...options.plotOptions.pie.dataLabels,
+            format:'{point.y} '
+          }
+        }
+      }
+    }
   }
 
   return (

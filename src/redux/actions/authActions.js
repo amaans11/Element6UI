@@ -34,8 +34,8 @@ import {
   getCarbonReturnsLineData,
   getCarbonReturnsTableData,
 } from './flmActions'
+import { getAlignment, getSummary,getFootprint,getFundTargetSetting } from './fundOfFundActions'
 import { NotificationManager } from 'react-notifications'
-import { HistoryTwoTone } from '@material-ui/icons'
 
 const history = createBrowserHistory()
 
@@ -43,9 +43,29 @@ const requestApi = async (dispatch, auth, flm) => {
   const moduleName = auth.moduleName
   const tabValue = auth.tabValue
   const companyData = flm.companyData
+  const {allPortfolios,currentPortfolio,currentFundsPortfolio} = auth
 
+  console.log("result..",currentFundsPortfolio)
   let data = {}
 
+  let childrenIds=[]
+  let result = []
+  if(allPortfolios && allPortfolios.length > 0){
+      allPortfolios.map(portfolio=>{
+          if(portfolio.portfolio_id === currentFundsPortfolio.value ){
+               childrenIds = portfolio.children_id
+          }
+      })
+  }
+  if(childrenIds && childrenIds .length > 0){
+      childrenIds.map(id=>{
+          allPortfolios.map(portfolio=>{
+              if(portfolio.id === id ){
+                  result.push(portfolio.portfolio_id)
+              }
+          })
+      })
+  }
 
   switch (moduleName) {
     case 'Emissions':
@@ -97,6 +117,37 @@ const requestApi = async (dispatch, auth, flm) => {
         default:
           data = getRequestData('SCOPE3_MATERILITY', auth)
           await dispatch(getScope3Data(data))
+          break
+      }
+      break
+    case 'Fund Of Funds':
+      switch (tabValue) {
+        case 0:
+          await dispatch(getSummary(result.join(',')))
+          break
+          case 1:
+          const reData = getRequestData('PORTFOLIO_EMISSION', auth)
+          reData.portfolio_id = [...result,currentFundsPortfolio.value]
+          delete reData.benchmark_id
+          delete reData.version_benchmark
+          await dispatch(getFootprint(reData))
+          break
+        case 2:
+          const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
+          requestData.portfolio_id = [...result,currentFundsPortfolio.value]
+          delete requestData.benchmark_id
+          delete requestData.version_benchmark
+          await dispatch(getAlignment(requestData))
+          break
+          case 3:
+          const resData = getRequestData('TARGET_SETTING', auth)
+          resData.portfolio_id = [...result]
+          delete resData.benchmark_id
+          delete resData.version_benchmark
+          await dispatch(getFundTargetSetting(resData))
+          break
+        default:
+          await dispatch(getSummary(result.join(',')))
           break
       }
       break
@@ -281,7 +332,7 @@ const requestApi = async (dispatch, auth, flm) => {
 export const signinUser = (data) => {
   return async (dispatch) => {
     return axios
-      .post(`${actionTypes.API_URL}/user/sign_in`, data)
+      .post(`${process.env.REACT_APP_API_URL}/user/sign_in`, data)
       .then(async (result) => {
         const userDetails ={
           ...result.data,
@@ -350,12 +401,61 @@ export const getPortfolioListFailure = () => {
   return { type: actionTypes.GET_PORTFOLIO_LIST_FAILURE }
 }
 
+
+export const getFundsPortfolioList = () => {
+  return async (dispatch, getState) => {
+    const accessToken = getState().auth.currentUser.access_token
+    const headers = {
+      'Authorization': `Bearer ${accessToken}`,
+    }
+    return axios
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/?portfolio_type=PC&is_full=true`, { headers: headers })
+      .then((result) => {
+        dispatch(getFundsPortfolioListSuccess(result.data))
+        const list = result.data
+        let res = []
+        if (list && list.length > 0) {
+           list.map((portfolio) => {
+            if(portfolio.is_parent){
+                res.push({
+                    label: portfolio.name,
+                    value: portfolio.portfolio_id,
+                    version: portfolio.version,
+                })
+            }
+          })
+        }
+        const fundsData = {
+          label: res[0].label,
+          value: res[0].value,
+          version: res[0].version,
+        }
+        console.log("list>>",list)
+        console.log("fundsData>>",fundsData)
+
+        return {list,fundsData}
+      })
+      .catch((error) => {
+        console.log("error>>",error)
+        dispatch(getFundsPortfolioListFailure())
+      })
+  }
+}
+
+export const getFundsPortfolioListSuccess = (res) => {
+  return { type: actionTypes.GET_FUNDS_PORTFOLIO_LIST_SUCCESS, res }
+}
+
+export const getFundsPortfolioListFailure = () => {
+  return { type: actionTypes.GET_FUNDS_PORTFOLIO_LIST_FAILURE }
+}
+
 export const getUserInfo = () => {
   return async (dispatch,getState) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .get(`${actionTypes.API_URL}/user/info`,{
+      .get(`${process.env.REACT_APP_API_URL}/user/info`,{
         headers:{
           'Authorization': `Bearer ${accessToken}`,
         }
@@ -375,7 +475,7 @@ export const updateUserInfo = (data) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .put(`${actionTypes.API_URL}/user/info`,data,{
+      .put(`${process.env.REACT_APP_API_URL}/user/info`,data,{
         headers:{
           'Authorization': `Bearer ${accessToken}`,
         }
@@ -388,7 +488,7 @@ export const getUploadPortfolioList = () => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .get(`${actionTypes.API_URL}/portfolio/?is_full=True`, {
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/?is_full=True`, {
         headers: { 
           'Authorization': `Bearer ${accessToken}`,
          },
@@ -430,9 +530,21 @@ export const setPortfolio = (portfolio) => {
     requestApi(dispatch, auth, flm)
   }
 }
+export const setFundsPortfolio = (portfolio) => {
+  console.log("portfolio//",portfolio)
+  return async (dispatch, getState) => {
+    await dispatch(setFundsPortfolioSuccess(portfolio))
+    const auth = getState().auth
+    const flm = getState().flm
+    requestApi(dispatch, auth, flm)
+  }
+}
 
 export const setPortfolioSuccess = (res) => {
   return { type: actionTypes.SET_PORTFOLIO, res }
+}
+export const setFundsPortfolioSuccess = (res) => {
+  return { type: actionTypes.SET_FUNDS_PORTFOLIO, res }
 }
 export const setBenchmark = (benchmark) => {
   return async (dispatch, getState) => {
@@ -522,7 +634,7 @@ export const logoutUser = () => {
       const accessToken = getState().auth.currentUser.access_token
 
       return axios
-        .post(`${actionTypes.API_URL}/user/sign_out`,{},{
+        .post(`${process.env.REACT_APP_API_URL}/user/sign_out`,{},{
           headers:{
             'Authorization': `Bearer ${accessToken}`,
           }
@@ -534,7 +646,7 @@ export const logoutUser = () => {
           window.location.reload()
         })
         .catch(err=>{
-          NotificationManager.error("Logout Failed s! try again")
+          NotificationManager.error("Logout Failed ! try again")
         })
     }
 }
@@ -582,12 +694,13 @@ export const generateReport = (data) => {
   }
 }
 
-export const uploadPortfolioRequest = (data) => {
+export const uploadPortfolioRequest = (data,isFund) => {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.currentUser.access_token
 
+    const api_url = isFund ? `${process.env.REACT_APP_API_URL}/portfolio/fund_of_funds/` : `${process.env.REACT_APP_API_URL}/portfolio/`
     return axios
-      .post(`${process.env.REACT_APP_API_URL}/portfolio/`, data, {
+      .post(api_url, data, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -614,7 +727,7 @@ export const changeEmail = (data) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .post(`${actionTypes.API_URL}/user/change_email`, data, {
+      .post(`${process.env.REACT_APP_API_URL}/user/change_email`, data, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -637,7 +750,7 @@ export const verifyCode = (data) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .post(`${actionTypes.API_URL}/user/verify`, data, {
+      .post(`${process.env.REACT_APP_API_URL}/user/change_email_verify`, data, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -660,7 +773,7 @@ export const changePassword = (data) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .post(`${actionTypes.API_URL}/user/change_pwd`, data, {
+      .post(`${process.env.REACT_APP_API_URL}/user/change_pwd`, data, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -762,7 +875,7 @@ export const getAccessToken = () => {
     const refreshToken = getState().auth.currentUser.refresh_token
 
     return axios
-      .post(`${actionTypes.API_URL}/user/refresh`,{}, {
+      .post(`${process.env.REACT_APP_API_URL}/user/refresh`,{}, {
         headers: {
           'Authorization': `Bearer ${refreshToken}`,
         },
