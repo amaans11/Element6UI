@@ -488,7 +488,7 @@ export const getUploadPortfolioList = () => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .get(`${process.env.REACT_APP_API_URL}/portfolio/?is_full=True`, {
+      .get(`${process.env.REACT_APP_API_URL}/portfolio/?is_full=True&short=False`, {
         headers: { 
           'Authorization': `Bearer ${accessToken}`,
          },
