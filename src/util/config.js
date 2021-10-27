@@ -204,7 +204,7 @@ const configs = {
 			Y_AXIS_TITLE: 'Weight (%)'
 		},
 		FOOTPRINT_PIE:{
-			TITLE: "Children's footprint contribution to the parent",
+			TITLE: "Footprint Contribution",
 		},
 		FOOTPRINT_STACK:{
 			TITLE: "Fund of Funds Portfolio Weight Composition",
@@ -212,10 +212,10 @@ const configs = {
 
 		},
 		FOOTPRINT_STACK_COL:{
-			TITLE: "Children Sector Intensity",
+			TITLE: "Funds Sector Intensity",
 		},
 		PARENT_INTENSITY:{
-			TITLE:"Parent Sector Intensity",
+			TITLE:"Funds Sector Intensity",
 			Y_AXIS_TITLE:"tCO2e/1M USD"
 		},
 		FUND_TARGET_SETTINGS:{

@@ -11,11 +11,13 @@ function PieChart({
   loading,
   chartTitle,
   isExportEnabled,
-  isFundOfFunds
+  isFundOfFunds,
+  tooltipHeading
 }) {
   const title = CONFIG['CHART'][chartKey]['TITLE']
   const currentTheme = localStorage.getItem('appTheme')
 
+  console.log('tooltipHeading',tooltipHeading)
   let options = {
     chart: {
       type: 'pie',
@@ -98,7 +100,7 @@ function PieChart({
     options={
       ...options,
       tooltip: {
-        pointFormat: '{series.name}: <b>{point.y}</b>',
+        pointFormat: '{series.name}: <b>{point.y}</b>' + " "  + tooltipHeading,
       },
       plotOptions:{
         pie:{

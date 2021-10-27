@@ -8,6 +8,7 @@ import DataTable from '../../components/Table/DataTable';
 import {targetFundCells} from '../../util/TableHeadConfig'
 import getRequestData from '../../util/RequestData'
 import StackedColumn from '../../components/ChartsComponents/StackedColumn'
+import { filter } from 'lodash'
 
 
 const Alignment = () => {
@@ -22,6 +23,7 @@ const Alignment = () => {
 
   const auth = useSelector((state) => state.auth)
   const {allPortfolios,currentFundsPortfolio,loading,filterItem} = auth
+  const {alignmentYear} = filterItem
   const targetSetting = useSelector(state=>state.fund.targetSetting)
 
   useEffect(() => {
@@ -61,14 +63,13 @@ const Alignment = () => {
      setMetric(e.target.value)
     }
     else{
-      console.log("testamaan")
       const data = targetSetting.data
       let chartData=[]
       let categories = []
     
       if (data && Object.keys(data).length > 0) {
         Object.keys(data).map((id,index) => {
-          let allowance = data[id]['Target_Setting_table']['Allowance']['2020']
+          let allowance = data[id]['Target_Setting_table']['Allowance'][alignmentYear]
   
           chartData.push({
               name:getPortfolioName(id),
@@ -134,8 +135,8 @@ const Alignment = () => {
     if (data && Object.keys(data).length > 0) {
       Object.keys(data).map((id,index) => {
         let contrib = data[id]['Target_Setting_table']['Portfolio']['intensity']
-        let allowance = data[id]['Target_Setting_table']['Allowance']['2020']
-        let annualRed = data[id]['Target_Setting_table']['AnnualReduction'][0]['2020'] 
+        let allowance = data[id]['Target_Setting_table']['Allowance'][alignmentYear]
+        let annualRed = data[id]['Target_Setting_table']['AnnualReduction'][0][alignmentYear] 
 
         tableData.push({
             name:getPortfolioName(id),
@@ -159,8 +160,8 @@ const Alignment = () => {
     if (data && Object.keys(data).length > 0) {
       Object.keys(data).map((id,index) => {
         let contrib = data[id]['Target_Setting_table']['Portfolio']['intensity']
-        let allowance = data[id]['Target_Setting_table']['Allowance']['2020']
-        let annualRed = data[id]['Target_Setting_table']['AnnualReduction'][0]['2020'] 
+        let allowance = data[id]['Target_Setting_table']['Allowance'][alignmentYear]
+        let annualRed = data[id]['Target_Setting_table']['AnnualReduction'][0][alignmentYear] 
         title = data[id]['axis_title'];
         chartData.push({
             name:getPortfolioName(id),
