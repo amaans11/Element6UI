@@ -603,25 +603,25 @@ const backgroundCells=[
 ]
 const summaryCells = [
 	{
-		name: 'Child Name',
+		name: 'Name',
 		selector: 'name',
 		sortable: true,
 		right: false
 	},
 	{
-		name: 'Child Weight (%)',
+		name: 'Weight (%)',
 		selector: 'weight',
 		sortable: true,
 		right: true
 	},
 	{
-		name: 'Emissions Coverage (%)',
+		name: 'Coverage (%)',
 		selector: 'emission',
 		sortable: true,
 		right: true
 	},
 	{
-		name: 'Emissions Weight Coverage (%)',
+		name: 'Weight Coverage (%)',
 		selector: 'fundamentals',
 		sortable: true,
 		right: true

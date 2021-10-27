@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, CircularProgress } from '@material-ui/core'
 import PieChart from '../../components/ChartsComponents/PieChart'
+import {orderBy} from 'lodash'
 import StackedBar from '../../components/ChartsComponents/StackedBar'
 import StackedColumn from '../../components/ChartsComponents/StackedColumn'
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
@@ -121,7 +122,16 @@ const Alignment = () => {
           })
         }
 
-        setPieChartData(pieChartData)
+        let sorteddata = orderBy(pieChartData[0]['data'], ['y'],['desc'])
+        let name = pieChartData[0]['name']
+
+        let newData  = [];
+        newData[0]={
+          data:sorteddata,
+          name:name
+        }
+
+        setPieChartData(newData)
         setStackedChartData(stackedChartData)
         setStackedColChartData(stackedCol)
         setCategories(categories)
@@ -186,6 +196,7 @@ const Alignment = () => {
                 chartKey="FOOTPRINT_PIE"
                 data={pieChartdata}
                 isFundOfFunds={true}
+                tooltipHeading={yAxisTitle}
               />
              </Grid>
              <Grid item xs ={6}>
