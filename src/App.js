@@ -159,16 +159,6 @@ class App extends Component {
     Highcharts.setOptions(Highcharts.theme)
   }
    
-  componentDidCatch(error, errorInfo) {
-    // Sentry.withScope(scope => {
-    //   Object.keys(errorInfo).forEach(key => {
-    //     scope.setExtra(key, errorInfo[key]);
-    //   });
-    
-    //   Sentry.captureException(error);
-    // });
-  }
-
   render(){
     return (
       <Provider store={store}>

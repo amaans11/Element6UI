@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import * as Sentry from '@sentry/browser';
 import { connect } from 'react-redux';
+import {get} from 'lodash'
 import { configureStore } from '../../redux/store'
 
 class ErrorBoundary extends Component {
@@ -10,11 +11,7 @@ class ErrorBoundary extends Component {
     }
 
     componentDidCatch(error, errorInfo) {
-      const {store,persistor} = configureStore();
-      const user = this.props.user
       this.setState({ error });
-
-
       Sentry.withScope(scope => {
         Object.keys(errorInfo).forEach(key => {
           scope.setExtra(key, errorInfo[key]);
@@ -24,19 +21,48 @@ class ErrorBoundary extends Component {
     }
 
     render() {
-      const client = this.props.user.client
-      const userName = this.props.user.userName
-      const {filterItem} = this.props
-      const {sector,footprintMetric,marketValue,assetClass,inferenceType,emission,portScenario
-      ,targetScenario,warmingScenario,approach,alignmentYear
-      } = filterItem
+      let client=null;
+      let userName = null;
+      let sector = null;
+      let footprintMetric = null;
+      let marketValue = null;
+      let assetClass = null;
+      let inferenceType = null;
+      let emission = null;
+      let portScenario = null;
+      let targetScenario = null;
+      let approach = null;
+      let alignmentYear = null;
+      let warmingScenario = null;
+
+      const {user,filterItem} = this.props;
+
+      console.log("filterItem",filterItem)
+      if(user && Object.keys(user).length > 0){
+        client = get(this.props.user,'client',null)
+        userName = get(this.props.user,'userName',null)
+      }
+      if(filterItem && Object.keys(filterItem).length > 0){
+        sector = filterItem['sector']
+        footprintMetric = filterItem['footprintMetric']
+        marketValue = filterItem['marketValue']
+        assetClass = filterItem['assetClass']
+        inferenceType = filterItem['inferenceType']
+        emission = filterItem['emission']
+        portScenario = filterItem['portScenario']
+        targetScenario = filterItem['targetScenario']
+        warmingScenario = filterItem['warmingScenario']
+        approach = filterItem['approach']
+        alignmentYear = filterItem['alignmentYear']
+      }
+         
 
       Sentry.setTag("client", client);
       Sentry.setTag("user-name", userName);
       Sentry.setTag("sector", sector);
       Sentry.setTag("footprint-metric", footprintMetric);
       Sentry.setTag("market-value", marketValue);
-      Sentry.setTag("asset-class", assetClass.toString());
+      Sentry.setTag("asset-class", assetClass && assetClass.length > 0 && assetClass.toString());
       Sentry.setTag("inference-type", inferenceType);
       Sentry.setTag("emission", emission);
 

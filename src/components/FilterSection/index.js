@@ -373,7 +373,11 @@ export default function FilterGroup() {
         return true
       }
       if(tagName == 'TotalCarbEmis'){
+        if(tabValue == 0){
+          return false
+        }
         return true
+
       }
       if(tagName == 'CarbIntensityMarketVal'){
         return false
@@ -383,7 +387,6 @@ export default function FilterGroup() {
       }
     }
     else if(moduleName === 'Fund Of Funds'){
-      console.log("test")
       if(tabValue == 1){
         if(tagName == 'WeightAvgRev'){
           return true
@@ -399,6 +402,23 @@ export default function FilterGroup() {
         }
         if(tagName == 'CarbIntensityRev'){
           return true
+        }
+      }
+      else if(tabValue === 2){
+        if(tagName == 'WeightAvgRev'){
+          return true
+        }
+        if(tagName == 'WeightAvgMarketVal'){
+          return true
+        }
+        if(tagName == 'TotalCarbEmis'){
+          return false
+        }
+        if(tagName == 'CarbIntensityMarketVal'){
+          return false
+        }
+        if(tagName == 'CarbIntensityRev'){
+          return false
         }
       }
       else{
