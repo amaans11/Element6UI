@@ -653,7 +653,6 @@ export default function FilterGroup() {
   }
   const currentTheme = localStorage.getItem('appTheme') || 'basic'
 
-  console.log("filterItem>>",filterItem)
   return (
     <React.Fragment>
       {pathname !== '/forward-looking-analysis' &&
@@ -816,7 +815,6 @@ export default function FilterGroup() {
         : filterData.map((e, grpIndex) => {
             if (some(configs, { name: e.grpKey })) {
               const index = findIndex(configs, { name: e.grpKey })
-              console.log("filterItem[e.grpKey]/",filterItem)
               return (
                 <Accordion
                   style={{
@@ -828,7 +826,10 @@ export default function FilterGroup() {
                     configs[index]['disabled'] ||
                     (e.grpKey === 'footprintMetric' &&
                       filterItem.approach === 'MarketShare' &&
-                      (tabValue === 1 || tabValue === 2))
+                      (tabValue === 1 || tabValue === 2)) ||
+                      (e.grpKey === 'marketValue' &&
+                      filterItem.footprintMetric === 'TotalCarbEmis' &&
+                      tabValue === 2)
                   }
                   expanded={
                     e.grpKey === 'assetClass' &&  pathname !== '/fund-of-funds' ?  false : isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
@@ -877,7 +878,8 @@ export default function FilterGroup() {
                         ? filterRes['WeightAvgRev']
                         : configs[index]['disabled']
                         ? filterRes[configs[index]['value']]
-                        : filterRes[filterItem[e.grpKey]]}
+                        :
+                        filterRes[filterItem[e.grpKey]]}
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>

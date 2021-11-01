@@ -46,6 +46,7 @@ const CompanyProfile = () => {
   const [currentCompany, setCurrentCompany] = useState('')
   const [currentSector, setCurrentSector] = useState('')
   const [companyName, setCompanyName] = useState('')
+  const [chartLabel,setChartLabel] = useState('')
 
   useEffect(() => {
     fetchCompanies()
@@ -98,6 +99,7 @@ const CompanyProfile = () => {
     let companyValues = []
     let lowEnergyDemand = []
     let companyName = ''
+    let chartlabel =companyProfile['data']['chart_label']
 
     let scenario = portScenario === 'LowEnergyDemand' ? 'LowEnergyDemand' : portScenario == 'SSP226' ? 'SSP2-26' : 'SSP1-26'
 
@@ -150,49 +152,18 @@ const CompanyProfile = () => {
     }
 
     if (tableResponse && Object.keys(tableResponse).length > 0) {
-      tableData = [
-        {
-          name: 'Name',
-          summary: tableResponse['Name'],
-        },
-        {
-          name: 'Sector',
-          summary: tableResponse['SASBSector'],
-        },
-        {
-          name: 'Disclosure Scope 1+2 Category',
-          summary: tableResponse['DisclosureScope12Category']
-            ? tableResponse['DisclosureScope12Category']
-            : 'NA',
-        },
-        {
-          name: 'Number of Scope 3 Categories Disclosed',
-          summary: tableResponse['DisclosureNumberofS3Categories']
-            ? tableResponse['DisclosureNumberofS3Categories']
-            : 'NA',
-        },
-        {
-          name: 'Emissions Intensity Scope 1+2+3 (tCO2e/m Revenue)',
-          summary: tableResponse['intensityS123']
-            ? tableResponse['intensityS123']
-            : 'NA',
-        },
-        {
-          name: 'Emissions Intensity Scope 1+2 (tCO2e/m Revenue)',
-          summary: tableResponse['intensityS12']
-            ? tableResponse['intensityS12']
-            : 'NA',
-        },
-        {
-          name: 'Intensity Momentum Scope 1+2 (tCO2e/m Revenue)',
-          summary: tableResponse['momentum'] ? tableResponse['momentum'] : 'NA',
-        },
-      ]
+      Object.keys(tableResponse).map(key=>{
+        tableData.push({
+          name:key,
+          summary:tableResponse[key]
+        })
+      })
     }
 
     setChartData(chartData)
     setTableData(tableData)
     setCompanyName(companyName)
+    setChartLabel(chartlabel)
   }
   const handleSectorChange = async (e) => {
     const sector = e.target.value
@@ -271,8 +242,8 @@ const CompanyProfile = () => {
                 data={chartData}
                 chartKey="COMPANY_PROFILE"
                 chartTitle={`${companyName} Profile`}
-                // isCustomHeight={true}
                 isExportEnabled={!trial}
+                yAxisTitle={chartLabel}
               />
             </Grid>
             <Grid item xs={12}>
