@@ -97,7 +97,8 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
   const [selectedPortfolio, setSelectedPortfolio] = useState('')
   const portfolioTableRes = useSelector((state) => state.auth.portfolioTableRes)
   const userInfo = useSelector((state) => state.auth.userInfo)
-  
+  const accessToken = useSelector((state) => state.auth.currentUser.accessToken)
+
 
   const { year, quarter, version } = userInfo
   const trial = get(userInfo,'Trial',false)
@@ -221,9 +222,10 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
       quarter_emissions: quarterEmissions,
       version_emissions: versionEmissions,
     }
+
     axios
       .post(url, requestData, {
-        headers: { 'client-key': userInfo.client_key },
+        headers: { 'Authorization': `Bearer ${accessToken}`      },
       })
       .then((response) => {
         const blob = new Blob([response.data], {
