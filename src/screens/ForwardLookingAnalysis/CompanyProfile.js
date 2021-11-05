@@ -161,49 +161,21 @@ const CompanyProfile = () => {
         {
           name: 'Sector',
           summary: tableResponse['SASB Sector'],
-        },
-        {
-          name: 'Target Qualification',
-          summary: tableResponse['Target Qualification'] ? tableResponse['Target Qualification'] : 'NA',
-        },
-        {
-          name: 'Disclosure Scope 1+2 Category',
-          summary: tableResponse['Disclosure Scope 1+2 Category']
-            ? tableResponse['Disclosure Scope 1+2 Category']
-            : 'NA',
-        },
-        {
-          name: 'Number of Scope 3 Categories Disclosed',
-          summary: tableResponse['Number of Scope 3 Categories Disclosed ']
-            ? tableResponse['Number of Scope 3 Categories Disclosed ']
-            : 'NA',
-        },
-        {
-          name: 'Contribution to Scope 12 (tCO2e/1M Revenue)',
-          summary: tableResponse['Contribution to Scope 12 (tCO2e/1M Revenue)']
-            ? tableResponse['Contribution to Scope 12 (tCO2e/1M Revenue)']
-            : 'NA',
-        },
-        {
-          name: 'Contribution to Scope 123 (tCO2e/1M Revenue)',
-          summary: tableResponse['Contribution to Scope 123 (tCO2e/1M Revenue)']
-            ? tableResponse['Contribution to Scope 123 (tCO2e/1M Revenue)']
-            : 'NA',
-        },
-        {
-          name: 'Intensity Scope 12 (tCO2e/1M Revenue)',
-          summary: tableResponse['Intensity Scope 12 (tCO2e/1M Revenue)'] ? tableResponse['Intensity Scope 12 (tCO2e/1M Revenue)'] : 'NA',
-        },
-        {
-          name: 'Intensity Scope 123 (tCO2e/1M Revenue)',
-          summary: tableResponse['Intensity Scope 123 (tCO2e/1M Revenue)'] ? tableResponse['Intensity Scope 123 (tCO2e/1M Revenue)'] : 'NA',
-        },
-        {
-          name: 'Intensity Momentum Scope 123',
-          summary: tableResponse['Intensity Momentum Scope 123'] ? tableResponse['Intensity Momentum Scope 123'] : 'NA',
-        },
+        }
       ]
+      Object.keys(tableResponse).map(key=>{
+        if(key !== 'Name' && key !== 'SASB Sector' && key !== 'GICS Sector'){
+          tableData.push({
+            name:key,
+            summary:tableResponse[key]
+          })
+        }
+       
+      })
     }
+
+    
+    
 
     setChartData(chartData)
     setTableData(tableData)
