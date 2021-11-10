@@ -97,8 +97,9 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
   const [selectedPortfolio, setSelectedPortfolio] = useState('')
   const portfolioTableRes = useSelector((state) => state.auth.portfolioTableRes)
   const userInfo = useSelector((state) => state.auth.userInfo)
-  const accessToken = useSelector((state) => state.auth.currentUser.accessToken)
+  const accessToken = useSelector((state) => state.auth.currentUser.access_token)
 
+  console.log("accessToken",accessToken)
 
   const { year, quarter, version } = userInfo
   const trial = get(userInfo,'Trial',false)
