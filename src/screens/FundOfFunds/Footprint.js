@@ -62,12 +62,13 @@ const Alignment = () => {
         let stackedCol = []
         let parentCategories=[]
         let parentData=[]
-        console.log("currentFundsPortfolio,",currentFundsPortfolio)
+        console.log("footprintData,",footprintData)
 
   
         if(footprintData && Object.keys(footprintData).length > 0){
           Object.keys(footprintData).map((id,index)=>{
               if(id !== currentFundsPortfolio.value){
+                
               const footprint = inferenceType == 'Avg' ? footprintData[id]['Footprint'][0]['Avg'] : 
               footprintData[id]['Footprint'][1]['Max']
               const weight = footprintData[id]['Weight']
@@ -76,6 +77,8 @@ const Alignment = () => {
   
               const value = footprint['Child_Contribution'][emission]
               
+              parentCategories.push(getPortfolioName(id))
+
               pieChartData[0]['data'].push({
                   name:getPortfolioName(id),
                   y:value
@@ -97,27 +100,20 @@ const Alignment = () => {
                       data:values
                   }
               ]
+              parentData=[
+                ...parentData,
+                {
+                    name:getPortfolioName(id),
+                    data:values
+                }
+            ]
             }
             else{
               const footprint = inferenceType == 'Avg' ? footprintData[id]['Footprint'][0]['Avg'] : 
               footprintData[id]['Footprint'][1]['Max']
 
               const intensity = footprint['Sector_Intensity']
-              let values =[]
-
-              Object.keys(intensity).map(el=>{
-                values.push(intensity[el][emission])
-                if(!parentCategories.includes(el)){
-                  parentCategories.push(el)
-                }
-            })
-            parentData=[
-              ...parentData,
-              {
-                  name:getPortfolioName(id),
-                  data:values
-              }
-          ]
+          
             }
           })
         }
@@ -130,6 +126,9 @@ const Alignment = () => {
           data:sorteddata,
           name:name
         }
+        
+        console.log("parentData",parentData)
+        console.log("parentCategories",parentCategories)
 
         setPieChartData(newData)
         setStackedChartData(stackedChartData)

@@ -9,6 +9,7 @@ import { Grid } from '@material-ui/core'
 import DataTable from '../../components/Table/DataTable';
 import {summaryCells} from '../../util/TableHeadConfig'
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
+import StackedBar from '../../components/ChartsComponents/StackedBar'
 
 const Summary = () => {
   const dispatch = useDispatch()
@@ -65,7 +66,7 @@ const Summary = () => {
         chartData.push({
           name:port.name,
           data:[port.weight]
-                })
+          })
         tableData.push({
             name:port.name,
             weight:port.weight,
@@ -94,10 +95,10 @@ const Summary = () => {
         <Box>
             <Grid container>
                 <Grid item xs={12}>
-                <HorizontalBar
-                chartKey="SUMMARY"
-                data={chartData}
-                categories={['']}
+                <StackedBar
+                  chartKey="SUMMARY"
+                  data={chartData}
+                  categories={['']}
               />
                 </Grid>
                 <div

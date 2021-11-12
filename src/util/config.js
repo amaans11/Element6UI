@@ -212,7 +212,7 @@ const configs = {
 
 		},
 		FOOTPRINT_STACK_COL:{
-			TITLE: "Funds Sector Intensity",
+			TITLE: "Sectoral Breakdown of Intensity",
 		},
 		PARENT_INTENSITY:{
 			TITLE:"Funds Sector Intensity",

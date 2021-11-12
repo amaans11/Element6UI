@@ -166,7 +166,13 @@ const Alignment = () => {
         chartData.push({
             name:getPortfolioName(id),
             data:Object.values(contrib),
+            stack:'Contribution'
         })
+        chartData.push({
+          name:getPortfolioName(id),
+          data:Object.values(allowance),
+          stack:'Allowance'
+      })
 
         if(index == 0){
             categories = [...Object.keys(contrib)]
@@ -186,6 +192,7 @@ const Alignment = () => {
    setSector(categories[0])
    setYAxisTitle(title)
   }
+  console.log("chartData",chartData)
   return (
       <React.Fragment>
       {loading ? (
@@ -200,21 +207,7 @@ const Alignment = () => {
         </Box>
       ) : (
         <Box>
-          <Grid item xs={4} style={{marginTop:20}}>
-              <FormControl variant="outlined" >
-                <InputLabel>Select Metric</InputLabel>
-                <Select
-                  label="Select Metric"
-                  value={metric}
-                  onChange={handleMetricChange}
-                  style={{fontSize:14,width:300,marginBottom:20}}
-                >
-                  {['Contribution','Allowance'].map(metric => (
-                      <MenuItem value={metric}>{metric}</MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            </Grid>
+         
           <StackedColumn
                 chartKey="FUND_TARGET_SETTINGS"
                 data={chartData}

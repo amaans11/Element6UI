@@ -50,6 +50,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
         },
       },
     },
+    
     yAxis: {
       min: 0,
       gridLineWidth: 0,
@@ -74,7 +75,13 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
         },
       },
     },
-
+    tooltip: {
+      formatter: function() {
+        let stackName = this.series.userOptions.stack;
+  
+        return '<b>' +this.x +'</b><br />' + stackName + ': '  + this.y 
+      }
+    },
     plotOptions: {
       series: {
         stacking: 'normal',

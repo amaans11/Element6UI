@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Box, CircularProgress,FormControl,InputLabel,Select,MenuItem } from '@material-ui/core'
+import { Box, CircularProgress,FormControl,InputLabel,Select,MenuItem,Button } from '@material-ui/core'
 import PieChart from '../../components/ChartsComponents/PieChart'
 import { getAlignment, getSummary } from '../../redux/actions/fundOfFundActions'
 import { Grid } from '@material-ui/core'
@@ -102,6 +102,14 @@ const Alignment = () => {
         }
         return portName
   }
+  const handleDeselect=async()=>{
+    const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
+    requestData.portfolio_id = [currentFundsPortfolio.value]
+    delete requestData.benchmark_id
+    delete requestData.version_benchmark
+
+    await dispatch(getAlignment(requestData))
+  }
 
   const getChartData = () => {
     let alignmentData = alignment['data']
@@ -197,7 +205,7 @@ const Alignment = () => {
         </Box>
       ) : (
         <Box>
-           <Grid item xs={4} style={{marginTop:20}}>
+           {/* <Grid item xs={4} style={{marginTop:20}}>
               <FormControl variant="outlined" >
                 <InputLabel>Select Children</InputLabel>
                 <Select
@@ -212,12 +220,13 @@ const Alignment = () => {
                     ))}
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
 
           <LineChart
             data={lineChartData}
             chartKey="PORT_ALIGNMENT"
           />
+          <Button onClick={handleDeselect}>Deselect All</Button>
         </Box>
       )}
     </React.Fragment>
