@@ -200,7 +200,7 @@ const configs = {
 			Y_AXIS_TITLE:'Aggregated Sector Sentiment'
 		},
 		SUMMARY:{
-			TITLE: 'Fund of Funds Composition: Weights',
+			TITLE: 'Weights',
 			Y_AXIS_TITLE: 'Weight (%)'
 		},
 		FOOTPRINT_PIE:{
@@ -212,15 +212,19 @@ const configs = {
 
 		},
 		FOOTPRINT_STACK_COL:{
-			TITLE: "Sectoral Breakdown of Intensity",
+			TITLE: "Sectoral Intensity",
 		},
 		PARENT_INTENSITY:{
-			TITLE:"Funds Sector Intensity",
+			TITLE:"Sectoral Breakdown of Intensity",
 			Y_AXIS_TITLE:"tCO2e/1M USD"
 		},
 		FUND_TARGET_SETTINGS:{
 			TITLE:"Children’s Targets Breakdown",
 			Y_AXIS_TITLE:"Carbon Emissions(tCo2e)"
+		},
+		FUND_ALIGNMENT:{
+			TITLE: 'Alignment',
+			Y_AXIS_TITLE: 'Global Emissions (%)'
 		}
 	}
 };

@@ -224,7 +224,7 @@ const Alignment = () => {
 
           <LineChart
             data={lineChartData}
-            chartKey="PORT_ALIGNMENT"
+            chartKey="FUND_ALIGNMENT"
           />
           <Button onClick={handleDeselect}>Deselect All</Button>
         </Box>

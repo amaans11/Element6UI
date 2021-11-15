@@ -3,7 +3,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
 
-function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loading, chartTitle,isExportEnabled }) {
+function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loading, chartTitle,isExportEnabled ,isEnabled,isFundOfFunds}) {
 	let title = chartTitle;
 	if (!chartTitle) {
 		title = CONFIG['CHART'][chartKey]['TITLE'];
@@ -76,7 +76,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 		},
 		tooltip: {
 			formatter: function() {
-				const item=this.colorIndex === 0 ? 'Portfolio' : 'Benchmark'
+				const item=isFundOfFunds ? 'Sector Intensity' : chartKey === 'FUND_TARGET_SETTINGS' ? this.colorIndex === 0 ? 'allowance' : 'contribution' : this.colorIndex === 0 ? 'portfolio' : 'benchmark'
 				// eslint-disable-next-line
 				return '<b>' + this.x + '</b>' + '<br/>' + '<b>' + item + ' : ' + '</b>'  + new Intl.NumberFormat().format(this.y) + ' (' + tooltipUnit  + ')';
 			}
@@ -102,6 +102,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 			}
 		},
 		legend: {
+			enabled:isEnabled === 'false' ? false : true,
 			layout: 'vertical',
 			align: 'right',
 			verticalAlign: 'top',

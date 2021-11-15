@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Box, CircularProgress,Grid,MenuItem,FormControl,InputLabel,Select } from '@material-ui/core'
+import { Box, CircularProgress,Grid,MenuItem,FormControl,InputLabel,Select,Chip} from '@material-ui/core'
 import PieChart from '../../components/ChartsComponents/PieChart'
 import {  getFundTargetSetting } from '../../redux/actions/fundOfFundActions'
 import DataTable from '../../components/Table/DataTable';
@@ -9,6 +9,7 @@ import {targetFundCells} from '../../util/TableHeadConfig'
 import getRequestData from '../../util/RequestData'
 import StackedColumn from '../../components/ChartsComponents/StackedColumn'
 import { filter } from 'lodash'
+import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
 
 
 const Alignment = () => {
@@ -18,7 +19,10 @@ const Alignment = () => {
   const [tableData,setTableData] = useState([])
   const [categories,setCategories] = useState([])
   const [currentSector,setSector] = useState("")
+  const [isSelected,setSelected] = useState(true)
+  const [barChartData,setBarChartData] = useState([]);
   const [yAxisTitle,setYAxisTitle] = useState("")
+  const [companies,setCompanies] = useState([])
   const [metric,setMetric] = useState("Contribution")
 
   const auth = useSelector((state) => state.auth)
@@ -131,12 +135,22 @@ const Alignment = () => {
   const handleSectorChange = (e) => {
     const sectorName = e.target.value
     const data = targetSetting.data
+    let barChartData=[]
     let tableData=[]
+    let allowanceValues = []
+    let contribValues = []
     if (data && Object.keys(data).length > 0) {
       Object.keys(data).map((id,index) => {
         let contrib = data[id]['Target_Setting_table']['Portfolio']['intensity']
         let allowance = data[id]['Target_Setting_table']['Allowance'][alignmentYear]
         let annualRed = data[id]['Target_Setting_table']['AnnualReduction'][0][alignmentYear] 
+
+        allowanceValues.push(
+          allowance[sectorName]
+        )
+        contribValues.push(
+          contrib[sectorName]
+        )
 
         tableData.push({
             name:getPortfolioName(id),
@@ -146,8 +160,20 @@ const Alignment = () => {
         })       
       })
     }
+    barChartData =[
+      {
+        name: 'allowance',
+        data: allowanceValues
+      },
+      {
+        name: 'contribution',
+        data: contribValues
+      },
+    ]
+
    setTableData(tableData)
    setSector(sectorName)
+   setBarChartData(barChartData)
   }
   const getChartData = () => {
     const data = targetSetting.data
@@ -155,13 +181,17 @@ const Alignment = () => {
     let categories = []
     let tableData=[]
     let title= ''
-
+    let barChartData=[]
+    let allowanceValues = []
+    let contribValues = []
+    let companies=[]
 
     if (data && Object.keys(data).length > 0) {
       Object.keys(data).map((id,index) => {
         let contrib = data[id]['Target_Setting_table']['Portfolio']['intensity']
         let allowance = data[id]['Target_Setting_table']['Allowance'][alignmentYear]
         let annualRed = data[id]['Target_Setting_table']['AnnualReduction'][0][alignmentYear] 
+
         title = data[id]['axis_title'];
         chartData.push({
             name:getPortfolioName(id),
@@ -174,6 +204,18 @@ const Alignment = () => {
           stack:'Allowance'
       })
 
+
+      allowanceValues.push(
+        Object.values(allowance)[0]
+      )
+      contribValues.push(
+        Object.values(contrib)[0]
+      )
+      companies.push(
+        getPortfolioName(id)
+      )
+      
+
         if(index == 0){
             categories = [...Object.keys(contrib)]
         }
@@ -185,12 +227,25 @@ const Alignment = () => {
         })       
       })
     }
+    console.log("allowanceValues",allowanceValues)
+    barChartData =[
+      {
+        name: 'allowance',
+        data: allowanceValues
+      },
+      {
+        name: 'contribution',
+        data: contribValues
+      },
+    ]
 
    setChartData(chartData)
    setCategories(categories)
    setTableData(tableData)
    setSector(categories[0])
    setYAxisTitle(title)
+   setBarChartData(barChartData)
+   setCompanies(companies)
   }
   console.log("chartData",chartData)
   return (
@@ -207,13 +262,19 @@ const Alignment = () => {
         </Box>
       ) : (
         <Box>
-         
-          <StackedColumn
+          {isSelected ? <StackedColumn
                 chartKey="FUND_TARGET_SETTINGS"
                 data={chartData}
                 categories={categories}
                 yAxisTitle={yAxisTitle}
+              /> : 
+                <HorizontalBar
+                categories={companies}
+                data={barChartData}
+                chartKey="FUND_TARGET_SETTINGS"
+                yAxisTitle={yAxisTitle}
               />
+              }
               <Grid container>
             <Grid item xs={4}>
               <FormControl variant="outlined" >
@@ -230,6 +291,21 @@ const Alignment = () => {
                     ))}
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item xs ={4}>
+              {
+                isSelected ? 
+                <Chip label="Change to sectoral view"  variant="outlined"
+                    onClick={()=>{setSelected(false)}}
+                    style={{width:220,height:55}}
+                />
+                :
+                <Chip label="Change to stacked view"
+                      onClick={()=>{setSelected(true)}}
+                      style={{width:220,height:55}}
+
+                />
+              }
             </Grid>
           </Grid>
             <DataTable

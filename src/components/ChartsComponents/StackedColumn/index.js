@@ -77,7 +77,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
     },
     tooltip: {
       formatter: function() {
-        let stackName = this.series.userOptions.stack;
+        let stackName = this.series.userOptions.stack ? this.series.userOptions.stack : yAxisTitle;
   
         return '<b>' +this.x +'</b><br />' + stackName + ': '  + this.y 
       }

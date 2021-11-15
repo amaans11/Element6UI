@@ -99,17 +99,10 @@ const Summary = () => {
                   chartKey="SUMMARY"
                   data={chartData}
                   categories={['']}
+                  maxValue={100}
               />
                 </Grid>
-                <div
-            style={{
-              fontSize: 14,
-              fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-              marginTop:10
-            }}
-          >
-            This is the fund-level breakdown of the uploaded fund of funds portfolio.
-          </div>
+                
                 <Grid item xs={12} style={{marginTop:10}}>
                     <DataTable data={tableData} columns={summaryCells} tableHeading="COMPANY_ANALYSIS" />
                 </Grid>
