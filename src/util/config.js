@@ -219,7 +219,7 @@ const configs = {
 			Y_AXIS_TITLE:"tCO2e/1M USD"
 		},
 		FUND_TARGET_SETTINGS:{
-			TITLE:"Children’s Targets Breakdown",
+			TITLE:"Targets Breakdown",
 			Y_AXIS_TITLE:"Carbon Emissions(tCo2e)"
 		},
 		FUND_ALIGNMENT:{

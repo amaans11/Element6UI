@@ -192,17 +192,31 @@ const Alignment = () => {
         let allowance = data[id]['Target_Setting_table']['Allowance'][alignmentYear]
         let annualRed = data[id]['Target_Setting_table']['AnnualReduction'][0][alignmentYear] 
 
+        const colors=[
+          '#1E2732',
+          '#F7DC81',
+          '#7d7551',
+          '#31d6c9',
+          '#bbbfbf',
+          '#a0d911',
+          '#36cfc9',
+          '#40a9ff',
+          '#f759ab',
+          '#22075e',
+        ]
         title = data[id]['axis_title'];
         chartData.push({
-            name:getPortfolioName(id),
+            name:getPortfolioName(id) + " - Contribution",
             data:Object.values(contrib),
-            stack:'Contribution'
+            stack:'Contribution',
+            color:colors[index]
         })
         chartData.push({
-          name:getPortfolioName(id),
+          name:getPortfolioName(id) + " - Allowance",
           data:Object.values(allowance),
-          stack:'Allowance'
-      })
+          stack:'Allowance',
+          color:colors[index]
+        })
 
 
       allowanceValues.push(
