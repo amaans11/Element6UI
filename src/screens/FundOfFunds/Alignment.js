@@ -24,6 +24,7 @@ const Alignment = () => {
 
   const [lineChartData, setLineChartData] = useState([])
   const [portIds,setPortIds] = useState([])
+  const [isDeselect,setDeselect] = useState(false)
 
 
   useEffect(() => {
@@ -104,11 +105,19 @@ const Alignment = () => {
   }
   const handleDeselect=async()=>{
     const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
-    requestData.portfolio_id = [currentFundsPortfolio.value]
     delete requestData.benchmark_id
     delete requestData.version_benchmark
+    const data = getChildrenIds()
 
+
+    if(!isDeselect){
+      requestData.portfolio_id = [currentFundsPortfolio.value]
+    }
+  else{
+    requestData.portfolio_id = data
+  }
     await dispatch(getAlignment(requestData))
+    setDeselect(!isDeselect)
   }
 
   const getChartData = () => {
@@ -226,7 +235,7 @@ const Alignment = () => {
             data={lineChartData}
             chartKey="FUND_ALIGNMENT"
           />
-          <Button onClick={handleDeselect}>Deselect All</Button>
+          <Button onClick={handleDeselect}>{isDeselect ? "Select All" : "(De)select All"}</Button>
         </Box>
       )}
     </React.Fragment>

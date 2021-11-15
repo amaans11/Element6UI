@@ -76,7 +76,7 @@ function HorizontalBar({ data, categories, chartKey, yAxisTitle, subtitle, loadi
 		},
 		tooltip: {
 			formatter: function() {
-				const item=isFundOfFunds ? 'Sector Intensity' : chartKey === 'FUND_TARGET_SETTINGS' ? this.colorIndex === 0 ? 'allowance' : 'contribution' : this.colorIndex === 0 ? 'portfolio' : 'benchmark'
+				const item=isFundOfFunds ? 'Sector Intensity' : chartKey === 'FUND_TARGET_SETTINGS' ? this.colorIndex === 0 ? 'Allowance' : 'Contribution' : this.colorIndex === 0 ? 'portfolio' : 'benchmark'
 				// eslint-disable-next-line
 				return '<b>' + this.x + '</b>' + '<br/>' + '<b>' + item + ' : ' + '</b>'  + new Intl.NumberFormat().format(this.y) + ' (' + tooltipUnit  + ')';
 			}

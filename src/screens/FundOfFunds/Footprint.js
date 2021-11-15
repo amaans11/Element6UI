@@ -46,6 +46,18 @@ const Alignment = () => {
     const footprintData = footprint.data.data
 
     let barChartData=[]
+    const colors=[
+      '#1E2732',
+      '#F7DC81',
+      '#7d7551',
+      '#31d6c9',
+      '#bbbfbf',
+      '#a0d911',
+      '#36cfc9',
+      '#40a9ff',
+      '#f759ab',
+      '#22075e',
+    ]
     
     if(footprintData && Object.keys(footprintData).length > 0){
       Object.keys(footprintData).map((id,index)=>{
@@ -56,7 +68,10 @@ const Alignment = () => {
           const intensity = footprint['Sector_Intensity']
 
           if(currentSector && intensity[sectorName]){
-            barChartData.push(intensity[sectorName][emission]? intensity[sectorName][emission] : 0)
+            barChartData.push({
+              y:intensity[sectorName][emission]? intensity[sectorName][emission] : 0,
+              color:colors[index-1]
+            })
           }
           
         }
@@ -98,8 +113,18 @@ const Alignment = () => {
         let parentCategories=[]
         let parentData=[]
         let barCHartData=[]
-        console.log("footprintData,",footprintData)
-
+        const colors=[
+          '#1E2732',
+          '#F7DC81',
+          '#7d7551',
+          '#31d6c9',
+          '#bbbfbf',
+          '#a0d911',
+          '#36cfc9',
+          '#40a9ff',
+          '#f759ab',
+          '#22075e',
+        ]
   
         if(footprintData && Object.keys(footprintData).length > 0){
           Object.keys(footprintData).map((id,index)=>{
@@ -116,7 +141,10 @@ const Alignment = () => {
 
               parentCategories.push(getPortfolioName(id))
               if(currentSector){
-                barCHartData.push(intensity[currentSector][emission]? intensity[currentSector][emission] : 0)
+                barCHartData.push({
+                  y:intensity[currentSector][emission]? intensity[currentSector][emission] : 0,
+                  color:colors[index-1]
+                })
               }
               pieChartData[0]['data'].push({
                   name:getPortfolioName(id),
@@ -127,18 +155,20 @@ const Alignment = () => {
                   data:[weight]
               })
               Object.keys(intensity).map(el=>{
-                  values.push(intensity[el][emission])
+                  values.push(
+                    intensity[el][emission]
+                  )
                   if(!categories.includes(el)){
                     categories.push(el)
                   }
               })
-              stackedCol=[
-                  ...stackedCol,
-                  {
-                      name:getPortfolioName(id),
-                      data:values
-                  }
-              ]
+
+              console.log("getPortfolioName(id)",getPortfolioName(id))
+              stackedCol.push({
+                name:getPortfolioName(id),
+                data:values
+              })
+              
               parentData=[
                 ...parentData,
                 {
@@ -169,7 +199,7 @@ const Alignment = () => {
         console.log("parentData",parentData)
         console.log("parentCategories",parentCategories)
 
-        setPieChartData(newData)
+        setPieChartData(pieChartData)
         setStackedChartData(stackedChartData)
         setStackedColChartData(stackedCol)
         setCategories(categories)
@@ -217,7 +247,9 @@ const Alignment = () => {
 
     await dispatch(getFootprint(requestData))
   }
-  
+  console.log("parentData",parentData)
+  console.log("stackedColChartData",stackedColChartData)
+
   return (
     <React.Fragment>
       {loading ? (
@@ -258,7 +290,7 @@ const Alignment = () => {
               marginBottom:10
             }}
           >
-            The pie chart shows the composition of the total fund of funds footprint, by displaying the contribution of the funds to the total fund of funds footprint for the selected scope. Where necessary, the children footprints are weighted by the child weights. The sector intensity of the children and the sector intensity of the parent are calculated as single portfolios.
+          The pie chart shows the composition of the total fund of funds footprint, by displaying the contribution of the funds for the selected scope. Where necessary, the funds' footprints are weighted by the funds' weights. The sector intensity of the funds are calculated as single portfolios.
           </div>
           <Grid item xs={4}>
               <FormControl variant="outlined" >

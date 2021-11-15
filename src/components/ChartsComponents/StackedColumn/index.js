@@ -55,7 +55,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
       min: 0,
       gridLineWidth: 0,
       stackLabels:{
-        enabled:true
+        enabled:false
       },
       title: {
         text: yAxis,

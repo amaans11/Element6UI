@@ -130,10 +130,17 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
       ...options,
       yAxis:{
         ...yAxis,
-        max:100
+        max:maxValue,
+        title:{
+          ...options.yAxis.title
+        },
+        labels:{
+          ...options.yAxis.labels
+        }
       }
     }
   }
+  console.log("optionms>>",options)
   return (
     <div>
       <HighchartsReact highcharts={Highcharts} options={options} />

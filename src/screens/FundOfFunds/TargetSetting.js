@@ -162,11 +162,11 @@ const Alignment = () => {
     }
     barChartData =[
       {
-        name: 'allowance',
+        name: 'Allowance',
         data: allowanceValues
       },
       {
-        name: 'contribution',
+        name: 'Contribution',
         data: contribValues
       },
     ]
@@ -185,6 +185,7 @@ const Alignment = () => {
     let allowanceValues = []
     let contribValues = []
     let companies=[]
+    let currentSector=''
 
     if (data && Object.keys(data).length > 0) {
       Object.keys(data).map((id,index) => {
@@ -232,6 +233,7 @@ const Alignment = () => {
 
         if(index == 0){
             categories = [...Object.keys(contrib)]
+            currentSector = Object.keys(contrib)[0]
         }
         tableData.push({
             name:getPortfolioName(id),
@@ -244,24 +246,25 @@ const Alignment = () => {
     console.log("allowanceValues",allowanceValues)
     barChartData =[
       {
-        name: 'allowance',
+        name: 'Allowance',
         data: allowanceValues
       },
       {
-        name: 'contribution',
+        name: 'Contribution',
         data: contribValues
       },
     ]
 
+    console.log("currentSector",currentSector)
+    setSector(currentSector)
    setChartData(chartData)
    setCategories(categories)
    setTableData(tableData)
-   setSector(categories[0])
    setYAxisTitle(title)
    setBarChartData(barChartData)
    setCompanies(companies)
   }
-  console.log("chartData",chartData)
+  console.log("currentSector",currentSector)
   return (
       <React.Fragment>
       {loading ? (
