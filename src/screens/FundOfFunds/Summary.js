@@ -78,6 +78,7 @@ const Summary = () => {
     setTableData(tableData)
   }
 
+  console.log("chartData",chartData)
 
   return (
     <React.Fragment>

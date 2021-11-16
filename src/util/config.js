@@ -200,11 +200,11 @@ const configs = {
 			Y_AXIS_TITLE:'Aggregated Sector Sentiment'
 		},
 		SUMMARY:{
-			TITLE: 'Weights',
+			TITLE: "Funds' Weights",
 			Y_AXIS_TITLE: 'Weight (%)'
 		},
 		FOOTPRINT_PIE:{
-			TITLE: "Footprint Contribution",
+			TITLE: "Funds' Footprint Contribution",
 		},
 		FOOTPRINT_STACK:{
 			TITLE: "Fund of Funds Portfolio Weight Composition",
@@ -212,18 +212,18 @@ const configs = {
 
 		},
 		FOOTPRINT_STACK_COL:{
-			TITLE: "Sectoral Intensity",
+			TITLE: "Funds' Sectoral Intensity",
 		},
 		PARENT_INTENSITY:{
-			TITLE:"Sectoral Breakdown of Intensity",
+			TITLE:"Funds' Sectoral Breakdown of Intensity",
 			Y_AXIS_TITLE:"tCO2e/1M USD"
 		},
 		FUND_TARGET_SETTINGS:{
-			TITLE:"Targets Breakdown",
+			TITLE:"Funds' Target Setting",
 			Y_AXIS_TITLE:"Carbon Emissions(tCo2e)"
 		},
 		FUND_ALIGNMENT:{
-			TITLE: 'Alignment',
+			TITLE: "Funds' Alignment",
 			Y_AXIS_TITLE: 'Global Emissions (%)'
 		}
 	}

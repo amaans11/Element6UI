@@ -196,9 +196,6 @@ const Alignment = () => {
           name:name
         }
         
-        console.log("parentData",parentData)
-        console.log("parentCategories",parentCategories)
-
         setPieChartData(pieChartData)
         setStackedChartData(stackedChartData)
         setStackedColChartData(stackedCol)
@@ -247,7 +244,7 @@ const Alignment = () => {
 
     await dispatch(getFootprint(requestData))
   }
-  console.log("parentData",parentData)
+  console.log("pieChartdata",pieChartdata)
   console.log("stackedColChartData",stackedColChartData)
 
   return (
@@ -290,8 +287,7 @@ const Alignment = () => {
               marginBottom:10
             }}
           >
-          The pie chart shows the composition of the total fund of funds footprint, by displaying the contribution of the funds for the selected scope. Where necessary, the funds' footprints are weighted by the funds' weights. The sector intensity of the funds are calculated as single portfolios.
-          </div>
+The pie chart shows the composition of the total fund of funds footprint, by displaying the contribution of the funds for the selected scope. Where necessary, the funds' footprints are weighted by the funds' weights. The sector intensities of the funds are calculated as single portfolios.          </div>
           <Grid item xs={4}>
               <FormControl variant="outlined" >
                 <InputLabel>Select Sector</InputLabel>
