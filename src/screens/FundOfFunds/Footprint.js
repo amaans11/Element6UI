@@ -126,10 +126,10 @@ const Alignment = () => {
           '#22075e',
         ]
   
-        if(footprintData && Object.keys(footprintData).length > 0){
+        if(footprintData && Object.keys(footprintData).length > 0){ 
           Object.keys(footprintData).map((id,index)=>{
               if(id !== currentFundsPortfolio.value){
-                
+
               const footprint = inferenceType == 'Avg' ? footprintData[id]['Footprint'][0]['Avg'] : 
               footprintData[id]['Footprint'][1]['Max']
               const weight = footprintData[id]['Weight']
@@ -143,13 +143,13 @@ const Alignment = () => {
               if(currentSector){
                 barCHartData.push({
                   y:intensity[currentSector][emission]? intensity[currentSector][emission] : 0,
-                  color:colors[index-1]
+                  color:colors[index]
                 })
               }
               else{
                 barCHartData.push({
                   y:0,
-                  color:colors[index-1]
+                  color:colors[index]
                 })
               }
               pieChartData[0]['data'].push({
@@ -187,7 +187,6 @@ const Alignment = () => {
               footprintData[id]['Footprint'][1]['Max']
 
               const intensity = footprint['Sector_Intensity']
-          
             }
           })
         }
@@ -201,6 +200,7 @@ const Alignment = () => {
           name:name
         }
         
+        console.log("barChartData>>",barCHartData)
         setPieChartData(pieChartData)
         setStackedChartData(stackedChartData)
         setStackedColChartData(stackedCol)
