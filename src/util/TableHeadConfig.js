@@ -603,7 +603,7 @@ const backgroundCells=[
 ]
 const summaryCells = [
 	{
-		name: 'Name',
+		name: 'Fund Name',
 		selector: 'name',
 		sortable: true,
 		right: false
@@ -629,7 +629,7 @@ const summaryCells = [
 ]
 const targetFundCells = [
 	{
-		name: 'Child Name',
+		name: 'Fund Name',
 		selector: 'name',
 		sortable: true,
 		right: false
@@ -647,7 +647,7 @@ const targetFundCells = [
 		right: true
 	},
 	{
-		name: 'Annual Reduction',
+		name: 'Annual Reduction (%)',
 		selector: 'annualRed',
 		sortable: true,
 		right: true

@@ -12,6 +12,10 @@ import { Grid } from '@material-ui/core'
 import DataTable from '../../components/Table/DataTable';
 import {summaryCells} from '../../util/TableHeadConfig'
 import getRequestData from '../../util/RequestData'
+import { FormControl } from '@material-ui/core'
+import { InputLabel } from '@material-ui/core'
+import { Select } from '@material-ui/core'
+import { MenuItem } from '@material-ui/core'
 
 
 const Alignment = () => {
@@ -28,6 +32,7 @@ const Alignment = () => {
   const [yAxisTitle,setYAxisTitle] = useState("")
   const [parentData,setParentData] = useState("")
   const [parentCategories,setParentCategories] = useState("")
+  const [currentSector,setSector] = useState("")
 
   useEffect(() => {
     fetchDetails()
@@ -35,6 +40,51 @@ const Alignment = () => {
   useEffect(() => {
     getChartData()
   }, [footprint])
+
+  const handleSectorChange = (e) => {
+    const sectorName = e.target.value
+    const footprintData = footprint.data.data
+
+    let barChartData=[]
+    const colors=[
+      '#1E2732',
+      '#F7DC81',
+      '#7d7551',
+      '#31d6c9',
+      '#bbbfbf',
+      '#a0d911',
+      '#36cfc9',
+      '#40a9ff',
+      '#f759ab',
+      '#22075e',
+    ]
+    
+    if(footprintData && Object.keys(footprintData).length > 0){
+      Object.keys(footprintData).map((id,index)=>{
+          if(id !== currentFundsPortfolio.value){
+            const footprint = inferenceType == 'Avg' ? footprintData[id]['Footprint'][0]['Avg'] : 
+            footprintData[id]['Footprint'][1]['Max']
+
+          const intensity = footprint['Sector_Intensity']
+
+          if(currentSector && intensity[sectorName]){
+            barChartData.push({
+              y:intensity[sectorName][emission]? intensity[sectorName][emission] : 0,
+              color:colors[index-1]
+            })
+          }
+          
+        }
+      })
+    }
+
+    setParentData({
+      name:'',
+      data:barChartData
+    })
+
+   setSector(sectorName)
+  }
 
   const getPortfolioName = id=>{
       let portName = ''
@@ -53,7 +103,7 @@ const Alignment = () => {
         const footprintData = footprint.data.data
         let pieChartData = [
           {
-            name: 'Child Contribution',
+            name: 'Contribution',
             data: [],
           },
         ]   
@@ -62,12 +112,24 @@ const Alignment = () => {
         let stackedCol = []
         let parentCategories=[]
         let parentData=[]
-        console.log("currentFundsPortfolio,",currentFundsPortfolio)
-
+        let barCHartData=[]
+        const colors=[
+          '#1E2732',
+          '#F7DC81',
+          '#7d7551',
+          '#31d6c9',
+          '#bbbfbf',
+          '#a0d911',
+          '#36cfc9',
+          '#40a9ff',
+          '#f759ab',
+          '#22075e',
+        ]
   
         if(footprintData && Object.keys(footprintData).length > 0){
           Object.keys(footprintData).map((id,index)=>{
               if(id !== currentFundsPortfolio.value){
+                
               const footprint = inferenceType == 'Avg' ? footprintData[id]['Footprint'][0]['Avg'] : 
               footprintData[id]['Footprint'][1]['Max']
               const weight = footprintData[id]['Weight']
@@ -75,7 +137,21 @@ const Alignment = () => {
               let values=[]
   
               const value = footprint['Child_Contribution'][emission]
-              
+              const currentSector = Object.keys(intensity)[0]
+
+              parentCategories.push(getPortfolioName(id))
+              if(currentSector){
+                barCHartData.push({
+                  y:intensity[currentSector][emission]? intensity[currentSector][emission] : 0,
+                  color:colors[index-1]
+                })
+              }
+              else{
+                barCHartData.push({
+                  y:0,
+                  color:colors[index-1]
+                })
+              }
               pieChartData[0]['data'].push({
                   name:getPortfolioName(id),
                   y:value
@@ -85,39 +161,33 @@ const Alignment = () => {
                   data:[weight]
               })
               Object.keys(intensity).map(el=>{
-                  values.push(intensity[el][emission])
+                  values.push(
+                    intensity[el][emission]
+                  )
                   if(!categories.includes(el)){
                     categories.push(el)
                   }
               })
-              stackedCol=[
-                  ...stackedCol,
-                  {
-                      name:getPortfolioName(id),
-                      data:values
-                  }
-              ]
+
+              stackedCol.push({
+                name:getPortfolioName(id),
+                data:values
+              })
+              
+              parentData=[
+                ...parentData,
+                {
+                    name:getPortfolioName(id),
+                    data:values
+                }
+            ]
             }
             else{
               const footprint = inferenceType == 'Avg' ? footprintData[id]['Footprint'][0]['Avg'] : 
               footprintData[id]['Footprint'][1]['Max']
 
               const intensity = footprint['Sector_Intensity']
-              let values =[]
-
-              Object.keys(intensity).map(el=>{
-                values.push(intensity[el][emission])
-                if(!parentCategories.includes(el)){
-                  parentCategories.push(el)
-                }
-            })
-            parentData=[
-              ...parentData,
-              {
-                  name:getPortfolioName(id),
-                  data:values
-              }
-          ]
+          
             }
           })
         }
@@ -130,13 +200,17 @@ const Alignment = () => {
           data:sorteddata,
           name:name
         }
-
-        setPieChartData(newData)
+        
+        setPieChartData(pieChartData)
         setStackedChartData(stackedChartData)
         setStackedColChartData(stackedCol)
         setCategories(categories)
-        setParentData(parentData)
+        setParentData({
+          name:'',
+          data:barCHartData
+        })
         setParentCategories(parentCategories)
+        setSector(categories[0])
       }
       
   }
@@ -175,7 +249,9 @@ const Alignment = () => {
 
     await dispatch(getFootprint(requestData))
   }
-  
+  console.log("pieChartdata",pieChartdata)
+  console.log("stackedColChartData",stackedColChartData)
+
   return (
     <React.Fragment>
       {loading ? (
@@ -216,8 +292,23 @@ const Alignment = () => {
               marginBottom:10
             }}
           >
-            The pie chart shows the composition of the total fund of funds footprint, by displaying the contribution of the funds to the total fund of funds footprint for the selected scope. Where necessary, the children footprints are weighted by the child weights. The sector intensity of the children and the sector intensity of the parent are calculated as single portfolios.
-          </div>
+The pie chart shows the composition of the total fund of funds footprint, by displaying the contribution of the funds for the selected scope. Where necessary, the funds' footprints are weighted by the funds' weights. The sector intensities of the funds are calculated as single portfolios.          </div>
+          <Grid item xs={4}>
+              <FormControl variant="outlined" >
+                <InputLabel>Select Sector</InputLabel>
+                <Select
+                  label="Select Sector"
+                  value={currentSector}
+                  onChange={handleSectorChange}
+                  style={{fontSize:14,width:300,marginBottom:20}}
+                >
+                  {categories.length > 0 &&
+                    categories.map((sector) => (
+                      <MenuItem value={sector}>{sector}</MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Grid>
          <Grid container>
              <Grid item xs ={12}>
              <HorizontalBar
@@ -225,6 +316,8 @@ const Alignment = () => {
                 data={parentData}
                 categories={parentCategories}
                 yAxisTitle={yAxisTitle}
+                isEnabled="false"
+                isFundOfFunds={true}
               />
              </Grid>
          </Grid>

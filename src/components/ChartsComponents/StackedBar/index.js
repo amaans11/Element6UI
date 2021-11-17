@@ -3,7 +3,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import CONFIG from '../../../util/config'
 
-function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExportEnabled}) {
+function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExportEnabled,maxValue}) {
   const title = CONFIG['CHART'][chartKey]['TITLE']
   let yAxis = yAxisTitle
   if (!yAxisTitle) {
@@ -125,6 +125,22 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
       }
   }
   }
+  if(maxValue){
+    options={
+      ...options,
+      yAxis:{
+        ...yAxis,
+        max:maxValue,
+        title:{
+          ...options.yAxis.title
+        },
+        labels:{
+          ...options.yAxis.labels
+        }
+      }
+    }
+  }
+  console.log("optionms>>",options)
   return (
     <div>
       <HighchartsReact highcharts={Highcharts} options={options} />

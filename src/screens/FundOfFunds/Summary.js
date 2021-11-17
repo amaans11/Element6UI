@@ -9,6 +9,7 @@ import { Grid } from '@material-ui/core'
 import DataTable from '../../components/Table/DataTable';
 import {summaryCells} from '../../util/TableHeadConfig'
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
+import StackedBar from '../../components/ChartsComponents/StackedBar'
 
 const Summary = () => {
   const dispatch = useDispatch()
@@ -65,7 +66,7 @@ const Summary = () => {
         chartData.push({
           name:port.name,
           data:[port.weight]
-                })
+          })
         tableData.push({
             name:port.name,
             weight:port.weight,
@@ -77,6 +78,7 @@ const Summary = () => {
     setTableData(tableData)
   }
 
+  console.log("chartData",chartData)
 
   return (
     <React.Fragment>
@@ -94,21 +96,14 @@ const Summary = () => {
         <Box>
             <Grid container>
                 <Grid item xs={12}>
-                <HorizontalBar
-                chartKey="SUMMARY"
-                data={chartData}
-                categories={['']}
+                <StackedBar
+                  chartKey="SUMMARY"
+                  data={chartData}
+                  categories={['']}
+                  maxValue={100}
               />
                 </Grid>
-                <div
-            style={{
-              fontSize: 14,
-              fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-              marginTop:10
-            }}
-          >
-            This is the fund-level breakdown of the uploaded fund of funds portfolio.
-          </div>
+                
                 <Grid item xs={12} style={{marginTop:10}}>
                     <DataTable data={tableData} columns={summaryCells} tableHeading="COMPANY_ANALYSIS" />
                 </Grid>

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Box, CircularProgress,FormControl,InputLabel,Select,MenuItem } from '@material-ui/core'
+import { Box, CircularProgress,FormControl,InputLabel,Select,MenuItem,Button } from '@material-ui/core'
 import PieChart from '../../components/ChartsComponents/PieChart'
 import { getAlignment, getSummary } from '../../redux/actions/fundOfFundActions'
 import { Grid } from '@material-ui/core'
@@ -24,6 +24,7 @@ const Alignment = () => {
 
   const [lineChartData, setLineChartData] = useState([])
   const [portIds,setPortIds] = useState([])
+  const [isDeselect,setDeselect] = useState(false)
 
 
   useEffect(() => {
@@ -102,10 +103,31 @@ const Alignment = () => {
         }
         return portName
   }
+  const handleDeselect=async()=>{
+    const requestData = getRequestData('PORTFOLIO_ALIGNMENT', auth)
+    delete requestData.benchmark_id
+    delete requestData.version_benchmark
+    const data = getChildrenIds()
+
+
+    if(!isDeselect){
+      requestData.portfolio_id = [currentFundsPortfolio.value]
+    }
+  else{
+    requestData.portfolio_id = data
+  }
+    await dispatch(getAlignment(requestData))
+    setDeselect(!isDeselect)
+  }
 
   const getChartData = () => {
     let alignmentData = alignment['data']
     let childIds = []
+    let onePoint = [];
+    let scenarioValue = [];
+    let two = [];
+    let twoPointSeven = [];
+    let parentValue = {};
 
     if(alignmentData && Object.keys(alignmentData).length > 0){
         let scenario =
@@ -115,60 +137,77 @@ const Alignment = () => {
         ? 'SSP2-26'
         : 'SSP1-26'
 
-    let chartData = [
-      {
-        name: 'One Point Seven Five',
-        data: [],
-      },
-      {
-        name: scenario,
-        data: [],
-      },
-      {
-        name: 'Two',
-        data: [],
-      },
-      {
-        name: 'Two Point Seven',
-        data: [],
-      },
-      
-    ]
+    let chartData = []
     const data = alignmentData['Scenarios']
 
-    if (data && Object.keys(data).length > 0) {
-      Object.keys(data).map((year) => {
-        chartData[0]['data'].push([
-          Date.UTC(year, '01', '01'),
-          data[year]['OnePointSevenFive'],
-        ])
-        chartData[1]['data'].push([
-          Date.UTC(year, '01', '01'),
-          data[year][scenario],
-        ])
-        chartData[2]['data'].push([
-          Date.UTC(year, '01', '01'),
-          data[year]['Two'],
-        ])
-        chartData[3]['data'].push([
-          Date.UTC(year, '01', '01'),
-          data[year]['TwoPointSeven'],
-        ])
-      })
-    }
+   
     if(alignmentData['Children_Dots'] &&  Object.keys(alignmentData['Children_Dots'].length > 0)){
         Object.keys(alignmentData['Children_Dots']).map(el=>{
-            chartData.push({
+            if(el !== currentFundsPortfolio.value){
+              chartData.push({
                 name:getPortfolioName(el),
                 data: [
                   [
                     Date.UTC(2020, '01', '01'),
                     alignmentData['Children_Dots'][el],
-                    ],
+                  ],
+                ],
+              })
+            }
+            else{
+              parentValue={
+                name:currentFundsPortfolio.label,
+                data: [
+                  [
+                    Date.UTC(2020, '01', '01'),
+                    alignmentData['Children_Dots'][el],
+                  ],
                 ],
               }
-        )})
+            }
+        })
     }
+    if (data && Object.keys(data).length > 0) {
+      Object.keys(data).map((year) => {
+        onePoint.push([
+          Date.UTC(year, '01', '01'),
+          data[year]['OnePointSevenFive'],
+        ])
+        scenarioValue.push([
+          Date.UTC(year, '01', '01'),
+          data[year][scenario],
+        ])
+        two.push([
+          Date.UTC(year, '01', '01'),
+          data[year]['Two'],
+        ])
+        twoPointSeven.push([
+          Date.UTC(year, '01', '01'),
+          data[year]['TwoPointSeven'],
+        ])
+        
+      })
+    }
+    chartData.push( {
+      name: 'One Point Seven Five',
+      data: onePoint,
+    })
+    chartData.push( {
+      name: scenario,
+      data:scenarioValue ,
+    })
+    chartData.push( {
+      name: 'Two',
+      data: two,
+    })
+    chartData.push( {
+      name: 'Two Point Seven',
+      data: twoPointSeven,
+    })
+    chartData.push(parentValue)
+    console.log("chartData>>",chartData)
+    console.log("chartData>>",currentFundsPortfolio.label)
+
     if(Object.keys(alignmentData['Children_Dots']).length > 0){
       Object.keys(alignmentData['Children_Dots']).map(key=>{
            if(key !== currentFundsPortfolio.value){
@@ -197,7 +236,7 @@ const Alignment = () => {
         </Box>
       ) : (
         <Box>
-           <Grid item xs={4} style={{marginTop:20}}>
+           {/* <Grid item xs={4} style={{marginTop:20}}>
               <FormControl variant="outlined" >
                 <InputLabel>Select Children</InputLabel>
                 <Select
@@ -212,12 +251,13 @@ const Alignment = () => {
                     ))}
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
 
           <LineChart
             data={lineChartData}
-            chartKey="PORT_ALIGNMENT"
+            chartKey="FUND_ALIGNMENT"
           />
+          <Button onClick={handleDeselect}>{isDeselect ? "Select All" : "(De)select All"}</Button>
         </Box>
       )}
     </React.Fragment>
