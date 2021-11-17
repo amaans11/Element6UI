@@ -146,6 +146,12 @@ const Alignment = () => {
                   color:colors[index-1]
                 })
               }
+              else{
+                barCHartData.push({
+                  y:0,
+                  color:colors[index-1]
+                })
+              }
               pieChartData[0]['data'].push({
                   name:getPortfolioName(id),
                   y:value
@@ -163,7 +169,6 @@ const Alignment = () => {
                   }
               })
 
-              console.log("getPortfolioName(id)",getPortfolioName(id))
               stackedCol.push({
                 name:getPortfolioName(id),
                 data:values

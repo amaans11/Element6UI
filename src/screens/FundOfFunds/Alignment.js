@@ -123,6 +123,11 @@ const Alignment = () => {
   const getChartData = () => {
     let alignmentData = alignment['data']
     let childIds = []
+    let onePoint = [];
+    let scenarioValue = [];
+    let two = [];
+    let twoPointSeven = [];
+    let parentValue = {};
 
     if(alignmentData && Object.keys(alignmentData).length > 0){
         let scenario =
@@ -132,60 +137,77 @@ const Alignment = () => {
         ? 'SSP2-26'
         : 'SSP1-26'
 
-    let chartData = [
-      {
-        name: 'One Point Seven Five',
-        data: [],
-      },
-      {
-        name: scenario,
-        data: [],
-      },
-      {
-        name: 'Two',
-        data: [],
-      },
-      {
-        name: 'Two Point Seven',
-        data: [],
-      },
-      
-    ]
+    let chartData = []
     const data = alignmentData['Scenarios']
 
-    if (data && Object.keys(data).length > 0) {
-      Object.keys(data).map((year) => {
-        chartData[0]['data'].push([
-          Date.UTC(year, '01', '01'),
-          data[year]['OnePointSevenFive'],
-        ])
-        chartData[1]['data'].push([
-          Date.UTC(year, '01', '01'),
-          data[year][scenario],
-        ])
-        chartData[2]['data'].push([
-          Date.UTC(year, '01', '01'),
-          data[year]['Two'],
-        ])
-        chartData[3]['data'].push([
-          Date.UTC(year, '01', '01'),
-          data[year]['TwoPointSeven'],
-        ])
-      })
-    }
+   
     if(alignmentData['Children_Dots'] &&  Object.keys(alignmentData['Children_Dots'].length > 0)){
         Object.keys(alignmentData['Children_Dots']).map(el=>{
-            chartData.push({
+            if(el !== currentFundsPortfolio.value){
+              chartData.push({
                 name:getPortfolioName(el),
                 data: [
                   [
                     Date.UTC(2020, '01', '01'),
                     alignmentData['Children_Dots'][el],
-                    ],
+                  ],
+                ],
+              })
+            }
+            else{
+              parentValue={
+                name:currentFundsPortfolio.label,
+                data: [
+                  [
+                    Date.UTC(2020, '01', '01'),
+                    alignmentData['Children_Dots'][el],
+                  ],
                 ],
               }
-        )})
+            }
+        })
     }
+    if (data && Object.keys(data).length > 0) {
+      Object.keys(data).map((year) => {
+        onePoint.push([
+          Date.UTC(year, '01', '01'),
+          data[year]['OnePointSevenFive'],
+        ])
+        scenarioValue.push([
+          Date.UTC(year, '01', '01'),
+          data[year][scenario],
+        ])
+        two.push([
+          Date.UTC(year, '01', '01'),
+          data[year]['Two'],
+        ])
+        twoPointSeven.push([
+          Date.UTC(year, '01', '01'),
+          data[year]['TwoPointSeven'],
+        ])
+        
+      })
+    }
+    chartData.push( {
+      name: 'One Point Seven Five',
+      data: onePoint,
+    })
+    chartData.push( {
+      name: scenario,
+      data:scenarioValue ,
+    })
+    chartData.push( {
+      name: 'Two',
+      data: two,
+    })
+    chartData.push( {
+      name: 'Two Point Seven',
+      data: twoPointSeven,
+    })
+    chartData.push(parentValue)
+    console.log("chartData>>",chartData)
+    console.log("chartData>>",currentFundsPortfolio.label)
+
     if(Object.keys(alignmentData['Children_Dots']).length > 0){
       Object.keys(alignmentData['Children_Dots']).map(key=>{
            if(key !== currentFundsPortfolio.value){
