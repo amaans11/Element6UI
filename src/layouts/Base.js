@@ -76,6 +76,7 @@ import {
 } from '../redux/actions/authActions'
 import {  getDownloadDetails} from '../redux/actions/footprintActions'
 import csvFile from '../assets/Dummy-file.xlsx'
+import fundscsvFile from '../assets/Fund_of_Funds_Template.xlsx'
 import { ContactSupportOutlined } from '@material-ui/icons'
 
 const drawerWidth = 295
@@ -643,7 +644,16 @@ const MiniDrawer = ({ classes, history }) => {
                 download="Sample Portfolio"
                 className={classes.samplePortfolio}
               >
-                Sample Portfolio
+                Portfolio Template
+              </a>
+            </Box>
+            <Box>
+              <a
+                href={fundscsvFile}
+                download="Sample Portfolio"
+                className={classes.samplePortfolio}
+              >
+                Fund of Funds Template
               </a>
             </Box>
           </DialogContentText>
