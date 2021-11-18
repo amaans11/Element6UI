@@ -49,7 +49,6 @@ const data={
         'sector',
         'footprintMetric',
         'marketValue',
-        'assetClass',
         'inferenceType',
         'emission',
         'strategy'
@@ -58,7 +57,6 @@ const data={
         'sector',
         'footprintMetric',
         'marketValue',
-        'assetClass',
         'inferenceType',
         'emission',
         'strategy'
