@@ -142,7 +142,7 @@ const data={
         'emission',
     ],
     'URGENTEM_API':[],
-    'COMPOSITION':[
+    'SUMMARY':[
     ],
     'TARGET_SETTING':[
         'sector',

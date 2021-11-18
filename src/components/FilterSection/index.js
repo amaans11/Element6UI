@@ -653,6 +653,7 @@ export default function FilterGroup() {
   }
   const currentTheme = localStorage.getItem('appTheme') || 'basic'
 
+  console.log("configs",configs)
   return (
     <React.Fragment>
       {pathname !== '/forward-looking-analysis' &&

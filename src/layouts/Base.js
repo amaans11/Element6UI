@@ -417,7 +417,15 @@ const MiniDrawer = ({ classes, history }) => {
         <div className={classes.toolbar}  />
         <List>
           {RouteData.map((e, index) => (
+            userInfo.extra_modules.length === 0 && e.name === 'Fund Of Funds'  ?
             <ListItemLink
+              primary={e.name}
+              icon={e.icon}
+              to={e.url}
+              handleClick={() => setDefaultTab(e)}
+              disabled={true}
+            />
+            :<ListItemLink
               primary={e.name}
               icon={e.icon}
               to={e.url}
