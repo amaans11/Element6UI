@@ -233,13 +233,13 @@ const Alignment = () => {
 
         chartData.push({
             name:getPortfolioName(id) + " - Contribution",
-            data:res1,
+            data:res2,
             stack:'Contribution',
             color:colors[index]
         })
         chartData.push({
           name:getPortfolioName(id) + " - Allowance",
-          data:res2,
+          data:res1,
           stack:'Allowance',
           color:colors[index]
         })
