@@ -206,22 +206,43 @@ const Alignment = () => {
           '#22075e',
         ]
         title = data[id]['axis_title'];
+        console.log("allowance",allowance)
+        console.log("allowance",Object.values(allowance))
+        console.log("allowance",id)
+        let res1=[];
+        let res2=[]
+
+        if(allowance && Object.keys(allowance).length > 0 ){
+          Object.keys(allowance).map(key=>{
+            res1.push(allowance[key])
+          })
+        }
+        if(contrib && Object.keys(contrib).length > 0 ){
+          Object.keys(contrib).map(key=>{
+            res2.push(contrib[key])
+          })
+        }
+        if(allowance['Consumer Goods'] === 0){
+          res1.unshift(0)
+          res1.pop()
+        }
+        if(contrib['Consumer Goods'] === 0){
+          res2.unshift(0)
+          res2.pop()
+        }
+
         chartData.push({
             name:getPortfolioName(id) + " - Contribution",
-            data:Object.values(contrib),
+            data:res1,
             stack:'Contribution',
             color:colors[index]
         })
         chartData.push({
           name:getPortfolioName(id) + " - Allowance",
-          data:Object.values(allowance),
+          data:res2,
           stack:'Allowance',
           color:colors[index]
         })
-
-
-     
-      
 
         if(index == 0){
             categories = [...Object.keys(contrib)]
@@ -244,7 +265,7 @@ const Alignment = () => {
         )      
       })
     }
-    console.log("allowanceValues",allowanceValues)
+    console.log("chartData",JSON.stringify(chartData))
     barChartData =[
       {
         name: 'Allowance',
@@ -256,7 +277,6 @@ const Alignment = () => {
       },
     ]
 
-    console.log("currentSector",currentSector)
     setSector(currentSector)
    setChartData(chartData)
    setCategories(categories)
