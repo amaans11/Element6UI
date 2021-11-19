@@ -220,15 +220,7 @@ const Alignment = () => {
         })
 
 
-      allowanceValues.push(
-        Object.values(allowance)[0]
-      )
-      contribValues.push(
-        Object.values(contrib)[0]
-      )
-      companies.push(
-        getPortfolioName(id)
-      )
+     
       
 
         if(index == 0){
@@ -240,7 +232,16 @@ const Alignment = () => {
             contribution:contrib[categories[0]],
             allowance:allowance[categories[0]],
             annualRed:annualRed[categories[0]]
-        })       
+        }) 
+        allowanceValues.push(
+          contrib[categories[0]]
+        )
+        contribValues.push(
+         allowance[categories[0]])
+        
+        companies.push(
+          getPortfolioName(id)
+        )      
       })
     }
     console.log("allowanceValues",allowanceValues)
