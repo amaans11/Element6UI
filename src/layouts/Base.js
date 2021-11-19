@@ -76,6 +76,7 @@ import {
 } from '../redux/actions/authActions'
 import {  getDownloadDetails} from '../redux/actions/footprintActions'
 import csvFile from '../assets/Dummy-file.xlsx'
+import fundscsvFile from '../assets/Fund_of_Funds_Template.xlsx'
 import { ContactSupportOutlined } from '@material-ui/icons'
 
 const drawerWidth = 295
@@ -417,7 +418,15 @@ const MiniDrawer = ({ classes, history }) => {
         <div className={classes.toolbar}  />
         <List>
           {RouteData.map((e, index) => (
+            !userInfo.extra_modules.includes('fund_of_funds') && e.name === 'Fund Of Funds'  ?
             <ListItemLink
+              primary={e.name}
+              icon={e.icon}
+              to={e.url}
+              handleClick={() => setDefaultTab(e)}
+              disabled={true}
+            />
+            :<ListItemLink
               primary={e.name}
               icon={e.icon}
               to={e.url}
@@ -635,7 +644,16 @@ const MiniDrawer = ({ classes, history }) => {
                 download="Sample Portfolio"
                 className={classes.samplePortfolio}
               >
-                Sample Portfolio
+                Portfolio Template
+              </a>
+            </Box>
+            <Box>
+              <a
+                href={fundscsvFile}
+                download="Sample Portfolio"
+                className={classes.samplePortfolio}
+              >
+                Fund of Funds Template
               </a>
             </Box>
           </DialogContentText>

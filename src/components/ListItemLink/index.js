@@ -14,7 +14,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned";
 
 function ListItemLink(props) {
-  const { icon, primary, to,handleClick } = props;
+  const { icon, primary, to,handleClick,disabled} = props;
 
   const getAvataricon = (icon) => {
     switch (icon) {
@@ -60,7 +60,7 @@ function ListItemLink(props) {
 
   return (
     <li>
-      <ListItem button component={CustomLink} className="navigation" onClick={handleClick}>
+      <ListItem button component={CustomLink} className="navigation" onClick={handleClick} disabled={disabled}>
         <Box>{getAvataricon(icon)}</Box>
         <Typography style={{fontSize:8}}>{primary}</Typography>
       </ListItem>
