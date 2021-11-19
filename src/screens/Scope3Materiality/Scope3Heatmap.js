@@ -143,7 +143,7 @@ const Scope3Heatmap = () => {
 
 			let res = [];
 			if (matType === 'matPort') {
-				res =  Object.values(heatmapData['data'])[0][0]['PortfolioScaled'];
+				res =  Object.values(heatmapData['data'])[1][0]['PortfolioScaled'];
 			} else {
 				res =  Object.values(heatmapData['data'])[1][1]['SectorScaled'];
 			}
