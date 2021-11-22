@@ -395,7 +395,7 @@ const MiniDrawer = ({ classes, history }) => {
       }
     })
   }
-  console.log("currentFundsPortfolio",currentFundsPortfolio)
+  console.log("userInfo",userInfo)
 
   return (
     <div className={classes.root}>
@@ -418,7 +418,7 @@ const MiniDrawer = ({ classes, history }) => {
         <div className={classes.toolbar}  />
         <List>
           {RouteData.map((e, index) => (
-            !userInfo.extra_modules.includes('fund_of_funds') && e.name === 'Fund Of Funds'  ?
+            Object.keys(userInfo).length !== 0 && !userInfo.extra_modules.includes('fund_of_funds') && e.name === 'Fund Of Funds'  ?
             <ListItemLink
               primary={e.name}
               icon={e.icon}
