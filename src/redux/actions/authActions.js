@@ -750,7 +750,7 @@ export const verifyCode = (data) => {
     const accessToken = getState().auth.currentUser.access_token
 
     return axios
-      .post(`${process.env.REACT_APP_API_URL}/user/change_email_verify`, data, {
+      .post(`${actionTypes.API_URL}/user/verify`, data, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
@@ -764,6 +764,7 @@ export const verifyCode = (data) => {
       })
   }
 }
+
 
 export const verifyCodeSuccess = (res) => {
   return { type: actionTypes.VERIFY_CODE_SUCCESS, res }
