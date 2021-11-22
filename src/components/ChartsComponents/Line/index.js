@@ -4,6 +4,7 @@ import HighchartsReact from 'highcharts-react-official';
 import CONFIG from '../../../util/config';
 
 function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHeight , isExportEnabled}) {
+	console.log("lineChartData",data)
 	let title = chartTitle
 	if(!chartTitle){
 		 title = CONFIG['CHART'][chartKey]['TITLE'];
@@ -86,7 +87,7 @@ function LineChart({ data, chartKey, yAxisTitle, subtitle,chartTitle,isCustomHei
 					connectorAllowed: false,
 				},
 				marker: {
-					enabled: chartKey == 'PORT_ALIGNMENT' ? true : false
+					enabled: chartKey == 'PORT_ALIGNMENT' || chartKey == 'FUND_ALIGNMENT' ? true : false
 				},
 				lineWidth:chartKey == 'PORT_ALIGNMENT' || chartKey === 'COMPANY_PROFILE' ? 2 : 1,
 			},

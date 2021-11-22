@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Highcharts from 'highcharts'
 import { Route, Switch, BrowserRouter } from 'react-router-dom'
 import axios from 'axios'
+import * as Sentry from "@sentry/browser";
 import { Provider } from 'react-redux'
 import { NotificationContainer } from 'react-notifications'
 import more from 'highcharts/highcharts-more'
@@ -22,6 +23,7 @@ import ErrorBoundary from './screens/ErrorBoundary'
 // React notifications css import
 import 'react-notifications/lib/notifications.css'
 import { NotificationManager } from 'react-notifications'
+import { Component } from 'react';
 
 // Highcharts import
 require('highcharts/modules/exporting')(Highcharts)
@@ -102,8 +104,6 @@ Highcharts.theme = {
 // Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
-    console.log("test")
-
     // Do something before request is sent
 
     store.dispatch(setLoading(true))
@@ -147,15 +147,25 @@ axios.interceptors.response.use(
   },
 )
 
-function App() {
-  Highcharts.setOptions(Highcharts.theme)
+class App extends Component {
+  constructor(props){
+    super(props)
+    Sentry.init({
+      environment: process.env.REACT_APP_ENV,
+      dsn: "https://a092ae200946420f8adcecea70c1ee1a@o1015769.ingest.sentry.io/5981440",
+    });
 
-  return (
-    <Provider store={store}>
+
+    Highcharts.setOptions(Highcharts.theme)
+  }
+   
+  render(){
+    return (
+      <Provider store={store}>
       <PersistGate persistor={persistor}>
         <BrowserRouter>
           <div>
-          <ErrorBoundary>
+          <ErrorBoundary >
             <Switch>
               <Route exact path="/login" component={Login} />
               <AuthenticatedRoute path="/settings" exact component={Settings} />
@@ -169,7 +179,9 @@ function App() {
         <NotificationContainer />
       </PersistGate>
     </Provider>
-  )
+    )
+  }
+
 }
 
 export default App

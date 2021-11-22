@@ -198,6 +198,33 @@ const configs = {
 		SECTOR_SENTIMENT_SERIES:{
 			TITLE: 'Sector Sentiment Time Series',
 			Y_AXIS_TITLE:'Aggregated Sector Sentiment'
+		},
+		SUMMARY:{
+			TITLE: "Funds' Weights",
+			Y_AXIS_TITLE: 'Weight (%)'
+		},
+		FOOTPRINT_PIE:{
+			TITLE: "Funds' Footprint Contribution",
+		},
+		FOOTPRINT_STACK:{
+			TITLE: "Fund of Funds Portfolio Weight Composition",
+			Y_AXIS_TITLE:'Weight (%)',
+
+		},
+		FOOTPRINT_STACK_COL:{
+			TITLE: "Funds' Sectoral Intensity",
+		},
+		PARENT_INTENSITY:{
+			TITLE:"Funds' Sectoral Breakdown of Intensity",
+			Y_AXIS_TITLE:"tCO2e/1M USD"
+		},
+		FUND_TARGET_SETTINGS:{
+			TITLE:"Funds' Target Setting",
+			Y_AXIS_TITLE:"Carbon Emissions(tCo2e)"
+		},
+		FUND_ALIGNMENT:{
+			TITLE: "Funds' Alignment",
+			Y_AXIS_TITLE: 'Global Emissions (%)'
 		}
 	}
 };

@@ -601,6 +601,59 @@ const backgroundCells=[
 		right: true
 	},
 ]
+const summaryCells = [
+	{
+		name: 'Fund Name',
+		selector: 'name',
+		sortable: true,
+		right: false
+	},
+	{
+		name: 'Weight (%)',
+		selector: 'weight',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Coverage (%)',
+		selector: 'emission',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Weight Coverage (%)',
+		selector: 'fundamentals',
+		sortable: true,
+		right: true
+	},
+]
+const targetFundCells = [
+	{
+		name: 'Fund Name',
+		selector: 'name',
+		sortable: true,
+		right: false
+	},
+	{
+		name: 'Contribution',
+		selector: 'contribution',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Allowance',
+		selector: 'allowance',
+		sortable: true,
+		right: true
+	},
+	{
+		name: 'Annual Reduction (%)',
+		selector: 'annualRed',
+		sortable: true,
+		right: true
+	},
+]
+
 export {
 	avoidedEmissionCells,
 	sectoralScope3Cells,
@@ -614,5 +667,7 @@ export {
 	targetSettingCells,
 	companyProfileCells,
 	missingCoverageCells,
-	backgroundCells
+	backgroundCells,
+	summaryCells,
+	targetFundCells
 };

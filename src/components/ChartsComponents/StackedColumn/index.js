@@ -3,7 +3,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import CONFIG from '../../../util/config'
 
-function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExportEnabled,maxValue}) {
+function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExportEnabled}) {
   const title = CONFIG['CHART'][chartKey]['TITLE']
   let yAxis = yAxisTitle
   if (!yAxisTitle) {
@@ -17,7 +17,7 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
 
   let options = {
     chart: {
-      type: 'bar',
+      type: 'column',
     },
     title: {
       text: title,
@@ -50,9 +50,13 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
         },
       },
     },
+    
     yAxis: {
       min: 0,
       gridLineWidth: 0,
+      stackLabels:{
+        enabled:false
+      },
       title: {
         text: yAxis,
         align: 'high',
@@ -71,7 +75,13 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
         },
       },
     },
-
+    tooltip: {
+      formatter: function() {
+        let stackName = this.series.userOptions.stack ? this.series.userOptions.stack : yAxisTitle;
+  
+        return '<b>' +this.x +'</b><br />' + stackName + ': '  + this.y 
+      }
+    },
     plotOptions: {
       series: {
         stacking: 'normal',
@@ -125,22 +135,6 @@ function StackedBar({ data, categories, chartKey, yAxisTitle, subtitle , isExpor
       }
   }
   }
-  if(maxValue){
-    options={
-      ...options,
-      yAxis:{
-        ...yAxis,
-        max:maxValue,
-        title:{
-          ...options.yAxis.title
-        },
-        labels:{
-          ...options.yAxis.labels
-        }
-      }
-    }
-  }
-  console.log("optionms>>",options)
   return (
     <div>
       <HighchartsReact highcharts={Highcharts} options={options} />

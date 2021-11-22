@@ -205,6 +205,25 @@ export default function FilterGroup() {
             break
         }
         break
+        case 'Fund Of Funds':
+          switch (tabValue) {
+            case 0:
+              config = filterConfig['SUMMARY']
+              break
+              case 1 : 
+              config = flmFilterConfig['FUND_FOOTPRINT']
+              break;
+            case 2:
+              config = flmFilterConfig['PORTFOLIO_ALIGNMENT']
+              break
+            case 3:
+              config = flmFilterConfig['TARGET_SETTING']
+                break
+            default:
+              config = filterConfig['ALIGNMENT']
+              break
+          }
+          break;
 
       case 'Temp score':
         switch (tabValue) {
@@ -346,59 +365,100 @@ export default function FilterGroup() {
     }
   }
   const getFootprintMetric = (tagName) => {
-    const val = tabValue == 0 ? true : false;
+    if(moduleName === 'FLM'){
+      if(tagName == 'WeightAvgRev'){
+        return true
+      }
+      if(tagName == 'WeightAvgMarketVal'){
+        return true
+      }
+      if(tagName == 'TotalCarbEmis'){
+        if(tabValue == 0){
+          return false
+        }
+        return true
 
-    switch (moduleName) {
-      case 'FLM':
-        if(!val){
-          switch (tagName) {
-            case 'WeightAvgRev':
-              return true
-            case 'WeightAvgMarketVal':
-              return true
-            case 'TotalCarbEmis':
-              return true
-            case 'CarbIntensityMarketVal':
-              return false
-            case 'CarbIntensityRev':
-              return false
-            default:
-              return true
-          }
-        }
-        else{
-          switch (tagName) {
-            case 'WeightAvgRev':
-              return true
-            case 'WeightAvgMarketVal':
-              return true
-            case 'TotalCarbEmis':
-              return false
-            case 'CarbIntensityMarketVal':
-              return false
-            case 'CarbIntensityRev':
-              return false
-            default:
-              return true
-          }
-        }
-       
-      default:
-        switch (tagName) {
-          case 'WeightAvgRev':
-            return true
-          case 'WeightAvgMarketVal':
-            return true
-          case 'TotalCarbEmis':
-            return true
-          case 'CarbIntensityMarketVal':
-            return true
-          case 'CarbIntensityRev':
-            return true
-          default:
-            return true
-        }
+      }
+      if(tagName == 'CarbIntensityMarketVal'){
+        return false
+      }
+      if(tagName == 'CarbIntensityRev'){
+        return false
+      }
     }
+    else if(moduleName === 'Fund Of Funds'){
+      if(tabValue == 1){
+        if(tagName == 'WeightAvgRev'){
+          return true
+        }
+        if(tagName == 'WeightAvgMarketVal'){
+          return true
+        }
+        if(tagName == 'TotalCarbEmis'){
+          return true
+        }
+        if(tagName == 'CarbIntensityMarketVal'){
+          return true
+        }
+        if(tagName == 'CarbIntensityRev'){
+          return true
+        }
+      }
+      else if(tabValue === 2){
+        if(tagName == 'WeightAvgRev'){
+          return true
+        }
+        if(tagName == 'WeightAvgMarketVal'){
+          return true
+        }
+        if(tagName == 'TotalCarbEmis'){
+          return false
+        }
+        if(tagName == 'CarbIntensityMarketVal'){
+          return false
+        }
+        if(tagName == 'CarbIntensityRev'){
+          return false
+        }
+      }
+      else{
+        if(tagName == 'WeightAvgRev'){
+          return true
+        }
+        if(tagName == 'WeightAvgMarketVal'){
+          return true
+        }
+        if(tagName == 'TotalCarbEmis'){
+          return true
+        }
+        if(tagName == 'CarbIntensityMarketVal'){
+          return false
+        }
+        if(tagName == 'CarbIntensityRev'){
+          return false
+        }
+      }
+    }
+    else{
+      console.log("test1")
+
+      if(tagName == 'WeightAvgRev'){
+        return true
+      }
+      if(tagName == 'WeightAvgMarketVal'){
+        return true
+      }
+      if(tagName == 'TotalCarbEmis'){
+        return true
+      }
+      if(tagName == 'CarbIntensityMarketVal'){
+        return true
+      }
+      if(tagName == 'CarbIntensityRev'){
+        return true
+      }
+    }
+    
   }
   const getWarmingScenario = (tagName) => {
     switch (targetScenario) {
@@ -472,13 +532,22 @@ export default function FilterGroup() {
   const updateTags = (grpindex, tagindex, selected, grpKey) => {
     const newData = [...data]
     const grpName = newData[grpindex].grpKey
+    console.log("amaan",newData)
+    console.log("amaan",grpindex)
+
+    console.log("amaan",newData[grpindex])
 
     if(grpName == 'assetClass'){
+      console.log("amaan")
       let assetValues = filterItem[grpName]
+      console.log("amaan",assetValues)
 
       const currentValue = newData[grpindex].tagsList[tagindex].value
+      console.log("amaan",currentValue)
 
       if(selected){
+        console.log("amaan",currentValue)
+
           assetValues= [...assetValues , currentValue]
           dispatch(
             setFilterItem({
@@ -584,9 +653,11 @@ export default function FilterGroup() {
   }
   const currentTheme = localStorage.getItem('appTheme') || 'basic'
 
+  console.log("configs",configs)
   return (
     <React.Fragment>
-      {pathname !== '/forward-looking-analysis'
+      {pathname !== '/forward-looking-analysis' &&
+      pathname !== '/fund-of-funds'
         ? filterData.map((e, index) => {
             if (configs.includes(e.grpKey)) {
               return (
@@ -756,10 +827,13 @@ export default function FilterGroup() {
                     configs[index]['disabled'] ||
                     (e.grpKey === 'footprintMetric' &&
                       filterItem.approach === 'MarketShare' &&
-                      (tabValue === 1 || tabValue === 2))
+                      (tabValue === 1 || tabValue === 2)) ||
+                      (e.grpKey === 'marketValue' &&
+                      filterItem.footprintMetric === 'TotalCarbEmis' &&
+                      tabValue === 2)
                   }
                   expanded={
-                    e.grpKey === 'assetClass' ? false : isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
+                    e.grpKey === 'assetClass' &&  pathname !== '/fund-of-funds' ?  false : isExpand[e.grpKey] == undefined ? false : isExpand[e.grpKey]
                   }
                   onChange={() => {
                     handleExpandAccordion(e.grpKey)
@@ -788,7 +862,7 @@ export default function FilterGroup() {
                         fontWeight: '500',
                       }}
                     >
-                      {e.grpKey === 'assetClass' ? 'Equity,Corporate Bonds' : e.grpKey === 'footprintMetric' &&
+                      {e.grpKey === 'assetClass' ?  pathname !== '/fund-of-funds'   ? 'Equity,Corporate Bonds' : getAssetDetails(filterItem[e.grpKey]) : e.grpKey === 'footprintMetric' &&
                       filterItem.approach === 'MarketShare' &&
                       (tabValue === 1 || tabValue === 2)
                         ? 'Total Carbon Emissions'
@@ -805,7 +879,8 @@ export default function FilterGroup() {
                         ? filterRes['WeightAvgRev']
                         : configs[index]['disabled']
                         ? filterRes[configs[index]['value']]
-                        : filterRes[filterItem[e.grpKey]]}
+                        :
+                        filterRes[filterItem[e.grpKey]]}
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -814,7 +889,26 @@ export default function FilterGroup() {
                         const val = getEmission(t.value)
                         const fpValue = getFootprintMetric(t.value)
                         const warmingScValue = getWarmingScenario(t.value)
-                        if (e.grpKey === 'emission') {
+                        if(e.grpKey === 'assetClass'){
+                          return (
+                            <FilterTags
+                              name={t.name}
+                              selected={filterItem[e.grpKey].includes(t.value)}
+                              grpindex={index}
+                              tagindex={i}
+                              action={(grpindex, tagindex, selected) =>
+                                updateTags(
+                                  3,
+                                  tagindex,
+                                  selected,
+                                  e.grpKey,
+                                )
+                              }
+                            />
+                          )
+                        }
+                        
+                        else if (e.grpKey === 'emission') {
                           if (val) {
                             return (
                               <FilterTags

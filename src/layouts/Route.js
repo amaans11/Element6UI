@@ -36,6 +36,11 @@ export const RouteData = [
       icon: "InsertChartIcon",
     },
     {
+      name: "Fund Of Funds",
+      url: "/fund-of-funds",
+      icon: "ViewWeekIcon",
+    },
+    {
       name: "Stranded",
       url: "/stranded-assets-analysis",
       icon: "BarChartIcon",

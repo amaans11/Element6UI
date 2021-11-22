@@ -259,7 +259,7 @@ const getRequestData = (type, auth) => {
         benchmark_id: benchmarkId,
         version_portfolio: versionPortfolio,
         version_benchmark: versionBenchmark,
-        asset_type: assetClass == 'EqCB' ? ['Eq','CB'] : assetClass,
+        asset_type: ['Eq'],
         footprint: footprintMetric,
         sector: sector,
         market_value: marketValue,
@@ -608,6 +608,7 @@ const getRequestData = (type, auth) => {
 			version_portfolio:selectedDownloadPort.version
 		  }
 		  break;
+      
     default:
       data = {}
       break

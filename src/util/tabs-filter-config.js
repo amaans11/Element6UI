@@ -49,7 +49,6 @@ const data={
         'sector',
         'footprintMetric',
         'marketValue',
-        'assetClass',
         'inferenceType',
         'emission',
         'strategy'
@@ -58,7 +57,6 @@ const data={
         'sector',
         'footprintMetric',
         'marketValue',
-        'assetClass',
         'inferenceType',
         'emission',
         'strategy'
@@ -141,7 +139,18 @@ const data={
         'marketValue',
         'emission',
     ],
-    'URGENTEM_API':[]
+    'URGENTEM_API':[],
+    'SUMMARY':[
+    ],
+    'TARGET_SETTING':[
+        'sector',
+        'footprintMetric',
+        'marketValue',
+        'targetScenario',
+        'warmingScenario',
+        'approach',
+        'alignmentYear'
+    ]
 }
 
 export default data;

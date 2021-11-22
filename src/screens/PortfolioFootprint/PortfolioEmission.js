@@ -148,6 +148,7 @@ const PortfolioEmission = () => {
 				}
 			];
 		}
+		console.log("intensityChartData",intensityChartData)
 		setChartData(intensityChartData);
 		setTableData(intensityTableData);
 		setYAxisTitle(yTitle);

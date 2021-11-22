@@ -54,6 +54,7 @@ import UrgentemDownload from '../screens/UrgentemDownload'
 import GenerateReport from '../screens/GenerateReport'
 import UrgentemApi from '../screens/UrgentemApi'
 import NLP from '../screens/NLP'
+import FundOfFunds from '../screens/FundOfFunds'
 import UrgentemLanding from '../screens/UrgentemLanding'
 import { missingCoverageCells } from '../util/TableHeadConfig'
 import DataTable from '../components/Table/DataTable'
@@ -71,9 +72,11 @@ import {
   getDownloadPortfolios,
   setDownloadPortfolio,
   setDownloadTags,  setEmissions,
+  setFundsPortfolio
 } from '../redux/actions/authActions'
 import {  getDownloadDetails} from '../redux/actions/footprintActions'
 import csvFile from '../assets/Dummy-file.xlsx'
+import fundscsvFile from '../assets/Fund_of_Funds_Template.xlsx'
 import { ContactSupportOutlined } from '@material-ui/icons'
 
 const drawerWidth = 295
@@ -211,7 +214,9 @@ const MiniDrawer = ({ classes, history }) => {
   const [missingCoverage, setMissingCoverage] = useState({})
   const [description, setDescription] = useState('')
   const [isBenchmark, setBenchmarkValue] = useState(false)
+  const [fundOfFunds,setFundOfFunds] = useState(false)
   const [rebalance,setRebalance] = useState(false)
+
 
   const dispatch = useDispatch()
   const inputRef = useRef(null)
@@ -221,6 +226,9 @@ const MiniDrawer = ({ classes, history }) => {
   const portfolios = useSelector((state) => state.auth.portfolioList)
   const currentPortfolio = useSelector((state) => state.auth.currentPortfolio)
   const currentBenchmark = useSelector((state) => state.auth.currentBenchmark)
+  const fundsPortList = useSelector((state) => state.auth.fundsPortList)
+  const currentFundsPortfolio = useSelector((state) => state.auth.currentFundsPortfolio)
+
   const isVisible = useSelector((state) => state.auth.isVisible)
   const isAdmin = useSelector(
     (state) => state.auth.userInfo && state.auth.userInfo.is_admin,
@@ -254,6 +262,17 @@ const MiniDrawer = ({ classes, history }) => {
     await getPortfolio()
     await dispatch(getUploadPortfolioList())
     await dispatch(getDownloadPortfolios())
+  }
+  const onFundsPortfolioChange = async (currentValue) =>{
+    let portfolio = {}
+    if (portfolios && portfolios.length > 0) {
+      portfolios.map((port) => {
+        if (port.label === currentValue) {
+          portfolio = { ...port }
+        }
+      })
+    }
+    await dispatch(setFundsPortfolio(portfolio))
   }
   const onPortfolioChange = async (currentValue) => {
     let portfolio = {}
@@ -345,10 +364,9 @@ const MiniDrawer = ({ classes, history }) => {
     data.append('description', description)
     data.append('is_benchmark', isBenchmark)
     data.append('auto_rebalance', rebalance)
-  
 
     try {
-      await dispatch(uploadPortfolioRequest(data))
+      await dispatch(uploadPortfolioRequest(data,fundOfFunds))
       NotificationManager.success(
         'Your portfolio has been uploaded and is being processed. You will see your uploaded portfolio table updated once the processing has been completed.',
       )
@@ -377,6 +395,7 @@ const MiniDrawer = ({ classes, history }) => {
       }
     })
   }
+  console.log("userInfo",userInfo)
 
   return (
     <div className={classes.root}>
@@ -399,7 +418,15 @@ const MiniDrawer = ({ classes, history }) => {
         <div className={classes.toolbar}  />
         <List>
           {RouteData.map((e, index) => (
+            Object.keys(userInfo).length !== 0 && !userInfo.extra_modules.includes('fund_of_funds') && e.name === 'Fund Of Funds'  ?
             <ListItemLink
+              primary={e.name}
+              icon={e.icon}
+              to={e.url}
+              handleClick={() => setDefaultTab(e)}
+              disabled={true}
+            />
+            :<ListItemLink
               primary={e.name}
               icon={e.icon}
               to={e.url}
@@ -414,17 +441,20 @@ const MiniDrawer = ({ classes, history }) => {
             window.location.pathname !== '/urgentem-download' ? (
               <div className="filter-main">
                 <Box>
-                  <Box>
-                    <SelectwithSearch
-                      heading={'Select Portfolio'}
-                      data={
-                        portfolios && portfolios.length > 0 ? portfolios : []
-                      }
-                      // defaultValue={currentPortfolio}
-                      handleChange={onPortfolioChange}
-                      type="portfolio"
-                      currentValue={currentPortfolio}
-                    />
+                {window.location.pathname !== '/fund-of-funds' ? 
+
+                <React.Fragment>
+                   <Box>
+                  <SelectwithSearch
+                    heading={'Select Portfolio'}
+                    data={
+                      portfolios && portfolios.length > 0 ? portfolios : []
+                    }
+                    // defaultValue={currentPortfolio}
+                    handleChange={onPortfolioChange}
+                    type="portfolio"
+                    currentValue={currentPortfolio}
+                  />
                   </Box>
                   <Box mt={2}>
                     <SelectwithSearch
@@ -438,6 +468,20 @@ const MiniDrawer = ({ classes, history }) => {
                       currentValue={currentBenchmark}
                     />
                   </Box>
+                </React.Fragment>:
+                <Box>
+                <SelectwithSearch
+                  heading={'Select Funds Portfolio'}
+                  data={
+                    fundsPortList && fundsPortList.length > 0 ? fundsPortList : []
+                  }
+                  // defaultValue={currentPortfolio}
+                  handleChange={onFundsPortfolioChange}
+                  type="portfolio"
+                  currentValue={currentFundsPortfolio}
+                />
+                </Box>
+                 }
                 </Box>
                 <div className="filter-part">
                   <FilterGroup />
@@ -544,6 +588,9 @@ const MiniDrawer = ({ classes, history }) => {
             <Route path="/nlp" exact>
               <NLP />
             </Route>
+            <Route path="/fund-of-funds" exact>
+              <FundOfFunds />
+            </Route>
             <Route path="/temperature-metric" exact>
               <TemperatureMetric />
             </Route>
@@ -597,7 +644,16 @@ const MiniDrawer = ({ classes, history }) => {
                 download="Sample Portfolio"
                 className={classes.samplePortfolio}
               >
-                Sample Portfolio
+                Portfolio Template
+              </a>
+            </Box>
+            <Box>
+              <a
+                href={fundscsvFile}
+                download="Sample Portfolio"
+                className={classes.samplePortfolio}
+              >
+                Fund of Funds Template
               </a>
             </Box>
           </DialogContentText>
@@ -713,8 +769,16 @@ const MiniDrawer = ({ classes, history }) => {
               <InputLabel style={{ paddingTop: 10 }}>Rebalance Portfolio Weights</InputLabel>
             </Grid>
             <Grid item xs={3}>
-             
                <Checkbox checked={rebalance} onChange={(e)=>{setRebalance(e.target.checked)}} />
+            </Grid>
+            <Grid item xs={3}>
+              <InputLabel style={{ paddingTop: 10 }}>Fund Of Funds</InputLabel>
+            </Grid>
+            <Grid item xs={3}>
+              <Checkbox 
+                checked={fundOfFunds}
+                onChange= {(e)=>{setFundOfFunds(e.target.checked)}}
+              />
             </Grid>
           </Grid>
         </DialogContent>

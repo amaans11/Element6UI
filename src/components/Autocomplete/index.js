@@ -2,8 +2,10 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { DataUsageOutlined } from '@material-ui/icons';
 
 export default function SelectwithSearch({ heading, data, defaultValue,handleChange ,type,currentValue}) {
+	console.log("data>>",DataUsageOutlined)
 	return (
 		<div style={{ width: 250, marginRight: '20px'}}>
 			<Autocomplete
