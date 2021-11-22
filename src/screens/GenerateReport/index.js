@@ -147,10 +147,10 @@ const GenerateReport = () => {
                 <Checkbox
                   name="disclosure"
                   onChange={(e) => {
-                    handleCheckboxChange(3, e.target.checked)
+                    handleCheckboxChange(5, e.target.checked)
                   }}
                   color="default"
-                  checked={pages.includes(3) ? true : false}
+                  checked={pages.includes(5) ? true : false}
                 />
               }
               label={<div className={classes.text}>Disclosure</div>}
@@ -160,10 +160,10 @@ const GenerateReport = () => {
                 <Checkbox
                   name="forward"
                   onChange={(e) => {
-                    handleCheckboxChange(4, e.target.checked)
+                    handleCheckboxChange(6, e.target.checked)
                   }}
                   color="default"
-                  checked={pages.includes(4) ? true : false}
+                  checked={pages.includes(6) ? true : false}
                 />
               }
               label={
@@ -178,10 +178,10 @@ const GenerateReport = () => {
                 <Checkbox
                   name="sovFootprint"
                   onChange={(e) => {
-                    handleCheckboxChange(5, e.target.checked)
+                    handleCheckboxChange(4, e.target.checked)
                   }}
                   color="default"
-                  checked={pages.includes(5) ? true : false}
+                  checked={pages.includes(4) ? true : false}
                 />
               }
               label={<div className={classes.text}>Sovereign Footprint</div>}
@@ -191,10 +191,10 @@ const GenerateReport = () => {
                 <Checkbox
                   name="avoidedEmis"
                   onChange={(e) => {
-                    handleCheckboxChange(6, e.target.checked)
+                    handleCheckboxChange(3, e.target.checked)
                   }}
                   color="default"
-                  checked={pages.includes(6) ? true : false}
+                  checked={pages.includes(3) ? true : false}
                 />
               }
               label={<div className={classes.text}>Avoided Emissions</div>}
@@ -204,10 +204,10 @@ const GenerateReport = () => {
                 <Checkbox
                   name="fossilFuel"
                   onChange={(e) => {
-                    handleCheckboxChange(7, e.target.checked)
+                    handleCheckboxChange(8, e.target.checked)
                   }}
                   color="default"
-                  checked={pages.includes(7) ? true : false}
+                  checked={pages.includes(8) ? true : false}
                 />
               }
               label={
@@ -219,10 +219,10 @@ const GenerateReport = () => {
                 <Checkbox
                   name="tempMetric"
                   onChange={(e) => {
-                    handleCheckboxChange(8, e.target.checked)
+                    handleCheckboxChange(7, e.target.checked)
                   }}
                   color="default"
-                  checked={pages.includes(8) ? true : false}
+                  checked={pages.includes(7) ? true : false}
                 />
               }
               label={
