@@ -1,6 +1,3 @@
-export const API_URL = 'http://qa.urgentem.net:8080';
-export const TEMP_API_URL = 'https://tm-qa.urgentem.net';
-export const VERSION = 2;
 // --------- Auth --------------//
 export const SIGNIN_USER_SUCCESS = 'SIGNIN_USER_SUCCESS';
 export const VERIFY_USER_SUCCESS = 'VERIFY_USER_SUCCESS';
