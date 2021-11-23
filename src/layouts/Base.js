@@ -274,6 +274,7 @@ const MiniDrawer = ({ classes, history }) => {
     }
     await dispatch(setFundsPortfolio(portfolio))
   }
+  console.log("currentUser",currentUser)
   const onPortfolioChange = async (currentValue) => {
     let portfolio = {}
     if (portfolios && portfolios.length > 0) {
@@ -396,7 +397,11 @@ const MiniDrawer = ({ classes, history }) => {
     })
   }
   console.log("userInfo",userInfo)
+  let extraModules=[]
 
+  if(Object.keys(currentUser).length > 0){
+    extraModules = currentUser.extra_modules ? currentUser.extra_modules : []
+  }
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -418,7 +423,7 @@ const MiniDrawer = ({ classes, history }) => {
         <div className={classes.toolbar}  />
         <List>
           {RouteData.map((e, index) => (
-            Object.keys(userInfo).length !== 0 && !userInfo.extra_modules.includes('fund_of_funds') && e.name === 'Fund Of Funds'  ?
+            extraModules.length > 0 && !extraModules.includes('fund_of_funds') && e.name === 'Fund Of Funds'  ?
             <ListItemLink
               primary={e.name}
               icon={e.icon}
