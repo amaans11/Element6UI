@@ -423,7 +423,7 @@ const MiniDrawer = ({ classes, history }) => {
         <div className={classes.toolbar}  />
         <List>
           {RouteData.map((e, index) => (
-            extraModules.length > 0 && !extraModules.includes('fund_of_funds') && e.name === 'Fund Of Funds'  ?
+            !extraModules.includes('fund_of_funds') && e.name === 'Fund Of Funds'  ?
             <ListItemLink
               primary={e.name}
               icon={e.icon}
