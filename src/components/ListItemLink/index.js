@@ -1,6 +1,6 @@
 import React from "react";
 import {  NavLink } from "react-router-dom";
-import {Typography,ListItem,Box} from "@material-ui/core";
+import {Typography,ListItem,Box,Tooltip} from "@material-ui/core";
 import GraphicEqIcon from "@material-ui/icons/GraphicEq";
 import VerticalSplitIcon from "@material-ui/icons/VerticalSplit";
 import TimelineIcon from "@material-ui/icons/Timeline";
@@ -14,7 +14,8 @@ import FolderIcon from '@material-ui/icons/Folder';
 import AssignmentReturnedIcon from "@material-ui/icons/AssignmentReturned";
 
 function ListItemLink(props) {
-  const { icon, primary, to,handleClick,disabled} = props;
+  const { icon, primary, to,handleClick,disabled,fullName} = props;
+  console.log("props",props)
 
   const getAvataricon = (icon) => {
     switch (icon) {
@@ -60,10 +61,12 @@ function ListItemLink(props) {
 
   return (
     <li>
+      <Tooltip title={fullName}>
       <ListItem button component={CustomLink} className="navigation" onClick={handleClick} disabled={disabled}>
         <Box>{getAvataricon(icon)}</Box>
         <Typography style={{fontSize:8}}>{primary}</Typography>
       </ListItem>
+      </Tooltip>
     </li>
   );
 }

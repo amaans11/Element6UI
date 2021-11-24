@@ -18,6 +18,7 @@ import Header from '../../components/Header'
 import SideBar from '../../components/SideBar'
 import {changePassword} from '../../redux/actions/authActions'
 import { OutlinedInput } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 
 const UpdatePasswrod = ()=>{
     const dispatch = useDispatch();
@@ -55,10 +56,11 @@ const UpdatePasswrod = ()=>{
       };
 
     return (
-        <React.Fragment>
+        <Box>
+        <CssBaseline />
         <Header history={history} />
         <SideBar />
-        <Box style={{ marginTop: 100, marginLeft: 100}} mr={1} >
+        <Grid style={{ marginTop: 100, marginLeft: 100}} mr={1} >
             <Box >
                 <Box >
                     <Typography variant="h5" style={{ marginLeft: 20, marginTop: 1 }}>
@@ -124,8 +126,9 @@ const UpdatePasswrod = ()=>{
                     onClick={changePasswordHandler}
                 >Update Password</Button>
             </Box>        
-            </Box>
-        </React.Fragment>
+            </Grid>
+        </Box>
+       
     )
 }
 export default UpdatePasswrod;
