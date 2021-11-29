@@ -6,6 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import {Tooltip} from '@material-ui/core'
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -226,11 +227,12 @@ class MiniDrawer extends React.Component {
           <div className={classes.toolbar} />
           <List style={{ paddingTop: "2px" }}>
             {this.state.routeList.map((e, index) => (
-              <ListItemLink
-                primary={e.name}
-                icon={e.icon}
-                to={e.url}
-              ></ListItemLink>
+                <ListItemLink
+                  primary={e.name}
+                  icon={e.icon}
+                  to={e.url}
+                  fullName={e.fullName}
+                ></ListItemLink>
             ))}
           </List>
         </Drawer>

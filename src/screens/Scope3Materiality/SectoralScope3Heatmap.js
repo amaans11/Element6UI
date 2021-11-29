@@ -149,9 +149,42 @@ const SectoralScope3Heatmap = () => {
       getChartData(materiality, sectorName)
     }
   }, [heatmapData, materiality])
+
   const handleSectorChange = (e) => {
     const sectorName = e.target.value
+    let tableData=[]
+    const tableResponse = heatmapData['data']['Table']['Sector_Categories']
+
     getChartData(materiality, sectorName)
+
+
+    if (tableResponse && tableResponse.length > 0) {
+      tableResponse.map((table) => {
+        if(table['SASB_SICS_Sector'] === sectorName){
+          tableData.push({
+            security: table['Security_Name'],
+            business: table['Business Travel'],
+            capital: table['Capital Goods'],
+            downstreamLease: table['Downstream Leased Assets'],
+            downstreamTransport: table['Downstream Transport Distribution'],
+            employee: table['Employee Commuting'],
+            endOfLife: table['End of Life Treatment of Sold Products'],
+            franchise: table['Franchises'],
+            fuel: table['Fuel and Energy Related Activities'],
+            investments: table['Investments'],
+            processing: table['Processing of Sold Products'],
+            purchased: table['Purchased Goods and Services'],
+            upstreamLeased: table['Upstream Leased Assets'],
+            upstreamTransport: table['Upstream Transport and Distribution'],
+            useSolid: table['Use of Sold Products'],
+            waste: table['Waste Generated'],
+          })
+        }
+        
+      })
+    }
+    setTableData(tableData)
+
   }
 
   const getChartData = (materialityType, currentSectorName) => {
@@ -195,24 +228,27 @@ const SectoralScope3Heatmap = () => {
     }
     if (tableResponse && tableResponse.length > 0) {
       tableResponse.map((table) => {
-        tableData.push({
-          security: table['Security_Name'],
-          business: table['Business Travel'],
-          capital: table['Capital Goods'],
-          downstreamLease: table['Downstream Leased Assets'],
-          downstreamTransport: table['Downstream Transport Distribution'],
-          employee: table['Employee Commuting'],
-          endOfLife: table['End of Life Treatment of Sold Products'],
-          franchise: table['Franchises'],
-          fuel: table['Fuel and Energy Related Activities'],
-          investments: table['Investments'],
-          processing: table['Processing of Sold Products'],
-          purchased: table['Purchased Goods and Services'],
-          upstreamLeased: table['Upstream Leased Assets'],
-          upstreamTransport: table['Upstream Transport and Distribution'],
-          useSolid: table['Use of Sold Products'],
-          waste: table['Waste Generated'],
-        })
+        if(table['SASB_SICS_Sector'] === currentSector){
+          tableData.push({
+            security: table['Security_Name'],
+            business: table['Business Travel'],
+            capital: table['Capital Goods'],
+            downstreamLease: table['Downstream Leased Assets'],
+            downstreamTransport: table['Downstream Transport Distribution'],
+            employee: table['Employee Commuting'],
+            endOfLife: table['End of Life Treatment of Sold Products'],
+            franchise: table['Franchises'],
+            fuel: table['Fuel and Energy Related Activities'],
+            investments: table['Investments'],
+            processing: table['Processing of Sold Products'],
+            purchased: table['Purchased Goods and Services'],
+            upstreamLeased: table['Upstream Leased Assets'],
+            upstreamTransport: table['Upstream Transport and Distribution'],
+            useSolid: table['Use of Sold Products'],
+            waste: table['Waste Generated'],
+          })
+        }
+        
       })
     }
 

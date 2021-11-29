@@ -430,12 +430,14 @@ const MiniDrawer = ({ classes, history }) => {
               to={e.url}
               handleClick={() => setDefaultTab(e)}
               disabled={true}
+              fullName={e.fullName}
             />
             :<ListItemLink
               primary={e.name}
               icon={e.icon}
               to={e.url}
               handleClick={() => setDefaultTab(e)}
+              fullName={e.fullName}
             />
           ))}
         </List>

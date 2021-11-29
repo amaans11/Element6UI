@@ -122,7 +122,7 @@ const Header = ({ history }) => {
 						open={Boolean(anchorEl)}
 						onClose={()=>{setAnchor(null)}}
 						>
-						<MenuItem onClick={handleThemeChange} disabled = {pathname == '/verification-code' || pathname == '/update-password'}>
+						<MenuItem onClick={handleThemeChange} disabled = {pathname == '/verification-code' }>
 							<BorderColorIcon className={classes.icon} />Change Theme
 						</MenuItem>
 						<MenuItem onClick={handleSettings} disabled = {pathname == '/verification-code' || pathname == '/update-password'}>
