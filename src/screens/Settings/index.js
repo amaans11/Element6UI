@@ -42,6 +42,7 @@ import {
   getUserInfo,
   updateUserInfo
 } from '../../redux/actions/authActions'
+import manual from '../../assets/User Manual.pdf'
 
 const quarterOptions = ['Q1', 'Q2', 'Q3', 'Q4']
 
@@ -103,6 +104,8 @@ const Settings = () => {
   const yearOptions = userInfo.allowed_years
   const currenyConfigs = userInfo.currency_config
   const currencyYears = Object.keys(currenyConfigs)
+  const isTrial = userInfo.trial
+
 
   const currentYear = userInfo.year.currency
   const currentCurrency = get(userInfo, 'display_currency', 'USD')
@@ -316,6 +319,7 @@ const Settings = () => {
   }
   const headCells = getHeadCells()
   const history = useHistory()
+
   return (
     <Box>
       <CssBaseline />
@@ -408,6 +412,14 @@ const Settings = () => {
                 </Button>
               </Grid>
             </Grid>
+            {!isTrial && <Grid container>
+              <Grid item xs={3}>
+                <Typography className={classes.headingText}>User Manual :</Typography>
+              </Grid>
+              <Grid item xs={6} style={{marginTop:10}}>
+                <a href={manual}>User Manual</a>
+              </Grid>
+            </Grid>}
           </Card>
         </Grid>
         <Grid item xs={5}>
