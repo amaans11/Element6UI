@@ -28,9 +28,9 @@ const returnYearRes = {
 }
 const tempMetric = {
   '0': 'None',
-  '1': 'All companies without targets set a 2 degree target',
+  '1': 'All companies without targets set a 1.5 degree target',
   '2': 'All companies without targets set a 1.75 degree target',
-  '3': 'Top 10 contributors set 2 degrees targets',
+  '3': 'Top 10 contributors set 1.5 degrees targets',
   '4': 'Top 10 contributors set 1.75 degree targets',
 }
 const filterRes = {
