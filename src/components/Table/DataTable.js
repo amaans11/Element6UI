@@ -171,7 +171,8 @@ class ReactDataTable extends React.Component {
 
     const columnDelimiter = ','
     const lineDelimiter = '\n'
-    const keys = Object.keys(array[0])
+    const keys = array.length > 0 ? Object.keys(array[0]) : []
+    console.log("keys>>",keys)
 
     result = ''
     result += keys.join(columnDelimiter)

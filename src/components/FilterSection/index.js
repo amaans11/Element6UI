@@ -717,7 +717,7 @@ export default function FilterGroup() {
                           return (
                             <FilterTags
                               name={t.name}
-                              selected={filterItem[e.grpKey].includes(t.value)}
+                              selected={filterItem[e.grpKey] && filterItem[e.grpKey].length > 0 && filterItem[e.grpKey].includes(t.value)}
                               grpindex={index}
                               tagindex={i}
                               action={(grpindex, tagindex, selected) =>
