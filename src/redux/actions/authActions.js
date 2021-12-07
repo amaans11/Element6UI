@@ -889,8 +889,8 @@ export const getAccessToken = () => {
         window.location.reload()
       })
       .catch((err) => {
-        const errorType = err.response.data.type
-        if(errorType == 're-login'){
+        const errorType = err && err.response ? err.response.data.type : null
+        if(errorType && errorType == 're-login'){
           NotificationManager.error("Session Expired!")
           dispatch(logoutUser())
         }
