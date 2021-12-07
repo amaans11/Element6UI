@@ -115,9 +115,9 @@
       grpKey:'scenario',
       tagsList: [
         { name: "None", value: "0", selected: true },
-        { name: "All companies without targets set a 2 degree target", value: "1", selected: false },
+        { name: "All companies without targets set a 1.5 degree target", value: "1", selected: false },
         { name: "All companies without targets set a 1.75 degree target", value: "2", selected: false },
-        { name: "Top 10 contributors set 2 degrees targets", value: "3", selected: false },
+        { name: "Top 10 contributors set 1.5 degrees targets", value: "3", selected: false },
         { name: "Top 10 contributors set 1.75 degree targets", value: "4", selected: false },
       ]
     },
