@@ -412,7 +412,9 @@ export const getFundsPortfolioList = () => {
       .get(`${process.env.REACT_APP_API_URL}/portfolio/?portfolio_type=PC&is_full=true`, { headers: headers })
       .then((result) => {
         dispatch(getFundsPortfolioListSuccess(result.data))
-        const list = result.data
+        let list = result && result.data.length > 0 ? result.data : []
+
+        let fundsData={}
         let res = []
         if (list && list.length > 0) {
            list.map((portfolio) => {
@@ -425,18 +427,16 @@ export const getFundsPortfolioList = () => {
             }
           })
         }
-        const fundsData = {
-          label: res[0].label,
-          value: res[0].value,
-          version: res[0].version,
+
+         fundsData = {
+          label: res.length > 0 ? res[0].label : '',
+          value: res.length > 0 ? res[0].value : '',
+          version: res.length > 0 ? res[0].version : '',
         }
-        console.log("list>>",list)
-        console.log("fundsData>>",fundsData)
 
         return {list,fundsData}
       })
       .catch((error) => {
-        console.log("error>>",error)
         dispatch(getFundsPortfolioListFailure())
       })
   }
@@ -669,7 +669,10 @@ export const getDownloadPortfolios = () => {
         dispatch(getDownloadPortfoliosSuccess(result.data))
       })
       .catch((err) => {
-        const error = err.response.data.message
+        let error = null;
+        if(err && err.response ){
+           error = err ? err.response.data.message : null
+        }
         dispatch(getDownloadPortfoliosFailed(error))
       })
   }
@@ -886,8 +889,8 @@ export const getAccessToken = () => {
         window.location.reload()
       })
       .catch((err) => {
-        const errorType = err.response.data.type
-        if(errorType == 're-login'){
+        const errorType = err && err.response ? err.response.data.type : null
+        if(errorType && errorType == 're-login'){
           NotificationManager.error("Session Expired!")
           dispatch(logoutUser())
         }
