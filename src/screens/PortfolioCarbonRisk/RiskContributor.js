@@ -18,7 +18,7 @@ const RiskContributor = () => {
 	const { year, intensityScope } = auth.filterItem;
 	const {userInfo} = auth
 
-	const trial = get(userInfo,'Trial',false)
+	const trial = get(userInfo,'trial',false)
 
 	const [ chartData, setChartData ] = useState([]);
 	const [ tableData, setTableData ] = useState([]);
@@ -116,7 +116,8 @@ const RiskContributor = () => {
 						yAxisTitle={`Contribution to Annualized Return (${year})`}
 						isExportEnabled={!trial}
 					/>
-					<DataTable data={tableData} columns={riskContribCells} tableHeading="RISK_CONTRIBUTOR" />
+					<DataTable data={tableData} columns={riskContribCells} tableHeading="RISK_CONTRIBUTOR"               isTrial={trial}
+ />
 				</Box>
 			)}
 		</React.Fragment>

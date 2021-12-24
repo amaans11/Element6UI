@@ -20,7 +20,7 @@ const Attribution = () => {
   const [categories, setCategories] = useState([])
 
   const dispatch = useDispatch()
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const fetchDetails = async () => {
     const data = getRequestData('TEMP_ATTRIBUTION', auth)

@@ -37,7 +37,7 @@ function UrgentemDownload() {
 
   const { downloadPortfolioList, userInfo } = auth
 
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const yearEmissions =
     userInfo.year && userInfo.year.emissions ? userInfo.year.emissions : '2019'
@@ -238,6 +238,7 @@ function UrgentemDownload() {
                 tableHeading="DOWNLOAD"
                 isScroll={true}
                 loading={loading}
+                isTrial={trial}
               />
             ) : (
               <DataTable
@@ -245,6 +246,7 @@ function UrgentemDownload() {
                 columns={columns}
                 tableHeading="DOWNLOAD"
                 loading={loading}
+                isTrial={trial}
               />
             )}
           </Box>

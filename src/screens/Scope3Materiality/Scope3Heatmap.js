@@ -32,7 +32,7 @@ const Scope3Heatmap = () => {
 
 	const { materiality } = filterItem;
 	const { loading,userInfo } = auth;
-	const trial = get(userInfo,'Trial',false)
+	const trial = get(userInfo,'trial',false)
 
 	const getCategoryKey = (category,emission) => {
 		if(emission === 'Sc123'){

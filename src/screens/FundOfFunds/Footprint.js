@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, CircularProgress } from '@material-ui/core'
 import PieChart from '../../components/ChartsComponents/PieChart'
-import {orderBy} from 'lodash'
+import {orderBy,get} from 'lodash'
 import StackedBar from '../../components/ChartsComponents/StackedBar'
 import StackedColumn from '../../components/ChartsComponents/StackedColumn'
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
@@ -21,9 +21,10 @@ import { MenuItem } from '@material-ui/core'
 const Alignment = () => {
   const dispatch = useDispatch()
   const auth = useSelector((state) => state.auth)
-  const {allPortfolios,currentFundsPortfolio,loading,filterItem} = auth
+  const {allPortfolios,currentFundsPortfolio,loading,filterItem,userInfo} = auth
   const footprint = useSelector(state=>state.fund.footprint)
   const { inferenceType,emission } = filterItem
+  const trial = get(userInfo,'trial',false)
 
   const [pieChartdata,setPieChartData] = useState([])
   const [stackedChartData,setStackedChartData] = useState([])
@@ -273,6 +274,8 @@ const Alignment = () => {
                 data={pieChartdata}
                 isFundOfFunds={true}
                 tooltipHeading={yAxisTitle}
+                isExportEnabled={!trial}					
+
               />
              </Grid>
              <Grid item xs ={6}>
@@ -281,6 +284,8 @@ const Alignment = () => {
                 data={stackedColChartData}
                 categories={categories}
                 yAxisTitle={yAxisTitle}
+                isExportEnabled={!trial}					
+
               />
              </Grid>
          </Grid>
@@ -318,6 +323,8 @@ The pie chart shows the composition of the total fund of funds footprint, by dis
                 yAxisTitle={yAxisTitle}
                 isEnabled="false"
                 isFundOfFunds={true}
+                isExportEnabled={!trial}					
+
               />
              </Grid>
          </Grid>

@@ -10,6 +10,7 @@ import {summaryCells} from '../../util/TableHeadConfig'
 import getRequestData from '../../util/RequestData'
 import LineChart from '../../components/ChartsComponents/Line'
 import { result } from 'lodash'
+import {get} from 'lodash'
 
 
 const Alignment = () => {
@@ -18,9 +19,10 @@ const Alignment = () => {
   const [chartData,setChartData] = useState([])
 
   const auth = useSelector((state) => state.auth)
-  const {allPortfolios,currentFundsPortfolio,loading,filterItem} = auth
+  const {allPortfolios,currentFundsPortfolio,loading,filterItem,userInfo} = auth
   const alignment = useSelector(state=>state.fund.alignment)
   const { portScenario } = filterItem
+  const trial = get(userInfo,'trial',false)
 
   const [lineChartData, setLineChartData] = useState([])
   const [portIds,setPortIds] = useState([])
@@ -256,6 +258,8 @@ const Alignment = () => {
           <LineChart
             data={lineChartData}
             chartKey="FUND_ALIGNMENT"
+            isExportEnabled={!trial}					
+
           />
           <Button onClick={handleDeselect}>{isDeselect ? "Select All" : "(De)select All"}</Button>
         </Box>

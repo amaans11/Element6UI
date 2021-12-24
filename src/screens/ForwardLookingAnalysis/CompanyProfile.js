@@ -37,7 +37,7 @@ const CompanyProfile = () => {
   const { loading, filterItem,userInfo } = auth
   const { portScenario } = filterItem
   const classes = useStyles()
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const [chartData, setChartData] = useState([])
   const [tableData, setTableData] = useState([])
@@ -268,6 +268,7 @@ const CompanyProfile = () => {
                 data={tableData}
                 columns={companyProfileCells}
                 tableHeading="COMPANY_PROFILE"
+                isTrial={trial}
               />
             </Grid>
           </Grid>

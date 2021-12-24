@@ -18,7 +18,7 @@ const CoalPower = () => {
   const coalPower = useSelector((state) => state.stranded.coalPower)
   const auth = useSelector((state) => state.auth)
   const { loading,userInfo } = auth
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const fetchDetails = async () => {
     const data = getRequestData('COAL_POWER', auth)
@@ -82,6 +82,7 @@ const CoalPower = () => {
                   data={tableData}
                   columns={coalPowerCells}
                   tableHeading="COAL_POWER"
+                  isTrial={trial}
                 />
               </Box>
             </Grid>

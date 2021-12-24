@@ -21,7 +21,7 @@ const AvoidedEmission = () => {
 	const [ tableData, setTableData ] = useState([]);
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
 
-	const trial = get(userInfo,'Trial',false)
+	const trial = get(userInfo,'trial',false)
 
 	const dispatch = useDispatch();
 
@@ -141,6 +141,7 @@ const AvoidedEmission = () => {
 						data={tableData}
 						columns={avoidedEmissionCells}
 						tableHeading="AVOIDED_EMISSIONS"
+						isTrial={trial}
 					/>
 				</Box>
 			)}

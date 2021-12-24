@@ -17,7 +17,7 @@ const SectoralTempScore = () => {
 	const [ chartCategories, setChartCategories ] = useState([]);
 	const { filterItem, loading,userInfo } = auth;
 	const { scoreType, emission } = filterItem;
-	const trial = get(userInfo,'Trial',false)
+	const trial = get(userInfo,'trial',false)
 
 	const fetchDetails = async () => {
 		const data = getRequestData('SECTORAL_TEMP_SCORE', auth);

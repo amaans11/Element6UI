@@ -22,7 +22,7 @@ const SovereignFootprint = () => {
 
   const dispatch = useDispatch()
   const { loading, userInfo } = auth
-  const trial = get(userInfo, 'Trial', false)
+  const trial = get(userInfo, 'trial', false)
 
   const fetchDetails = async () => {
     const data = getRequestData('SOVEREIGN_FOOTPRINT', auth)
@@ -190,6 +190,7 @@ const SovereignFootprint = () => {
             data={tableData}
             columns={tableCells}
             tableHeading="SOVEREIGN_FOOTPRINT"
+            isTrial={trial}
           />
         </Box>
       )}

@@ -23,7 +23,7 @@ const ContributionAnalysis = () => {
 
   const { filterItem, loading , userInfo } = auth
   const { scoreType, emission } = filterItem
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
 
   const fetchDetails = async () => {

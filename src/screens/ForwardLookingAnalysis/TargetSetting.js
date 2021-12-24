@@ -16,7 +16,7 @@ const TargetSetting = () => {
   const auth = useSelector((state) => state.auth)
   const { loading, filterItem,userInfo } = auth
   const { alignmentYear } = filterItem
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
 
   const [chartData, setChartData] = useState([])
@@ -123,6 +123,7 @@ const TargetSetting = () => {
             data={tableData}
             columns={targetSettingCells}
             tableHeading="TARGET_SETTING"
+            isTrial={trial}
           />
         </Box>
       )}

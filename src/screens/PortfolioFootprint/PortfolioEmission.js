@@ -25,7 +25,7 @@ const PortfolioEmission = () => {
 	const {filterItem,loading,userInfo}=auth;
 
 	const {footprintMetric} = filterItem
-	const trial = get(userInfo,'Trial',false)
+	const trial = get(userInfo,'trial',false)
 
 	const portEmissionCells = [
 		{
@@ -173,6 +173,7 @@ const PortfolioEmission = () => {
 						data={tableData}
 						columns={portEmissionCells}
 						tableHeading="PORTFOLIO_INTENSITY"
+						isTrial={trial}
 					/>
 				</React.Fragment>
 			)}

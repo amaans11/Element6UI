@@ -22,7 +22,7 @@ const FossilFuel = () => {
   const fossilFuel = useSelector((state) => state.stranded.fossilFuel)
   const auth = useSelector((state) => state.auth)
   const { loading,userInfo } = auth
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const fetchDetails = async () => {
     const data = getRequestData('FOSSIL_FUEL', auth)
@@ -129,6 +129,7 @@ const FossilFuel = () => {
                   data={tableData}
                   columns={fossilFuelCells}
                   tableHeading="FOSSIL_FUEL"
+                  isTrial={trial}
                 />
               </Box>
             </Grid>
@@ -137,6 +138,7 @@ const FossilFuel = () => {
                 data={countryTableData}
                 columns={countryFossilCells}
                 tableHeading="FOSSIL_FUEL_COUNTRY"
+                isTrial={trial}
               />
               <div style={{ fontSize: 11 }}>
                 * Where applicable only top 10 countries shown.

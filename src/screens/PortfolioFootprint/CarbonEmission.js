@@ -45,7 +45,7 @@ const CarbonEmission = () => {
 	const [ categories, setCategories ] = useState([]);
 	const [ yAxisTitle, setYTitle ] = useState('');
 	const { inferenceType, emission } = filterItem;
-	const trial = get(userInfo,'Trial',false)
+	const trial = get(userInfo,'trial',false)
 
 	useEffect(() => {
 		fetchDetails();

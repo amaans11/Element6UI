@@ -10,6 +10,7 @@ import DataTable from '../../components/Table/DataTable';
 import {summaryCells} from '../../util/TableHeadConfig'
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
 import StackedBar from '../../components/ChartsComponents/StackedBar'
+import {get} from 'lodash'
 
 const Summary = () => {
   const dispatch = useDispatch()
@@ -18,8 +19,10 @@ const Summary = () => {
   const [chartData,setChartData] = useState([])
 
   const auth = useSelector((state) => state.auth)
-  const {loading} = auth
+  const {loading,userInfo} = auth
   const summary = useSelector(state=>state.fund.summary)
+  const trial = get(userInfo,'trial',false)
+
 
   useEffect(() => {
     fetchDetails()
@@ -99,11 +102,15 @@ const Summary = () => {
                   data={chartData}
                   categories={['']}
                   maxValue={100}
+                  isExportEnabled={!trial}					
               />
                 </Grid>
                 
                 <Grid item xs={12} style={{marginTop:10}}>
-                    <DataTable data={tableData} columns={summaryCells} tableHeading="COMPANY_ANALYSIS" />
+                    <DataTable data={tableData} columns={summaryCells} tableHeading="COMPANY_ANALYSIS"
+                    							isTrial={trial}
+
+                    />
                 </Grid>
             </Grid>
         

@@ -23,7 +23,7 @@ const Disclosure = () => {
 
   const dispatch = useDispatch()
   const { loading,userInfo } = auth
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const fetchDetails = async () => {
     const portData = getRequestData('PORT_DISCLOSURE', auth)

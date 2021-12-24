@@ -29,7 +29,7 @@ const CompanyAnalysis = () => {
 	const auth = useSelector((state) => state.auth);
 	const { loading,filterItem,userInfo,currentCurrency } = auth;
 	const {emission}=filterItem;
-	const trial = get(userInfo,'Trial',false)
+	const trial = get(userInfo,'trial',false)
 
 	const emissionLabel=getEmissionValue(emission)
 
@@ -103,7 +103,8 @@ const CompanyAnalysis = () => {
 						yAxisTitle={`${emissionLabel} GHG Emissions (tCO2)`}
 						isExportEnabled={!trial}
 					/>
-					<DataTable data={tableData} columns={companyAnalysisCells} tableHeading="COMPANY_ANALYSIS" />
+					<DataTable data={tableData} columns={companyAnalysisCells} tableHeading="COMPANY_ANALYSIS"                isTrial={trial}
+/>
 				</React.Fragment>
 			)}
 		</React.Fragment>

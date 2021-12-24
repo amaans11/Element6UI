@@ -31,7 +31,7 @@ const PortTemperatureScore = () => {
   const auth = useSelector((state) => state.auth)
   const { emission, scoreType, defaultValue } = auth.filterItem
   const { loading , userInfo} = auth
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const [companyChartData, setCompanyChartData] = useState([])
   const [tableData, setTableData] = useState([])
@@ -180,6 +180,8 @@ const PortTemperatureScore = () => {
               data={tableData}
               columns={tempScoreCells}
               tableHeading="TEMP_SCORE"
+              isTrial={trial}
+
             />
           </Grid>
         </React.Fragment>

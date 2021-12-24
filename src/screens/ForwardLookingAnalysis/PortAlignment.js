@@ -14,7 +14,7 @@ const PortAlignment = () => {
   const auth = useSelector((state) => state.auth)
   const { loading, filterItem,userInfo } = auth
   const { portScenario } = filterItem
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const [lineChartData, setLineChartData] = useState([])
 

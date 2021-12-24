@@ -102,7 +102,7 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
   console.log("accessToken",accessToken)
 
   const { year, quarter, version } = userInfo
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const yearFundamentals =
     year && year.fundamentals ? year.fundamentals : '2019'
@@ -331,6 +331,7 @@ function UrgentemLanding({ history, handleUploadPortfolio }) {
               data={portfolioTableRes}
               columns={headCells}
               tableHeading="UPLOAD_PORTFOLIO"
+              isTrial={trial}
             />
           </Box>
           </Grid>

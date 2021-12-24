@@ -10,6 +10,7 @@ import getRequestData from '../../util/RequestData'
 import StackedColumn from '../../components/ChartsComponents/StackedColumn'
 import { filter } from 'lodash'
 import HorizontalBar from '../../components/ChartsComponents/HorizontalBar'
+import {get} from 'lodash'
 
 
 const Alignment = () => {
@@ -26,9 +27,10 @@ const Alignment = () => {
   const [metric,setMetric] = useState("Contribution")
 
   const auth = useSelector((state) => state.auth)
-  const {allPortfolios,currentFundsPortfolio,loading,filterItem} = auth
+  const {allPortfolios,currentFundsPortfolio,loading,filterItem,userInfo} = auth
   const {alignmentYear} = filterItem
   const targetSetting = useSelector(state=>state.fund.targetSetting)
+	const trial = get(userInfo,'trial',false)
 
   useEffect(() => {
     fetchDetails()
@@ -305,12 +307,16 @@ const Alignment = () => {
                 data={chartData}
                 categories={categories}
                 yAxisTitle={yAxisTitle}
+                isExportEnabled={!trial}					
+
               /> : 
                 <HorizontalBar
                 categories={companies}
                 data={barChartData}
                 chartKey="FUND_TARGET_SETTINGS"
                 yAxisTitle={yAxisTitle}
+                isExportEnabled={!trial}					
+
               />
               }
               <Grid container>
@@ -350,7 +356,8 @@ const Alignment = () => {
               data={tableData}
               columns={targetFundCells}
               tableHeading="PORTFOLIO_INTENSITY"
-            />
+              isTrial={trial}
+              />
         </Box>
       )}
     </React.Fragment>

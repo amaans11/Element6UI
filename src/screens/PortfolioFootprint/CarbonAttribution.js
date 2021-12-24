@@ -13,7 +13,7 @@ const CarbonAttribution = () => {
   )
   const auth = useSelector((state) => state.auth)
   const { loading,userInfo } = auth
-	const trial = get(userInfo,'Trial',false)
+	const trial = get(userInfo,'trial',false)
 
   const [chartData, setChartData] = useState([])
   const [categories, setCategories] = useState([])
@@ -93,7 +93,6 @@ const CarbonAttribution = () => {
               fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
             }}
           >
-            
             This module allows investors to interrogate the role of sector
             allocation and stock selection that lead to differences in the
             carbon intensity of the portfolio and chosen benchmark. In this

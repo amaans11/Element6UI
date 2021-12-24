@@ -37,7 +37,7 @@ const GenerateReport = () => {
 
   const auth = useSelector((state) => state.auth)
   const { isVisible,userInfo } = auth
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const handleCheckboxChange = (key, value) => {
     let list = [...pages]

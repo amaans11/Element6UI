@@ -29,7 +29,7 @@ const PortfolioOptimization = () => {
   const auth = useSelector((state) => state.auth)
 
   const { reweightFactor, loading,userInfo } = auth
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
 
   const [yAxisTitle, setYAxisTitle] = useState('')
@@ -381,6 +381,7 @@ const PortfolioOptimization = () => {
                 data={tableData}
                 columns={portOptimizationCells}
                 tableHeading="PORT_OPTIMIZATION"
+                isTrial={trial}
               />
             </Grid>
           </Grid>

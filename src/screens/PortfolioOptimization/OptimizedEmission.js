@@ -18,7 +18,7 @@ const PortfolioOptimization = () => {
 
 	const { reweightFactor,loading,userInfo } = auth
 
-	const trial = get(userInfo,'Trial',false)
+	const trial = get(userInfo,'trial',false)
 	
 	const [ yAxisTitle, setYAxisTitle ] = useState('');
 	const [ lineChartData, setLineChartData ] = useState([]);

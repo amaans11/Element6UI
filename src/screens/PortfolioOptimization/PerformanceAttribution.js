@@ -16,7 +16,7 @@ const PerformanceAttribution = () => {
 	const perfAttributionData = useSelector((state) => state.optimization.perfAttributionData);
 
 	const {loading,userInfo}=auth;
-	const trial = get(userInfo,'Trial',false)
+	const trial = get(userInfo,'trial',false)
 
 
 	const getData = () => {

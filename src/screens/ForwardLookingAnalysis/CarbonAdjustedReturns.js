@@ -45,7 +45,7 @@ const CarbonAdjustedReturns = () => {
   const { loading, filterItem,userInfo } = auth
   const { emission } = filterItem
 
-  const trial = get(userInfo,'Trial',false)
+  const trial = get(userInfo,'trial',false)
 
   const [chartData, setChartData] = useState([])
   const [returnData, setReturnData] = useState([])
